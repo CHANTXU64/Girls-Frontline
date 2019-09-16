@@ -1,5 +1,5 @@
 /**
- *   ÉÙÅ®Ç°ÏßºóÇÚ×éºÏÅÅĞò
+ *   å°‘å¥³å‰çº¿åå‹¤ç»„åˆæ’åº
  *	 The MIT License(MIT)
  *	 Copyright(C) 2019 CHT
  *	 Permission is hereby granted, free of charge, to any person obtaining
@@ -23,12 +23,12 @@
 #include<cmath>
 #include<string>
 using namespace std;
-#define B 3//ÒşĞÔÈ¨ÖØ
+#define B 3//éšæ€§æƒé‡
 #define Weights(a,b) (((a)>(b) ? B:1)*((a)-(b)))
 
 int main() {
-	int fangan[100][9] = { 0 };//¹²¼Æ100¸ö·½°¸
-	int cht[3] = { 0,0,0 };//±ØÒªµÄºóÇÚÕ½ÒÛ±àºÅ
+	int fangan[100][9] = { 0 };//å…±è®¡100ä¸ªæ–¹æ¡ˆ
+	int cht[3] = { 0,0,0 };//å¿…è¦çš„åå‹¤æˆ˜å½¹ç¼–å·
 	int Q[48][4] =
 	{{0,     17400, 17400, 0},
 	 {18333, 0,     0,     11667},
@@ -86,7 +86,7 @@ int main() {
 	int lingjian = 0;
 	{
 		float a = 0, b = 0, c = 0, d = 0;
-		cout << "ÊäÈëÈËÁ¦,µ¯Ò©,¿ÚÁ¸,Áã¼şÃ¿Ğ¡Ê±ĞèÇóÁ¿:(½¨Òé²»Òª³¬¹ıÁ½Î»Ğ¡Êı)" << endl;
+		cout << "è¾“å…¥äººåŠ›,å¼¹è¯,å£ç²®,é›¶ä»¶æ¯å°æ—¶éœ€æ±‚é‡:(å»ºè®®ä¸è¦è¶…è¿‡ä¸¤ä½å°æ•°)" << endl;
 		cin >> a >> b >> c >> d;
 		renli = round(a * 100);
 		danyao = round(b * 100);
@@ -94,32 +94,32 @@ int main() {
 		lingjian = round(d * 100);
 	}
 	if ((renli < 0) || (danyao < 0) || (kouliang < 0) || (lingjian < 0)) {
-		cout << "ÊıÁ¿ÓĞ´íÎó" << endl;
+		cout << "æ•°é‡æœ‰é”™è¯¯" << endl;
 		system("pause");
 		return 0;
 	}
 	
 	int C[4] = { 0 };
-	cout << "ÊäÈëÈËÁ¦µ¯Ò©¿ÚÁ¸Áã¼şµÄÈ¨ÖØ:(ÕûÊı)(¸ß¼¶Ñ¡Ïî, Ò»°ã¶¼ÊÇ1¾ÍĞĞÁË)" << endl;
+	cout << "è¾“å…¥äººåŠ›å¼¹è¯å£ç²®é›¶ä»¶çš„æƒé‡:(æ•´æ•°)(é«˜çº§é€‰é¡¹, ä¸€èˆ¬éƒ½æ˜¯1å°±è¡Œäº†)" << endl;
 	cin >> C[0] >> C[1] >> C[2] >> C[3];
 
-	cout << "ÊäÈë±ØĞëÒª½øĞĞµÄºóÇÚÕ½ÒÛ¸öÊı:(0»ò1»ò2»ò3)" << endl;
+	cout << "è¾“å…¥å¿…é¡»è¦è¿›è¡Œçš„åå‹¤æˆ˜å½¹ä¸ªæ•°:(0æˆ–1æˆ–2æˆ–3)" << endl;
 	int i = 0;
 	cin >> i;
 	if ((i < 0) || (i > 3)) {
-		cout << "ÊäÈëµÄ¸öÊıÓĞÎÊÌâ" << endl;
+		cout << "è¾“å…¥çš„ä¸ªæ•°æœ‰é—®é¢˜" << endl;
 		system("pause");
 		return 0;
 	}
 	if (i != 0) {
 		string *a = new string[i];
-		cout << "ÊäÈë±ØĞëÒª½øĞĞµÄºóÇÚÕ½ÒÛ:(¸ñÊ½0-1 10-4)" << endl;
+		cout << "è¾“å…¥å¿…é¡»è¦è¿›è¡Œçš„åå‹¤æˆ˜å½¹:(æ ¼å¼0-1 10-4)" << endl;
 		for (int n = 1; n <= i; n++) {
 			cin >> a[n - 1];
 			int m = 0;
 			m = a[n - 1].find("-");
 			if (m == 0) {
-				cout << "¸ñÊ½ÓĞÎÊÌâ" << endl;
+				cout << "æ ¼å¼æœ‰é—®é¢˜" << endl;
 				system("pause");
 				return 0;
 			}
@@ -127,7 +127,7 @@ int main() {
 			x = stoi(a[n - 1].substr(0, m));
 			y = stoi(a[n - 1].erase(0, m + 1));
 			if ((x < 0) || (x > 11) || (y < 0) || (y > 4)) {
-				cout << "ÊäÈëµÄºóÇÚÕ½ÒÛÓĞÎÊÌâ" << endl;
+				cout << "è¾“å…¥çš„åå‹¤æˆ˜å½¹æœ‰é—®é¢˜" << endl;
 				system("pause");
 				return 0;
 			}
@@ -143,7 +143,7 @@ int main() {
 	int xrenli = 0, xdanyao = 0, xkouliang = 0, xlingjian = 0;
 	int XX = 0;
 
-	//Ã»ÓĞ±ØĞëÒª½øĞĞµÄºóÇÚÕ½ÒÛ
+	//æ²¡æœ‰å¿…é¡»è¦è¿›è¡Œçš„åå‹¤æˆ˜å½¹
 	if (i == 0) {
 		int n1 = 0, n2 = 0, n3 = 0, n4 = 0;
 		for (n1 = 1; n1 <= 48; n1++) {
@@ -170,7 +170,7 @@ int main() {
 								fangan[ii - 1][7] = xlingjian;
 								fangan[ii - 1][8] = XX;
 								break;
-							}//·½°¸ÁĞ±íÎ´Âú 
+							}//æ–¹æ¡ˆåˆ—è¡¨æœªæ»¡ 
 							if (XX >= fangan[ii - 1][8]) continue;
 							for (int iii = 100; iii > ii; iii--) {
 								fangan[iii - 1][0] = fangan[iii - 2][0];
@@ -192,7 +192,7 @@ int main() {
 							fangan[ii - 1][6] = xkouliang;
 							fangan[ii - 1][7] = xlingjian;
 							fangan[ii - 1][8] = XX;
-							//¸Ä±ä·½°¸
+							//æ”¹å˜æ–¹æ¡ˆ
 							break;
 						}
 					}
@@ -201,7 +201,7 @@ int main() {
 		}
 	}
 	
-	//ÓĞÒ»¸öĞèÒª½øĞĞµÄºóÇÚÕ½ÒÛ
+	//æœ‰ä¸€ä¸ªéœ€è¦è¿›è¡Œçš„åå‹¤æˆ˜å½¹
 	if (i == 1) {
 		int n1 = 0, n2 = 0, n3 = 0;
 		for (n1 = 1; n1 <= 48; n1++) {
@@ -227,7 +227,7 @@ int main() {
 							fangan[ii - 1][7] = xlingjian + Q[cht[0] - 1][3];
 							fangan[ii - 1][8] = XX;
 							break;
-						}//·½°¸ÁĞ±íÎ´Âú 
+						}//æ–¹æ¡ˆåˆ—è¡¨æœªæ»¡ 
 						if (XX >= fangan[ii - 1][8]) continue;
 						for (int iii = 100; iii > ii; iii--) {
 							fangan[iii - 1][0] = fangan[iii - 2][0];
@@ -249,7 +249,7 @@ int main() {
 						fangan[ii - 1][6] = xkouliang + Q[cht[0] - 1][2];
 						fangan[ii - 1][7] = xlingjian + Q[cht[0] - 1][3];
 						fangan[ii - 1][8] = XX;
-						//¸Ä±ä·½°¸
+						//æ”¹å˜æ–¹æ¡ˆ
 						break;
 					}
 				}
@@ -257,7 +257,7 @@ int main() {
 		}
 	}
 
-	//ÓĞÁ½¸öĞèÒª½øĞĞµÄºóÇÚÕ½ÒÛ
+	//æœ‰ä¸¤ä¸ªéœ€è¦è¿›è¡Œçš„åå‹¤æˆ˜å½¹
 	if (i == 2) {
 		int n1 = 0, n2 = 0;
 		for (n1 = 1; n1 <= 48; n1++) {
@@ -281,7 +281,7 @@ int main() {
 						fangan[ii - 1][7] = xlingjian + Q[cht[0] - 1][3] + Q[cht[1] - 1][3];
 						fangan[ii - 1][8] = XX;
 						break;
-					}//·½°¸ÁĞ±íÎ´Âú 
+					}//æ–¹æ¡ˆåˆ—è¡¨æœªæ»¡ 
 					if (XX >= fangan[ii - 1][8]) continue;
 					for (int iii = 100; iii > ii; iii--) {
 						fangan[iii - 1][0] = fangan[iii - 2][0];
@@ -303,14 +303,14 @@ int main() {
 					fangan[ii - 1][6] = xkouliang + Q[cht[0] - 1][2] + Q[cht[1] - 1][2];
 					fangan[ii - 1][7] = xlingjian + Q[cht[0] - 1][3] + Q[cht[1] - 1][3];
 					fangan[ii - 1][8] = XX;
-					//¸Ä±ä·½°¸
+					//æ”¹å˜æ–¹æ¡ˆ
 					break;
 				}
 			}
 		}
 	}
 
-	//ÓĞÈı¸öĞèÒª½øĞĞµÄºóÇÚÕ½ÒÛ
+	//æœ‰ä¸‰ä¸ªéœ€è¦è¿›è¡Œçš„åå‹¤æˆ˜å½¹
 	if (i == 3) {
 		int n1 = 0;
 		for (n1 = 1; n1 <= 48; n1++) {
@@ -332,7 +332,7 @@ int main() {
 					fangan[ii - 1][7] = xlingjian + Q[cht[0] - 1][3] + Q[cht[1] - 1][3] + Q[cht[2] - 1][3];
 					fangan[ii - 1][8] = XX;
 					break;
-				}//·½°¸ÁĞ±íÎ´Âú 
+				}//æ–¹æ¡ˆåˆ—è¡¨æœªæ»¡ 
 				if (XX >= fangan[ii - 1][8]) continue;
 				for (int iii = 100; iii > ii; iii--) {
 					fangan[iii - 1][0] = fangan[iii - 2][0];
@@ -354,23 +354,24 @@ int main() {
 				fangan[ii - 1][6] = xkouliang + Q[cht[0] - 1][2] + Q[cht[1] - 1][2] + Q[cht[2] - 1][2];
 				fangan[ii - 1][7] = xlingjian + Q[cht[0] - 1][3] + Q[cht[1] - 1][3] + Q[cht[2] - 1][3];
 				fangan[ii - 1][8] = XX;
-				//¸Ä±ä·½°¸
+				//æ”¹å˜æ–¹æ¡ˆ
 				break;
 			}
 		}
 	}
 
-	cout << "\tºóÇÚ×éºÏ\t\t\tÈËÁ¦\tµ¯Ò©\t¿ÚÁ¸\tÁã¼ş" << endl;
+	cout << "\tåå‹¤ç»„åˆ\t\t\täººåŠ›\tå¼¹è¯\tå£ç²®\té›¶ä»¶" << endl;
 	for (int n = 1; n <= 100; n++) {
 		if (fangan[n - 1][0] == 0) break;
-		cout << int(fangan[n - 1][0] / 4) << "-" << fangan[n - 1][0] % 4 << "\t";
-		cout << int(fangan[n - 1][1] / 4) << "-" << fangan[n - 1][1] % 4 << "\t";
-		cout << int(fangan[n - 1][2] / 4) << "-" << fangan[n - 1][2] % 4 << "\t";
-		cout << int(fangan[n - 1][3] / 4) << "-" << fangan[n - 1][3] % 4 << "\t\t";
+		for (int nn = 0; nn <= 3; nn++) {
+			if (fangan[n - 1][nn] % 4 == 0) cout << int(fangan[n - 1][nn] / 4) - 1 << "-4\t";
+			else cout << int(fangan[n - 1][nn] / 4) << "-" << fangan[n - 1][nn] % 4 << "\t";
+		}
 		cout << fangan[n - 1][4] / 100 << "\t";
 		cout << fangan[n - 1][5] / 100 << "\t";
 		cout << fangan[n - 1][6] / 100 << "\t";
 		cout << fangan[n - 1][7] / 100 << endl;
+		
 	}
 	system("pause");
 	return 0;
