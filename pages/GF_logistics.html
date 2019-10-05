@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content=""> 
+    <title>少女前线-后勤组合排序器</title>
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/GF_logistics.js"></script>
+    <script>
+
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="tooltip-demo">
+                            <h1 class="page-header">后勤组合排序器 <button type="button" data-toggle="tooltip" data-placement="bottom" title="各资源获取速率乘其权重求和排序 所缺的资源可将权重调大" class="btn btn-outline btn-default">?</button></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">设置</div>
+                            <div class="panel-body">
+                                <div class="col-lg-6">
+                                    <ul class="nav nav-tabs nav-justified">
+                                        <li class="active">
+                                            <a href="#method_1" data-toggle="tab">随时能收后勤</a>
+                                        </li>
+                                        <li>
+                                            <a href="#method_2" data-toggle="tab">单次后勤</a>
+                                        </li>
+                                        <li>
+                                            <a href="#method_3" data-toggle="tab">每隔几小时收后勤</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade in active" id="method_1">
+                                            <h4>常用</h4>
+                                            <p>
+                                                <button type="button" class="btn btn-default" onclick="setTarget(1)">手枪HG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget(2)">冲锋枪SMG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget(3)">步枪RF</button>
+                                            </p>
+                                            <p>
+                                                <button type="button" class="btn btn-default" onclick="setTarget(4)">突击步枪AR</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget(5)">机枪MG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget(6)">霰弹枪SG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget(7)">零件</button>
+                                            </p>
+                                            <br>
+                                            <ul class="nav nav-tabs nav-justified">
+                                                <li class="active">
+                                                    <a href="#hour" data-toggle="tab" onclick="hour_day(false)">平均每小时资源需求量</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#day" data-toggle="tab" onclick="hour_day(true)">每天资源需求量</a>
+                                                </li>
+                                            </ul>
+                                            <br>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade in active" id="hour">
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每小时人力需求</span>
+                                                        <input type="text" class="form-control" placeholder="输入整数" id="MT" value=0 onclick="this.select()">
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每小时弹药需求</span>
+                                                        <input type="text" class="form-control" id="AT" value=0 onclick="this.select()">
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每小时口粮需求</span>
+                                                        <input type="text" class="form-control" id="RT" value=0 onclick="this.select()">
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每小时零件需求</span>
+                                                        <input type="text" class="form-control" id="PT" value=0 onclick="this.select()">
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每小时人形需求</span>
+                                                        <input type="text" class="form-control" id="GT" value=0 onclick="this.select()">
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每小时装备需求</span>
+                                                        <input type="text" class="form-control" id="ET" value=0 onclick="this.select()">
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每小时快建需求</span>
+                                                        <input type="text" class="form-control" id="FT" value=0 onclick="this.select()">
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="day">
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每天执行该后勤小时数</span>
+                                                        <input type="text" class="form-control" id="Hours" value=16 onclick="this.select()">
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每天人力需求</span>
+                                                        <input type="text" class="form-control" id="MTd" value=0 onclick="this.select()">
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每天弹药需求</span>
+                                                        <input type="text" class="form-control" id="ATd" value=0 onclick="this.select()">
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每天口粮需求</span>
+                                                        <input type="text" class="form-control" id="RTd" value=0 onclick="this.select()">
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每天零件需求</span>
+                                                        <input type="text" class="form-control" id="PTd" value=0 onclick="this.select()">
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每天人形需求</span>
+                                                        <input type="text" class="form-control" id="GTd" value=0 onclick="this.select()">
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每天装备需求</span>
+                                                        <input type="text" class="form-control" id="ETd" value=0 onclick="this.select()">
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">每天快建需求</span>
+                                                        <input type="text" class="form-control" id="FTd" value=0 onclick="this.select()">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <p><button type="button" class="btn btn-info" onclick="getPlan_1()">开始排序</button></p>
+                                        </div>
+                                        <div class="tab-pane fade" id="method_2">
+                                            
+                                        </div>
+                                        <div class="tab-pane fade" id="method_3">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <br>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon">后勤队伍平均大成功概率(无大成功UP)</span>
+                                        <input type="text" class="form-control" id="Probability" value=60 onclick="this.select()">
+                                        <span class="input-group-addon" id="Display_Prob"></span>
+                                        <span class="input-group-addon">%</span>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label> <input type="checkbox" id="ProbUp" onclick="Function_ProbUP()">后勤大成功UP</label>
+                                    </div>
+                                    <br>
+                                    <h4>关卡解锁</h4>
+                                    <p>
+                                        <select class="form-control" id="MapLimit">
+                                            <option value=1>第一战役</option>
+                                            <option value=2>第二战役</option>
+                                            <option value=3>第三战役</option>
+                                            <option value=4>第四战役</option>
+                                            <option value=4.5>第零战役 (通关4-4E)</option>
+                                            <option value=5>第五战役</option>
+                                            <option value=6>第六战役</option>
+                                            <option value=7>第七战役</option>
+                                            <option value=8>第八战役</option>
+                                            <option value=9>第九战役</option>
+                                            <option value=10>第十战役</option>
+                                            <option value=11 selected>第十一战役</option>
+                                        </select>
+                                    </p>
+                                    <br>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#colla-tdoll" class="collapsed">权重设置(高级设置)</a>
+                                            </h4>
+                                        </div>
+                                        <div id="colla-tdoll" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                一般不用更改，当对结果不满意可以进行适当修改
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">人力权重</span>
+                                                    <input type="text" class="form-control" placeholder="输入整数" id="Mw" value=1 onclick="this.select()">
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">弹药权重</span>
+                                                    <input type="text" class="form-control" placeholder="输入整数" id="Aw" value=1 onclick="this.select()">
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">口粮权重</span>
+                                                    <input type="text" class="form-control" placeholder="输入整数" id="Rw" value=1 onclick="this.select()">
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">零件权重</span>
+                                                    <input type="text" class="form-control" placeholder="输入整数" id="Pw" value=1 onclick="this.select()">
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">人形权重</span>
+                                                    <input type="text" class="form-control" placeholder="输入整数" id="Gw" value=1 onclick="this.select()">
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">装备权重</span>
+                                                    <input type="text" class="form-control" placeholder="输入整数" id="Ew" value=1 onclick="this.select()">
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">快建权重</span>
+                                                    <input type="text" class="form-control" placeholder="输入整数" id="Fw" value=1 onclick="this.select()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                排序结果
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="table-responsive" id="Plan_Table"></div>
+                                <!-- /.table-responsive -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+</html>
