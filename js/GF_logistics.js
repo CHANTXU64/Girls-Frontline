@@ -1,3 +1,7 @@
+function Value(){
+    return Mw * Weights(MT, MC) + Aw * Weights(AT, AC) + Rw * Weights(RT, RC) + Pw * Weights(PT, PC);
+}
+
 //权重计算, 顺便乘上(a-b)
 function Weights(Target, Current){
     if (Target < Current) {
@@ -130,7 +134,7 @@ function setTarget_1(TargetInfo) {
     var ATd = document.getElementById('ATd1');
     var RTd = document.getElementById('RTd1');
     var PTd = document.getElementById('PTd1');
-    var Hours = document.getElementById('Hours').value;
+    var Hour = document.getElementById('Hours').value;
     switch (TargetInfo) {
         case 1:
             MT.value = 130; AT.value = 130; RT.value = 130; PT.value = 130; break;
@@ -147,7 +151,7 @@ function setTarget_1(TargetInfo) {
         case 7:
             MT.value = 0; AT.value = 0; RT.value = 0; PT.value = 1; break;
     }
-    MTd.value = MT.value * Hours; ATd.value = AT.value * Hours; RTd.value = RT.value * Hours; PTd.value = PT.value * Hours;
+    MTd.value = MT.value * Hour; ATd.value = AT.value * Hour; RTd.value = RT.value * Hour; PTd.value = PT.value * Hour;
 }
 function setTarget_2(TargetInfo) {
     var MT = document.getElementById('MT2');
@@ -247,6 +251,49 @@ function JudgeProbability(document_getElementById) {
         return ProbUP / 200 + 1.3;
     }
     return (parseFloat(X.value) + ProbUP) / 200 + 1;
+}
+
+//将方案添加进方案列表中
+function Plan_Push(n1, n2, n3, n4) {
+    for (var ii = 1; ii <= Plan.length; ii++) {
+        if (Plan[ii - 1][0] === 0) {
+            Plan[ii - 1][0] = n1;
+            Plan[ii - 1][1] = n2;
+            Plan[ii - 1][2] = n3;
+            Plan[ii - 1][3] = n4;
+            Plan[ii - 1][4] = MC;
+            Plan[ii - 1][5] = AC;
+            Plan[ii - 1][6] = RC;
+            Plan[ii - 1][7] = PC;
+            Plan[ii - 1][8] = Plan_value;
+            break;
+        }//方案列表未满 
+        if (Plan_value >= Plan[ii - 1][8]) continue;
+        else {
+            for (var iii = Plan.length; iii > ii; iii--) {
+                Plan[iii - 1][0] = Plan[iii - 2][0];
+                Plan[iii - 1][1] = Plan[iii - 2][1];
+                Plan[iii - 1][2] = Plan[iii - 2][2];
+                Plan[iii - 1][3] = Plan[iii - 2][3];
+                Plan[iii - 1][4] = Plan[iii - 2][4];
+                Plan[iii - 1][5] = Plan[iii - 2][5];
+                Plan[iii - 1][6] = Plan[iii - 2][6];
+                Plan[iii - 1][7] = Plan[iii - 2][7];
+                Plan[iii - 1][8] = Plan[iii - 2][8];
+            }
+            Plan[ii - 1][0] = n1;
+            Plan[ii - 1][1] = n2;
+            Plan[ii - 1][2] = n3;
+            Plan[ii - 1][3] = n4;
+            Plan[ii - 1][4] = MC;
+            Plan[ii - 1][5] = AC;
+            Plan[ii - 1][6] = RC;
+            Plan[ii - 1][7] = PC;
+            Plan[ii - 1][8] = Plan_value;
+            //改变方案
+            break;
+        }
+    }
 }
 
 function getPlan() {
@@ -355,54 +402,17 @@ function getPlan_1() {
                         RC = Addition_rate * Hours * (Q[n1 - 1][2] + Q[n2 - 1][2] + Q[n3 - 1][2] + Q[n4 - 1][2]);
                         PC = Addition_rate * Hours * (Q[n1 - 1][3] + Q[n2 - 1][3] + Q[n3 - 1][3] + Q[n4 - 1][3]);
                     }
-                    Plan_value = Mw * Weights(MT, MC) + Aw * Weights(AT, AC) + Rw * Weights(RT, RC) + Pw * Weights(PT, PC);
-                    for (var ii = 1; ii <= Plan.length; ii++) {
-                        if (Plan[ii - 1][0] === 0) {
-                            Plan[ii - 1][0] = n1;
-                            Plan[ii - 1][1] = n2;
-                            Plan[ii - 1][2] = n3;
-                            Plan[ii - 1][3] = n4;
-                            Plan[ii - 1][4] = MC;
-                            Plan[ii - 1][5] = AC;
-                            Plan[ii - 1][6] = RC;
-                            Plan[ii - 1][7] = PC;
-                            Plan[ii - 1][8] = Plan_value;
-                            break;
-                        }//方案列表未满 
-                        if (Plan_value >= Plan[ii - 1][8]) continue;
-                        else {
-                            for (var iii = Plan.length; iii > ii; iii--) {
-                                Plan[iii - 1][0] = Plan[iii - 2][0];
-                                Plan[iii - 1][1] = Plan[iii - 2][1];
-                                Plan[iii - 1][2] = Plan[iii - 2][2];
-                                Plan[iii - 1][3] = Plan[iii - 2][3];
-                                Plan[iii - 1][4] = Plan[iii - 2][4];
-                                Plan[iii - 1][5] = Plan[iii - 2][5];
-                                Plan[iii - 1][6] = Plan[iii - 2][6];
-                                Plan[iii - 1][7] = Plan[iii - 2][7];
-                                Plan[iii - 1][8] = Plan[iii - 2][8];
-                            }
-                            Plan[ii - 1][0] = n1;
-                            Plan[ii - 1][1] = n2;
-                            Plan[ii - 1][2] = n3;
-                            Plan[ii - 1][3] = n4;
-                            Plan[ii - 1][4] = MC;
-                            Plan[ii - 1][5] = AC;
-                            Plan[ii - 1][6] = RC;
-                            Plan[ii - 1][7] = PC;
-                            Plan[ii - 1][8] = Plan_value;
-                            //改变方案
-                            break;
-                        }
-                    }
+                    Plan_value = Value();
+                    Plan_Push(n1, n2, n3, n4);
                 }
             }
         }
     }
-    Print_Table(Plan);
+    Print_Table();
 }
 
 function initialize_2() {
+    Hours = 0;
     for (var i = 0; i < Plan_length; i++){
         for (var ii = 0; ii < 9; ii++){
             Plan[i][ii] = 0;
@@ -438,7 +448,72 @@ function initialize_2() {
     Block_Numbers = Block_Maps(parseFloat(document.getElementById('MapLimit').value));
 }
 
+function getPlan_2() {
+    initialize_2();
+    var Time_hours = parseFloat(document.getElementById('Time2_hours').value);
+    var Time_minutes = parseFloat(document.getElementById('Time2_minutes').value);
+    Hours = Time_hours + Time_minutes / 60;
+    //排除超时后勤
+    for (var i = 1; i <= Q.length; i++) {
+        if (Q[i - 1][7] > (Hours * 60)) {
+            if (Block_Numbers.indexOf(i) == -1) {
+                Block_Numbers.push(i);
+            }
+        }
+    }
+    var conti_1, conti_2, conti_3, conti_4;
+    for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
+        conti_1 = false;
+        for (var ii = 1; ii <= Block_Numbers.length; ii++) {
+            if (n1 === Block_Numbers[ii-1]) {
+                conti_1 = true;
+                break;
+            }
+        }
+        if (conti_1 === true) continue;
+        for (var n2 = n1 + 1; n2 <= (Q.length - 2); n2++) {
+            conti_2 = false;
+            for (var ii = 1; ii <= Block_Numbers.length; ii++) {
+                if (n2 === Block_Numbers[ii-1]) {
+                    conti_2 = true;
+                    break;
+                }
+            }
+            if (conti_2 === true) continue;
+            for (var n3 = n2 + 1; n3 <= (Q.length - 1); n3++) {
+                conti_3 = false;
+                for (var ii = 1; ii <= Block_Numbers.length; ii++) {
+                    if (n3 === Block_Numbers[ii-1]) {
+                        conti_3 = true;
+                        break;
+                    }
+                }
+                if (conti_3 === true) continue;
+                for (var n4 = n3 + 1; n4 <= Q.length; n4++) {
+                    conti_4 = false;
+                    for (var ii = 1; ii <= Block_Numbers.length; ii++) {
+                        if (n4 === Block_Numbers[ii-1]) {
+                            conti_4 = true;
+                            break;
+                        }
+                    }
+                    if (conti_4 === true) continue;
+
+                    MC = Addition_rate * (Q[n1-1][0]*Q[n1-1][7]/60 + Q[n2-1][0]*Q[n2-1][7]/60 + Q[n3-1][0]*Q[n3-1][7]/60 + Q[n4-1][0]*Q[n4-1][7]/60);
+                    AC = Addition_rate * (Q[n1-1][1]*Q[n1-1][7]/60 + Q[n2-1][1]*Q[n2-1][7]/60 + Q[n3-1][1]*Q[n3-1][7]/60 + Q[n4-1][1]*Q[n4-1][7]/60);
+                    RC = Addition_rate * (Q[n1-1][2]*Q[n1-1][7]/60 + Q[n2-1][2]*Q[n2-1][7]/60 + Q[n3-1][2]*Q[n3-1][7]/60 + Q[n4-1][2]*Q[n4-1][7]/60);
+                    PC = Addition_rate * (Q[n1-1][3]*Q[n1-1][7]/60 + Q[n2-1][3]*Q[n2-1][7]/60 + Q[n3-1][3]*Q[n3-1][7]/60 + Q[n4-1][3]*Q[n4-1][7]/60);
+                    Plan_value = Value();
+                    Plan_Push(n1, n2, n3, n4);
+                }
+            }
+        }
+    }
+    Print_Table();
+}
+
 function initialize_3() {
+    Hours = 0;
     for (var i = 0; i < Plan_length; i++){
         for (var ii = 0; ii < 9; ii++){
             Plan[i][ii] = 0;
@@ -480,11 +555,20 @@ window.onload = function () {
     Table.innerHTML = tab;
 }
 
-function Print_Table(Plan){
+function Print_Table(){
     var Table = document.getElementById("Plan_Table");
-    if (hour_or_day === "hour") var tab = '<table class="table table-striped table-bordered table-hover"><thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th><th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>人形/h</th><th>装备/h</th><th>快建/h</th><th>最短时间</th><th>最长时间</th></tr></thead>';
-    else var tab = '<table class="table table-striped table-bordered table-hover"><thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th><th>人力/d</th><th>弹药/d</th><th>口粮/d</th><th>零件/d</th><th>人形/d</th><th>装备/d</th><th>快建/d</th><th>最短时间</th><th>最长时间</th></tr></thead>';
-    tab += '<tbody>';
+    var tab;
+    switch (method) {
+        case 1:
+            if (hour_or_day === "hour") tab = '<table class="table table-striped table-bordered table-hover"><thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th><th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>人形/h</th><th>装备/h</th><th>快建/h</th><th>最短时间</th><th>最长时间</th></tr></thead>';
+            else tab = '<table class="table table-striped table-bordered table-hover"><thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th><th>人力/d</th><th>弹药/d</th><th>口粮/d</th><th>零件/d</th><th>人形/d</th><th>装备/d</th><th>快建/d</th><th>最短时间</th><th>最长时间</th></tr></thead>';
+            tab += '<tbody>'; break;
+        case 2:
+            tab = '<table class="table table-striped table-bordered table-hover"><thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th><th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>人形/h</th><th>装备/h</th><th>快建/h</th></tr></thead>';
+            tab += '<tbody>'; break;
+        case 3:
+            tab += '<tbody>'; break;
+    }
     for (var i = 1; i <= Plan.length; i++) {
         if (Plan[i - 1][0] === 0) break;
         tab += ("<tr><td>" + i + "</td>");
@@ -499,8 +583,14 @@ function Print_Table(Plan){
         tab += ("<td>--</td>");
         tab += ("<td>--</td>");
         tab += ("<td>--</td>");
-        tab += ("<td>" + (Math.round(Math.min(Q[Plan[i-1][0]-1][7],Q[Plan[i-1][1]-1][7],Q[Plan[i-1][2]-1][7],Q[Plan[i-1][3]-1][7]) / 0.6) / 100) + "h</td>");
-        tab += ("<td>" + (Math.round(Math.max(Q[Plan[i-1][0]-1][7],Q[Plan[i-1][1]-1][7],Q[Plan[i-1][2]-1][7],Q[Plan[i-1][3]-1][7]) / 0.6) / 100) + "h</td></tr>");
+        switch (method) {
+            case 1:
+                tab += ("<td>" + (Math.round(Math.min(Q[Plan[i-1][0]-1][7],Q[Plan[i-1][1]-1][7],Q[Plan[i-1][2]-1][7],Q[Plan[i-1][3]-1][7]) / 0.6) / 100) + "h</td>");
+                tab += ("<td>" + (Math.round(Math.max(Q[Plan[i-1][0]-1][7],Q[Plan[i-1][1]-1][7],Q[Plan[i-1][2]-1][7],Q[Plan[i-1][3]-1][7]) / 0.6) / 100) + "h</td></tr>");
+                break;
+            case 3:
+                break;
+        }
     }
     Table.innerHTML = tab;
 }
