@@ -69,37 +69,42 @@ var Plan_value;//该方案总价值
 var Block_Numbers;//不能进行的后勤
 var Addition_rate;//大成功加成率
 var ProbUP = 0;//大成功UP
+var method = 1;
 var hour_or_day = "hour";
 
-function hour_day(x) {
-    if (x === false) hour_or_day = "hour";
-    else hour_or_day = "day";
-}
+//监听标签页
+$(function (){
+    $('[href=#hour]').on("shown.bs.tab", function(){hour_or_day = "hour";});
+    $('[href=#day]').on("shown.bs.tab", function(){hour_or_day = "day";});
+    $('[href=#method_1]').on("shown.bs.tab", function(){method = 1});
+    $('[href=#method_2]').on("shown.bs.tab", function(){method = 2});
+    $('[href=#method_3]').on("shown.bs.tab", function(){method = 3});
+})
 
 //同步更新每小时与每天资源需求量
 $(function (){
-    $("#MT").on('input propertychange change',function() {$("#MTd").val($(this).val() * document.getElementById('Hours').value)});
-    $("#AT").on('input propertychange',function() {$("#ATd").val($(this).val() * document.getElementById('Hours').value)});
-    $("#RT").on('input propertychange',function() {$("#RTd").val($(this).val() * document.getElementById('Hours').value)});
-    $("#PT").on('input propertychange',function() {$("#PTd").val($(this).val() * document.getElementById('Hours').value)});
-    $("#GT").on('input propertychange',function() {$("#GTd").val($(this).val() * document.getElementById('Hours').value)});
-    $("#ET").on('input propertychange',function() {$("#ETd").val($(this).val() * document.getElementById('Hours').value)});
-    $("#FT").on('input propertychange',function() {$("#FTd").val($(this).val() * document.getElementById('Hours').value)});
-    $("#MTd").on('input propertychange',function() {$("#MT").val($(this).val() / document.getElementById('Hours').value)});
-    $("#ATd").on('input propertychange',function() {$("#AT").val($(this).val() / document.getElementById('Hours').value)});
-    $("#RTd").on('input propertychange',function() {$("#RT").val($(this).val() / document.getElementById('Hours').value)});
-    $("#PTd").on('input propertychange',function() {$("#PT").val($(this).val() / document.getElementById('Hours').value)});
-    $("#GTd").on('input propertychange',function() {$("#GT").val($(this).val() / document.getElementById('Hours').value)});
-    $("#ETd").on('input propertychange',function() {$("#ET").val($(this).val() / document.getElementById('Hours').value)});
-    $("#FTd").on('input propertychange',function() {$("#FT").val($(this).val() / document.getElementById('Hours').value)});
+    $("#MT1").on('input propertychange',function() {$("#MTd1").val($(this).val() * document.getElementById('Hours').value)});
+    $("#AT1").on('input propertychange',function() {$("#ATd1").val($(this).val() * document.getElementById('Hours').value)});
+    $("#RT1").on('input propertychange',function() {$("#RTd1").val($(this).val() * document.getElementById('Hours').value)});
+    $("#PT1").on('input propertychange',function() {$("#PTd1").val($(this).val() * document.getElementById('Hours').value)});
+    $("#GT1").on('input propertychange',function() {$("#GTd1").val($(this).val() * document.getElementById('Hours').value)});
+    $("#ET1").on('input propertychange',function() {$("#ETd1").val($(this).val() * document.getElementById('Hours').value)});
+    $("#FT1").on('input propertychange',function() {$("#FTd1").val($(this).val() * document.getElementById('Hours').value)});
+    $("#MTd1").on('input propertychange',function() {$("#MT1").val($(this).val() / document.getElementById('Hours').value)});
+    $("#ATd1").on('input propertychange',function() {$("#AT1").val($(this).val() / document.getElementById('Hours').value)});
+    $("#RTd1").on('input propertychange',function() {$("#RT1").val($(this).val() / document.getElementById('Hours').value)});
+    $("#PTd1").on('input propertychange',function() {$("#PT1").val($(this).val() / document.getElementById('Hours').value)});
+    $("#GTd1").on('input propertychange',function() {$("#GT1").val($(this).val() / document.getElementById('Hours').value)});
+    $("#ETd1").on('input propertychange',function() {$("#ET1").val($(this).val() / document.getElementById('Hours').value)});
+    $("#FTd1").on('input propertychange',function() {$("#FT1").val($(this).val() / document.getElementById('Hours').value)});
     $("#Hours").on('input propertychange',function() {
-        $("#MT").val(document.getElementById('MTd').value / document.getElementById('Hours').value);
-        $("#AT").val(document.getElementById('ATd').value / document.getElementById('Hours').value);
-        $("#RT").val(document.getElementById('RTd').value / document.getElementById('Hours').value);
-        $("#PT").val(document.getElementById('PTd').value / document.getElementById('Hours').value);
-        $("#GT").val(document.getElementById('GTd').value / document.getElementById('Hours').value);
-        $("#ET").val(document.getElementById('ETd').value / document.getElementById('Hours').value);
-        $("#FT").val(document.getElementById('FTd').value / document.getElementById('Hours').value);
+        $("#MT1").val(document.getElementById('MTd1').value / document.getElementById('Hours').value);
+        $("#AT1").val(document.getElementById('ATd1').value / document.getElementById('Hours').value);
+        $("#RT1").val(document.getElementById('RTd1').value / document.getElementById('Hours').value);
+        $("#PT1").val(document.getElementById('PTd1').value / document.getElementById('Hours').value);
+        $("#GT1").val(document.getElementById('GTd1').value / document.getElementById('Hours').value);
+        $("#ET1").val(document.getElementById('ETd1').value / document.getElementById('Hours').value);
+        $("#FT1").val(document.getElementById('FTd1').value / document.getElementById('Hours').value);
     });
 })
 
@@ -116,15 +121,15 @@ function Function_ProbUP() {
     }
 };
 
-function setTarget(TargetInfo) {
-    var MT = document.getElementById('MT');
-    var AT = document.getElementById('AT');
-    var RT = document.getElementById('RT');
-    var PT = document.getElementById('PT');
-    var MTd = document.getElementById('MTd');
-    var ATd = document.getElementById('ATd');
-    var RTd = document.getElementById('RTd');
-    var PTd = document.getElementById('PTd');
+function setTarget_1(TargetInfo) {
+    var MT = document.getElementById('MT1');
+    var AT = document.getElementById('AT1');
+    var RT = document.getElementById('RT1');
+    var PT = document.getElementById('PT1');
+    var MTd = document.getElementById('MTd1');
+    var ATd = document.getElementById('ATd1');
+    var RTd = document.getElementById('RTd1');
+    var PTd = document.getElementById('PTd1');
     var Hours = document.getElementById('Hours').value;
     switch (TargetInfo) {
         case 1:
@@ -143,6 +148,50 @@ function setTarget(TargetInfo) {
             MT.value = 0; AT.value = 0; RT.value = 0; PT.value = 1; break;
     }
     MTd.value = MT.value * Hours; ATd.value = AT.value * Hours; RTd.value = RT.value * Hours; PTd.value = PT.value * Hours;
+}
+function setTarget_2(TargetInfo) {
+    var MT = document.getElementById('MT2');
+    var AT = document.getElementById('AT2');
+    var RT = document.getElementById('RT2');
+    var PT = document.getElementById('PT2');
+    switch (TargetInfo) {
+        case 1:
+            MT.value = 130; AT.value = 130; RT.value = 130; PT.value = 130; break;
+        case 2:
+            MT.value = 430; AT.value = 430; RT.value = 130; PT.value = 230; break;
+        case 3:
+            MT.value = 430; AT.value = 130; RT.value = 430; PT.value = 230; break;
+        case 4:
+            MT.value = 130; AT.value = 430; RT.value = 430; PT.value = 130; break;
+        case 5:
+            MT.value = 730; AT.value = 630; RT.value = 130; PT.value = 430; break;
+        case 6:
+            MT.value = 600; AT.value = 200; RT.value = 600; PT.value = 400; break;
+        case 7:
+            MT.value = 0; AT.value = 0; RT.value = 0; PT.value = 1; break;
+    }
+}
+function setTarget_3(TargetInfo) {
+    var MT = document.getElementById('MT3');
+    var AT = document.getElementById('AT3');
+    var RT = document.getElementById('RT3');
+    var PT = document.getElementById('PT3');
+    switch (TargetInfo) {
+        case 1:
+            MT.value = 130; AT.value = 130; RT.value = 130; PT.value = 130; break;
+        case 2:
+            MT.value = 430; AT.value = 430; RT.value = 130; PT.value = 230; break;
+        case 3:
+            MT.value = 430; AT.value = 130; RT.value = 430; PT.value = 230; break;
+        case 4:
+            MT.value = 130; AT.value = 430; RT.value = 430; PT.value = 130; break;
+        case 5:
+            MT.value = 730; AT.value = 630; RT.value = 130; PT.value = 430; break;
+        case 6:
+            MT.value = 600; AT.value = 200; RT.value = 600; PT.value = 400; break;
+        case 7:
+            MT.value = 0; AT.value = 0; RT.value = 0; PT.value = 1; break;
+    }
 }
 
 function Block_Maps(MapLimit) {
@@ -186,7 +235,7 @@ function JudgeEmpty(document_getElementById) {
     else return parseFloat(X.value);
 }
 
-//计算大成功加成率
+//计算大成功资源加成率
 function JudgeProbability(document_getElementById) {
     var X = document_getElementById;
     if (X.value === "" || X.value < 0) {
@@ -200,6 +249,17 @@ function JudgeProbability(document_getElementById) {
     return (parseFloat(X.value) + ProbUP) / 200 + 1;
 }
 
+function getPlan() {
+    switch (method) {
+        case 1:
+            getPlan_1(); break;
+        case 2:
+            getPlan_2(); break;
+        case 3:
+            getPlan_3(); break;
+    }
+}
+
 function initialize_1() {
     Hours = parseFloat(document.getElementById('Hours').value);
     for (var i = 0; i < Plan_length; i++){
@@ -207,20 +267,20 @@ function initialize_1() {
             Plan[i][ii] = 0;
         }
     }
-    JudgeEmpty(document.getElementById('MTd'));
-    JudgeEmpty(document.getElementById('ATd'));
-    JudgeEmpty(document.getElementById('RTd'));
-    JudgeEmpty(document.getElementById('PTd'));
-    JudgeEmpty(document.getElementById('GTd'));
-    JudgeEmpty(document.getElementById('ETd'));
-    JudgeEmpty(document.getElementById('FTd'));
-    MT = JudgeEmpty(document.getElementById('MT'));
-    AT = JudgeEmpty(document.getElementById('AT'));
-    RT = JudgeEmpty(document.getElementById('RT'));
-    PT = JudgeEmpty(document.getElementById('PT'));
-    GT = JudgeEmpty(document.getElementById('GT'));
-    ET = JudgeEmpty(document.getElementById('ET'));
-    FT = JudgeEmpty(document.getElementById('FT'));
+    JudgeEmpty(document.getElementById('MTd1'));
+    JudgeEmpty(document.getElementById('ATd1'));
+    JudgeEmpty(document.getElementById('RTd1'));
+    JudgeEmpty(document.getElementById('PTd1'));
+    JudgeEmpty(document.getElementById('GTd1'));
+    JudgeEmpty(document.getElementById('ETd1'));
+    JudgeEmpty(document.getElementById('FTd1'));
+    MT = JudgeEmpty(document.getElementById('MT1'));
+    AT = JudgeEmpty(document.getElementById('AT1'));
+    RT = JudgeEmpty(document.getElementById('RT1'));
+    PT = JudgeEmpty(document.getElementById('PT1'));
+    GT = JudgeEmpty(document.getElementById('GT1'));
+    ET = JudgeEmpty(document.getElementById('ET1'));
+    FT = JudgeEmpty(document.getElementById('FT1'));
     Mw = JudgeEmpty(document.getElementById('Mw'));
     Aw = JudgeEmpty(document.getElementById('Aw'));
     Rw = JudgeEmpty(document.getElementById('Rw'));
@@ -340,6 +400,78 @@ function getPlan_1() {
         }
     }
     Print_Table(Plan);
+}
+
+function initialize_2() {
+    for (var i = 0; i < Plan_length; i++){
+        for (var ii = 0; ii < 9; ii++){
+            Plan[i][ii] = 0;
+        }
+    }
+    MT = JudgeEmpty(document.getElementById('MT2'));
+    AT = JudgeEmpty(document.getElementById('AT2'));
+    RT = JudgeEmpty(document.getElementById('RT2'));
+    PT = JudgeEmpty(document.getElementById('PT2'));
+    GT = JudgeEmpty(document.getElementById('GT2'));
+    ET = JudgeEmpty(document.getElementById('ET2'));
+    FT = JudgeEmpty(document.getElementById('FT2'));
+    Mw = JudgeEmpty(document.getElementById('Mw'));
+    Aw = JudgeEmpty(document.getElementById('Aw'));
+    Rw = JudgeEmpty(document.getElementById('Rw'));
+    Pw = JudgeEmpty(document.getElementById('Pw'));
+    Gw = JudgeEmpty(document.getElementById('Gw'));
+    Ew = JudgeEmpty(document.getElementById('Ew'));
+    Fw = JudgeEmpty(document.getElementById('Fw'));
+    if (MT === 0) Mw = 0;
+    if (AT === 0) Aw = 0;
+    if (RT === 0) Rw = 0;
+    if (PT === 0) Pw = 0;
+    if (GT === 0) Gw = 0;
+    if (ET === 0) Ew = 0;
+    if (FT === 0) Fw = 0;
+    if (Mw===0&&Aw===0&&Rw===0&&Pw===0&&Gw===0&&Ew===0&&Fw===0) {
+        Mw=1; Aw=1; Rw=1; Pw=1; Gw=1; Ew=1; Fw=1;
+    }
+    MC = 0; AC = 0; RC = 0; PC = 0; GC = 0; EC = 0; FC = 0;
+    Plan_value = 0;
+    Addition_rate = JudgeProbability(document.getElementById('Probability'));
+    Block_Numbers = Block_Maps(parseFloat(document.getElementById('MapLimit').value));
+}
+
+function initialize_3() {
+    for (var i = 0; i < Plan_length; i++){
+        for (var ii = 0; ii < 9; ii++){
+            Plan[i][ii] = 0;
+        }
+    }
+    MT = JudgeEmpty(document.getElementById('MT3'));
+    AT = JudgeEmpty(document.getElementById('AT3'));
+    RT = JudgeEmpty(document.getElementById('RT3'));
+    PT = JudgeEmpty(document.getElementById('PT3'));
+    GT = JudgeEmpty(document.getElementById('GT3'));
+    ET = JudgeEmpty(document.getElementById('ET3'));
+    FT = JudgeEmpty(document.getElementById('FT3'));
+    Mw = JudgeEmpty(document.getElementById('Mw'));
+    Aw = JudgeEmpty(document.getElementById('Aw'));
+    Rw = JudgeEmpty(document.getElementById('Rw'));
+    Pw = JudgeEmpty(document.getElementById('Pw'));
+    Gw = JudgeEmpty(document.getElementById('Gw'));
+    Ew = JudgeEmpty(document.getElementById('Ew'));
+    Fw = JudgeEmpty(document.getElementById('Fw'));
+    if (MT === 0) Mw = 0;
+    if (AT === 0) Aw = 0;
+    if (RT === 0) Rw = 0;
+    if (PT === 0) Pw = 0;
+    if (GT === 0) Gw = 0;
+    if (ET === 0) Ew = 0;
+    if (FT === 0) Fw = 0;
+    if (Mw===0&&Aw===0&&Rw===0&&Pw===0&&Gw===0&&Ew===0&&Fw===0) {
+        Mw=1; Aw=1; Rw=1; Pw=1; Gw=1; Ew=1; Fw=1;
+    }
+    MC = 0; AC = 0; RC = 0; PC = 0; GC = 0; EC = 0; FC = 0;
+    Plan_value = 0;
+    Addition_rate = JudgeProbability(document.getElementById('Probability'));
+    Block_Numbers = Block_Maps(parseFloat(document.getElementById('MapLimit').value));
 }
 
 window.onload = function () {

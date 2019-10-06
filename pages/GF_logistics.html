@@ -17,7 +17,7 @@
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="../js/GF_logistics.js"></script>
     <script>
-
+        $(function (){$("[data-toggle='tooltip']").tooltip();})
     </script>
 </head>
 
@@ -53,23 +53,23 @@
                                         <div class="tab-pane fade in active" id="method_1">
                                             <h4>常用</h4>
                                             <p>
-                                                <button type="button" class="btn btn-default" onclick="setTarget(1)">手枪HG</button>
-                                                <button type="button" class="btn btn-default" onclick="setTarget(2)">冲锋枪SMG</button>
-                                                <button type="button" class="btn btn-default" onclick="setTarget(3)">步枪RF</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_1(1)">手枪HG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_1(2)">冲锋枪SMG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_1(3)">步枪RF</button>
                                             </p>
                                             <p>
-                                                <button type="button" class="btn btn-default" onclick="setTarget(4)">突击步枪AR</button>
-                                                <button type="button" class="btn btn-default" onclick="setTarget(5)">机枪MG</button>
-                                                <button type="button" class="btn btn-default" onclick="setTarget(6)">霰弹枪SG</button>
-                                                <button type="button" class="btn btn-default" onclick="setTarget(7)">零件</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_1(4)">突击步枪AR</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_1(5)">机枪MG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_1(6)">霰弹枪SG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_1(7)">零件</button>
                                             </p>
                                             <br>
                                             <ul class="nav nav-tabs nav-justified">
                                                 <li class="active">
-                                                    <a href="#hour" data-toggle="tab" onclick="hour_day(false)">平均每小时资源需求量</a>
+                                                    <a href="#hour" data-toggle="tab">平均每小时资源需求量</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#day" data-toggle="tab" onclick="hour_day(true)">每天资源需求量</a>
+                                                    <a href="#day" data-toggle="tab">每天资源需求量</a>
                                                 </li>
                                             </ul>
                                             <br>
@@ -77,31 +77,31 @@
                                                 <div class="tab-pane fade in active" id="hour">
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每小时人力需求</span>
-                                                        <input type="text" class="form-control" placeholder="输入整数" id="MT" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="MT1" value=0 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每小时弹药需求</span>
-                                                        <input type="text" class="form-control" id="AT" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="AT1" value=0 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每小时口粮需求</span>
-                                                        <input type="text" class="form-control" id="RT" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="RT1" value=0 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每小时零件需求</span>
-                                                        <input type="text" class="form-control" id="PT" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="PT1" value=0 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每小时人形需求</span>
-                                                        <input type="text" class="form-control" id="GT" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="GT1" value=0 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每小时装备需求</span>
-                                                        <input type="text" class="form-control" id="ET" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="ET1" value=0 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每小时快建需求</span>
-                                                        <input type="text" class="form-control" id="FT" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="FT1" value=0 onclick="this.select()">
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane fade" id="day">
@@ -111,49 +111,154 @@
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每天人力需求</span>
-                                                        <input type="text" class="form-control" id="MTd" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="MTd1" value=0 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每天弹药需求</span>
-                                                        <input type="text" class="form-control" id="ATd" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="ATd1" value=0 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每天口粮需求</span>
-                                                        <input type="text" class="form-control" id="RTd" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="RTd1" value=0 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每天零件需求</span>
-                                                        <input type="text" class="form-control" id="PTd" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="PTd1" value=0 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每天人形需求</span>
-                                                        <input type="text" class="form-control" id="GTd" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="GTd1" value=0 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每天装备需求</span>
-                                                        <input type="text" class="form-control" id="ETd" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="ETd1" value=0 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">每天快建需求</span>
-                                                        <input type="text" class="form-control" id="FTd" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control" id="FTd1" value=0 onclick="this.select()">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <br>
-                                            <p><button type="button" class="btn btn-info" onclick="getPlan_1()">开始排序</button></p>
                                         </div>
                                         <div class="tab-pane fade" id="method_2">
-                                            
+                                            <h4>时长</h4>
+                                            <div class="col-lg-6">
+                                                <div class="form-group input-group">
+                                                    <input type="text" class="form-control" id="Time2_hours" value=8 onclick="this.select()">
+                                                    <span class="input-group-addon">小时</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group input-group">
+                                                    <input type="text" class="form-control" id="Time2_minutes" value=0 onclick="this.select()">
+                                                    <span class="input-group-addon">分钟</span>
+                                                </div>
+                                            </div>
+                                            <br><br><br>
+                                            <h4>常用</h4>
+                                            <p>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_2(1)">手枪HG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_2(2)">冲锋枪SMG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_2(3)">步枪RF</button>
+                                            </p>
+                                            <p>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_2(4)">突击步枪AR</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_2(5)">机枪MG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_2(6)">霰弹枪SG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_2(7)">零件</button>
+                                            </p><br>
+                                            <h4>单次资源需求量</h4>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">人力需求</span>
+                                                <input type="text" class="form-control" id="MT2" value=0 onclick="this.select()">
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">弹药需求</span>
+                                                <input type="text" class="form-control" id="AT2" value=0 onclick="this.select()">
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">口粮需求</span>
+                                                <input type="text" class="form-control" id="RT2" value=0 onclick="this.select()">
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">零件需求</span>
+                                                <input type="text" class="form-control" id="PT2" value=0 onclick="this.select()">
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">人形需求</span>
+                                                <input type="text" class="form-control" id="GT2" value=0 onclick="this.select()">
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">装备需求</span>
+                                                <input type="text" class="form-control" id="ET2" value=0 onclick="this.select()">
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">快建需求</span>
+                                                <input type="text" class="form-control" id="FT2" value=0 onclick="this.select()">
+                                            </div>
                                         </div>
                                         <div class="tab-pane fade" id="method_3">
-                                            
+                                            <h4>间隔时长</h4>
+                                            <div class="col-lg-6">
+                                                <div class="form-group input-group">
+                                                    <input type="text" class="form-control" id="Time3_hours" value=3 onclick="this.select()">
+                                                    <span class="input-group-addon">小时</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group input-group">
+                                                    <input type="text" class="form-control" id="Time3_minutes" value=0 onclick="this.select()">
+                                                    <span class="input-group-addon">分钟</span>
+                                                </div>
+                                            </div>
+                                            <br><br><br>
+                                            <h4>常用</h4>
+                                            <p>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_3(1)">手枪HG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_3(2)">冲锋枪SMG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_3(3)">步枪RF</button>
+                                            </p>
+                                            <p>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_3(4)">突击步枪AR</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_3(5)">机枪MG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_3(6)">霰弹枪SG</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_3(7)">零件</button>
+                                            </p><br>
+                                            <h4>平均每小时资源需求量</h4>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">每小时人力需求</span>
+                                                <input type="text" class="form-control" id="MT3" value=0 onclick="this.select()">
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">每小时弹药需求</span>
+                                                <input type="text" class="form-control" id="AT3" value=0 onclick="this.select()">
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">每小时口粮需求</span>
+                                                <input type="text" class="form-control" id="RT3" value=0 onclick="this.select()">
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">每小时零件需求</span>
+                                                <input type="text" class="form-control" id="PT3" value=0 onclick="this.select()">
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">每小时人形需求</span>
+                                                <input type="text" class="form-control" id="GT3" value=0 onclick="this.select()">
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">每小时装备需求</span>
+                                                <input type="text" class="form-control" id="ET3" value=0 onclick="this.select()">
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">每小时快建需求</span>
+                                                <input type="text" class="form-control" id="FT3" value=0 onclick="this.select()">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <br>
-                                    <div class="form-group input-group">
-                                        <span class="input-group-addon">后勤队伍平均大成功概率(无大成功UP)</span>
+                                    <h4>后勤队伍平均大成功概率</h4>
+                                    <div class="form-group input-group col-lg-6">
                                         <input type="text" class="form-control" id="Probability" value=60 onclick="this.select()">
                                         <span class="input-group-addon" id="Display_Prob"></span>
                                         <span class="input-group-addon">%</span>
@@ -220,6 +325,10 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <br>
+                                    <p><button type="button" class="btn btn-info" onclick="getPlan()">开始排序</button></p>
                                 </div>
                             </div>
                         </div>
