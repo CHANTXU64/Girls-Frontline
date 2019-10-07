@@ -423,6 +423,8 @@ function initialize_2() {
             Plan[i][ii] = 0;
         }
     }
+    JudgeEmpty(document.getElementById('Time2_hours'));
+    JudgeEmpty(document.getElementById('Time2_minutes'));
     MT = JudgeEmpty(document.getElementById('MT2'));
     AT = JudgeEmpty(document.getElementById('AT2'));
     RT = JudgeEmpty(document.getElementById('RT2'));
@@ -525,6 +527,8 @@ function initialize_3() {
             Plan[i][ii] = 0;
         }
     }
+    JudgeEmpty(document.getElementById('Time3_hours'));
+    JudgeEmpty(document.getElementById('Time3_minutes'));
     MT = JudgeEmpty(document.getElementById('MT3'));
     AT = JudgeEmpty(document.getElementById('AT3'));
     RT = JudgeEmpty(document.getElementById('RT3'));
@@ -669,7 +673,7 @@ function Print_Table(){
             tab = '<table class="table table-striped table-bordered table-hover"><thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th><th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>人形/h</th><th>装备/h</th><th>快建/h</th></tr></thead>';
             tab += '<tbody>'; break;
         case 3:
-            tab = '<table class="table table-striped table-bordered table-hover"><thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th><th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>人形/h</th><th>装备/h</th><th>快建/h</th><th><a href="#" data-toggle="tooltip" data-placement="top" title="一周期指从全部后勤同时开始到下一次全部后勤同时收取这段时间">一个周期</a></th></tr></thead>';
+            tab = '<table class="table table-striped table-bordered table-hover"><thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th><th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>人形/h</th><th>装备/h</th><th>快建/h</th><th>最长时间</th><th><a href="#" data-toggle="tooltip" data-placement="top" title="一周期指从全部后勤同时开始到下一次全部后勤同时收取这段时间">一个周期</a></th></tr></thead>';
             tab += '<tbody>'; break;
     }
     for (var i = 1; i <= Plan.length; i++) {
@@ -688,11 +692,14 @@ function Print_Table(){
         tab += ("<td>--</td>");
         switch (method) {
             case 1:
-                tab += ("<td>" + (Math.round(Math.min(Q[Plan[i-1][0]-1][7],Q[Plan[i-1][1]-1][7],Q[Plan[i-1][2]-1][7],Q[Plan[i-1][3]-1][7]) / 0.6) / 100) + "h</td>");
-                tab += ("<td>" + (Math.round(Math.max(Q[Plan[i-1][0]-1][7],Q[Plan[i-1][1]-1][7],Q[Plan[i-1][2]-1][7],Q[Plan[i-1][3]-1][7]) / 0.6) / 100) + "h</td></tr>");
+                tab += ("<td>" + (Math.round(Math.min(Q[Plan[i-1][0]-1][7],Q[Plan[i-1][1]-1][7],Q[Plan[i-1][2]-1][7],Q[Plan[i-1][3]-1][7]) * 100) / 100) + "h</td>");
+                tab += ("<td>" + (Math.round(Math.max(Q[Plan[i-1][0]-1][7],Q[Plan[i-1][1]-1][7],Q[Plan[i-1][2]-1][7],Q[Plan[i-1][3]-1][7]) * 100) / 100) + "h</td></tr>");
                 break;
+            case 2:
+                tab += "</tr>"; break;
             case 3:
-                tab += ("<td>" + (Math.round(Plan[i - 1][9] * 10) / 10) + "(h)</td>");
+                tab += ("<td>" + (Math.round(Math.max(Q[Plan[i-1][0]-1][7],Q[Plan[i-1][1]-1][7],Q[Plan[i-1][2]-1][7],Q[Plan[i-1][3]-1][7]) * 100) / 100) + "h</td>");
+                tab += ("<td>" + (Math.round(Plan[i - 1][9] * 10) / 10) + "h</td></tr>");
                 break;
         }
     }
