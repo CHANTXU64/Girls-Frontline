@@ -1,6 +1,90 @@
-var Correction_Factor = 0; //目标值修正系数
-function Correct_Target() { //目标修正函数
-    
+//资源目标值修正函数
+function Correct_Target() { 
+    var Correction_Factor = 0; //目标值修正系数
+    var X = 0;//MT' or AT' or RT' or PT'
+    var Xi;
+    if (MT >= AT && MT >= RT && MT >= PT) Xi = 0;
+    else {
+        if (AT >= RT && AT >= PT) Xi = 1;
+        else {
+            if (RT >= PT) Xi = 2;
+            else Xi = 3;
+        }
+    }
+    var conti_1, conti_2, conti_3, conti_4;
+    for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
+        conti_1 = false;
+        for (var ii = 1; ii <= Block_Numbers.length; ii++) {
+            if (n1 === Block_Numbers[ii-1]) {
+                conti_1 = true;
+                break;
+            }
+        }
+        if (conti_1 === true) continue;
+        for (var n2 = n1 + 1; n2 <= (Q.length - 2); n2++) {
+            conti_2 = false;
+            for (var ii = 1; ii <= Block_Numbers.length; ii++) {
+                if (n2 === Block_Numbers[ii-1]) {
+                    conti_2 = true;
+                    break;
+                }
+            }
+            if (conti_2 === true) continue;
+            for (var n3 = n2 + 1; n3 <= (Q.length - 1); n3++) {
+                conti_3 = false;
+                for (var ii = 1; ii <= Block_Numbers.length; ii++) {
+                    if (n3 === Block_Numbers[ii-1]) {
+                        conti_3 = true;
+                        break;
+                    }
+                }
+                if (conti_3 === true) continue;
+                for (var n4 = n3 + 1; n4 <= Q.length; n4++) {
+                    conti_4 = false;
+                    for (var ii = 1; ii <= Block_Numbers.length; ii++) {
+                        if (n4 === Block_Numbers[ii-1]) {
+                            conti_4 = true;
+                            break;
+                        }
+                    }
+                    if (conti_4 === true) continue;
+
+                    switch (method) {
+                        case 1:
+                            X = Math.max(X, (Addition_rate * (Q[n1 - 1][Xi] + Q[n2 - 1][Xi] + Q[n3 - 1][Xi] + Q[n4 - 1][Xi])));
+                            break;
+                        case 2:
+                            X = Math.max(X, (Addition_rate * (Q[n1-1][Xi] * Q[n1-1][7] + Q[n2-1][Xi] * Q[n2-1][7] + Q[n3-1][Xi] * Q[n3-1][7] + Q[n4-1][Xi] * Q[n4-1][7]) / Hours));
+                            break;
+                        case 3:
+                            var times = [1, 1, 1, 1];
+                            var number = [n1, n2, n3, n4];
+                            var X_n = [0, 0, 0, 0];
+                            for (var i = 0; i < 4; i++) {
+                                while (times[i] * Hours < Q[number[i] - 1][7]) times[i] += 1;
+                                X_n[i] = Q[number[i] - 1][Xi] * Q[number[i] - 1][7] / (times[i] * Hours);
+                            }
+                            X = Math.max(X, (Addition_rate * (X_n[0] + X_n[1] + X_n[2] + X_n[3])));
+                            break;
+                    }
+                }
+            }
+        }
+    }
+    switch (Xi) {
+        case 0:
+            Correction_Factor = X / MT; break;
+        case 1:
+            Correction_Factor = X / AT; break;
+        case 2:
+            Correction_Factor = X / RT; break;
+        case 3:
+            Correction_Factor = X / PT; break;
+    }
+    MT = Correction_Factor * MT;
+    AT = Correction_Factor * AT;
+    RT = Correction_Factor * RT;
+    PT = Correction_Factor * PT;
 }
 
 function Value(){
@@ -162,8 +246,16 @@ function setTarget_1(TargetInfo) {
         case 5:
             MT.value = 730; AT.value = 630; RT.value = 130; PT.value = 430; break;
         case 6:
-            MT.value = 600; AT.value = 200; RT.value = 600; PT.value = 400; break;
+            MT.value = 8000; AT.value = 2000; RT.value = 8000; PT.value = 4000; break;
         case 7:
+            MT.value = 1; AT.value = 1; RT.value = 1; PT.value = 1; break;
+        case 8:
+            MT.value = 1; AT.value = 0; RT.value = 0; PT.value = 0; break;
+        case 9:
+            MT.value = 0; AT.value = 1; RT.value = 0; PT.value = 0; break;
+        case 10:
+            MT.value = 0; AT.value = 0; RT.value = 1; PT.value = 0; break;
+        case 11:
             MT.value = 0; AT.value = 0; RT.value = 0; PT.value = 1; break;
     }
     MTd.value = MT.value * Hour; ATd.value = AT.value * Hour; RTd.value = RT.value * Hour; PTd.value = PT.value * Hour;
@@ -185,8 +277,16 @@ function setTarget_2(TargetInfo) {
         case 5:
             MT.value = 730; AT.value = 630; RT.value = 130; PT.value = 430; break;
         case 6:
-            MT.value = 600; AT.value = 200; RT.value = 600; PT.value = 400; break;
+            MT.value = 8000; AT.value = 2000; RT.value = 8000; PT.value = 4000; break;
         case 7:
+            MT.value = 1; AT.value = 1; RT.value = 1; PT.value = 1; break;
+        case 8:
+            MT.value = 1; AT.value = 0; RT.value = 0; PT.value = 0; break;
+        case 9:
+            MT.value = 0; AT.value = 1; RT.value = 0; PT.value = 0; break;
+        case 10:
+            MT.value = 0; AT.value = 0; RT.value = 1; PT.value = 0; break;
+        case 11:
             MT.value = 0; AT.value = 0; RT.value = 0; PT.value = 1; break;
     }
 }
@@ -207,8 +307,16 @@ function setTarget_3(TargetInfo) {
         case 5:
             MT.value = 730; AT.value = 630; RT.value = 130; PT.value = 430; break;
         case 6:
-            MT.value = 600; AT.value = 200; RT.value = 600; PT.value = 400; break;
+            MT.value = 8000; AT.value = 2000; RT.value = 8000; PT.value = 4000; break;
         case 7:
+            MT.value = 1; AT.value = 1; RT.value = 1; PT.value = 1; break;
+        case 8:
+            MT.value = 1; AT.value = 0; RT.value = 0; PT.value = 0; break;
+        case 9:
+            MT.value = 0; AT.value = 1; RT.value = 0; PT.value = 0; break;
+        case 10:
+            MT.value = 0; AT.value = 0; RT.value = 1; PT.value = 0; break;
+        case 11:
             MT.value = 0; AT.value = 0; RT.value = 0; PT.value = 1; break;
     }
 }
@@ -380,6 +488,8 @@ function getPlan_1() {
         confirm("每天执行后勤时长不能为0！");
         return 0;
     }
+
+    Correct_Target();
     var conti_1, conti_2, conti_3, conti_4;
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
         conti_1 = false;
@@ -418,18 +528,10 @@ function getPlan_1() {
                     }
                     if (conti_4 === true) continue;
 
-                    if (hour_or_day === "hour") {
-                        MC = Addition_rate * (Q[n1 - 1][0] + Q[n2 - 1][0] + Q[n3 - 1][0] + Q[n4 - 1][0]);
-                        AC = Addition_rate * (Q[n1 - 1][1] + Q[n2 - 1][1] + Q[n3 - 1][1] + Q[n4 - 1][1]);
-                        RC = Addition_rate * (Q[n1 - 1][2] + Q[n2 - 1][2] + Q[n3 - 1][2] + Q[n4 - 1][2]);
-                        PC = Addition_rate * (Q[n1 - 1][3] + Q[n2 - 1][3] + Q[n3 - 1][3] + Q[n4 - 1][3]);
-                    }
-                    else {
-                        MC = Addition_rate * Hours * (Q[n1 - 1][0] + Q[n2 - 1][0] + Q[n3 - 1][0] + Q[n4 - 1][0]);
-                        AC = Addition_rate * Hours * (Q[n1 - 1][1] + Q[n2 - 1][1] + Q[n3 - 1][1] + Q[n4 - 1][1]);
-                        RC = Addition_rate * Hours * (Q[n1 - 1][2] + Q[n2 - 1][2] + Q[n3 - 1][2] + Q[n4 - 1][2]);
-                        PC = Addition_rate * Hours * (Q[n1 - 1][3] + Q[n2 - 1][3] + Q[n3 - 1][3] + Q[n4 - 1][3]);
-                    }
+                    MC = Addition_rate * (Q[n1 - 1][0] + Q[n2 - 1][0] + Q[n3 - 1][0] + Q[n4 - 1][0]);
+                    AC = Addition_rate * (Q[n1 - 1][1] + Q[n2 - 1][1] + Q[n3 - 1][1] + Q[n4 - 1][1]);
+                    RC = Addition_rate * (Q[n1 - 1][2] + Q[n2 - 1][2] + Q[n3 - 1][2] + Q[n4 - 1][2]);
+                    PC = Addition_rate * (Q[n1 - 1][3] + Q[n2 - 1][3] + Q[n3 - 1][3] + Q[n4 - 1][3]);
                     Plan_value = Value();
                     Plan_Push(n1, n2, n3, n4);
                 }
@@ -495,6 +597,8 @@ function getPlan_2() {
             }
         }
     }
+
+    Correct_Target();
     var conti_1, conti_2, conti_3, conti_4;
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
         conti_1 = false;
@@ -533,10 +637,10 @@ function getPlan_2() {
                     }
                     if (conti_4 === true) continue;
 
-                    MC = Addition_rate * (Q[n1-1][0] * Q[n1-1][7] + Q[n2-1][0] * Q[n2-1][7] + Q[n3-1][0] * Q[n3-1][7] + Q[n4-1][0] * Q[n4-1][7]);
-                    AC = Addition_rate * (Q[n1-1][1] * Q[n1-1][7] + Q[n2-1][1] * Q[n2-1][7] + Q[n3-1][1] * Q[n3-1][7] + Q[n4-1][1] * Q[n4-1][7]);
-                    RC = Addition_rate * (Q[n1-1][2] * Q[n1-1][7] + Q[n2-1][2] * Q[n2-1][7] + Q[n3-1][2] * Q[n3-1][7] + Q[n4-1][2] * Q[n4-1][7]);
-                    PC = Addition_rate * (Q[n1-1][3] * Q[n1-1][7] + Q[n2-1][3] * Q[n2-1][7] + Q[n3-1][3] * Q[n3-1][7] + Q[n4-1][3] * Q[n4-1][7]);
+                    MC = Addition_rate * (Q[n1-1][0] * Q[n1-1][7] + Q[n2-1][0] * Q[n2-1][7] + Q[n3-1][0] * Q[n3-1][7] + Q[n4-1][0] * Q[n4-1][7]) / Hours;
+                    AC = Addition_rate * (Q[n1-1][1] * Q[n1-1][7] + Q[n2-1][1] * Q[n2-1][7] + Q[n3-1][1] * Q[n3-1][7] + Q[n4-1][1] * Q[n4-1][7]) / Hours;
+                    RC = Addition_rate * (Q[n1-1][2] * Q[n1-1][7] + Q[n2-1][2] * Q[n2-1][7] + Q[n3-1][2] * Q[n3-1][7] + Q[n4-1][2] * Q[n4-1][7]) / Hours;
+                    PC = Addition_rate * (Q[n1-1][3] * Q[n1-1][7] + Q[n2-1][3] * Q[n2-1][7] + Q[n3-1][3] * Q[n3-1][7] + Q[n4-1][3] * Q[n4-1][7]) / Hours;
                     Plan_value = Value();
                     Plan_Push(n1, n2, n3, n4);
                 }
@@ -625,6 +729,7 @@ function getPlan_3() {
         }
         return 0;
     }
+    Correct_Target();
     var conti_1, conti_2, conti_3, conti_4;
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
         conti_1 = false;
@@ -676,10 +781,10 @@ function getPlan_3() {
                         RC_n[i] = Q[number[i] - 1][2] * Q[number[i] - 1][7] / (times[i] * Hours);
                         PC_n[i] = Q[number[i] - 1][3] * Q[number[i] - 1][7] / (times[i] * Hours);
                     }
-                    MC = MC_n[0] + MC_n[1] + MC_n[2] + MC_n[3];
-                    AC = AC_n[0] + AC_n[1] + AC_n[2] + AC_n[3];
-                    RC = RC_n[0] + RC_n[1] + RC_n[2] + RC_n[3];
-                    PC = PC_n[0] + PC_n[1] + PC_n[2] + PC_n[3];
+                    MC = Addition_rate * (MC_n[0] + MC_n[1] + MC_n[2] + MC_n[3]);
+                    AC = Addition_rate * (AC_n[0] + AC_n[1] + AC_n[2] + AC_n[3]);
+                    RC = Addition_rate * (RC_n[0] + RC_n[1] + RC_n[2] + RC_n[3]);
+                    PC = Addition_rate * (PC_n[0] + PC_n[1] + PC_n[2] + PC_n[3]);
                     One_cycle_time = gcds(times) * Hours;
                     Plan_value = Value();
                     Plan_Push(n1, n2, n3, n4);
@@ -718,13 +823,24 @@ function Print_Table(){
             if (Plan[i - 1][ii] % 4 === 0) tab += ("<td>" + (parseInt(Plan[i - 1][ii] / 4) - 1) + "-4</td>");
             else tab += ("<td>" + (parseInt(Plan[i - 1][ii] / 4)) + "-" + Plan[i - 1][ii] % 4 + "</td>");
         }
-        tab += ("<td>" + (Math.round(Plan[i - 1][4] * 10) / 10) + "</td>");
-        tab += ("<td>" + (Math.round(Plan[i - 1][5] * 10) / 10) + "</td>");
-        tab += ("<td>" + (Math.round(Plan[i - 1][6] * 10) / 10) + "</td>");
-        tab += ("<td>" + (Math.round(Plan[i - 1][7] * 10) / 10) + "</td>");
-        tab += ("<td>--</td>");
-        tab += ("<td>--</td>");
-        tab += ("<td>--</td>");
+        if ((method === 1 && hour_or_day === "day") || method === 2) {
+            tab += ("<td>" + (Math.round(Plan[i - 1][4] * Hours * 10) / 10) + "</td>");
+            tab += ("<td>" + (Math.round(Plan[i - 1][5] * Hours * 10) / 10) + "</td>");
+            tab += ("<td>" + (Math.round(Plan[i - 1][6] * Hours * 10) / 10) + "</td>");
+            tab += ("<td>" + (Math.round(Plan[i - 1][7] * Hours * 10) / 10) + "</td>");
+            tab += ("<td>--</td>");
+            tab += ("<td>--</td>");
+            tab += ("<td>--</td>");
+        }
+        else {
+            tab += ("<td>" + (Math.round(Plan[i - 1][4] * 10) / 10) + "</td>");
+            tab += ("<td>" + (Math.round(Plan[i - 1][5] * 10) / 10) + "</td>");
+            tab += ("<td>" + (Math.round(Plan[i - 1][6] * 10) / 10) + "</td>");
+            tab += ("<td>" + (Math.round(Plan[i - 1][7] * 10) / 10) + "</td>");
+            tab += ("<td>--</td>");
+            tab += ("<td>--</td>");
+            tab += ("<td>--</td>");
+        }
         switch (method) {
             case 1:
                 tab += ("<td>" + (Math.round(Math.min(Q[Plan[i-1][0]-1][7],Q[Plan[i-1][1]-1][7],Q[Plan[i-1][2]-1][7],Q[Plan[i-1][3]-1][7]) * 100) / 100) + "h</td>");

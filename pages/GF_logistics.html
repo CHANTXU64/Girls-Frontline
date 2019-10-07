@@ -34,7 +34,11 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-8">
+                        <div class="alert alert-warning" role="alert">
+                            对于需求量的填写，计算结果只和四种资源之间的比例有关，既可以填实际需求量也可填需求比例。
+                        </div>
                         <div class="panel panel-default">
+                            
                             <div class="panel-heading">设置</div>
                             <div class="panel-body">
                                 <div class="col-lg-6">
@@ -61,14 +65,20 @@
                                                 <button type="button" class="btn btn-default" onclick="setTarget_1(4)">突击步枪AR</button>
                                                 <button type="button" class="btn btn-default" onclick="setTarget_1(5)">机枪MG</button>
                                                 <button type="button" class="btn btn-default" onclick="setTarget_1(6)">霰弹枪SG</button>
-                                                <button type="button" class="btn btn-default" onclick="setTarget_1(7)">零件</button>
+                                            </p>
+                                            <p>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_1(7)">1:1:1:1</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_1(8)">人力</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_1(9)">弹药</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_1(10)">口粮</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_1(11)">零件</button>
                                             </p>
                                             <ul class="nav nav-tabs nav-justified">
                                                 <li class="active">
-                                                    <a href="#hour" data-toggle="tab">平均每小时资源需求量</a>
+                                                    <a href="#hour" data-toggle="tab">平均每小时需求量</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#day" data-toggle="tab">每天资源需求量</a>
+                                                    <a href="#day" data-toggle="tab">每天需求量</a>
                                                 </li>
                                             </ul>
                                             <br>
@@ -181,9 +191,15 @@
                                                 <button type="button" class="btn btn-default" onclick="setTarget_2(4)">突击步枪AR</button>
                                                 <button type="button" class="btn btn-default" onclick="setTarget_2(5)">机枪MG</button>
                                                 <button type="button" class="btn btn-default" onclick="setTarget_2(6)">霰弹枪SG</button>
-                                                <button type="button" class="btn btn-default" onclick="setTarget_2(7)">零件</button>
                                             </p>
-                                            <h4>单次资源需求量</h4>
+                                            <p>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_2(7)">1:1:1:1</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_2(8)">人力</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_2(9)">弹药</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_2(10)">口粮</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_2(11)">零件</button>
+                                            </p>
+                                            <h4>单次需求量</h4>
                                             <div class="form-group input-group">
                                                 <span class="input-group-addon">人力需求</span>
                                                 <input type="text" class="form-control" id="MT2" value=0 onclick="this.select()">
@@ -239,9 +255,15 @@
                                                 <button type="button" class="btn btn-default" onclick="setTarget_3(4)">突击步枪AR</button>
                                                 <button type="button" class="btn btn-default" onclick="setTarget_3(5)">机枪MG</button>
                                                 <button type="button" class="btn btn-default" onclick="setTarget_3(6)">霰弹枪SG</button>
-                                                <button type="button" class="btn btn-default" onclick="setTarget_3(7)">零件</button>
                                             </p>
-                                            <h4>平均每小时资源需求量</h4>
+                                            <p>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_3(7)">1:1:1:1</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_3(8)">人力</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_3(9)">弹药</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_3(10)">口粮</button>
+                                                <button type="button" class="btn btn-default" onclick="setTarget_3(11)">零件</button>
+                                            </p>
+                                            <h4>平均每小时需求量</h4>
                                             <div class="form-group input-group">
                                                 <span class="input-group-addon">每小时人力需求</span>
                                                 <input type="text" class="form-control" id="MT3" value=0 onclick="this.select()">
