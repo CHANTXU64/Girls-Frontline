@@ -1,3 +1,8 @@
+var Correction_Factor = 0; //目标值修正系数
+function Correct_Target() { //目标修正函数
+    
+}
+
 function Value(){
     return Mw * Weights(MT, MC) + Aw * Weights(AT, AC) + Rw * Weights(RT, RC) + Pw * Weights(PT, PC);
 }
@@ -88,28 +93,37 @@ $(function (){
 
 //同步更新每小时与每天资源需求量
 $(function (){
-    $("#MT1").on('input propertychange',function() {$("#MTd1").val($(this).val() * document.getElementById('Hours').value)});
-    $("#AT1").on('input propertychange',function() {$("#ATd1").val($(this).val() * document.getElementById('Hours').value)});
-    $("#RT1").on('input propertychange',function() {$("#RTd1").val($(this).val() * document.getElementById('Hours').value)});
-    $("#PT1").on('input propertychange',function() {$("#PTd1").val($(this).val() * document.getElementById('Hours').value)});
-    $("#GT1").on('input propertychange',function() {$("#GTd1").val($(this).val() * document.getElementById('Hours').value)});
-    $("#ET1").on('input propertychange',function() {$("#ETd1").val($(this).val() * document.getElementById('Hours').value)});
-    $("#FT1").on('input propertychange',function() {$("#FTd1").val($(this).val() * document.getElementById('Hours').value)});
-    $("#MTd1").on('input propertychange',function() {$("#MT1").val($(this).val() / document.getElementById('Hours').value)});
-    $("#ATd1").on('input propertychange',function() {$("#AT1").val($(this).val() / document.getElementById('Hours').value)});
-    $("#RTd1").on('input propertychange',function() {$("#RT1").val($(this).val() / document.getElementById('Hours').value)});
-    $("#PTd1").on('input propertychange',function() {$("#PT1").val($(this).val() / document.getElementById('Hours').value)});
-    $("#GTd1").on('input propertychange',function() {$("#GT1").val($(this).val() / document.getElementById('Hours').value)});
-    $("#ETd1").on('input propertychange',function() {$("#ET1").val($(this).val() / document.getElementById('Hours').value)});
-    $("#FTd1").on('input propertychange',function() {$("#FT1").val($(this).val() / document.getElementById('Hours').value)});
-    $("#Hours").on('input propertychange',function() {
-        $("#MT1").val(document.getElementById('MTd1').value / document.getElementById('Hours').value);
-        $("#AT1").val(document.getElementById('ATd1').value / document.getElementById('Hours').value);
-        $("#RT1").val(document.getElementById('RTd1').value / document.getElementById('Hours').value);
-        $("#PT1").val(document.getElementById('PTd1').value / document.getElementById('Hours').value);
-        $("#GT1").val(document.getElementById('GTd1').value / document.getElementById('Hours').value);
-        $("#ET1").val(document.getElementById('ETd1').value / document.getElementById('Hours').value);
-        $("#FT1").val(document.getElementById('FTd1').value / document.getElementById('Hours').value);
+    $("#MT1").on('input propertychange',function() {$("#MTd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#AT1").on('input propertychange',function() {$("#ATd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#RT1").on('input propertychange',function() {$("#RTd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#PT1").on('input propertychange',function() {$("#PTd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#GT1").on('input propertychange',function() {$("#GTd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#ET1").on('input propertychange',function() {$("#ETd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#FT1").on('input propertychange',function() {$("#FTd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#MTd1").on('input propertychange',function() {$("#MT1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#ATd1").on('input propertychange',function() {$("#AT1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#RTd1").on('input propertychange',function() {$("#RT1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#PTd1").on('input propertychange',function() {$("#PT1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#GTd1").on('input propertychange',function() {$("#GT1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#ETd1").on('input propertychange',function() {$("#ET1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#FTd1").on('input propertychange',function() {$("#FT1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#Time1_hours").on('input propertychange',function() {
+        $("#MT1").val(document.getElementById('MTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#AT1").val(document.getElementById('ATd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#RT1").val(document.getElementById('RTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#PT1").val(document.getElementById('PTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#GT1").val(document.getElementById('GTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#ET1").val(document.getElementById('ETd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#FT1").val(document.getElementById('FTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+    });
+    $("#Time1_minutes").on('input propertychange',function() {
+        $("#MT1").val(document.getElementById('MTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#AT1").val(document.getElementById('ATd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#RT1").val(document.getElementById('RTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#PT1").val(document.getElementById('PTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#GT1").val(document.getElementById('GTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#ET1").val(document.getElementById('ETd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#FT1").val(document.getElementById('FTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
     });
 })
 
@@ -135,7 +149,7 @@ function setTarget_1(TargetInfo) {
     var ATd = document.getElementById('ATd1');
     var RTd = document.getElementById('RTd1');
     var PTd = document.getElementById('PTd1');
-    var Hour = document.getElementById('Hours').value;
+    var Hour = parseFloat(document.getElementById('Time1_hours').value) + (parseFloat(document.getElementById('Time1_minutes').value) / 60);
     switch (TargetInfo) {
         case 1:
             MT.value = 130; AT.value = 130; RT.value = 130; PT.value = 130; break;
@@ -233,7 +247,7 @@ function Block_Maps(MapLimit) {
 //判断是否为空, 补0
 function JudgeEmpty(document_getElementById) {
     var X = document_getElementById;
-    if (X.value === "") {
+    if (X.value === "" || isNaN(X.value)) {
         X.value = 0;
         return 0;
     }
@@ -312,12 +326,14 @@ function getPlan() {
 }
 
 function initialize_1() {
-    Hours = parseFloat(document.getElementById('Hours').value);
+    Hours = 0;
     for (var i = 0; i < Plan_length; i++){
         for (var ii = 0; ii < 9; ii++){
             Plan[i][ii] = 0;
         }
     }
+    JudgeEmpty(document.getElementById('Time1_hours'));
+    JudgeEmpty(document.getElementById('Time1_minutes'));
     JudgeEmpty(document.getElementById('MTd1'));
     JudgeEmpty(document.getElementById('ATd1'));
     JudgeEmpty(document.getElementById('RTd1'));
@@ -357,6 +373,13 @@ function initialize_1() {
 
 function getPlan_1() {
     initialize_1();
+    var Time_hours = parseFloat(document.getElementById('Time1_hours').value);
+    var Time_minutes = parseFloat(document.getElementById('Time1_minutes').value);
+    Hours = Time_hours + Time_minutes / 60;
+    if (Hours == 0) {
+        confirm("每天执行后勤时长不能为0！");
+        return 0;
+    }
     var conti_1, conti_2, conti_3, conti_4;
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
         conti_1 = false;
@@ -460,6 +483,10 @@ function getPlan_2() {
     var Time_hours = parseFloat(document.getElementById('Time2_hours').value);
     var Time_minutes = parseFloat(document.getElementById('Time2_minutes').value);
     Hours = Time_hours + Time_minutes / 60;
+    if (Hours == 0) {
+        confirm("时长不能为0！");
+        return 0;
+    }
     //排除超时后勤
     for (var i = 1; i <= Q.length; i++) {
         if (Q[i - 1][7] > Hours) {
@@ -590,6 +617,14 @@ function getPlan_3() {
     var Time_hours = parseFloat(document.getElementById('Time3_hours').value);
     var Time_minutes = parseFloat(document.getElementById('Time3_minutes').value);
     Hours = Time_hours + Time_minutes / 60;
+    if (Hours == 0) {
+        var r = confirm("间隔时长为0，请使用\"随时能收后勤\"一栏来计算组合方案");
+        if (r == true) {
+            $('a[href="#method_1"]').tab('show');
+            method = 1;
+        }
+        return 0;
+    }
     var conti_1, conti_2, conti_3, conti_4;
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
         conti_1 = false;
@@ -670,7 +705,7 @@ function Print_Table(){
             else tab = '<table class="table table-striped table-bordered table-hover"><thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th><th>人力/d</th><th>弹药/d</th><th>口粮/d</th><th>零件/d</th><th>人形/d</th><th>装备/d</th><th>快建/d</th><th>最短时间</th><th>最长时间</th></tr></thead>';
             tab += '<tbody>'; break;
         case 2:
-            tab = '<table class="table table-striped table-bordered table-hover"><thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th><th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>人形/h</th><th>装备/h</th><th>快建/h</th></tr></thead>';
+            tab = '<table class="table table-striped table-bordered table-hover"><thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th><th>人力</th><th>弹药</th><th>口粮</th><th>零件</th><th>人形</th><th>装备</th><th>快建</th></tr></thead>';
             tab += '<tbody>'; break;
         case 3:
             tab = '<table class="table table-striped table-bordered table-hover"><thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th><th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>人形/h</th><th>装备/h</th><th>快建/h</th><th>最长时间</th><th><a href="#" data-toggle="tooltip" data-placement="top" title="一周期指从全部后勤同时开始到下一次全部后勤同时收取这段时间">一个周期</a></th></tr></thead>';
