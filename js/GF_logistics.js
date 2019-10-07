@@ -11,44 +11,14 @@ function Correct_Target() {
             else Xi = 3;
         }
     }
-    var conti_1, conti_2, conti_3, conti_4;
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
-        conti_1 = false;
-        for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-            if (n1 === Block_Numbers[ii-1]) {
-                conti_1 = true;
-                break;
-            }
-        }
-        if (conti_1 === true) continue;
+        if (Block_Numbers.indexOf(n1) != -1) continue;
         for (var n2 = n1 + 1; n2 <= (Q.length - 2); n2++) {
-            conti_2 = false;
-            for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-                if (n2 === Block_Numbers[ii-1]) {
-                    conti_2 = true;
-                    break;
-                }
-            }
-            if (conti_2 === true) continue;
+            if (Block_Numbers.indexOf(n2) != -1) continue;
             for (var n3 = n2 + 1; n3 <= (Q.length - 1); n3++) {
-                conti_3 = false;
-                for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-                    if (n3 === Block_Numbers[ii-1]) {
-                        conti_3 = true;
-                        break;
-                    }
-                }
-                if (conti_3 === true) continue;
+                if (Block_Numbers.indexOf(n3) != -1) continue;
                 for (var n4 = n3 + 1; n4 <= Q.length; n4++) {
-                    conti_4 = false;
-                    for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-                        if (n4 === Block_Numbers[ii-1]) {
-                            conti_4 = true;
-                            break;
-                        }
-                    }
-                    if (conti_4 === true) continue;
-
+                    if (Block_Numbers.indexOf(n4) != -1) continue;
                     switch (method) {
                         case 1:
                             X = Math.max(X, (Addition_rate * (Q[n1 - 1][Xi] + Q[n2 - 1][Xi] + Q[n3 - 1][Xi] + Q[n4 - 1][Xi])));
@@ -490,44 +460,14 @@ function getPlan_1() {
     }
 
     Correct_Target();
-    var conti_1, conti_2, conti_3, conti_4;
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
-        conti_1 = false;
-        for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-            if (n1 === Block_Numbers[ii-1]) {
-                conti_1 = true;
-                break;
-            }
-        }
-        if (conti_1 === true) continue;
+        if (Block_Numbers.indexOf(n1) != -1) continue;
         for (var n2 = n1 + 1; n2 <= (Q.length - 2); n2++) {
-            conti_2 = false;
-            for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-                if (n2 === Block_Numbers[ii-1]) {
-                    conti_2 = true;
-                    break;
-                }
-            }
-            if (conti_2 === true) continue;
+            if (Block_Numbers.indexOf(n2) != -1) continue;
             for (var n3 = n2 + 1; n3 <= (Q.length - 1); n3++) {
-                conti_3 = false;
-                for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-                    if (n3 === Block_Numbers[ii-1]) {
-                        conti_3 = true;
-                        break;
-                    }
-                }
-                if (conti_3 === true) continue;
+                if (Block_Numbers.indexOf(n3) != -1) continue;
                 for (var n4 = n3 + 1; n4 <= Q.length; n4++) {
-                    conti_4 = false;
-                    for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-                        if (n4 === Block_Numbers[ii-1]) {
-                            conti_4 = true;
-                            break;
-                        }
-                    }
-                    if (conti_4 === true) continue;
-
+                    if (Block_Numbers.indexOf(n4) != -1) continue;
                     MC = Addition_rate * (Q[n1 - 1][0] + Q[n2 - 1][0] + Q[n3 - 1][0] + Q[n4 - 1][0]);
                     AC = Addition_rate * (Q[n1 - 1][1] + Q[n2 - 1][1] + Q[n3 - 1][1] + Q[n4 - 1][1]);
                     RC = Addition_rate * (Q[n1 - 1][2] + Q[n2 - 1][2] + Q[n3 - 1][2] + Q[n4 - 1][2]);
@@ -599,44 +539,14 @@ function getPlan_2() {
     }
 
     Correct_Target();
-    var conti_1, conti_2, conti_3, conti_4;
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
-        conti_1 = false;
-        for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-            if (n1 === Block_Numbers[ii-1]) {
-                conti_1 = true;
-                break;
-            }
-        }
-        if (conti_1 === true) continue;
+        if (Block_Numbers.indexOf(n1) != -1) continue;
         for (var n2 = n1 + 1; n2 <= (Q.length - 2); n2++) {
-            conti_2 = false;
-            for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-                if (n2 === Block_Numbers[ii-1]) {
-                    conti_2 = true;
-                    break;
-                }
-            }
-            if (conti_2 === true) continue;
+            if (Block_Numbers.indexOf(n2) != -1) continue;
             for (var n3 = n2 + 1; n3 <= (Q.length - 1); n3++) {
-                conti_3 = false;
-                for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-                    if (n3 === Block_Numbers[ii-1]) {
-                        conti_3 = true;
-                        break;
-                    }
-                }
-                if (conti_3 === true) continue;
+                if (Block_Numbers.indexOf(n3) != -1) continue;
                 for (var n4 = n3 + 1; n4 <= Q.length; n4++) {
-                    conti_4 = false;
-                    for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-                        if (n4 === Block_Numbers[ii-1]) {
-                            conti_4 = true;
-                            break;
-                        }
-                    }
-                    if (conti_4 === true) continue;
-
+                    if (Block_Numbers.indexOf(n4) != -1) continue;
                     MC = Addition_rate * (Q[n1-1][0] * Q[n1-1][7] + Q[n2-1][0] * Q[n2-1][7] + Q[n3-1][0] * Q[n3-1][7] + Q[n4-1][0] * Q[n4-1][7]) / Hours;
                     AC = Addition_rate * (Q[n1-1][1] * Q[n1-1][7] + Q[n2-1][1] * Q[n2-1][7] + Q[n3-1][1] * Q[n3-1][7] + Q[n4-1][1] * Q[n4-1][7]) / Hours;
                     RC = Addition_rate * (Q[n1-1][2] * Q[n1-1][7] + Q[n2-1][2] * Q[n2-1][7] + Q[n3-1][2] * Q[n3-1][7] + Q[n4-1][2] * Q[n4-1][7]) / Hours;
@@ -730,44 +640,14 @@ function getPlan_3() {
         return 0;
     }
     Correct_Target();
-    var conti_1, conti_2, conti_3, conti_4;
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
-        conti_1 = false;
-        for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-            if (n1 === Block_Numbers[ii-1]) {
-                conti_1 = true;
-                break;
-            }
-        }
-        if (conti_1 === true) continue;
+        if (Block_Numbers.indexOf(n1) != -1) continue;
         for (var n2 = n1 + 1; n2 <= (Q.length - 2); n2++) {
-            conti_2 = false;
-            for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-                if (n2 === Block_Numbers[ii-1]) {
-                    conti_2 = true;
-                    break;
-                }
-            }
-            if (conti_2 === true) continue;
+            if (Block_Numbers.indexOf(n2) != -1) continue;
             for (var n3 = n2 + 1; n3 <= (Q.length - 1); n3++) {
-                conti_3 = false;
-                for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-                    if (n3 === Block_Numbers[ii-1]) {
-                        conti_3 = true;
-                        break;
-                    }
-                }
-                if (conti_3 === true) continue;
+                if (Block_Numbers.indexOf(n3) != -1) continue;
                 for (var n4 = n3 + 1; n4 <= Q.length; n4++) {
-                    conti_4 = false;
-                    for (var ii = 1; ii <= Block_Numbers.length; ii++) {
-                        if (n4 === Block_Numbers[ii-1]) {
-                            conti_4 = true;
-                            break;
-                        }
-                    }
-                    if (conti_4 === true) continue;
-
+                    if (Block_Numbers.indexOf(n4) != -1) continue;
                     var times = [1, 1, 1, 1];
                     var number = [n1, n2, n3, n4];
                     var MC_n = [0, 0, 0, 0];
