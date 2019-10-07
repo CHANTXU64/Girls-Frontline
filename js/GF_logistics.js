@@ -122,7 +122,7 @@ var Q = [//后勤战役-人力 弹药 口粮 零件 人形 装备 快建 时间(
 var Plan_length = 36;//Plan.lenth
 var Plan = new Array(Plan_length);//方案
 for (var i = 0; i < Plan.length; i++){
-    Plan[i] = new Array(9);
+    Plan[i] = new Array(10);
 }
 var Hours;
 var MT, AT, RT, PT, GT, ET, FT;//目标值
@@ -406,7 +406,7 @@ function getPlan() {
 function initialize_1() {
     Hours = 0;
     for (var i = 0; i < Plan_length; i++){
-        for (var ii = 0; ii < 9; ii++){
+        for (var ii = 0; ii < 10; ii++){
             Plan[i][ii] = 0;
         }
     }
@@ -484,7 +484,7 @@ function getPlan_1() {
 function initialize_2() {
     Hours = 0;
     for (var i = 0; i < Plan_length; i++){
-        for (var ii = 0; ii < 9; ii++){
+        for (var ii = 0; ii < 10; ii++){
             Plan[i][ii] = 0;
         }
     }
