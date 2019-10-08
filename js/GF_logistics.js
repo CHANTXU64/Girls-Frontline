@@ -145,167 +145,109 @@ $(function (){
     $('[href=#method_3]').on("shown.bs.tab", function(){method = 3});
 })
 
-//同步更新每小时与每天资源需求量
+//method1同步更新每小时与每天资源需求量
 $(function (){
-    $("#MT1").on('input propertychange',function() {$("#MTd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
-    $("#AT1").on('input propertychange',function() {$("#ATd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
-    $("#RT1").on('input propertychange',function() {$("#RTd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
-    $("#PT1").on('input propertychange',function() {$("#PTd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
-    $("#GT1").on('input propertychange',function() {$("#GTd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
-    $("#ET1").on('input propertychange',function() {$("#ETd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
-    $("#FT1").on('input propertychange',function() {$("#FTd1").val($(this).val() * (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
-    $("#MTd1").on('input propertychange',function() {$("#MT1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
-    $("#ATd1").on('input propertychange',function() {$("#AT1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
-    $("#RTd1").on('input propertychange',function() {$("#RT1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
-    $("#PTd1").on('input propertychange',function() {$("#PT1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
-    $("#GTd1").on('input propertychange',function() {$("#GT1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
-    $("#ETd1").on('input propertychange',function() {$("#ET1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
-    $("#FTd1").on('input propertychange',function() {$("#FT1").val($(this).val() / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)))});
+    $("#MT1").on('input propertychange',function() {$("#MTd1").val($(this).val() * (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
+    $("#AT1").on('input propertychange',function() {$("#ATd1").val($(this).val() * (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
+    $("#RT1").on('input propertychange',function() {$("#RTd1").val($(this).val() * (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
+    $("#PT1").on('input propertychange',function() {$("#PTd1").val($(this).val() * (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
+    $("#GT1").on('input propertychange',function() {$("#GTd1").val($(this).val() * (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
+    $("#ET1").on('input propertychange',function() {$("#ETd1").val($(this).val() * (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
+    $("#FT1").on('input propertychange',function() {$("#FTd1").val($(this).val() * (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
+    $("#MTd1").on('input propertychange',function() {$("#MT1").val($(this).val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
+    $("#ATd1").on('input propertychange',function() {$("#AT1").val($(this).val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
+    $("#RTd1").on('input propertychange',function() {$("#RT1").val($(this).val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
+    $("#PTd1").on('input propertychange',function() {$("#PT1").val($(this).val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
+    $("#GTd1").on('input propertychange',function() {$("#GT1").val($(this).val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
+    $("#ETd1").on('input propertychange',function() {$("#ET1").val($(this).val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
+    $("#FTd1").on('input propertychange',function() {$("#FT1").val($(this).val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60))});
     $("#Time1_hours").on('input propertychange',function() {
-        $("#MT1").val(document.getElementById('MTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
-        $("#AT1").val(document.getElementById('ATd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
-        $("#RT1").val(document.getElementById('RTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
-        $("#PT1").val(document.getElementById('PTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
-        $("#GT1").val(document.getElementById('GTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
-        $("#ET1").val(document.getElementById('ETd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
-        $("#FT1").val(document.getElementById('FTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#MT1").val($("#MTd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
+        $("#AT1").val($("#ATd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
+        $("#RT1").val($("#RTd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
+        $("#PT1").val($("#PTd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
+        $("#GT1").val($("#GTd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
+        $("#ET1").val($("#ETd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
+        $("#FT1").val($("#FTd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
     });
     $("#Time1_minutes").on('input propertychange',function() {
-        $("#MT1").val(document.getElementById('MTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
-        $("#AT1").val(document.getElementById('ATd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
-        $("#RT1").val(document.getElementById('RTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
-        $("#PT1").val(document.getElementById('PTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
-        $("#GT1").val(document.getElementById('GTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
-        $("#ET1").val(document.getElementById('ETd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
-        $("#FT1").val(document.getElementById('FTd1').value / (parseFloat(document.getElementById('Time1_hours').value) + parseFloat(document.getElementById('Time1_minutes').value / 60)));
+        $("#MT1").val($("#MTd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
+        $("#AT1").val($("#ATd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
+        $("#RT1").val($("#RTd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
+        $("#PT1").val($("#PTd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
+        $("#GT1").val($("#GTd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
+        $("#ET1").val($("#ETd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
+        $("#FT1").val($("#FTd1").val() / (parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60));
     });
 })
 
 function Function_ProbUP() {
     if (document.getElementById('ProbUp').checked) {
-        var Display_Prob = document.getElementById('Display_Prob');
-        Display_Prob.innerHTML = "+20";
+        document.getElementById('Display_Prob').innerHTML = "+20";
         ProbUP = 20;
     }
     else {
-        var Display_Prob = document.getElementById('Display_Prob');
-        Display_Prob.innerHTML = "";
+        document.getElementById('Display_Prob').innerHTML = "";
         ProbUP = 0;
     }
 };
 
-function setTarget_1(TargetInfo) {
-    var MT = document.getElementById('MT1');
-    var AT = document.getElementById('AT1');
-    var RT = document.getElementById('RT1');
-    var PT = document.getElementById('PT1');
-    var MTd = document.getElementById('MTd1');
-    var ATd = document.getElementById('ATd1');
-    var RTd = document.getElementById('RTd1');
-    var PTd = document.getElementById('PTd1');
-    var Hour = parseFloat(document.getElementById('Time1_hours').value) + (parseFloat(document.getElementById('Time1_minutes').value) / 60);
+function setTarget(TargetInfo) {
+    switch (method) {
+        case 1:
+            var MT = $("#MT1");
+            var AT = $("#AT1");
+            var RT = $("#RT1");
+            var PT = $("#PT1");
+            var MTd = $("#MTd1");
+            var ATd = $("#ATd1");
+            var RTd = $("#RTd1");
+            var PTd = $("#PTd1");
+            var Hour = parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60;
+            break;
+        case 2:
+            var MT = $("#MT2");
+            var AT = $("#AT2");
+            var RT = $("#RT2");
+            var PT = $("#PT2");
+            break;
+        case 3:
+            var MT = $("#MT3");
+            var AT = $("#AT3");
+            var RT = $("#RT3");
+            var PT = $("#PT3");
+            break;
+    }
     switch (TargetInfo) {
         case 1:
-            MT.value = 130; AT.value = 130; RT.value = 130; PT.value = 130; break;
+            MT.val(130); AT.val(130); RT.val(130); PT.val(130); break;
         case 2:
-            MT.value = 430; AT.value = 430; RT.value = 130; PT.value = 230; break;
+            MT.val(430); AT.val(430); RT.val(130); PT.val(230); break;
         case 3:
-            MT.value = 430; AT.value = 130; RT.value = 430; PT.value = 230; break;
+            MT.val(430); AT.val(130); RT.val(430); PT.val(230); break;
         case 4:
-            MT.value = 130; AT.value = 430; RT.value = 430; PT.value = 130; break;
+            MT.val(130); AT.val(430); RT.val(430); PT.val(130); break;
         case 5:
-            MT.value = 730; AT.value = 630; RT.value = 130; PT.value = 430; break;
+            MT.val(730); AT.val(630); RT.val(130); PT.val(430); break;
         case 6:
-            MT.value = 8000; AT.value = 2000; RT.value = 8000; PT.value = 4000; break;
+            MT.val(8000); AT.val(2000); RT.val(8000); PT.val(4000); break;
         case 7:
-            MT.value = 1; AT.value = 1; RT.value = 1; PT.value = 1; break;
+            MT.val(1); AT.val(1); RT.val(1); PT.val(1); break;
         case 8:
-            MT.value = 1; AT.value = 0; RT.value = 0; PT.value = 0; break;
+            MT.val(1); AT.val(0); RT.val(0); PT.val(0); break;
         case 9:
-            MT.value = 0; AT.value = 1; RT.value = 0; PT.value = 0; break;
+            MT.val(0); AT.val(1); RT.val(0); PT.val(0); break;
         case 10:
-            MT.value = 0; AT.value = 0; RT.value = 1; PT.value = 0; break;
+            MT.val(0); AT.val(0); RT.val(1); PT.val(0); break;
         case 11:
-            MT.value = 0; AT.value = 0; RT.value = 0; PT.value = 1; break;
+            MT.val(0); AT.val(0); RT.val(0); PT.val(1); break;
     }
-    MTd.value = MT.value * Hour; ATd.value = AT.value * Hour; RTd.value = RT.value * Hour; PTd.value = PT.value * Hour;
-}
-function setTarget_2(TargetInfo) {
-    var MT = document.getElementById('MT2');
-    var AT = document.getElementById('AT2');
-    var RT = document.getElementById('RT2');
-    var PT = document.getElementById('PT2');
-    switch (TargetInfo) {
-        case 1:
-            MT.value = 130; AT.value = 130; RT.value = 130; PT.value = 130; break;
-        case 2:
-            MT.value = 430; AT.value = 430; RT.value = 130; PT.value = 230; break;
-        case 3:
-            MT.value = 430; AT.value = 130; RT.value = 430; PT.value = 230; break;
-        case 4:
-            MT.value = 130; AT.value = 430; RT.value = 430; PT.value = 130; break;
-        case 5:
-            MT.value = 730; AT.value = 630; RT.value = 130; PT.value = 430; break;
-        case 6:
-            MT.value = 8000; AT.value = 2000; RT.value = 8000; PT.value = 4000; break;
-        case 7:
-            MT.value = 1; AT.value = 1; RT.value = 1; PT.value = 1; break;
-        case 8:
-            MT.value = 1; AT.value = 0; RT.value = 0; PT.value = 0; break;
-        case 9:
-            MT.value = 0; AT.value = 1; RT.value = 0; PT.value = 0; break;
-        case 10:
-            MT.value = 0; AT.value = 0; RT.value = 1; PT.value = 0; break;
-        case 11:
-            MT.value = 0; AT.value = 0; RT.value = 0; PT.value = 1; break;
-    }
-}
-function setTarget_3(TargetInfo) {
-    var MT = document.getElementById('MT3');
-    var AT = document.getElementById('AT3');
-    var RT = document.getElementById('RT3');
-    var PT = document.getElementById('PT3');
-    switch (TargetInfo) {
-        case 1:
-            MT.value = 130; AT.value = 130; RT.value = 130; PT.value = 130; break;
-        case 2:
-            MT.value = 430; AT.value = 430; RT.value = 130; PT.value = 230; break;
-        case 3:
-            MT.value = 430; AT.value = 130; RT.value = 430; PT.value = 230; break;
-        case 4:
-            MT.value = 130; AT.value = 430; RT.value = 430; PT.value = 130; break;
-        case 5:
-            MT.value = 730; AT.value = 630; RT.value = 130; PT.value = 430; break;
-        case 6:
-            MT.value = 8000; AT.value = 2000; RT.value = 8000; PT.value = 4000; break;
-        case 7:
-            MT.value = 1; AT.value = 1; RT.value = 1; PT.value = 1; break;
-        case 8:
-            MT.value = 1; AT.value = 0; RT.value = 0; PT.value = 0; break;
-        case 9:
-            MT.value = 0; AT.value = 1; RT.value = 0; PT.value = 0; break;
-        case 10:
-            MT.value = 0; AT.value = 0; RT.value = 1; PT.value = 0; break;
-        case 11:
-            MT.value = 0; AT.value = 0; RT.value = 0; PT.value = 1; break;
-    }
+    if (method === 1) MTd.val(MT.val() * Hour); ATd.val(AT.val() * Hour); RTd.val(RT.val() * Hour); PTd.val(PT.val() * Hour);
 }
 
 function Block_Maps(MapLimit) {
     var Block_Numbers;
     switch (MapLimit) {
-        case 1:
-            Block_Numbers = [1,2,3,4,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48]; break;
-        case 2:
-            Block_Numbers = [1,2,3,4,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48]; break;
-        case 3:
-            Block_Numbers = [1,2,3,4,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48]; break;
-        case 4:
-            Block_Numbers = [1,2,3,4,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48]; break;
-        case 4.5:
-            Block_Numbers = [21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48]; break;
-        case 5:
-            Block_Numbers = [25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48]; break;
         case 6:
             Block_Numbers = [29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48]; break;
         case 7:
@@ -323,27 +265,25 @@ function Block_Maps(MapLimit) {
 }
 
 //判断是否为空, 补0
-function JudgeEmpty(document_getElementById) {
-    var X = document_getElementById;
-    if (X.value === "" || isNaN(X.value)) {
-        X.value = 0;
+function JudgeEmpty(X) {
+    if (X.val() === "" || isNaN(X.val())) {
+        X.val() = 0;
         return 0;
     }
-    else return parseFloat(X.value);
+    else return parseFloat(X.val());
 }
 
 //计算大成功资源加成率
-function JudgeProbability(document_getElementById) {
-    var X = document_getElementById;
-    if (X.value === "" || X.value < 0) {
-        X.value = 0;
+function JudgeProbability(X) {
+    if (X.val() === "" || X.val() < 0) {
+        X.val() = 0;
         return ProbUP / 200 + 1;
     }
-    if (X.value > 60) {
-        X.value = 60;
+    if (X.val() > 60) {
+        X.val() = 60;
         return ProbUP / 200 + 1.3;
     }
-    return (parseFloat(X.value) + ProbUP) / 200 + 1;
+    return (parseFloat(X.val()) + ProbUP) / 200 + 1;
 }
 
 //将方案添加进方案列表中
@@ -403,36 +343,62 @@ function getPlan() {
     }
 }
 
-function initialize_1() {
+function initialize() {
     Hours = 0;
     for (var i = 0; i < Plan_length; i++){
         for (var ii = 0; ii < 10; ii++){
             Plan[i][ii] = 0;
         }
     }
-    JudgeEmpty(document.getElementById('Time1_hours'));
-    JudgeEmpty(document.getElementById('Time1_minutes'));
-    JudgeEmpty(document.getElementById('MTd1'));
-    JudgeEmpty(document.getElementById('ATd1'));
-    JudgeEmpty(document.getElementById('RTd1'));
-    JudgeEmpty(document.getElementById('PTd1'));
-    JudgeEmpty(document.getElementById('GTd1'));
-    JudgeEmpty(document.getElementById('ETd1'));
-    JudgeEmpty(document.getElementById('FTd1'));
-    MT = JudgeEmpty(document.getElementById('MT1'));
-    AT = JudgeEmpty(document.getElementById('AT1'));
-    RT = JudgeEmpty(document.getElementById('RT1'));
-    PT = JudgeEmpty(document.getElementById('PT1'));
-    GT = JudgeEmpty(document.getElementById('GT1'));
-    ET = JudgeEmpty(document.getElementById('ET1'));
-    FT = JudgeEmpty(document.getElementById('FT1'));
-    Mw = JudgeEmpty(document.getElementById('Mw'));
-    Aw = JudgeEmpty(document.getElementById('Aw'));
-    Rw = JudgeEmpty(document.getElementById('Rw'));
-    Pw = JudgeEmpty(document.getElementById('Pw'));
-    Gw = JudgeEmpty(document.getElementById('Gw'));
-    Ew = JudgeEmpty(document.getElementById('Ew'));
-    Fw = JudgeEmpty(document.getElementById('Fw'));
+    switch (method) {
+        case 1:
+            JudgeEmpty($("#Time1_hours"));
+            JudgeEmpty($("#Time1_minutes"));
+            JudgeEmpty($("#MTd1"));
+            JudgeEmpty($("#ATd1"));
+            JudgeEmpty($("#RTd1"));
+            JudgeEmpty($("#PTd1"));
+            JudgeEmpty($("#GTd1"));
+            JudgeEmpty($("#ETd1"));
+            JudgeEmpty($("#FTd1"));
+            MT = JudgeEmpty($("#MT1"));
+            AT = JudgeEmpty($("#AT1"));
+            RT = JudgeEmpty($("#RT1"));
+            PT = JudgeEmpty($("#PT1"));
+            GT = JudgeEmpty($("#GT1"));
+            ET = JudgeEmpty($("#ET1"));
+            FT = JudgeEmpty($("#FT1"));
+            break;
+        case 2:
+            JudgeEmpty($("#Time2_hours"));
+            JudgeEmpty($("#Time2_minutes"));
+            MT = JudgeEmpty($("#MT2"));
+            AT = JudgeEmpty($("#AT2"));
+            RT = JudgeEmpty($("#RT2"));
+            PT = JudgeEmpty($("#PT2"));
+            GT = JudgeEmpty($("#GT2"));
+            ET = JudgeEmpty($("#ET2"));
+            FT = JudgeEmpty($("#FT2"));
+            break;
+        case 3:
+            JudgeEmpty($("#Time3_hours"));
+            JudgeEmpty($("#Time3_minutes"));
+            MT = JudgeEmpty($("#MT3"));
+            AT = JudgeEmpty($("#AT3"));
+            RT = JudgeEmpty($("#RT3"));
+            PT = JudgeEmpty($("#PT3"));
+            GT = JudgeEmpty($("#GT3"));
+            ET = JudgeEmpty($("#ET3"));
+            FT = JudgeEmpty($("#FT3"));
+            break;
+    }
+    Mw = JudgeEmpty($("#Mw"));
+    Aw = JudgeEmpty($("#Aw"));
+    Rw = JudgeEmpty($("#Rw"));
+    Pw = JudgeEmpty($("#Pw"));
+    Gw = JudgeEmpty($("#Gw"));
+    Ew = JudgeEmpty($("#Ew"));
+    Fw = JudgeEmpty($("#Fw"));
     if (MT === 0) Mw = 0;
     if (AT === 0) Aw = 0;
     if (RT === 0) Rw = 0;
@@ -445,21 +411,18 @@ function initialize_1() {
     }
     MC = 0; AC = 0; RC = 0; PC = 0; GC = 0; EC = 0; FC = 0;
     Plan_value = 0;
-    Addition_rate = JudgeProbability(document.getElementById('Probability'));
-    Block_Numbers = Block_Maps(parseFloat(document.getElementById('MapLimit').value));
+    Addition_rate = JudgeProbability($("#Probability"));
+    Block_Numbers = Block_Maps(parseFloat($("#MapLimit").val()));
 }
 
 function getPlan_1() {
-    initialize_1();
-    var Time_hours = parseFloat(document.getElementById('Time1_hours').value);
-    var Time_minutes = parseFloat(document.getElementById('Time1_minutes').value);
-    Hours = Time_hours + Time_minutes / 60;
+    initialize();
+    Hours = parseFloat($("#Time1_hours").val()) + parseFloat($("#Time1_minutes").val()) / 60;
     if (Hours == 0) {
         confirm("每天执行后勤时长不能为0！");
         return 0;
     }
-
-    Correct_Target();
+    Correct_Target();//目标值修正
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
         if (Block_Numbers.indexOf(n1) != -1) continue;
         for (var n2 = n1 + 1; n2 <= (Q.length - 2); n2++) {
@@ -481,50 +444,9 @@ function getPlan_1() {
     Print_Table();
 }
 
-function initialize_2() {
-    Hours = 0;
-    for (var i = 0; i < Plan_length; i++){
-        for (var ii = 0; ii < 10; ii++){
-            Plan[i][ii] = 0;
-        }
-    }
-    JudgeEmpty(document.getElementById('Time2_hours'));
-    JudgeEmpty(document.getElementById('Time2_minutes'));
-    MT = JudgeEmpty(document.getElementById('MT2'));
-    AT = JudgeEmpty(document.getElementById('AT2'));
-    RT = JudgeEmpty(document.getElementById('RT2'));
-    PT = JudgeEmpty(document.getElementById('PT2'));
-    GT = JudgeEmpty(document.getElementById('GT2'));
-    ET = JudgeEmpty(document.getElementById('ET2'));
-    FT = JudgeEmpty(document.getElementById('FT2'));
-    Mw = JudgeEmpty(document.getElementById('Mw'));
-    Aw = JudgeEmpty(document.getElementById('Aw'));
-    Rw = JudgeEmpty(document.getElementById('Rw'));
-    Pw = JudgeEmpty(document.getElementById('Pw'));
-    Gw = JudgeEmpty(document.getElementById('Gw'));
-    Ew = JudgeEmpty(document.getElementById('Ew'));
-    Fw = JudgeEmpty(document.getElementById('Fw'));
-    if (MT === 0) Mw = 0;
-    if (AT === 0) Aw = 0;
-    if (RT === 0) Rw = 0;
-    if (PT === 0) Pw = 0;
-    if (GT === 0) Gw = 0;
-    if (ET === 0) Ew = 0;
-    if (FT === 0) Fw = 0;
-    if (Mw===0&&Aw===0&&Rw===0&&Pw===0&&Gw===0&&Ew===0&&Fw===0) {
-        Mw=1; Aw=1; Rw=1; Pw=1; Gw=1; Ew=1; Fw=1;
-    }
-    MC = 0; AC = 0; RC = 0; PC = 0; GC = 0; EC = 0; FC = 0;
-    Plan_value = 0;
-    Addition_rate = JudgeProbability(document.getElementById('Probability'));
-    Block_Numbers = Block_Maps(parseFloat(document.getElementById('MapLimit').value));
-}
-
 function getPlan_2() {
-    initialize_2();
-    var Time_hours = parseFloat(document.getElementById('Time2_hours').value);
-    var Time_minutes = parseFloat(document.getElementById('Time2_minutes').value);
-    Hours = Time_hours + Time_minutes / 60;
+    initialize();
+    Hours = parseFloat($("#Time2_hours").val()) + parseFloat($("#Time2_minutes").val()) / 60;
     if (Hours == 0) {
         confirm("时长不能为0！");
         return 0;
@@ -537,8 +459,7 @@ function getPlan_2() {
             }
         }
     }
-
-    Correct_Target();
+    Correct_Target();//目标值修正
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
         if (Block_Numbers.indexOf(n1) != -1) continue;
         for (var n2 = n1 + 1; n2 <= (Q.length - 2); n2++) {
@@ -560,77 +481,29 @@ function getPlan_2() {
     Print_Table();
 }
 
-function initialize_3() {
-    Hours = 0;
-    One_cycle_time = 0;
-    for (var i = 0; i < Plan_length; i++){
-        for (var ii = 0; ii < 10; ii++){
-            Plan[i][ii] = 0;
-        }
-    }
-    JudgeEmpty(document.getElementById('Time3_hours'));
-    JudgeEmpty(document.getElementById('Time3_minutes'));
-    MT = JudgeEmpty(document.getElementById('MT3'));
-    AT = JudgeEmpty(document.getElementById('AT3'));
-    RT = JudgeEmpty(document.getElementById('RT3'));
-    PT = JudgeEmpty(document.getElementById('PT3'));
-    GT = JudgeEmpty(document.getElementById('GT3'));
-    ET = JudgeEmpty(document.getElementById('ET3'));
-    FT = JudgeEmpty(document.getElementById('FT3'));
-    Mw = JudgeEmpty(document.getElementById('Mw'));
-    Aw = JudgeEmpty(document.getElementById('Aw'));
-    Rw = JudgeEmpty(document.getElementById('Rw'));
-    Pw = JudgeEmpty(document.getElementById('Pw'));
-    Gw = JudgeEmpty(document.getElementById('Gw'));
-    Ew = JudgeEmpty(document.getElementById('Ew'));
-    Fw = JudgeEmpty(document.getElementById('Fw'));
-    if (MT === 0) Mw = 0;
-    if (AT === 0) Aw = 0;
-    if (RT === 0) Rw = 0;
-    if (PT === 0) Pw = 0;
-    if (GT === 0) Gw = 0;
-    if (ET === 0) Ew = 0;
-    if (FT === 0) Fw = 0;
-    if (Mw===0&&Aw===0&&Rw===0&&Pw===0&&Gw===0&&Ew===0&&Fw===0) {
-        Mw=1; Aw=1; Rw=1; Pw=1; Gw=1; Ew=1; Fw=1;
-    }
-    MC = 0; AC = 0; RC = 0; PC = 0; GC = 0; EC = 0; FC = 0;
-    Plan_value = 0;
-    Addition_rate = JudgeProbability(document.getElementById('Probability'));
-    Block_Numbers = Block_Maps(parseFloat(document.getElementById('MapLimit').value));
-}
-
 //求一个数组的最小公倍数
 //my.oschina.net/tearlight/blog/145135
 //by: subying
 function gcd(a,b){
-    var minNum = Math.min(a,b),maxNum = Math.max(a,b),i=Math.floor(maxNum/minNum),vper=0;
-    if(a ===0 || b===0){
-        return maxNum;
-    }
-
+    var minNum = Math.min(a,b), maxNum = Math.max(a,b), i=Math.floor(maxNum/minNum), vper=0;
     for(;i<=maxNum;i++){
         vper = minNum * i;
         if(vper % maxNum === 0){
             return vper;
-            break;
         }
     }
 }
 function gcds(arr){
-    var onum = 0,i = 0,len = arr.length,midNum = 0;
-    for(;i<len;i++){
-        onum = Math.floor(arr[i]);//去掉小数
-        midNum = gcd(midNum,onum);
+    var i = 0, midNum = 0;
+    for(;i < arr.length; i++){
+        midNum = gcd(midNum,arr[i]);
     }
     return midNum;
 }
 
 function getPlan_3() {
-    initialize_3();
-    var Time_hours = parseFloat(document.getElementById('Time3_hours').value);
-    var Time_minutes = parseFloat(document.getElementById('Time3_minutes').value);
-    Hours = Time_hours + Time_minutes / 60;
+    initialize();
+    Hours = parseFloat($("#Time3_hours").val()) + parseFloat($("#Time3_minutes").val()) / 60;
     if (Hours == 0) {
         var r = confirm("间隔时长为0，请使用\"随时能收后勤\"一栏来计算组合方案");
         if (r == true) {
@@ -639,7 +512,7 @@ function getPlan_3() {
         }
         return 0;
     }
-    Correct_Target();
+    Correct_Target();//目标值修正
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
         if (Block_Numbers.indexOf(n1) != -1) continue;
         for (var n2 = n1 + 1; n2 <= (Q.length - 2); n2++) {
