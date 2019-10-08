@@ -494,7 +494,7 @@ function gcd(a,b){
     }
 }
 function gcds(arr){
-    var i = 0, midNum = 0;
+    var i = 0, midNum = 1;
     for(;i < arr.length; i++){
         midNum = gcd(midNum,arr[i]);
     }
