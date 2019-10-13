@@ -17,7 +17,7 @@ function Value_0(Target, Current) {
         return (Current - Target) * (- 0.04 * Math.pow((Target - Current) / Target, 3) - 0.01 * (Target - Current) / Target);
     }
 }
-
+//
 var Q = [//后勤战役-人力 弹药 口粮 零件 人形 装备 快建 时间(hour)
     [0,       174,     174,     0,       0, 0, 0, 0.8333],//0-1
     [183.333, 0,       0,       116.667, 0, 0, 0, 3],
