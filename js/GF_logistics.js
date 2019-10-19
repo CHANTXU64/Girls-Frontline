@@ -95,7 +95,7 @@ function Q_blueprint() {//契约参考:bbs.nga.cn/read.php?tid=13814613 图片�
         Q[10][6] = 0.125;//2-3
         Q[19][6] = 0.125;//4-4
 }
-var Plan_length = 36;//Plan.lenth
+var Plan_length = 336;//Plan.lenth
 var Plan = new Array(Plan_length);//方案
 for (var i = 0; i < Plan.length; i++){
     Plan[i] = new Array(13);
