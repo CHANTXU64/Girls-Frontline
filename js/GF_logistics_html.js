@@ -40,13 +40,14 @@ function TimeLimit_disable() {
 //同步更新大成功UP增加概率
 $(function (){
     $("#Probability").on('input propertychange',function() {
-        if (document.getElementById('ProbUp').checked) {
-            if ($("#Probability").val() < 15) ProbUP = 15;
-            if ($("#Probability").val() > 60) ProbUP = 30;
+        var UpRate;
+        if (document.getElementById('GreatSuccessRateUp').checked) {
+            if ($("#Probability").val() < 15) UpRate = 15;
+            if ($("#Probability").val() > 60) UpRate = 30;
             if ($("#Probability").val() <= 60 && $("#Probability").val() >= 15) {
-                ProbUP = 15 + Math.floor(($("#Probability").val() - 15) / 3);
+                UpRate = 15 + Math.floor(($("#Probability").val() - 15) / 3);
             }
-            document.getElementById('Display_Prob').innerHTML = ("+" + ProbUP);
+            document.getElementById('Display_Prob').innerHTML = ("+" + UpRate);
         }
     });
 })
@@ -85,12 +86,18 @@ function Function_GreatSuccessRateUP() {
     if (document.getElementById('GreatSuccessRateUp').checked) {
         UpRate = 15 + Math.floor(($("#GreatSuccessRate").val() - 15) / 3);
         document.getElementById('Display_UPRate').innerHTML = ("+" + UpRate);
+        return UpRate;
     }
     else {
-        UpRate = 0;
         document.getElementById('Display_UPRate').innerHTML = "";
+        return UpRate;
     }
-};
+}
+function CheckDataLegalityAndCorrect_GreatSuccessRate() {
+    var Rate = $("#GreatSuccessRate");
+    if (Rate.val()==="" || isNaN(Rate.val()) || Rate.val()<15) Rate.val(15);
+    if (Rate.val()>60) Rate.val(60);
+}
 
 function setTarget(TargetInfo) {
     var MT = $("#MT");
