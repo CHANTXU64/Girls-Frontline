@@ -228,17 +228,17 @@ class Tab_Intervals extends Tab {
 		for (var i = 0; i < 4; i++) {
 			CurrentValue[i] *= ResourceIncreasingRate;
 		}
-		this._set_Customizer(this.CalculateArrayLeastCommonMultiple(times) * this.TotalTime);
+		this._set_Customizer(this._CalculateArrayLeastCommonMultiple(times) * this.TotalTime);
 		return CurrentValue;
 	}
-	CalculateArrayLeastCommonMultiple(array) {
+	_CalculateArrayLeastCommonMultiple(array) {
 		var arr = array;
 		for (var i = 0; i < (arr.length - 1); i++) {
-			arr[i+1] = arr[i] * arr[i+1] / this.gcd(arr[i], arr[i + 1]);
+			arr[i+1] = arr[i] * arr[i+1] / this._gcd(arr[i], arr[i + 1]);
 		}
 		return arr[arr.length - 1];
 	}
-	gcd(a, b) {
+	_gcd(a, b) {
 		if (b) while ((a %= b) && (b %= a));
 		return a + b;
 	}

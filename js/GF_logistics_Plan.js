@@ -1,4 +1,3 @@
-var test_chant = 0;
 class Plan {
     constructor(length) {
         this.List = new Array(length);
