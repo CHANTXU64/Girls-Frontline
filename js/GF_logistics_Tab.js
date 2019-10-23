@@ -2,9 +2,8 @@ class Tab {
 	TotalTime = 1;
 	
 	setTime() {}
-	CheckDataLegalityAndCorrect_Time() {}
-	
-	TimeMustBeNonNegativeNumber(Hours, Minutes) {
+	_CheckDataLegalityAndCorrect_Time() {}
+	_TimeMustBeNonNegativeNumber(Hours, Minutes) {
 		if (is_Non_positive_number(Hours.val())) Hours.val(0);
 		if (is_Non_positive_number(Minutes.val())) Minutes.val(0);
 	}
@@ -13,17 +12,48 @@ class Tab {
 		return this.TotalTime;
 	}
 
+	CustomizePlanList() {
+		return [];
+	}
+	_set_Customizer(x) {
+		_Customizer = x;
+	}
+
 	getUnableLogistic() {
 		var Unable_0 = setUnableLogistic();
-		var Unable_1 = this.setUnableLogisticCustomize_1(Unable_0);
-		var Unable_2 = this.setUnableLogisticCustomize_2(Unable_1);
+		var Unable_1 = this._setUnableLogisticCustomize_1(Unable_0);
+		var Unable_2 = this._setUnableLogisticCustomize_2(Unable_1);
 		return Unable_2;
 	}
-	setUnableLogisticCustomize_1(UnableLogistic) {
+	_setUnableLogisticCustomize_1(UnableLogistic) {
+		this._CheckDataLegalityAndCorrect_LimitTime()
+		var startTime = parseFloat($("#Time_Limit_start").val());
+		var endTime = parseFloat($("#Time_Limit_end").val());
+		for (var i = 0; i < Q.length; i++) {
+            if (this._NotInLimitTime(Q[i][8], startTime, endTime)) {
+                if (UnableLogistic.indexOf(i) == -1) {
+                    UnableLogistic.push(i);
+                }
+            }
+		}
 		return UnableLogistic;
 	}
-	setUnableLogisticCustomize_2(UnableLogistic) {
+	_setUnableLogisticCustomize_2(UnableLogistic) {
 		return UnableLogistic;
+	}
+	_CheckDataLegalityAndCorrect_LimitTime() {
+		var start = $("#Time_Limit_start");
+		var end = $("#Time_Limit_end");
+		this._TimeMustBeNonNegativeNumber(start, end);
+		if (parseFloat(start.val()) > parseFloat(end.val())) {
+			alert("任务限制时间有问题！");
+			throw"--";
+		}
+	}
+	_NotInLimitTime(xtime, startTime, endTime) {
+		if (xtime < startTime && Math.abs(xtime - startTime) > 0.1) return true;
+		if (xtime > endTime && Math.abs(xtime - endTime) > 0.1) return true;
+		return false;
 	}
 
 	Calculate_Current(MissionsNumber, ResourceIncreasingRate) {}
@@ -36,7 +66,7 @@ class Tab {
 		return 1;
 	}
 
-	PrintTableCustomize(Plan, row) {
+	PrintTableCustomize(PlanList, row) {
 		return "";
 	}
 }
@@ -47,15 +77,15 @@ class Tab_Anytime extends Tab {
 			this.TotalTime = 1;
 			return;
 		}
-		this.CheckDataLegalityAndCorrect_Time();
+		this._CheckDataLegalityAndCorrect_Time();
 		var Hours = parseFloat($("#Time_Anytime_hours").val());
 		var Minutes = parseFloat($("#Time_Anytime_minutes").val());
 		this.TotalTime = Hours + Minutes / 60;
 	}
-	CheckDataLegalityAndCorrect_Time() {
+	_CheckDataLegalityAndCorrect_Time() {
 		var Hours = $("#Time_Anytime_hours");
 		var Minutes = $("#Time_Anytime_minutes");
-		this.TimeMustBeNonNegativeNumber(Hours, Minutes);
+		this._TimeMustBeNonNegativeNumber(Hours, Minutes);
 		var total_time = parseFloat(Hours.val()) + parseFloat(Minutes.val()) / 60;
 		if (total_time > 24) {
 			Hours.val(24);
@@ -70,7 +100,7 @@ class Tab_Anytime extends Tab {
 	Calculate_Current(Number, ResourceIncreasingRate) {
 		var CurrentValue = new Array(7);
 		for (var i = 0; i < 7; i++) {
-			CurrentValue[i] = Q[Number[0] - 1][i + 1] + Q[Number[1] - 1][i + 1] + Q[Number[2] - 1][i + 1] + Q[Number[3] - 1][i + 1];
+			CurrentValue[i] = Q[Number[0]][i + 1] + Q[Number[1]][i + 1] + Q[Number[2]][i + 1] + Q[Number[3]][i + 1];
 		}
 		for (var i = 0; i < 4; i++) {
 			CurrentValue[i] *= ResourceIncreasingRate;
@@ -94,25 +124,25 @@ class Tab_Anytime extends Tab {
 		else return this.TotalTime;
 	}
 
-	PrintTableCustomize(Plan, row) {
+	PrintTableCustomize(List, row) {
 		var tab = "";
-		tab += ("<td>" + (Math.round(Math.min(Q[Plan[row][0] - 1][8],Q[Plan[row][1] - 1][8],Q[Plan[row][2] - 1][8],Q[Plan[row][3] - 1][8]) * 100) / 100) + "h</td>");
-		tab += ("<td>" + (Math.round(Math.max(Q[Plan[row][0] - 1][8],Q[Plan[row][1] - 1][8],Q[Plan[row][2] - 1][8],Q[Plan[row][3] - 1][8]) * 100) / 100) + "h</td>");
+		tab += ("<td>" + (Math.round(Math.min(Q[List[row][0]][8],Q[List[row][1]][8],Q[List[row][2]][8],Q[List[row][3]][8]) * 100) / 100) + "h</td>");
+		tab += ("<td>" + (Math.round(Math.max(Q[List[row][0]][8],Q[List[row][1]][8],Q[List[row][2]][8],Q[List[row][3]][8]) * 100) / 100) + "h</td>");
 		return tab;
 	}
 }
 
 class Tab_SingleTime extends Tab {
 	setTime() {
-		this.CheckDataLegalityAndCorrect_Time();
+		this._CheckDataLegalityAndCorrect_Time();
 		var Hours = parseFloat($("#Time_SingleTime_hours").val());
 		var Minutes = parseFloat($("#Time_SingleTime_minutes").val());
 		this.TotalTime = Hours + Minutes / 60;
 	}
-	CheckDataLegalityAndCorrect_Time() {
+	_CheckDataLegalityAndCorrect_Time() {
 		var Hours = $("#Time_SingleTime_hours");
 		var Minutes = $("#Time_SingleTime_minutes");
-		this.TimeMustBeNonNegativeNumber(Hours, Minutes);
+		this._TimeMustBeNonNegativeNumber(Hours, Minutes);
 		var total_time = parseFloat(Hours.val()) + parseFloat(Minutes.val()) / 60;
 		if (total_time == 0) {
 			alert("时长不能为0！");
@@ -120,21 +150,21 @@ class Tab_SingleTime extends Tab {
 		}
 	}
 
-	setUnableLogisticCustomize_2(UnableLogistic) {//排除超时后勤
+	_setUnableLogisticCustomize_2(UnableLogistic) {//排除超时后勤
 		for (var i = 0; i < Q.length; i++) {
-            if (Q[i][8] > ShownTab.TotalTime) {
+            if (Q[i][8] > this.TotalTime) {
                 if (UnableLogistic.indexOf(i) == -1) {
                     UnableLogistic.push(i);
                 }
             }
 		}
-		
+		return UnableLogistic;
 	}
 
 	Calculate_Current(Number, ResourceIncreasingRate) {
 		var CurrentValue = new Array(7);
 		for (var i = 0; i < 7; i++) {
-			CurrentValue[i] = (Q[Number[0] - 1][i + 1] * Q[Number[0] - 1][8] + Q[Number[1] - 1][i + 1] * Q[Number[1] - 1][8] + Q[Number[2] - 1][i + 1] * Q[Number[2] - 1][8] + Q[Number[3] - 1][i + 1] * Q[Number[3] - 1][8]) / this.TotalTime;
+			CurrentValue[i] = (Q[Number[0]][i + 1] * Q[Number[0]][8] + Q[Number[1]][i + 1] * Q[Number[1]][8] + Q[Number[2]][i + 1] * Q[Number[2]][8] + Q[Number[3]][i + 1] * Q[Number[3]][8]) / this.TotalTime;
 		}
 		for (var i = 0; i < 4; i++) {
 			CurrentValue[i] *= ResourceIncreasingRate;
@@ -155,15 +185,15 @@ class Tab_SingleTime extends Tab {
 
 class Tab_Intervals extends Tab {
 	setTime() {
-		this.CheckDataLegalityAndCorrect_Time();
+		this._CheckDataLegalityAndCorrect_Time();
 		var Hours = parseFloat($("#Time_Intervals_hours").val());
 		var Minutes = parseFloat($("#Time_Intervals_minutes").val());
 		this.TotalTime = Hours + Minutes / 60;
 	}
-	CheckDataLegalityAndCorrect_Time() {
+	_CheckDataLegalityAndCorrect_Time() {
 		var Hours = $("#Time_Intervals_hours");
 		var Minutes = $("#Time_Intervals_minutes");
-		this.TimeMustBeNonNegativeNumber(Hours, Minutes);
+		this._TimeMustBeNonNegativeNumber(Hours, Minutes);
 		var total_time = parseFloat(Hours.val()) + parseFloat(Minutes.val()) / 60;
 		if (total_time == 0) {
 			var r = confirm("间隔时长为0，请使用\"随时能收后勤\"一栏来计算组合方案");
@@ -175,6 +205,10 @@ class Tab_Intervals extends Tab {
 		}
 	}
 
+	CustomizePlanList() {
+		return [0];//One_cycle_time
+	}
+
 	Calculate_Current(Number, ResourceIncreasingRate) {
 		var CurrentValue = new Array(7);
 		var times = [1, 1, 1, 1];
@@ -183,9 +217,9 @@ class Tab_Intervals extends Tab {
 			CurrentValue_n[i] = new Array(4);
 		}
 		for (var i = 0; i < 4; i++) {
-			while (times[i] * this.TotalTime < Q[Number[i] - 1][8]) times[i]++;
+			while (times[i] * this.TotalTime < Q[Number[i]][8]) times[i]++;
 			for (var ii = 0; ii < 7; ii++) {
-				CurrentValue_n[ii][i] = Q[Number[i] - 1][ii + 1] * Q[Number[i] - 1][8] / (times[i] * this.TotalTime);
+				CurrentValue_n[ii][i] = Q[Number[i]][ii + 1] * Q[Number[i]][8] / (times[i] * this.TotalTime);
 			}
 		}
 		for (var i = 0; i < 7; i++) {
@@ -194,7 +228,7 @@ class Tab_Intervals extends Tab {
 		for (var i = 0; i < 4; i++) {
 			CurrentValue[i] *= ResourceIncreasingRate;
 		}
-		One_cycle_time = this.CalculateArrayLeastCommonMultiple(times) * this.TotalTime;
+		this._set_Customizer(this.CalculateArrayLeastCommonMultiple(times) * this.TotalTime);
 		return CurrentValue;
 	}
 	CalculateArrayLeastCommonMultiple(array) {
@@ -215,10 +249,10 @@ class Tab_Intervals extends Tab {
 		return title;
 	}
 
-	PrintTableCustomize(Plan, row) {
+	PrintTableCustomize(List, row) {
 		var tab = "";
-		tab += ("<td>" + (Math.round(Math.max(Q[Plan[row][0] - 1][8],Q[Plan[row][1] - 1][8],Q[Plan[row][2] - 1][8],Q[Plan[row][3] - 1][8]) * 100) / 100) + "h</td>");
-		tab += ("<td>" + (Math.round(Plan[row][12] * 10) / 10) + "h</td>");
+		tab += ("<td>" + (Math.round(Math.max(Q[List[row][0]][8],Q[List[row][1]][8],Q[List[row][2]][8],Q[List[row][3]][8]) * 100) / 100) + "h</td>");
+		tab += ("<td>" + (Math.round(List[row].Customizer * 10) / 10) + "h</td>");
 		return tab;
 	}
 }

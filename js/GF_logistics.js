@@ -1,5 +1,7 @@
 //有问题
+var test_chant2;
 function Value(Weights, TargetValue, CurrentValue){
+    test_chant2++;
     return Weights[0] * Value_0(TargetValue[0], CurrentValue[0]) + Weights[1] * Value_0(TargetValue[1], CurrentValue[1]) + 
         Weights[2] * Value_0(TargetValue[2], CurrentValue[2]) + Weights[3] * Value_0(TargetValue[3], CurrentValue[3]);
 }
@@ -14,7 +16,7 @@ function Value_0(Target, Current) {
 }
 
 var ShownTab = new Tab_Anytime;
-var One_cycle_time = 0;
+var _Customizer;//Plan自定义暂存区
 
 function setUnableLogistic() {
     var Unable;
@@ -57,9 +59,8 @@ function ResourceValuesNotAll0(TargetValue) {
     return false;
 }
 function CorrectTargetValue_Resource(TargetValue) {
-    var CorrectionRate_Resource = 0;
     var Resource_CalibrationValue = 600;
-    CorrectionRate_Resource = Resource_CalibrationValue / ResourceValueMax(TargetValue);
+    var CorrectionRate_Resource = Resource_CalibrationValue / ResourceValueMax(TargetValue);
     for (var i = 0; i < 4; i++) {
         TargetValue[i] *= CorrectionRate_Resource;
     }
@@ -78,9 +79,8 @@ function ContractValuesNotAll0(TargetValue) {
     return false;
 }
 function CorrectTargetValue_Contract(TargetValue) {
-    var CorrectionRate_Contract = 0;
     var Contract_CalibrationValue = 1;
-    CorrectionRate_Contract = Contract_CalibrationValue / ContractValueMax(TargetValue);
+    var CorrectionRate_Contract = Contract_CalibrationValue / ContractValueMax(TargetValue);
     for (var i = 4; i < 7; i++) {
         TargetValue[i] *= CorrectionRate_Contract;
     }
@@ -91,62 +91,6 @@ function ContractValueMax(TargetValue) {
         max = Math.max(max, TargetValue[i]);
     }
     return max;
-}
-
-var test_chant = 0;
-class Plan {
-    constructor(length, width) {
-        this.List = new Array(length);
-        for (var i = 0; i < length; i++) {
-            this.List[i] = new Array(width);
-            for (var ii = 0; ii < width; ii++) {
-                this.List[i][ii] = 0;
-            }
-        }
-    }
-
-    push(MissionsNumber, CurrentValue, PlanValue) {
-        for (var i = this.List.length - 1; i >= 0; i--) {
-            if (this.ThisRowIsEmpty(i)) {
-                while (i != 0 && this.List[i - 1][0] == 0) i--;
-                this.PushIntoThisRow(i, MissionsNumber, CurrentValue, PlanValue);
-                continue;
-            }
-            if (PlanValue >= this.List[i][11]) {
-                test_chant += 1;
-                break;
-            }
-            else {
-                test_chant += 1;
-                if (i == this.List.length - 1) {
-                    this.PushIntoThisRow(i, MissionsNumber, CurrentValue, PlanValue);
-                }
-                else {
-                    this.ExchangeTheseTwoRows(i, MissionsNumber, CurrentValue, PlanValue);
-                }
-            }
-        }
-    }
-    ThisRowIsEmpty(RowNumber) {
-        if (this.List[RowNumber][0] == 0) return true;
-        else return false;
-    }
-    PushIntoThisRow(RowNumber, MissionsNumber, CurrentValue, PlanValue) {
-        for (var i = 0; i < 4; i++) {
-            this.List[RowNumber][i] = MissionsNumber[i];
-        }
-        for (var i = 0; i < 7; i++) {
-            this.List[RowNumber][i + 4] = CurrentValue[i];
-        }
-        this.List[RowNumber][11] = PlanValue;
-        this.List[RowNumber][12] = One_cycle_time;
-    }
-    ExchangeTheseTwoRows(RowNumber, MissionsNumber, CurrentValue, PlanValue) {
-        for (var i = 0; i < 12; i++) {
-            this.List[RowNumber + 1][i] = this.List[RowNumber][i];
-        }
-        this.PushIntoThisRow(RowNumber, MissionsNumber, CurrentValue, PlanValue);
-    }
 }
 
 function getTargetValue() {
@@ -191,6 +135,7 @@ function CheckDataLegalityAndCorrect_Weight() {
     }
 }
 
+//目标值为0, 对应权重也为0
 function AdjustWeightsByTargetValue(Weights, TargetValue) {
     for (var i = 0; i < 7; i++) {
         if (TargetValue[i] == 0) Weights[i] = 0;
@@ -200,22 +145,23 @@ function AdjustWeightsByTargetValue(Weights, TargetValue) {
 function Get_Plan_Main() {
     console.time("main");
     test_chant = 0;
+    test_chant2 = 0;
     ShownTab.setTime();
-    var plan = new Plan(100, 13);
+    var plan = new Plan(36);
     var TargetValue = getTargetValue();//目标值
     var Weights = getWeights();
     AdjustWeightsByTargetValue(Weights, TargetValue);
     var ResourceIncreasingRate = CalculateResourceIncreasingRate();
-    Q_init_Contract();//一定要在后面
+    Q_init_Contract();
     var UnableLogistic = ShownTab.getUnableLogistic();
     CorrectTargetValue(TargetValue);//目标值修正
-    for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
+    for (var n1 = 0; n1 < (Q.length - 3); n1++) {
         if (UnableLogistic.indexOf(n1) != -1) continue;
-        for (var n2 = n1 + 1; n2 <= (Q.length - 2); n2++) {
+        for (var n2 = n1 + 1; n2 < (Q.length - 2); n2++) {
             if (UnableLogistic.indexOf(n2) != -1) continue;
-            for (var n3 = n2 + 1; n3 <= (Q.length - 1); n3++) {
+            for (var n3 = n2 + 1; n3 < (Q.length - 1); n3++) {
                 if (UnableLogistic.indexOf(n3) != -1) continue;
-                for (var n4 = n3 + 1; n4 <= Q.length; n4++) {
+                for (var n4 = n3 + 1; n4 < Q.length; n4++) {
                     if (UnableLogistic.indexOf(n4) != -1) continue;
                     var CurrentValue = [0, 0, 0, 0, 0, 0, 0];
                     var Plan_value = 0;
@@ -228,5 +174,8 @@ function Get_Plan_Main() {
         }
     }
     console.timeEnd("main");
-    Print_Table(plan.List);
+    plan.print();
+    alert(test_chant);
+    alert(test_chant2);
+    alert(test_chant - test_chant2);
 }
