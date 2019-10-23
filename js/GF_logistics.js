@@ -1,5 +1,7 @@
+var test_chant_2 = 0;
 //有问题
 function Value(Weights, TargetValue, CurrentValue){
+    test_chant_2++;
     return Weights[0] * Value_0(TargetValue[0], CurrentValue[0]) + Weights[1] * Value_0(TargetValue[1], CurrentValue[1]) + 
         Weights[2] * Value_0(TargetValue[2], CurrentValue[2]) + Weights[3] * Value_0(TargetValue[3], CurrentValue[3]);
 }
@@ -19,13 +21,7 @@ function Value_0(Target, Current) {
     }
 }
 
-var Plan_length = 36;//Plan.lenth
-var Plan = new Array(Plan_length);//方案
-for (var i = 0; i < Plan.length; i++){
-    Plan[i] = new Array(13);
-}
 var Hours;
-var Plan_value;//该方案总价值
 var UnableLogistic;//不能进行的后勤
 var ResourceIncreasingRate;//大成功加成率
 var method = 1;
@@ -145,43 +141,115 @@ function CorrectTargetValue(TargetValue) {
     }
 }
 
-//将方案添加进方案列表中
-function Plan_Push(n1, n2, n3, n4, CurrentValue) {
-    for (var ii = 1; ii <= Plan.length; ii++) {
-        if (Plan[ii - 1][0] === 0) {
-            Plan[ii - 1][0] = n1;
-            Plan[ii - 1][1] = n2;
-            Plan[ii - 1][2] = n3;
-            Plan[ii - 1][3] = n4;
-            for (var i = 0; i < 7; i++) {
-                Plan[ii -1][i + 4] = CurrentValue[i];
+class Plan {
+    constructor(length, width) {
+        this.List = new Array(length);
+        for (var i = 0; i < length; i++) {
+            this.List[i] = new Array(width);
+            for (var ii = 0; ii < width; ii++) {
+                this.List[i][ii] = 0;
             }
-            Plan[ii - 1][11] = Plan_value;
-            if (method === 3) Plan[ii - 1][12] = One_cycle_time;
-            break;
-        }//方案列表未满 
-        if (Plan_value >= Plan[ii - 1][11]) continue;
-        else {
-            for (var iii = Plan.length; iii > ii; iii--) {
-                for (var i = 0; i < 12; i++) {
-                    Plan[iii - 1][i] = Plan[iii - 2][i];
-                }
-                if (method === 3) Plan[iii - 1][12] = Plan[iii - 2][12];
-            }
-            Plan[ii - 1][0] = n1;
-            Plan[ii - 1][1] = n2;
-            Plan[ii - 1][2] = n3;
-            Plan[ii - 1][3] = n4;
-            for (var i = 0; i < 7; i++) {
-                Plan[ii -1][i + 4] = CurrentValue[i];
-            }
-            Plan[ii - 1][11] = Plan_value;
-            if (method === 3) Plan[ii - 1][12] = One_cycle_time;
-            //改变方案
-            break;
         }
     }
+
+    push(MissionsNumber, CurrentValue, PlanValue) {
+        for (var i = this.List.length - 1; i >= 0; i--) {
+            if (this.ThisRowIsEmpty(i)) {
+                while (i != 0 && this.List[i - 1][0] == 0) i--;
+                this.PushIntoThisRow(i, MissionsNumber, CurrentValue, PlanValue);
+                continue;
+            }
+            if (PlanValue >= this.List[i][11]) {
+                test_chant += 1;
+                break;
+            }
+            else {
+                test_chant += 1;
+                if (i == this.List.length - 1) {
+                    this.PushIntoThisRow(i, MissionsNumber, CurrentValue, PlanValue);
+                }
+                else {
+                    this.ExchangeTheseTwoRows(i, MissionsNumber, CurrentValue, PlanValue);
+                }
+            }
+        }
+    }
+    ThisRowIsEmpty(RowNumber) {
+        if (this.List[RowNumber][0] == 0) return true;
+        else return false;
+    }
+    PushIntoThisRow(RowNumber, MissionsNumber, CurrentValue, PlanValue) {
+        for (var i = 0; i < 4; i++) {
+            this.List[RowNumber][i] = MissionsNumber[i];
+        }
+        for (var i = 0; i < 7; i++) {
+            this.List[RowNumber][i + 4] = CurrentValue[i];
+        }
+        this.List[RowNumber][11] = PlanValue;
+        if (method === 3) this.List[RowNumber][12] = One_cycle_time;
+    }
+    ExchangeTheseTwoRows(RowNumber, MissionsNumber, CurrentValue, PlanValue) {
+        for (var i = 0; i < 12; i++) {
+            this.List[RowNumber + 1][i] = this.List[RowNumber][i];
+        }
+        this.PushIntoThisRow(RowNumber, MissionsNumber, CurrentValue, PlanValue);
+    }
 }
+
+
+var test_chant = 0;
+//将方案添加进方案列表中
+// function Plan_Push(n1, n2, n3, n4, CurrentValue) {
+//     for (var ii = Plan.length; ii > 0; ii--) {
+//         if (Plan[ii - 1][0] === 0) {
+//             while (ii != 1 && Plan[ii - 2][0] == 0) ii--;
+//             Plan[ii - 1][0] = n1;
+//             Plan[ii - 1][1] = n2;
+//             Plan[ii - 1][2] = n3;
+//             Plan[ii - 1][3] = n4;
+//             for (var i = 0; i < 7; i++) {
+//                 Plan[ii -1][i + 4] = CurrentValue[i];
+//             }
+//             Plan[ii - 1][11] = Plan_value;
+//             if (method === 3) Plan[ii - 1][12] = One_cycle_time;
+//             break;
+//         }//方案列表未满 
+//         if (Plan_value >= Plan[ii - 1][11]) {
+//             test_chant += 1;
+//             break;
+//         }
+//         else {
+//             test_chant += 1;
+//             if (ii == Plan.length) {
+//                 Plan[ii - 1][0] = n1;
+//                 Plan[ii - 1][1] = n2;
+//                 Plan[ii - 1][2] = n3;
+//                 Plan[ii - 1][3] = n4;
+//                 for (var i = 0; i < 7; i++) {
+//                     Plan[ii -1][i + 4] = CurrentValue[i];
+//                 }
+//                 Plan[ii - 1][11] = Plan_value;
+//                 if (method === 3) Plan[ii - 1][12] = One_cycle_time;
+//             }
+//             else {
+//                 for (var i = 0; i < 12; i++) {
+//                     Plan[ii][i] = Plan[ii - 1][i];
+//                 }
+//                 if (method === 3) Plan[ii][12] = Plan[ii - 1][12];
+//                 Plan[ii - 1][0] = n1;
+//                 Plan[ii - 1][1] = n2;
+//                 Plan[ii - 1][2] = n3;
+//                 Plan[ii - 1][3] = n4;
+//                 for (var i = 0; i < 7; i++) {
+//                     Plan[ii -1][i + 4] = CurrentValue[i];
+//                 }
+//                 Plan[ii - 1][11] = Plan_value;
+//                 if (method === 3) Plan[ii - 1][12] = One_cycle_time;
+//             }
+//             //改变方案
+//         }
+//     }
+// }
 
 function getTargetValue() {
     CheckDataLegalityAndCorrect_Target();
@@ -232,12 +300,10 @@ function AdjustWeightsByTargetValue(Weights, TargetValue) {
 }
 
 function Get_Plan_Main() {
+    test_chant = 0;
+    test_chant_2 = 0;
     Hours = 0;
-    for (var i = 0; i < Plan_length; i++){
-        for (var ii = 0; ii < 13; ii++){
-            Plan[i][ii] = 0;
-        }
-    }
+    var plan = new Plan(1000, 13)
     // switch (method) {
     //     case 1:
     //         JudgeEmpty($("#Time_Anytime_hours"));
@@ -256,7 +322,6 @@ function Get_Plan_Main() {
     var Weights = getWeights();
     AdjustWeightsByTargetValue(Weights, TargetValue);
     var CurrentValue = [0, 0, 0, 0, 0, 0, 0];//现值
-    Plan_value = 0;
     ResourceIncreasingRate = CalculateResourceIncreasingRate();
     UnableLogistic = setUnableLogistic(parseFloat($("#MapLimit").val()));
     Q_init_Contract();//一定要在后面
@@ -304,6 +369,7 @@ function Get_Plan_Main() {
                 if (UnableLogistic.indexOf(n3) != -1) continue;
                 for (var n4 = n3 + 1; n4 <= Q.length; n4++) {
                     if (UnableLogistic.indexOf(n4) != -1) continue;
+                    var Plan_value = 0;
                     switch(method) {
                         case 1:
                             for (var i = 0; i < 4; i++) {
@@ -353,12 +419,13 @@ function Get_Plan_Main() {
                             break;
                     }
                     Plan_value = Value(Weights, TargetValue, CurrentValue);
-                    Plan_Push(n1, n2, n3, n4, CurrentValue);
+                    var MissionsNumber = [n1, n2, n3, n4];
+                    plan.push(MissionsNumber, CurrentValue, Plan_value)
                 }
             }
         }
     }
-    Print_Table(method, Plan, Hours);
+    Print_Table(method, plan.List, Hours);
 }
 
 //求一个数组的最小公倍数
