@@ -8,22 +8,15 @@ function Value(Weights, TargetValue, CurrentValue){
 function Value_0(Target, Current) {
     if (Target == 0) return 0;
     if (Target > Current) {//Y=5.5*x^3+4.5*x
-        // var ratio = (Target - Current) / Target;
-        // var Value = (Target - Current) * (5.5 * Math.pow(ratio, 3) + 4.5 * ratio);
-        // return Value;
         return (Target - Current) * (5.5 * Math.pow((Target - Current) / Target, 3) + 4.5 * (Target - Current) / Target);
     }
     else {//Y=-0.04*x^3 -0.01*x
-        // var ratio = (Target - Current) / Target;
-        // var Value = (Current - Target) * (- 0.04 * Math.pow(ratio, 3) - 0.01 * ratio);
-        // return Value;
         return (Current - Target) * (- 0.04 * Math.pow((Target - Current) / Target, 3) - 0.01 * (Target - Current) / Target);
     }
 }
 
 var Hours;
 var UnableLogistic;//不能进行的后勤
-var ResourceIncreasingRate;//大成功加成率
 var method = 1;
 var One_cycle_time;
 
@@ -55,7 +48,7 @@ function CalculateResourceIncreasingRate() {
 }
 
 //目标值修正函数
-function CorrectTargetValue(TargetValue) { 
+function CorrectTargetValue(TargetValue, ResourceIncreasingRate) { 
     var CorrectionFactor_Resource = 0; //资源目标值修正系数
     var CorrectionFactor_Contract = 0; //契约目标值修正系数
     var X = 0; var Xi;//MT' or AT' or RT' or PT'
@@ -141,6 +134,7 @@ function CorrectTargetValue(TargetValue) {
     }
 }
 
+var test_chant = 0;
 class Plan {
     constructor(length, width) {
         this.List = new Array(length);
@@ -196,61 +190,6 @@ class Plan {
     }
 }
 
-
-var test_chant = 0;
-//将方案添加进方案列表中
-// function Plan_Push(n1, n2, n3, n4, CurrentValue) {
-//     for (var ii = Plan.length; ii > 0; ii--) {
-//         if (Plan[ii - 1][0] === 0) {
-//             while (ii != 1 && Plan[ii - 2][0] == 0) ii--;
-//             Plan[ii - 1][0] = n1;
-//             Plan[ii - 1][1] = n2;
-//             Plan[ii - 1][2] = n3;
-//             Plan[ii - 1][3] = n4;
-//             for (var i = 0; i < 7; i++) {
-//                 Plan[ii -1][i + 4] = CurrentValue[i];
-//             }
-//             Plan[ii - 1][11] = Plan_value;
-//             if (method === 3) Plan[ii - 1][12] = One_cycle_time;
-//             break;
-//         }//方案列表未满 
-//         if (Plan_value >= Plan[ii - 1][11]) {
-//             test_chant += 1;
-//             break;
-//         }
-//         else {
-//             test_chant += 1;
-//             if (ii == Plan.length) {
-//                 Plan[ii - 1][0] = n1;
-//                 Plan[ii - 1][1] = n2;
-//                 Plan[ii - 1][2] = n3;
-//                 Plan[ii - 1][3] = n4;
-//                 for (var i = 0; i < 7; i++) {
-//                     Plan[ii -1][i + 4] = CurrentValue[i];
-//                 }
-//                 Plan[ii - 1][11] = Plan_value;
-//                 if (method === 3) Plan[ii - 1][12] = One_cycle_time;
-//             }
-//             else {
-//                 for (var i = 0; i < 12; i++) {
-//                     Plan[ii][i] = Plan[ii - 1][i];
-//                 }
-//                 if (method === 3) Plan[ii][12] = Plan[ii - 1][12];
-//                 Plan[ii - 1][0] = n1;
-//                 Plan[ii - 1][1] = n2;
-//                 Plan[ii - 1][2] = n3;
-//                 Plan[ii - 1][3] = n4;
-//                 for (var i = 0; i < 7; i++) {
-//                     Plan[ii -1][i + 4] = CurrentValue[i];
-//                 }
-//                 Plan[ii - 1][11] = Plan_value;
-//                 if (method === 3) Plan[ii - 1][12] = One_cycle_time;
-//             }
-//             //改变方案
-//         }
-//     }
-// }
-
 function getTargetValue() {
     CheckDataLegalityAndCorrect_Target();
     var arr = new Array(7);
@@ -303,7 +242,7 @@ function Get_Plan_Main() {
     test_chant = 0;
     test_chant_2 = 0;
     Hours = 0;
-    var plan = new Plan(1000, 13)
+    var plan = new Plan(100, 13)
     // switch (method) {
     //     case 1:
     //         JudgeEmpty($("#Time_Anytime_hours"));
@@ -322,7 +261,7 @@ function Get_Plan_Main() {
     var Weights = getWeights();
     AdjustWeightsByTargetValue(Weights, TargetValue);
     var CurrentValue = [0, 0, 0, 0, 0, 0, 0];//现值
-    ResourceIncreasingRate = CalculateResourceIncreasingRate();
+    var ResourceIncreasingRate = CalculateResourceIncreasingRate();
     UnableLogistic = setUnableLogistic(parseFloat($("#MapLimit").val()));
     Q_init_Contract();//一定要在后面
     switch (method) {
@@ -360,7 +299,7 @@ function Get_Plan_Main() {
             }
             break;
     }
-    CorrectTargetValue(TargetValue);//目标值修正
+    CorrectTargetValue(TargetValue, ResourceIncreasingRate);//目标值修正
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
         if (UnableLogistic.indexOf(n1) != -1) continue;
         for (var n2 = n1 + 1; n2 <= (Q.length - 2); n2++) {
