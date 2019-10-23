@@ -86,10 +86,6 @@ function ClearQContract() {
         Q[i - 1][7] = 0;
     }
 }
-function IsGreatSuccessRateUp() {
-    if (document.getElementById('GreatSuccessRateUp').checked) return 1;
-    else return 0;
-}
 function EstimateLevels() {
     CheckDataLegalityAndCorrect_GreatSuccessRate();
     var GreatSuccessRate = $("#GreatSuccessRate").val();

@@ -15,8 +15,7 @@ function Value_0(Target, Current) {
     }
 }
 
-var Hours;
-var UnableLogistic;//不能进行的后勤
+var ShownTab;
 var method = 1;
 var One_cycle_time;
 
@@ -48,90 +47,51 @@ function CalculateResourceIncreasingRate() {
 }
 
 //目标值修正函数
-function CorrectTargetValue(TargetValue, ResourceIncreasingRate) { 
-    var CorrectionFactor_Resource = 0; //资源目标值修正系数
-    var CorrectionFactor_Contract = 0; //契约目标值修正系数
-    var X = 0; var Xi;//MT' or AT' or RT' or PT'
-    var XX = 0; var XXi;//TT' or ET' or QT'
-    if (TargetValue[0] >= TargetValue[1] && TargetValue[0] >= TargetValue[2] && TargetValue[0] >= TargetValue[3]) Xi = 1;
-    else {
-        if (TargetValue[1] >= TargetValue[2] && TargetValue[1] >= TargetValue[3]) Xi = 2;
-        else {
-            if (TargetValue[2] >= TargetValue[3]) Xi = 3;
-            else Xi = 4;
-        }
+function CorrectTargetValue(TargetValue) {
+    if (ResourceValuesNotAll0(TargetValue)) CorrectTargetValue_Resource(TargetValue);
+    if (ContractValuesNotAll0(TargetValue)) CorrectTargetValue_Contract(TargetValue);
+}
+function ResourceValuesNotAll0(TargetValue) {
+    for (var i = 0; i < 4; i++) {
+        if (TargetValue[i] != 0) return true;
     }
-    if (TargetValue[4] >= TargetValue[5] && TargetValue[4] >= TargetValue[6]) XXi = 5;
-    else {
-        if (TargetValue[5] >= TargetValue[6]) XXi = 6;
-        else XXi = 7;
+    return false;
+}
+function CorrectTargetValue_Resource(TargetValue) {
+    var CorrectionRate_Resource = 0;
+    var Resource_CalibrationValue = 600;
+    CorrectionRate_Resource = Resource_CalibrationValue / ResourceValueMax(TargetValue);
+    for (var i = 0; i < 4; i++) {
+        TargetValue[i] *= CorrectionRate_Resource;
     }
-    for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
-        if (UnableLogistic.indexOf(n1) != -1) continue;
-        for (var n2 = n1 + 1; n2 <= (Q.length - 2); n2++) {
-            if (UnableLogistic.indexOf(n2) != -1) continue;
-            for (var n3 = n2 + 1; n3 <= (Q.length - 1); n3++) {
-                if (UnableLogistic.indexOf(n3) != -1) continue;
-                for (var n4 = n3 + 1; n4 <= Q.length; n4++) {
-                    if (UnableLogistic.indexOf(n4) != -1) continue;
-                    switch (method) {
-                        case 1:
-                            X = Math.max(X, (ResourceIncreasingRate * (Q[n1 - 1][Xi] + Q[n2 - 1][Xi] + Q[n3 - 1][Xi] + Q[n4 - 1][Xi])));
-                            XX = Math.max(XX, (Q[n1 - 1][XXi] + Q[n2 - 1][XXi] + Q[n3 - 1][XXi] + Q[n4 - 1][XXi]));
-                            break;
-                        case 2:
-                            X = Math.max(X, (ResourceIncreasingRate * (Q[n1-1][Xi] * Q[n1-1][8] + Q[n2-1][Xi] * Q[n2-1][8] + Q[n3-1][Xi] * Q[n3-1][8] + Q[n4-1][Xi] * Q[n4-1][8]) / Hours));
-                            XX = Math.max(XX, (Q[n1-1][XXi] * Q[n1-1][8] + Q[n2-1][XXi] * Q[n2-1][8] + Q[n3-1][XXi] * Q[n3-1][8] + Q[n4-1][XXi] * Q[n4-1][8]) / Hours);
-                            break;
-                        case 3:
-                            var times = [1, 1, 1, 1];
-                            var number = [n1, n2, n3, n4];
-                            var X_n = [0, 0, 0, 0];
-                            var XX_n = [0, 0, 0, 0];
-                            for (var i = 0; i < 4; i++) {
-                                while (times[i] * Hours < Q[number[i] - 1][8]) times[i] += 1;
-                                X_n[i] = Q[number[i] - 1][Xi] * Q[number[i] - 1][8] / (times[i] * Hours);
-                                XX_n[i] = Q[number[i] - 1][XXi] * Q[number[i] - 1][8] / (times[i] * Hours);
-                            }
-                            X = Math.max(X, (ResourceIncreasingRate * (X_n[0] + X_n[1] + X_n[2] + X_n[3])));
-                            XX = Math.max(XX, (XX_n[0] + XX_n[1] + XX_n[2] + XX_n[3]));
-                            break;
-                    }
-                }
-            }
-        }
+}
+function ResourceValueMax(TargetValue) {
+    var max = 0;
+    for (var i = 0; i < 4; i++) {
+        max = Math.max(max, TargetValue[i]);
     }
-    switch (Xi) {
-        case 1:
-            CorrectionFactor_Resource = X / TargetValue[0]; break;
-        case 2:
-            CorrectionFactor_Resource = X / TargetValue[1]; break;
-        case 3:
-            CorrectionFactor_Resource = X / TargetValue[2]; break;
-        case 4:
-            CorrectionFactor_Resource = X / TargetValue[3]; break;
+    return max;
+}
+function ContractValuesNotAll0(TargetValue) {
+    for (var i = 4; i < 7; i++) {
+        if (TargetValue[i] != 0) return true;
     }
-    switch (XXi) {
-        case 5:
-            CorrectionFactor_Contract = XX / TargetValue[4]; break;
-        case 6:
-            CorrectionFactor_Contract = XX / TargetValue[5]; break;
-        case 7:
-            CorrectionFactor_Contract = XX / TargetValue[6]; break;
+    return false;
+}
+function CorrectTargetValue_Contract(TargetValue) {
+    var CorrectionRate_Contract = 0;
+    var Contract_CalibrationValue = 1;
+    CorrectionRate_Contract = Contract_CalibrationValue / ContractValueMax(TargetValue);
+    for (var i = 4; i < 7; i++) {
+        TargetValue[i] *= CorrectionRate_Contract;
     }
-    if (TargetValue[0] == 0 && TargetValue[1] == 0 && TargetValue[2] == 0 && TargetValue[3] == 0) ;
-    else {
-        TargetValue[0] *= CorrectionFactor_Resource;
-        TargetValue[1] *= CorrectionFactor_Resource;
-        TargetValue[2] *= CorrectionFactor_Resource;
-        TargetValue[3] *= CorrectionFactor_Resource;
+}
+function ContractValueMax(TargetValue) {
+    var max = 0;
+    for (var i = 4; i < 7; i++) {
+        max = Math.max(max, TargetValue[i]);
     }
-    if (TargetValue[4] == 0 && TargetValue[5] == 0 && TargetValue[6] == 0) ;
-    else {
-        TargetValue[4] *= CorrectionFactor_Contract;
-        TargetValue[5] *= CorrectionFactor_Contract;
-        TargetValue[6] *= CorrectionFactor_Contract;
-    }
+    return max;
 }
 
 var test_chant = 0;
@@ -241,7 +201,7 @@ function AdjustWeightsByTargetValue(Weights, TargetValue) {
 function Get_Plan_Main() {
     test_chant = 0;
     test_chant_2 = 0;
-    Hours = 0;
+    var Hours = 0;
     var plan = new Plan(100, 13)
     // switch (method) {
     //     case 1:
@@ -262,7 +222,7 @@ function Get_Plan_Main() {
     AdjustWeightsByTargetValue(Weights, TargetValue);
     var CurrentValue = [0, 0, 0, 0, 0, 0, 0];//现值
     var ResourceIncreasingRate = CalculateResourceIncreasingRate();
-    UnableLogistic = setUnableLogistic(parseFloat($("#MapLimit").val()));
+    var UnableLogistic = setUnableLogistic(parseFloat($("#MapLimit").val()));
     Q_init_Contract();//一定要在后面
     switch (method) {
         case 1:
@@ -299,7 +259,7 @@ function Get_Plan_Main() {
             }
             break;
     }
-    CorrectTargetValue(TargetValue, ResourceIncreasingRate);//目标值修正
+    CorrectTargetValue(TargetValue);//目标值修正
     for (var n1 = 1; n1 <= (Q.length - 3); n1++) {
         if (UnableLogistic.indexOf(n1) != -1) continue;
         for (var n2 = n1 + 1; n2 <= (Q.length - 2); n2++) {

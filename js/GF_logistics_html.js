@@ -39,18 +39,25 @@ function TimeLimit_disable() {
 
 //同步更新大成功UP增加概率
 $(function (){
-    $("#Probability").on('input propertychange',function() {
-        var UpRate;
-        if (document.getElementById('GreatSuccessRateUp').checked) {
-            if ($("#Probability").val() < 15) UpRate = 15;
-            if ($("#Probability").val() > 60) UpRate = 30;
-            if ($("#Probability").val() <= 60 && $("#Probability").val() >= 15) {
-                UpRate = 15 + Math.floor(($("#Probability").val() - 15) / 3);
+    $("#GreatSuccessRate").on('input propertychange',function() {
+        if (IsGreatSuccessRateUp()) {
+            var UpRate;
+            switch(true) {
+                case $("#GreatSuccessRate").val() < 15:
+                    UpRate = 15; break;
+                case $("#GreatSuccessRate").val() > 60:
+                    UpRate = 30; break;
+                default :
+                    UpRate = 15 + Math.floor(($("#GreatSuccessRate").val() - 15) / 3);
             }
-            document.getElementById('Display_Prob').innerHTML = ("+" + UpRate);
+            document.getElementById('Display_UPRate').innerHTML = ("+" + UpRate);
         }
     });
 })
+function IsGreatSuccessRateUp() {
+    if (document.getElementById('GreatSuccessRateUp').checked) return 1;
+    else return 0;
+}
 
 function Tab_Anytime_hourorday() {
     var hours = parseFloat($("#Time_Anytime_hours").val()) + parseFloat($("#Time_Anytime_minutes").val()) / 60;
@@ -83,7 +90,7 @@ function Tab_Anytime_hourorday() {
 function Function_GreatSuccessRateUP() {
     CheckDataLegalityAndCorrect_GreatSuccessRate();
     var UpRate = 0;
-    if (document.getElementById('GreatSuccessRateUp').checked) {
+    if (IsGreatSuccessRateUp()) {
         UpRate = 15 + Math.floor(($("#GreatSuccessRate").val() - 15) / 3);
         document.getElementById('Display_UPRate').innerHTML = ("+" + UpRate);
         return UpRate;
