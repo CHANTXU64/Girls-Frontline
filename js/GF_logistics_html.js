@@ -10,18 +10,22 @@ $(function (){$("[data-toggle='tooltip']").tooltip();})
 //标签页
 $(function (){
     $('[href=#Tab_Anytime]').on("shown.bs.tab", function(){
-        method = 1;
-        if (document.getElementById('toggle-event').checked) $(".Demand span").html("每天需求量");
-        else $(".Demand span").html("平均每小时需求量");
+        ShownTab = new Tab_Anytime;
+        if (document.getElementById('toggle-event').checked) {
+            $(".Demand span").html("每天需求量");
+        }
+        else {
+            $(".Demand span").html("平均每小时需求量");
+        }
         TimeLimit_enable();
     });
     $('[href=#Tab_SingleTime]').on("shown.bs.tab", function(){
-        method = 2;
+        ShownTab = new Tab_SingleTime;
         $(".Demand span").html("单次需求量");
         TimeLimit_disable();
     });
     $('[href=#Tab_Intervals]').on("shown.bs.tab", function(){
-        method = 3;
+        ShownTab = new Tab_Intervals;
         $(".Demand span").html("平均每小时需求量");
         TimeLimit_disable();
     });
