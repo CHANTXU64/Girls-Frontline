@@ -1,19 +1,19 @@
 var ShownTab = new Tab_Anytime;
-var _Customizer;//Plan自定义暂存区
+var plan;
 var test_chant = 0;
 var test_chant2;
 
-return function Get_Plan_Main() {
+function Get_Plan_Main() {
     console.time("main");
     test_chant = 0;
     test_chant2 = 0;
+    Q_init_Contract();
     ShownTab.setTime();
-    var plan = new Plan(36);
-    var TargetValue = getTargetValue();//目标值
+    plan = new Plan(36);
+    var TargetValue = getTargetValue();
     var Weights = getWeights();
     AdjustWeightsByTargetValue(Weights, TargetValue);
     var ResourceIncreasingRate = CalculateResourceIncreasingRate();
-    Q_init_Contract();
     var UnableLogistic = ShownTab.getUnableLogistic();
     CorrectTargetValue(TargetValue);//目标值修正
     for (var n1 = 0; n1 < (Q.length - 3); n1++) {
@@ -36,9 +36,9 @@ return function Get_Plan_Main() {
     }
     console.timeEnd("main");
     plan.print();
-    alert(test_chant);
-    alert(test_chant2);
-    alert(test_chant - test_chant2);
+    // alert(test_chant);
+    // alert(test_chant2);
+    // alert(test_chant - test_chant2);
 }
 
 function getTargetValue() {
@@ -51,6 +51,10 @@ function getTargetValue() {
     arr[4] = parseFloat($("#TT").val());
     arr[5] = parseFloat($("#ET").val());
     arr[6] = parseFloat($("#QT").val());
+    if (arr.toString() == "0,0,0,0,0,0,0") {
+        alert("需求不能全为0！");
+        throw"--";
+    }
     return arr;
 }
 function CheckDataLegalityAndCorrect_Target() {
@@ -90,7 +94,6 @@ function AdjustWeightsByTargetValue(Weights, TargetValue) {
     }
 }
 
-//计算大成功资源加成率
 function CalculateResourceIncreasingRate() {
     var GreatSuccessRate_UP = Function_GreatSuccessRateUP();
     var GreatSuccessRate = parseFloat($("#GreatSuccessRate").val());

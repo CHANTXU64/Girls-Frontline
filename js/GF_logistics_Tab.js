@@ -15,8 +15,8 @@ class Tab {
 	CustomizePlanList() {
 		return [];
 	}
-	_set_Customizer(x) {
-		_Customizer = x;
+	_set_PlanCustomizer(x) {
+		plan._Customizer = x;
 	}
 
 	getUnableLogistic() {
@@ -51,12 +51,18 @@ class Tab {
 		}
 	}
 	_NotInLimitTime(xtime, startTime, endTime) {
-		if (xtime < startTime && Math.abs(xtime - startTime) > 0.1) return true;
-		if (xtime > endTime && Math.abs(xtime - endTime) > 0.1) return true;
+		if (xtime < startTime && Math.abs(xtime - startTime) > 0.02) return true;
+		if (xtime > endTime && Math.abs(xtime - endTime) > 0.02) return true;
 		return false;
 	}
 
 	Calculate_Current(MissionsNumber, ResourceIncreasingRate) {}
+	_CalculateCurrentByRate(CurrentValue, ResourceIncreasingRate) {
+		for (var i = 0; i < 4; i++) {
+			CurrentValue[i] *= ResourceIncreasingRate;
+		}
+		return CurrentValue;
+	}
 
 	PrintPlanTableTitle() {}
 	_title = '<thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th>';
@@ -66,7 +72,7 @@ class Tab {
 		return 1;
 	}
 
-	PrintTableCustomize(PlanList, row) {
+	PrintTableCustomize(row) {
 		return "";
 	}
 }
@@ -102,10 +108,7 @@ class Tab_Anytime extends Tab {
 		for (var i = 0; i < 7; i++) {
 			CurrentValue[i] = Q[Number[0]][i + 1] + Q[Number[1]][i + 1] + Q[Number[2]][i + 1] + Q[Number[3]][i + 1];
 		}
-		for (var i = 0; i < 4; i++) {
-			CurrentValue[i] *= ResourceIncreasingRate;
-		}
-		return CurrentValue;
+		return this._CalculateCurrentByRate(CurrentValue, ResourceIncreasingRate);
 	}
 
 	PrintPlanTableTitle() {
@@ -124,10 +127,10 @@ class Tab_Anytime extends Tab {
 		else return this.TotalTime;
 	}
 
-	PrintTableCustomize(List, row) {
+	PrintTableCustomize(row) {
 		var tab = "";
-		tab += ("<td>" + (Math.round(Math.min(Q[List[row][0]][8],Q[List[row][1]][8],Q[List[row][2]][8],Q[List[row][3]][8]) * 100) / 100) + "h</td>");
-		tab += ("<td>" + (Math.round(Math.max(Q[List[row][0]][8],Q[List[row][1]][8],Q[List[row][2]][8],Q[List[row][3]][8]) * 100) / 100) + "h</td>");
+		tab += ("<td>" + (Math.round(Math.min(Q[plan.List[row][0]][8],Q[plan.List[row][1]][8],Q[plan.List[row][2]][8],Q[plan.List[row][3]][8]) * 100) / 100) + "h</td>");
+		tab += ("<td>" + (Math.round(Math.max(Q[plan.List[row][0]][8],Q[plan.List[row][1]][8],Q[plan.List[row][2]][8],Q[plan.List[row][3]][8]) * 100) / 100) + "h</td>");
 		return tab;
 	}
 }
@@ -166,10 +169,7 @@ class Tab_SingleTime extends Tab {
 		for (var i = 0; i < 7; i++) {
 			CurrentValue[i] = (Q[Number[0]][i + 1] * Q[Number[0]][8] + Q[Number[1]][i + 1] * Q[Number[1]][8] + Q[Number[2]][i + 1] * Q[Number[2]][8] + Q[Number[3]][i + 1] * Q[Number[3]][8]) / this.TotalTime;
 		}
-		for (var i = 0; i < 4; i++) {
-			CurrentValue[i] *= ResourceIncreasingRate;
-		}
-		return CurrentValue;
+		return this._CalculateCurrentByRate(CurrentValue, ResourceIncreasingRate);
 	}
 
 	PrintPlanTableTitle() {
@@ -222,14 +222,11 @@ class Tab_Intervals extends Tab {
 				CurrentValue_n[ii][i] = Q[Number[i]][ii + 1] * Q[Number[i]][8] / (times[i] * this.TotalTime);
 			}
 		}
+		this._set_PlanCustomizer(this._CalculateArrayLeastCommonMultiple(times) * this.TotalTime);
 		for (var i = 0; i < 7; i++) {
 			CurrentValue[i] = CurrentValue_n[i][0] + CurrentValue_n[i][1] + CurrentValue_n[i][2] + CurrentValue_n[i][3];
 		}
-		for (var i = 0; i < 4; i++) {
-			CurrentValue[i] *= ResourceIncreasingRate;
-		}
-		this._set_Customizer(this._CalculateArrayLeastCommonMultiple(times) * this.TotalTime);
-		return CurrentValue;
+		return this._CalculateCurrentByRate(CurrentValue, ResourceIncreasingRate);
 	}
 	_CalculateArrayLeastCommonMultiple(array) {
 		var arr = array;
@@ -249,10 +246,10 @@ class Tab_Intervals extends Tab {
 		return title;
 	}
 
-	PrintTableCustomize(List, row) {
+	PrintTableCustomize(row) {
 		var tab = "";
-		tab += ("<td>" + (Math.round(Math.max(Q[List[row][0]][8],Q[List[row][1]][8],Q[List[row][2]][8],Q[List[row][3]][8]) * 100) / 100) + "h</td>");
-		tab += ("<td>" + (Math.round(List[row].Customizer * 10) / 10) + "h</td>");
+		tab += ("<td>" + (Math.round(Math.max(Q[plan.List[row][0]][8],Q[plan.List[row][1]][8],Q[plan.List[row][2]][8],Q[plan.List[row][3]][8]) * 100) / 100) + "h</td>");
+		tab += ("<td>" + (Math.round(plan.List[row].Customizer * 10) / 10) + "h</td>");
 		return tab;
 	}
 }
