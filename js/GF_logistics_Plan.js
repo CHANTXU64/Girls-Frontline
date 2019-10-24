@@ -6,7 +6,7 @@ class Plan {
             this.List[i].Customizer = ShownTab.CustomizePlanList();
             this.List[i].Value = 0;//该方案价值
         }
-        this._Customizer = this.List[0].Customizer;//暂存区
+        _Customizer = this.List[0].Customizer;
     }
     push(MissionsNumber, CurrentValue, PlanValue) {
         this._MissionsNumber = MissionsNumber;
@@ -36,7 +36,7 @@ class Plan {
             this.List[RowNumber][i + 4] = this._CurrentValue[i];
         }
         this.List[RowNumber].Value = this._PlanValue;
-        this.List[RowNumber].Customizer = this._Customizer;
+        this.List[RowNumber].Customizer = _Customizer;
     }
     _SortListByValue(thisrow) {
         for (var i = thisrow - 1; i >= 0; i--) {
@@ -68,7 +68,7 @@ class Plan {
             tab += ("<tr><td>" + (i+1) + "</td>");
             tab += this._PrintMissionsNumber(i);
             tab += this._PrintResourceContract(i);
-            tab += ShownTab.PrintTableCustomize(i);
+            tab += ShownTab.PrintTableCustomize(this, i);
             tab += '</tr>';
         }
         tab += '</tbody>'

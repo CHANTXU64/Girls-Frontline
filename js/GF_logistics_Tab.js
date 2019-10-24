@@ -16,7 +16,7 @@ class Tab {
 		return [];
 	}
 	_set_PlanCustomizer(x) {
-		plan._Customizer = x;
+		_Customizer = x;
 	}
 
 	getUnableLogistic() {
@@ -72,7 +72,7 @@ class Tab {
 		return 1;
 	}
 
-	PrintTableCustomize(row) {
+	PrintTableCustomize(plan, row) {
 		return "";
 	}
 }
@@ -127,7 +127,7 @@ class Tab_Anytime extends Tab {
 		else return this.TotalTime;
 	}
 
-	PrintTableCustomize(row) {
+	PrintTableCustomize(plan, row) {
 		var tab = "";
 		tab += ("<td>" + (Math.round(Math.min(Q[plan.List[row][0]][8],Q[plan.List[row][1]][8],Q[plan.List[row][2]][8],Q[plan.List[row][3]][8]) * 100) / 100) + "h</td>");
 		tab += ("<td>" + (Math.round(Math.max(Q[plan.List[row][0]][8],Q[plan.List[row][1]][8],Q[plan.List[row][2]][8],Q[plan.List[row][3]][8]) * 100) / 100) + "h</td>");
@@ -246,7 +246,7 @@ class Tab_Intervals extends Tab {
 		return title;
 	}
 
-	PrintTableCustomize(row) {
+	PrintTableCustomize(plan, row) {
 		var tab = "";
 		tab += ("<td>" + (Math.round(Math.max(Q[plan.List[row][0]][8],Q[plan.List[row][1]][8],Q[plan.List[row][2]][8],Q[plan.List[row][3]][8]) * 100) / 100) + "h</td>");
 		tab += ("<td>" + (Math.round(plan.List[row].Customizer * 10) / 10) + "h</td>");

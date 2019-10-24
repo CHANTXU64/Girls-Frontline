@@ -1,5 +1,5 @@
 var ShownTab = new Tab_Anytime;
-var plan;
+var _Customizer;//Plan暂存区
 var test_chant = 0;
 var test_chant2;
 
@@ -9,13 +9,13 @@ function Get_Plan_Main() {
     test_chant2 = 0;
     Q_init_Contract();
     ShownTab.setTime();
-    plan = new Plan(36);
+    var plan = new Plan(36);
     var TargetValue = getTargetValue();
     var Weights = getWeights();
     AdjustWeightsByTargetValue(Weights, TargetValue);
     var ResourceIncreasingRate = CalculateResourceIncreasingRate();
     var UnableLogistic = ShownTab.getUnableLogistic();
-    CorrectTargetValue(TargetValue);//目标值修正
+    TargetValue = CorrectTargetValue(TargetValue);//目标值修正
     for (var n1 = 0; n1 < (Q.length - 3); n1++) {
         if (UnableLogistic.indexOf(n1) != -1) continue;
         for (var n2 = n1 + 1; n2 < (Q.length - 2); n2++) {
@@ -103,46 +103,36 @@ function CalculateResourceIncreasingRate() {
 
 //目标值修正函数
 function CorrectTargetValue(TargetValue) {
-    if (ResourceValuesNotAll0(TargetValue)) CorrectTargetValue_Resource(TargetValue);
-    if (ContractValuesNotAll0(TargetValue)) CorrectTargetValue_Contract(TargetValue);
-}
-function ResourceValuesNotAll0(TargetValue) {
-    for (var i = 0; i < 4; i++) {
-        if (TargetValue[i] != 0) return true;
-    }
-    return false;
-}
-function CorrectTargetValue_Resource(TargetValue) {
+    var ResourceValue = new Array(4);
     var Resource_CalibrationValue = 600;
-    var CorrectionRate_Resource = Resource_CalibrationValue / ResourceValueMax(TargetValue);
     for (var i = 0; i < 4; i++) {
-        TargetValue[i] *= CorrectionRate_Resource;
+        ResourceValue[i] = TargetValue[i];
     }
-}
-function ResourceValueMax(TargetValue) {
-    var max = 0;
-    for (var i = 0; i < 4; i++) {
-        max = Math.max(max, TargetValue[i]);
+    if (ValuesNotAll0(ResourceValue)) CorrectValue(ResourceValue, Resource_CalibrationValue);
+    var ContractValue = new Array(3);
+    var Contract_CalibrationValue = 1;
+    for (var i = 0; i < 3; i++) {
+        ContractValue[i] = TargetValue[i + 4];
     }
-    return max;
+    if (ValuesNotAll0(ContractValue)) CorrectValue(ContractValue, Contract_CalibrationValue);
+    return ResourceValue.concat(ContractValue);
 }
-function ContractValuesNotAll0(TargetValue) {
-    for (var i = 4; i < 7; i++) {
-        if (TargetValue[i] != 0) return true;
+function ValuesNotAll0(Values) {
+    for (var i = 0; i < Values.length; i++) {
+        if (Values[i] != 0) return true;
     }
     return false;
 }
-function CorrectTargetValue_Contract(TargetValue) {
-    var Contract_CalibrationValue = 1;
-    var CorrectionRate_Contract = Contract_CalibrationValue / ContractValueMax(TargetValue);
-    for (var i = 4; i < 7; i++) {
-        TargetValue[i] *= CorrectionRate_Contract;
+function CorrectValue(Values, CalibrationValue) {
+    var CorrectionRate = CalibrationValue / ValueMax(Values);
+    for (var i = 0; i < Values.length; i++) {
+        Values[i] *= CorrectionRate;
     }
 }
-function ContractValueMax(TargetValue) {
+function ValueMax(xValue) {
     var max = 0;
-    for (var i = 4; i < 7; i++) {
-        max = Math.max(max, TargetValue[i]);
+    for (var i = 0; i < xValue.length; i++) {
+        max = Math.max(max, xValue[i]);
     }
     return max;
 }
