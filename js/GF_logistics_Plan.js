@@ -8,6 +8,7 @@ class Plan {
         }
         _Customizer = this.List[0].Customizer;
     }
+    
     push(MissionsNumber, CurrentValue, PlanValue) {
         this._MissionsNumber = MissionsNumber;
         this._CurrentValue = CurrentValue;
@@ -41,13 +42,9 @@ class Plan {
     _SortListByValue(thisrow) {
         for (var i = thisrow - 1; i >= 0; i--) {
             if (this._PlanValue < this.List[i].Value) {
-                test_chant += 1;
                 this._ExchangeTheseTwoRows(i);
             }
-            else {
-                test_chant += 1;
-                break;
-            }
+            else break;
         }
     }
     _ExchangeTheseTwoRows(RowNumber) {

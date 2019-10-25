@@ -81,14 +81,14 @@ function Q_init_Contract() {
 }
 function ClearQContract() {
     for (var i = 1; i <= Q.length; i++) {
-        Q[i - 1][5] = 0; 
-        Q[i - 1][6] = 0; 
+        Q[i - 1][5] = 0;
+        Q[i - 1][6] = 0;
         Q[i - 1][7] = 0;
     }
 }
 function EstimateLevels() {
     CheckDataLegalityAndCorrect_GreatSuccessRate();
-    var GreatSuccessRate = $("#GreatSuccessRate").val();
+    var GreatSuccessRate = parseFloat($("#GreatSuccessRate").val());
     if (GreatSuccessRate == 15) return 1;
     return Math.ceil((GreatSuccessRate - 15) / 45 * 100);
 }

@@ -62,13 +62,13 @@
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group input-group">
-                                                            <input type="text" class="form-control" id="Time_Anytime_hours" value=16 onclick="this.select()" disabled>
+                                                            <input type="text" class="form-control" id="Time_Anytime_hours" placeholder="不超过24的非负数" value=16 onclick="this.select()" disabled>
                                                             <span class="input-group-addon">小时</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group input-group">
-                                                            <input type="text" class="form-control" id="Time_Anytime_minutes" value=0 onclick="this.select()" disabled>
+                                                            <input type="text" class="form-control" id="Time_Anytime_minutes" placeholder="不超过1440的非负数" value=0 onclick="this.select()" disabled>
                                                             <span class="input-group-addon">分钟</span>
                                                         </div>
                                                     </div>
@@ -84,13 +84,13 @@
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group input-group">
-                                                            <input type="text" class="form-control" id="Time_SingleTime_hours" value=8 onclick="this.select()">
+                                                            <input type="text" class="form-control" id="Time_SingleTime_hours" placeholder="非负数" value=8 onclick="this.select()">
                                                             <span class="input-group-addon">小时</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group input-group">
-                                                            <input type="text" class="form-control" id="Time_SingleTime_minutes" value=0 onclick="this.select()">
+                                                            <input type="text" class="form-control" id="Time_SingleTime_minutes" placeholder="非负数" value=0 onclick="this.select()">
                                                             <span class="input-group-addon">分钟</span>
                                                         </div>
                                                     </div>
@@ -101,13 +101,13 @@
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="form-group input-group">
-                                                            <input type="text" class="form-control" id="Time_Intervals_hours" value=3 onclick="this.select()">
+                                                            <input type="text" class="form-control" id="Time_Intervals_hours" placeholder="非负数" value=3 onclick="this.select()">
                                                             <span class="input-group-addon">小时</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group input-group">
-                                                            <input type="text" class="form-control" id="Time_Intervals_minutes" value=0 onclick="this.select()">
+                                                            <input type="text" class="form-control" id="Time_Intervals_minutes" placeholder="非负数" value=0 onclick="this.select()">
                                                             <span class="input-group-addon">分钟</span>
                                                         </div>
                                                     </div>
@@ -118,7 +118,7 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group input-group">
-                                                    <input type="text" class="form-control" id="GreatSuccessRate" value=60 onclick="this.select()">
+                                                    <input type="text" class="form-control" id="GreatSuccessRate" placeholder="15~60之间的数" value=60 onclick="this.select()">
                                                     <span class="input-group-addon" id="Display_UPRate"></span>
                                                     <span class="input-group-addon">%</span>
                                                 </div>
@@ -134,14 +134,14 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">最少</span>
-                                                    <input type="text" class="form-control" id="Time_Limit_start" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" id="Time_Limit_start" placeholder="非负数" value=0 onclick="this.select()">
                                                     <span class="input-group-addon">小时</span>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">最多</span>
-                                                    <input type="text" class="form-control" id="Time_Limit_end" value=24 onclick="this.select()">
+                                                    <input type="text" class="form-control" id="Time_Limit_end" placeholder="正数" value=24 onclick="this.select()">
                                                     <span class="input-group-addon">小时</span>
                                                 </div>
                                             </div>
@@ -168,31 +168,31 @@
                                                     一般不用更改，当对结果不满意可以进行适当修改
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">人力权重</span>
-                                                        <input type="text" class="form-control" id="Mw" value=1 onclick="this.select()">
+                                                        <input type="text" class="form-control" placeholder="非负数" id="Mw" value=1 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">弹药权重</span>
-                                                        <input type="text" class="form-control" id="Aw" value=1 onclick="this.select()">
+                                                        <input type="text" class="form-control" placeholder="非负数" id="Aw" value=1 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">口粮权重</span>
-                                                        <input type="text" class="form-control" id="Rw" value=1 onclick="this.select()">
+                                                        <input type="text" class="form-control" placeholder="非负数" id="Rw" value=1 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">零件权重</span>
-                                                        <input type="text" class="form-control" id="Pw" value=1 onclick="this.select()">
+                                                        <input type="text" class="form-control" placeholder="非负数" id="Pw" value=1 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">人形权重</span>
-                                                        <input type="text" class="form-control" id="Tw" value=1 onclick="this.select()">
+                                                        <input type="text" class="form-control" placeholder="非负数" id="Tw" value=1 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">装备权重</span>
-                                                        <input type="text" class="form-control" id="Ew" value=1 onclick="this.select()">
+                                                        <input type="text" class="form-control" placeholder="非负数" id="Ew" value=1 onclick="this.select()">
                                                     </div>
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon">快建权重</span>
-                                                        <input type="text" class="form-control" id="Qw" value=1 onclick="this.select()">
+                                                        <input type="text" class="form-control" placeholder="非负数" id="Qw" value=1 onclick="this.select()">
                                                     </div>
                                                 </div>
                                             </div>
@@ -211,7 +211,7 @@
                                             <button type="button" class="btn btn-default" onclick="setTarget(6)">霰弹枪SG</button>
                                         </p>
                                         <p>
-                                            <button type="button" class="btn btn-default" onclick="setTarget(7)">1:1:1:1</button>
+                                            <button type="button" class="btn btn-default" onclick="setTarget(7)">平均</button>
                                             <button type="button" class="btn btn-default" onclick="setTarget(8)">人力</button>
                                             <button type="button" class="btn btn-default" onclick="setTarget(9)">弹药</button>
                                             <button type="button" class="btn btn-default" onclick="setTarget(10)">口粮</button>
@@ -226,7 +226,7 @@
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#MT'), -100)">--</button>
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#MT'), -10)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="MT" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" id="MT" placeholder="非负数" value=0 onclick="this.select()">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#MT'), 10)">+</button>
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#MT'), 100)">++</button>
@@ -238,7 +238,7 @@
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#AT'), -100)">--</button>
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#AT'), -10)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="AT" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" id="AT" placeholder="非负数" value=0 onclick="this.select()">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#AT'), 10)">+</button>
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#AT'), 100)">++</button>
@@ -250,7 +250,7 @@
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#RT'), -100)">--</button>
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#RT'), -10)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="RT" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" id="RT" placeholder="非负数" value=0 onclick="this.select()">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#RT'), 10)">+</button>
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#RT'), 100)">++</button>
@@ -262,7 +262,7 @@
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#PT'), -100)">--</button>
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#PT'), -10)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="PT" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" id="PT" placeholder="非负数" value=0 onclick="this.select()">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#PT'), 10)">+</button>
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#PT'), 100)">++</button>
@@ -273,7 +273,7 @@
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#TT'), -1)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="TT" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" id="TT" placeholder="非负数" value=0 onclick="this.select()">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#TT'), 1)">+</button>
                                                     </div>
@@ -283,7 +283,7 @@
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#ET'), -1)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="ET" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" id="ET" placeholder="非负数" value=0 onclick="this.select()">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#ET'), 1)">+</button>
                                                     </div>
@@ -293,7 +293,7 @@
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#QT'), -1)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="QT" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" id="QT" placeholder="非负数" value=0 onclick="this.select()">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button" onclick="ChangeTarget($('#QT'), 1)">+</button>
                                                     </div>

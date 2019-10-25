@@ -3,13 +3,15 @@ class Tab {
 	
 	setTime() {}
 	_CheckDataLegalityAndCorrect_Time() {}
-	_TimeMustBeNonNegativeNumber(Hours, Minutes) {
-		if (is_Non_positive_number(Hours.val())) Hours.val(0);
-		if (is_Non_positive_number(Minutes.val())) Minutes.val(0);
-	}
 
 	getTime() {
 		return this.TotalTime;
+	}
+
+	setResourceIncreasingRate() {
+		var GreatSuccessRate_UP = Function_GreatSuccessRateUP();
+		var GreatSuccessRate = parseFloat($("#GreatSuccessRate").val());
+		this.ResourceIncreasingRate = 1 + (GreatSuccessRate + GreatSuccessRate_UP) / 200;
 	}
 
 	CustomizePlanList() {
@@ -42,10 +44,9 @@ class Tab {
 		return UnableLogistic;
 	}
 	_CheckDataLegalityAndCorrect_LimitTime() {
-		var start = $("#Time_Limit_start");
-		var end = $("#Time_Limit_end");
-		this._TimeMustBeNonNegativeNumber(start, end);
-		if (parseFloat(start.val()) > parseFloat(end.val())) {
+		var start = getPositiveValueFromHTML($("#Time_Limit_start"));
+		var end = getPositiveValueFromHTML($("#Time_Limit_end"));
+		if (start > end) {
 			alert("任务限制时间有问题！");
 			throw"--";
 		}
@@ -56,10 +57,10 @@ class Tab {
 		return false;
 	}
 
-	Calculate_Current(MissionsNumber, ResourceIncreasingRate) {}
-	_CalculateCurrentByRate(CurrentValue, ResourceIncreasingRate) {
+	Calculate_Current(MissionsNumber) {}
+	_CalculateCurrentByResourceIncreasingRate(CurrentValue) {
 		for (var i = 0; i < 4; i++) {
-			CurrentValue[i] *= ResourceIncreasingRate;
+			CurrentValue[i] *= this.ResourceIncreasingRate;
 		}
 		return CurrentValue;
 	}
@@ -79,7 +80,7 @@ class Tab {
 
 class Tab_Anytime extends Tab {
 	setTime() {
-		if (!document.getElementById('toggle-event').checked) {
+		if (!is_Tab_Anytime_CaculateOneDay()) {
 			this.TotalTime = 1;
 			return;
 		}
@@ -89,13 +90,12 @@ class Tab_Anytime extends Tab {
 		this.TotalTime = Hours + Minutes / 60;
 	}
 	_CheckDataLegalityAndCorrect_Time() {
-		var Hours = $("#Time_Anytime_hours");
-		var Minutes = $("#Time_Anytime_minutes");
-		this._TimeMustBeNonNegativeNumber(Hours, Minutes);
-		var total_time = parseFloat(Hours.val()) + parseFloat(Minutes.val()) / 60;
+		var Hours = getPositiveValueFromHTML($("#Time_Anytime_hours"));
+		var Minutes = getPositiveValueFromHTML($("#Time_Anytime_minutes"));
+		var total_time = Hours + Minutes / 60;
 		if (total_time > 24) {
-			Hours.val(24);
-			Minutes.val(0);
+			alert("地球一天只有24小时！");
+			throw"--";
 		}
 		if (total_time == 0) {
 			alert("每天执行后勤时长不能为0！");
@@ -103,17 +103,17 @@ class Tab_Anytime extends Tab {
 		}
 	}
 
-	Calculate_Current(Number, ResourceIncreasingRate) {
+	Calculate_Current(Number) {
 		var CurrentValue = new Array(7);
 		for (var i = 0; i < 7; i++) {
 			CurrentValue[i] = Q[Number[0]][i + 1] + Q[Number[1]][i + 1] + Q[Number[2]][i + 1] + Q[Number[3]][i + 1];
 		}
-		return this._CalculateCurrentByRate(CurrentValue, ResourceIncreasingRate);
+		return this._CalculateCurrentByResourceIncreasingRate(CurrentValue);
 	}
 
 	PrintPlanTableTitle() {
 		var title;
-		if (document.getElementById('toggle-event').checked) {
+		if (is_Tab_Anytime_CaculateOneDay()) {
 			title = this._title + '<th>人力/d</th><th>弹药/d</th><th>口粮/d</th><th>零件/d</th><th>人形/d</th><th>装备/d</th><th>快建/d</th><th>最短时间</th><th>最长时间</th>' + this._titleEnd;
 		}
 		else {
@@ -123,8 +123,8 @@ class Tab_Anytime extends Tab {
 	}
 
 	get_Hours_PrintResourceContract() {
-		if (!document.getElementById('toggle-event').checked) return 1;
-		else return this.TotalTime;
+		if (is_Tab_Anytime_CaculateOneDay()) return this.TotalTime;
+		else return 1;
 	}
 
 	PrintTableCustomize(plan, row) {
@@ -143,10 +143,9 @@ class Tab_SingleTime extends Tab {
 		this.TotalTime = Hours + Minutes / 60;
 	}
 	_CheckDataLegalityAndCorrect_Time() {
-		var Hours = $("#Time_SingleTime_hours");
-		var Minutes = $("#Time_SingleTime_minutes");
-		this._TimeMustBeNonNegativeNumber(Hours, Minutes);
-		var total_time = parseFloat(Hours.val()) + parseFloat(Minutes.val()) / 60;
+		var Hours = getPositiveValueFromHTML($("#Time_SingleTime_hours"));
+		var Minutes = getPositiveValueFromHTML($("#Time_SingleTime_minutes"));
+		var total_time = Hours + Minutes / 60;
 		if (total_time == 0) {
 			alert("时长不能为0！");
 			throw"--";
@@ -164,12 +163,12 @@ class Tab_SingleTime extends Tab {
 		return UnableLogistic;
 	}
 
-	Calculate_Current(Number, ResourceIncreasingRate) {
+	Calculate_Current(Number) {
 		var CurrentValue = new Array(7);
 		for (var i = 0; i < 7; i++) {
 			CurrentValue[i] = (Q[Number[0]][i + 1] * Q[Number[0]][8] + Q[Number[1]][i + 1] * Q[Number[1]][8] + Q[Number[2]][i + 1] * Q[Number[2]][8] + Q[Number[3]][i + 1] * Q[Number[3]][8]) / this.TotalTime;
 		}
-		return this._CalculateCurrentByRate(CurrentValue, ResourceIncreasingRate);
+		return this._CalculateCurrentByResourceIncreasingRate(CurrentValue);
 	}
 
 	PrintPlanTableTitle() {
@@ -191,15 +190,13 @@ class Tab_Intervals extends Tab {
 		this.TotalTime = Hours + Minutes / 60;
 	}
 	_CheckDataLegalityAndCorrect_Time() {
-		var Hours = $("#Time_Intervals_hours");
-		var Minutes = $("#Time_Intervals_minutes");
-		this._TimeMustBeNonNegativeNumber(Hours, Minutes);
-		var total_time = parseFloat(Hours.val()) + parseFloat(Minutes.val()) / 60;
+		var Hours = getPositiveValueFromHTML($("#Time_Intervals_hours"));
+		var Minutes = getPositiveValueFromHTML($("#Time_Intervals_minutes"));
+		var total_time = Hours + Minutes / 60;
 		if (total_time == 0) {
 			var r = confirm("间隔时长为0，请使用\"随时能收后勤\"一栏来计算组合方案");
 			if (r == true) {
-				$('a[href="#Tab_Anytime"]').tab('show');
-				ShownTab = new Tab_Anytime;
+				location.reload();
 			}
 			throw"--";
 		}
@@ -209,7 +206,7 @@ class Tab_Intervals extends Tab {
 		return [0];//One_cycle_time
 	}
 
-	Calculate_Current(Number, ResourceIncreasingRate) {
+	Calculate_Current(Number) {
 		var CurrentValue = new Array(7);
 		var times = [1, 1, 1, 1];
 		var CurrentValue_n = new Array(7);
@@ -226,7 +223,7 @@ class Tab_Intervals extends Tab {
 		for (var i = 0; i < 7; i++) {
 			CurrentValue[i] = CurrentValue_n[i][0] + CurrentValue_n[i][1] + CurrentValue_n[i][2] + CurrentValue_n[i][3];
 		}
-		return this._CalculateCurrentByRate(CurrentValue, ResourceIncreasingRate);
+		return this._CalculateCurrentByResourceIncreasingRate(CurrentValue);
 	}
 	_CalculateArrayLeastCommonMultiple(array) {
 		var arr = array;

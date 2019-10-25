@@ -11,7 +11,7 @@ $(function (){$("[data-toggle='tooltip']").tooltip();})
 $(function (){
     $('[href=#Tab_Anytime]').on("shown.bs.tab", function(){
         ShownTab = new Tab_Anytime;
-        if (document.getElementById('toggle-event').checked) {
+        if (is_Tab_Anytime_CaculateOneDay()) {
             $(".Demand span").html("每天需求量");
         }
         else {
@@ -40,19 +40,23 @@ function TimeLimit_disable() {
     $("#Time_Limit_end").val(24);
     $("#Time_Limit_end").attr('disabled', "true");
 }
+function is_Tab_Anytime_CaculateOneDay() {
+    if (document.getElementById('toggle-event').checked) return true;
+    else return false;
+}
 
 //同步更新大成功UP增加概率
 $(function (){
     $("#GreatSuccessRate").on('input propertychange',function() {
         if (IsGreatSuccessRateUp()) {
             var UpRate;
-            switch(true) {
-                case $("#GreatSuccessRate").val() < 15:
-                    UpRate = 15; break;
-                case $("#GreatSuccessRate").val() > 60:
-                    UpRate = 30; break;
-                default :
-                    UpRate = 15 + Math.floor(($("#GreatSuccessRate").val() - 15) / 3);
+            var GreatSuccessRate = $("#GreatSuccessRate");
+            if (is_Non_positive_number(GreatSuccessRate.val()) || GreatSuccessRate.val() < 15) {
+                UpRate = 15;
+            }
+            else {
+                if (GreatSuccessRate.val() > 60) UpRate = 30;
+                else UpRate = 15 + Math.floor((GreatSuccessRate.val() - 15) / 3);
             }
             document.getElementById('Display_UPRate').innerHTML = ("+" + UpRate);
         }
@@ -65,7 +69,7 @@ function IsGreatSuccessRateUp() {
 
 function Tab_Anytime_hourorday() {
     var hours = parseFloat($("#Time_Anytime_hours").val()) + parseFloat($("#Time_Anytime_minutes").val()) / 60;
-    if (document.getElementById('toggle-event').checked) {
+    if (is_Tab_Anytime_CaculateOneDay()) {
         $(".Demand span").html("每天需求量");
         $("#Time_Anytime_hours").removeAttr("disabled");
         $("#Time_Anytime_minutes").removeAttr("disabled");
@@ -106,8 +110,8 @@ function Function_GreatSuccessRateUP() {
 }
 function CheckDataLegalityAndCorrect_GreatSuccessRate() {
     var Rate = $("#GreatSuccessRate");
-    if (Rate.val()==="" || isNaN(Rate.val()) || Rate.val()<15) Rate.val(15);
-    if (Rate.val()>60) Rate.val(60);
+    if (is_Non_positive_number(Rate.val()) || Rate.val() < 15) Rate.val(15);
+    if (Rate.val() > 60) Rate.val(60);
 }
 
 function setTarget(TargetInfo) {
@@ -142,6 +146,7 @@ function setTarget(TargetInfo) {
 }
 
 function ChangeTarget(ID, changevalue) {
-    ID.val(parseFloat(ID.val()) + changevalue);
-    if (ID.val() < 0) ID.val(0);c
+    var OriginalValue = getPositiveValueFromHTML(ID);
+    ID.val(OriginalValue + changevalue);
+    if (ID.val() < 0) ID.val(0);
 }
