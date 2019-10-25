@@ -48,7 +48,9 @@ class Plan {
         for (var i = 0; i < 4; i++) {
             ResourceValue[i] = this.TargetValue[i];
         }
-        if (this._ValuesNotAll0(ResourceValue)) this._CorrectValue(ResourceValue, Resource_CalibrationValue);
+        if (this._ValuesNotAll0(ResourceValue)) {
+            this._CorrectValue(ResourceValue, Resource_CalibrationValue);
+        }
         return ResourceValue;
     }
     _CorrectContractValue() {
@@ -57,7 +59,9 @@ class Plan {
         for (var i = 0; i < 3; i++) {
             ContractValue[i] = this.TargetValue[i + 4];
         }
-        if (this._ValuesNotAll0(ContractValue)) this._CorrectValue(ContractValue, Contract_CalibrationValue);
+        if (this._ValuesNotAll0(ContractValue)) {
+            this._CorrectValue(ContractValue, Contract_CalibrationValue);
+        }
         return ContractValue;
     }
     _ValuesNotAll0(Values) {
@@ -89,7 +93,11 @@ class Plan {
         this._SortListByValue(row);
     }
     _push() {
-        if (this._PlanValue >= this.List[this.List.length - 1].Value) return;
+        if (this._PlanValue >= this.List[this.List.length - 1].Value) {
+            test++;
+            return;
+        }
+        test++;
         this._PushIntoThisRow(this.List.length - 1);
         this._SortListByValue(this.List.length - 1);
     }
@@ -106,9 +114,13 @@ class Plan {
     _SortListByValue(thisrow) {
         for (var i = thisrow - 1; i >= 0; i--) {
             if (this._PlanValue < this.List[i].Value) {
+                test++;
                 this._ExchangeTheseTwoRows(i);
             }
-            else break;
+            else {
+                test++;
+                break;
+            }
         }
     }
     _ExchangeTheseTwoRows(RowNumber) {
@@ -132,15 +144,19 @@ class Plan {
             tab += ShownTab.PrintTableCustomize(this, i);
             tab += '</tr>';
         }
-        tab += '</tbody>'
+        tab += '</tbody>';
         Table.innerHTML = tab;
-        $(function (){$("[data-toggle='tooltip']").tooltip();})
+        $(function (){$("[data-toggle='tooltip']").tooltip();});
     }
     _PrintMissionsNumber(row) {
         var tab = "";
+        var MissionsNumber = new Array(4);
         for (var i = 0; i < 4; i++) {
-            if ((this.List[row][i] + 1) % 4 == 0) tab += ("<td>" + (parseInt((this.List[row][i] + 1) / 4) - 1) + "-4</td>");
-            else tab += ("<td>" + (parseInt((this.List[row][i] + 1) / 4)) + "-" + (this.List[row][i] + 1) % 4 + "</td>");
+            MissionsNumber[i] = Q[this.List[row][i]][0];
+        }
+        MissionsNumber = MissionsNumber.sort(sortNumber);
+        for (var i = 0; i < 4; i++) {
+            tab += ("<td>" + MissionsNumber[i] + "</td>");
         }
         return tab;
     }
@@ -155,4 +171,11 @@ class Plan {
         }
         return tab;
     }
+}
+
+function sortNumber(a, b) {
+    var aa, bb;
+    aa = parseInt(a.replace(/[^0-9]/ig,""));
+    bb = parseInt(b.replace(/[^0-9]/ig,""));
+    return aa - bb;
 }
