@@ -14,11 +14,11 @@ class Tab {
 		this.ResourceIncreasingRate = 1 + (GreatSuccessRate + GreatSuccessRate_UP) / 200;
 	}
 
-	CustomizePlanList() {
-		return [];
+	_setPlanListCustomizer() {
+		this._PlanListCustomizer = [];
 	}
-	_set_PlanCustomizer(x) {
-		_Customizer = x;
+	getPlanListCustomizer() {
+		return this._PlanListCustomizer;
 	}
 
 	getUnableLogistic() {
@@ -202,10 +202,6 @@ class Tab_Intervals extends Tab {
 		}
 	}
 
-	CustomizePlanList() {
-		return [0];//One_cycle_time
-	}
-
 	Calculate_Current(Number) {
 		var CurrentValue = new Array(7);
 		var times = [1, 1, 1, 1];
@@ -219,11 +215,15 @@ class Tab_Intervals extends Tab {
 				CurrentValue_n[ii][i] = Q[Number[i]][ii + 1] * Q[Number[i]][8] / (times[i] * this.TotalTime);
 			}
 		}
-		this._set_PlanCustomizer(this._CalculateArrayLeastCommonMultiple(times) * this.TotalTime);
+		this._setPlanListCustomizer(times);
 		for (var i = 0; i < 7; i++) {
 			CurrentValue[i] = CurrentValue_n[i][0] + CurrentValue_n[i][1] + CurrentValue_n[i][2] + CurrentValue_n[i][3];
 		}
 		return this._CalculateCurrentByResourceIncreasingRate(CurrentValue);
+	}
+	_setPlanListCustomizer(times) {
+		var One_cycle_time = this._CalculateArrayLeastCommonMultiple(times) * this.TotalTime;
+		this._PlanListCustomizer = [One_cycle_time];
 	}
 	_CalculateArrayLeastCommonMultiple(array) {
 		var arr = array;

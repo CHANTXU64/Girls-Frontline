@@ -62,10 +62,6 @@ $(function (){
         }
     });
 })
-function IsGreatSuccessRateUp() {
-    if (document.getElementById('GreatSuccessRateUp').checked) return 1;
-    else return 0;
-}
 
 function Tab_Anytime_hourorday() {
     var hours = parseFloat($("#Time_Anytime_hours").val()) + parseFloat($("#Time_Anytime_minutes").val()) / 60;
@@ -107,11 +103,6 @@ function Function_GreatSuccessRateUP() {
         document.getElementById('Display_UPRate').innerHTML = "";
         return UpRate;
     }
-}
-function CheckDataLegalityAndCorrect_GreatSuccessRate() {
-    var Rate = $("#GreatSuccessRate");
-    if (is_Non_positive_number(Rate.val()) || Rate.val() < 15) Rate.val(15);
-    if (Rate.val() > 60) Rate.val(60);
 }
 
 function setTarget(TargetInfo) {

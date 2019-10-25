@@ -1,18 +1,82 @@
 class Plan {
     constructor(length) {
+        this._setList(length);
+        this.TargetValue = this._getLegalityTargetValue();
+        this._CorrectTargetValue();
+    }
+    _setList(length) {
         this.List = new Array(length);
         for (var i = 0; i < length; i++) {
             this.List[i] = new Array(11);
-            this.List[i].Customizer = ShownTab.CustomizePlanList();
+            this.List[i].Customizer = [];
             this.List[i].Value = 0;//该方案价值
         }
-        _Customizer = this.List[0].Customizer;
     }
-    
-    push(MissionsNumber, CurrentValue, PlanValue) {
+    _getLegalityTargetValue() {
+        var HTMLTargetArr = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QT")];
+        var TargetArr = getPositiveValueFromHTML(HTMLTargetArr);
+        if (TargetArr.toString() == "0,0,0,0,0,0,0") {
+            alert("需求不能全为0！");
+            throw"--";
+        }
+        return TargetArr;
+    }
+    _CorrectTargetValue() {
+        this._TargetValueMultiplyWeight();
+        var ResourceValue = this._CorrectResourceValue();
+        var ContractValue = this._CorrectContractValue();
+        this.TargetValue = ResourceValue.concat(ContractValue);
+    }
+    _TargetValueMultiplyWeight() {
+        var Weights = this._getLegalityWeights();
+        for(var i = 0; i < 7; i++) {
+            this.TargetValue[i] *= Weights[i];
+        }
+    }
+    _getLegalityWeights() {
+        var HTMLWeightsArr = [$("#Mw"), $("#Aw"), $("#Rw"), $("#Pw"), $("#Tw"), $("#Ew"), $("#Qw")];
+        var WeightsArr = getPositiveValueFromHTML(HTMLWeightsArr);
+        if (WeightsArr.toString() == "0,0,0,0,0,0,0") {
+            alert("权重不能全为0！");
+            throw"--";
+        }
+        return WeightsArr;
+    }
+    _CorrectResourceValue() {
+        var ResourceValue = new Array(4);
+        var Resource_CalibrationValue = 600;
+        for (var i = 0; i < 4; i++) {
+            ResourceValue[i] = this.TargetValue[i];
+        }
+        if (this._ValuesNotAll0(ResourceValue)) this._CorrectValue(ResourceValue, Resource_CalibrationValue);
+        return ResourceValue;
+    }
+    _CorrectContractValue() {
+        var ContractValue = new Array(3);
+        var Contract_CalibrationValue = 1;
+        for (var i = 0; i < 3; i++) {
+            ContractValue[i] = this.TargetValue[i + 4];
+        }
+        if (this._ValuesNotAll0(ContractValue)) this._CorrectValue(ContractValue, Contract_CalibrationValue);
+        return ContractValue;
+    }
+    _ValuesNotAll0(Values) {
+        for (var i = 0; i < Values.length; i++) {
+            if (Values[i] != 0) return true;
+        }
+        return false;
+    }
+    _CorrectValue(Values, CalibrationValue) {
+        var CorrectionRate = CalibrationValue / ArrayMax(Values);
+        for (var i = 0; i < Values.length; i++) {
+            Values[i] *= CorrectionRate;
+        }
+    }
+
+    CaculateAndPush(MissionsNumber) {
         this._MissionsNumber = MissionsNumber;
-        this._CurrentValue = CurrentValue;
-        this._PlanValue = PlanValue;
+        this._CurrentValue = ShownTab.Calculate_Current(MissionsNumber);
+        this._PlanValue = Value(this.TargetValue, this._CurrentValue);
         if (!(0 in this.List[this.List.length - 1])) {
             this._push_FirstEmptyRow();
         }
@@ -37,7 +101,7 @@ class Plan {
             this.List[RowNumber][i + 4] = this._CurrentValue[i];
         }
         this.List[RowNumber].Value = this._PlanValue;
-        this.List[RowNumber].Customizer = _Customizer;
+        this.List[RowNumber].Customizer = ShownTab.getPlanListCustomizer();
     }
     _SortListByValue(thisrow) {
         for (var i = thisrow - 1; i >= 0; i--) {

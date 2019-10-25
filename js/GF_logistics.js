@@ -1,15 +1,10 @@
 var ShownTab = new Tab_Anytime;
-var _Customizer;//Plan暂存区
 
 function Get_Plan_Main() {
     Q_init_Contract();
     ShownTab.setTime();
     ShownTab.setResourceIncreasingRate();
-
     var plan = new Plan(36);
-    var TargetValue = getLegalityTargetValue();
-    var Weights = getLegalityWeights();
-    TargetValue = CorrectTargetValue(TargetValue);//目标值修正
     var UnableLogistic = ShownTab.getUnableLogistic();
     for (var n1 = 0; n1 < (Q.length - 3); n1++) {
         if (UnableLogistic.indexOf(n1) != -1) continue;
@@ -19,12 +14,7 @@ function Get_Plan_Main() {
                 if (UnableLogistic.indexOf(n3) != -1) continue;
                 for (var n4 = n3 + 1; n4 < Q.length; n4++) {
                     if (UnableLogistic.indexOf(n4) != -1) continue;
-                    var CurrentValue = [0, 0, 0, 0, 0, 0, 0];
-                    var Plan_value = 0;
-                    var MissionsNumber = [n1, n2, n3, n4];
-                    CurrentValue = ShownTab.Calculate_Current(MissionsNumber);
-                    Plan_value = Value(Weights, TargetValue, CurrentValue);
-                    plan.push(MissionsNumber, CurrentValue, Plan_value)
+                    plan.CaculateAndPush([n1, n2, n3, n4]);
                 }
             }
         }
@@ -32,15 +22,22 @@ function Get_Plan_Main() {
     plan.print();
 }
 
-function getLegalityTargetValue() {
-    var HTMLTargetArr = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QT")];
-    var TargetArr = getPositiveValueFromHTML(HTMLTargetArr);
-    if (TargetArr.toString() == "0,0,0,0,0,0,0") {
-        alert("需求不能全为0！");
-        throw"--";
-    }
-    return TargetArr;
+function IsGreatSuccessRateUp() {
+    if (document.getElementById('GreatSuccessRateUp').checked) return 1;
+    else return 0;
 }
+
+function CheckDataLegalityAndCorrect_GreatSuccessRate() {
+    var Rate = $("#GreatSuccessRate");
+    if (is_Non_positive_number(Rate.val()) || Rate.val() < 15) Rate.val(15);
+    if (Rate.val() > 60) Rate.val(60);
+}
+
+function is_Non_positive_number(x) {
+    if (x === "" || isNaN(x) || x < 0 || x === "Infinity") return true;
+    else return false;
+}
+
 function getPositiveValueFromHTML(HTMLValue) {
     if (Array.isArray(HTMLValue)) return _getPositiveValueFromHTML_array(HTMLValue);
     else return _getPositiveValueFromHTML_one(HTMLValue);
@@ -57,61 +54,19 @@ function _getPositiveValueFromHTML_array(HTMLArr) {
     }
     return Arr;
 }
-function is_Non_positive_number(x) {
-    if (x === "" || isNaN(x) || x < 0 || x === "Infinity") return true;
-    else return false;
-}
 
-function getLegalityWeights() {
-    var HTMLWeightsArr = [$("#Mw"), $("#Aw"), $("#Rw"), $("#Pw"), $("#Tw"), $("#Ew"), $("#Qw")];
-    var WeightsArr = getPositiveValueFromHTML(HTMLWeightsArr);
-    if (WeightsArr.toString() == "0,0,0,0,0,0,0") {
-        alert("权重不能全为0！");
-        throw"--";
-    }
-    return WeightsArr;
-}
-
-//目标值修正函数
-function CorrectTargetValue(TargetValue) {
-    var ResourceValue = new Array(4);
-    var Resource_CalibrationValue = 600;
-    for (var i = 0; i < 4; i++) {
-        ResourceValue[i] = TargetValue[i];
-    }
-    if (ValuesNotAll0(ResourceValue)) CorrectValue(ResourceValue, Resource_CalibrationValue);
-    var ContractValue = new Array(3);
-    var Contract_CalibrationValue = 1;
-    for (var i = 0; i < 3; i++) {
-        ContractValue[i] = TargetValue[i + 4];
-    }
-    if (ValuesNotAll0(ContractValue)) CorrectValue(ContractValue, Contract_CalibrationValue);
-    return ResourceValue.concat(ContractValue);
-}
-function ValuesNotAll0(Values) {
-    for (var i = 0; i < Values.length; i++) {
-        if (Values[i] != 0) return true;
-    }
-    return false;
-}
-function CorrectValue(Values, CalibrationValue) {
-    var CorrectionRate = CalibrationValue / ValueMax(Values);
-    for (var i = 0; i < Values.length; i++) {
-        Values[i] *= CorrectionRate;
-    }
-}
-function ValueMax(xValue) {
+function ArrayMax(Arr) {
     var max = 0;
-    for (var i = 0; i < xValue.length; i++) {
-        max = Math.max(max, xValue[i]);
+    for (var i = 0; i < Arr.length; i++) {
+        max = Math.max(max, Arr[i]);
     }
     return max;
 }
 
 //有问题
-function Value(Weights, TargetValue, CurrentValue) {
-    return Weights[0] * Value_0(TargetValue[0], CurrentValue[0]) + Weights[1] * Value_0(TargetValue[1], CurrentValue[1]) +
-        Weights[2] * Value_0(TargetValue[2], CurrentValue[2]) + Weights[3] * Value_0(TargetValue[3], CurrentValue[3]);
+function Value(TargetValue, CurrentValue) {
+    return Value_0(TargetValue[0], CurrentValue[0]) + Value_0(TargetValue[1], CurrentValue[1]) +
+        Value_0(TargetValue[2], CurrentValue[2]) + Value_0(TargetValue[3], CurrentValue[3]);
 }
 function Value_0(Target, Current) {
     if (Target == 0) return 0;
