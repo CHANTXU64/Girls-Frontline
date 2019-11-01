@@ -1,7 +1,6 @@
 var ShownTab = new Tab_Anytime;
 var Q_Backup = [];
 var test = 0;
-var tab_Timetable_time = [];
 
 function Get_Plan_Main() {
     test = 0;
