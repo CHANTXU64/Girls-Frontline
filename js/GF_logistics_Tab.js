@@ -22,7 +22,6 @@ class Tab {
 		return Unable_2;
 	}
 	_setUnableLogisticCustomize_1(UnableLogistic) {
-		this._checkDataLegalityAndCorrect_LimitTime()
 		var startTime = parseFloat($("#Time_Limit_start").val());
 		var endTime = parseFloat($("#Time_Limit_end").val());
 		for (var i = 0; i < Q.length; i++) {
@@ -36,14 +35,6 @@ class Tab {
 	}
 	_setUnableLogisticCustomize_2(UnableLogistic) {
 		return UnableLogistic;
-	}
-	_checkDataLegalityAndCorrect_LimitTime() {
-		var start = getPositiveValueFromHTML($("#Time_Limit_start"));
-		var end = getPositiveValueFromHTML($("#Time_Limit_end"));
-		if (start > end) {
-			alert("任务限制时间有问题！");
-			throw"--";
-		}
 	}
 	_notInLimitTime(xtime, startTime, endTime) {
 		if (xtime < startTime && Math.abs(xtime - startTime) > 0.02) return true;
@@ -78,23 +69,7 @@ class Tab_Anytime extends Tab {
 			this.TotalTime = 1;
 			return;
 		}
-		this._checkDataLegalityAndCorrect_Time();
-		var Hours = parseFloat($("#Time_Anytime_hours").val());
-		var Minutes = parseFloat($("#Time_Anytime_minutes").val());
-		this.TotalTime = Hours + Minutes / 60;
-	}
-	_checkDataLegalityAndCorrect_Time() {
-		var Hours = getPositiveValueFromHTML($("#Time_Anytime_hours"));
-		var Minutes = getPositiveValueFromHTML($("#Time_Anytime_minutes"));
-		var total_time = Hours + Minutes / 60;
-		if (total_time > 24) {
-			alert("地球一天只有24小时！");
-			throw"--";
-		}
-		if (total_time == 0) {
-			alert("每天执行后勤时长不能为0！");
-			throw"--";
-		}
+		this.TotalTime = parseFloat($("#Tab_Anytime_Time").val());
 	}
 
 	Calculate_Current(Number) {
@@ -146,7 +121,7 @@ class Tab_SingleTime extends Tab {
 		}
 	}
 
-	_setUnableLogisticCustomize_2(UnableLogistic) {//排除超时后勤
+	_setUnableLogisticCustomize_2(UnableLogistic) { //排除超时后勤
 		for (var i = 0; i < Q.length; i++) {
             if (Q[i][8] > this.TotalTime) {
                 if (UnableLogistic.indexOf(i) == -1) {

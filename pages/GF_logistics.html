@@ -65,8 +65,7 @@
                     <div class="col-lg-12">
                         <div class="tooltip-demo">
                             <h1 class="page-header">后勤组合排序器 <button type="button" data-toggle="tooltip"
-                                    data-placement="bottom" title="各资源获取速率乘其权重求和排序 所缺的资源可将权重调大"
-                                    class="btn btn-outline btn-default">?</button></h1>
+                                    data-placement="bottom" title="" class="btn btn-outline btn-default">?</button></h1>
                         </div>
                     </div>
                 </div>
@@ -77,7 +76,7 @@
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">设置</div>
-                            <div class="panel-body">
+                            <div class="panel-body" style="padding-left: 5px; padding-right: 5px;">
                                 <div class="col-lg-7">
                                     <h4>计算方式</h4>
                                     <ul class="nav nav-pills nav-justified">
@@ -100,23 +99,24 @@
                                                 <label><input id="Tab_Anytime_toggle-event" type="checkbox"
                                                         onclick="Tab_Anytime_hourorday()">按一天需求量计算</label>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="form-group input-group">
-                                                        <input type="text" class="form-control" id="Time_Anytime_hours"
-                                                            placeholder="不超过24的非负数" value=16 onclick="this.select()"
-                                                            disabled>
-                                                        <span class="input-group-addon">小时</span>
+                                            <h4>每天执行该后勤时长(小时)</h4>
+                                            <div slider>
+                                                <div>
+                                                    <div inverse-left style="width:100%;"></div>
+                                                    <div range id="Tab_Anytime_range" style="left:0%;right:33.3333%;"></div>
+                                                    <span thumb id="Tab_Anytime_thumb" style="left:66.6666%; background-color:#CCC;"></span>
+                                                    <div sign id="Tab_Anytime_sign" style="left:66.6666%;">
+                                                        <span id="sign_limit_end_value">16</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group input-group">
-                                                        <input type="text" class="form-control"
-                                                            id="Time_Anytime_minutes" placeholder="不超过1440的非负数" value=0
-                                                            onclick="this.select()" disabled>
-                                                        <span class="input-group-addon">分钟</span>
-                                                    </div>
-                                                </div>
+                                                <input id="Tab_Anytime_Time" type="range" tabindex="0" value="16" max="24"
+                                                    min="0" step="0.25" oninput="
+                                                var value=(100/(parseFloat(this.max)-parseInt(this.min)))*parseFloat(this.value)-(100/(parseInt(this.max)-parseFloat(this.min)))*parseFloat(this.min);
+                                                var children = this.parentNode.childNodes[1].childNodes;
+                                                children[3].style.right=(100-value)+'%';
+                                                children[5].style.left=value+'%';
+                                                children[7].style.left=value+'%';
+                                                children[7].childNodes[1].innerHTML=this.value;" disabled="disabled"/>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="Tab_SingleTime">
@@ -157,37 +157,42 @@
                                             </p>
                                             <h4>后勤总时长</h4>
                                             <div class="row">
-                                                <div class="col-lg-5">
+                                                <div class="col-lg-5" style="padding-left: 10px; padding-right: 10px;">
                                                     <div class="form-group input-group">
-                                                        <input type="text" class="form-control" id="Time_Timetable_hours"
-                                                            placeholder="非负数" value=5 onclick="this.select()">
+                                                        <input type="text" class="form-control"
+                                                            id="Time_Timetable_hours" placeholder="非负数" value=5
+                                                            onclick="this.select()">
                                                         <span class="input-group-addon">小时</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-5">
+                                                <div class="col-lg-5" style="padding-left: 10px; padding-right: 10px;">
                                                     <div class="form-group input-group">
-                                                        <input type="text" class="form-control" id="Time_Timetable_minutes"
-                                                            placeholder="非负数" value=0 onclick="this.select()">
+                                                        <input type="text" class="form-control"
+                                                            id="Time_Timetable_minutes" placeholder="非负数" value=0
+                                                            onclick="this.select()">
                                                         <span class="input-group-addon">分钟</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2">
-                                                    <button type="button" class="btn btn-default" onclick="Tab_Timetable_DeleteAllTimePoints()"><span class="glyphicon glyphicon-remove-sign" style="font-size: 17px;"/></button>
+                                                <div class="col-lg-2" style="padding-left: 10px; padding-right: 10px;">
+                                                    <button type="button" class="btn btn-default"
+                                                        onclick="Tab_Timetable_DeleteAllTimePoints()"><span
+                                                            class="glyphicon glyphicon-remove-sign"
+                                                            style="font-size: 17px; top: 3px;" /></button>
                                                 </div>
                                             </div>
-                                            <div class="checkbox">
-                                                <label><input id="Tab_Timetable_toggle-event" type="checkbox"
-                                                        onclick="Tab_Timetable_hourorday()">按平均每小时需求量计算</label>
-                                            </div>
-                                            <div slider style="margin: 30px 0 32px 0;">
+                                            <div slider style="margin: 20px 0 32px 0;">
                                                 <div id="Tab_Timetable_range" style="right: 49px;">
                                                     <div inverse-left style="width:70%;"></div>
                                                     <div inverse-right style="width:70%;"></div>
                                                     <div range style="left:0%;right:0%; background-color:#CCC;"></div>
-                                                    <span thumb id="Tab_Timetable_range_thumb_0" style="left:100%; background-color:rgb(221, 155, 155); cursor:default;"></span>
-                                                    <div id="Tab_Timetable_range_tooltip_0" class="tooltip right custom-tooltip" style="right: -72px; top:-15px;">
+                                                    <span thumb id="Tab_Timetable_range_thumb"
+                                                        style="left:100%; background-color:rgb(221, 155, 155); cursor:default;"></span>
+                                                    <div id="Tab_Timetable_range_tooltip"
+                                                        class="tooltip right custom-tooltip"
+                                                        style="right: -72px; top:-15px;">
                                                         <div class="tooltip-arrow"></div>
-                                                        <div id="Tab_Timetable_range_tooltip_0_value" class="tooltip-inner">5:00</div>
+                                                        <div id="Tab_Timetable_range_tooltip_0_value"
+                                                            class="tooltip-inner">5:00</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -195,17 +200,22 @@
                                             <div class="row">
                                                 <div class="col-lg-11">
                                                     <div class="form-group input-group">
-                                                        <input type="text" class="form-control" id="Tab_Timetable_new_hours"
-                                                            onclick="this.select()">
-                                                        <span class="input-group-addon">小时</span>
-                                                        <input type="text" class="form-control" id="Tab_Timetable_new_minutes"
-                                                            onclick="this.select()">
-                                                        <span class="input-group-addon">分钟</span>
+                                                        <input type="text" class="form-control"
+                                                            id="Tab_Timetable_new_hours" onclick="this.select()">
+                                                        <span class="input-group-addon" style="border-left-width: 0">小时</span>
+                                                        <input type="text" class="form-control" style="border-left-width: 0"
+                                                            id="Tab_Timetable_new_minutes" onclick="this.select()">
+                                                        <span class="input-group-addon" style="border-left-width: 0">分钟</span>
                                                         <div class="input-group-btn">
-                                                            <button type="button" class="btn btn-info" onclick="Tab_Timetable_AddNewTimePoint()"><span class="glyphicon glyphicon-plus" /></button>
+                                                            <button type="button" class="btn btn-info"
+                                                                onclick="Tab_Timetable_AddNewTimePoint()"><span
+                                                                    class="glyphicon glyphicon-plus" /></button>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="checkbox" style="margin-top: 0; margin-bottom: 16px;">
+                                                <label><input id="Tab_Timetable_toggle-event" type="checkbox" onclick="Tab_Timetable_hourorday()">按平均每小时需求量计算</label>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="Tab_Intervals">
@@ -236,7 +246,7 @@
                                             <div class="form-group input-group">
                                                 <input type="text" class="form-control" id="GreatSuccessRate"
                                                     placeholder="15~60之间的数" value=60 onclick="this.select()">
-                                                <span class="input-group-addon" id="Display_UPRate"></span>
+                                                <span class="input-group-addon" id="Display_UPRate" style="border-left-width: 0"></span>
                                                 <span class="input-group-addon">%</span>
                                             </div>
                                         </div>
@@ -248,21 +258,22 @@
                                         </div>
                                     </div>
                                     <h4>各个后勤任务时间范围(小时)</h4>
-                                    <div slider id="slider-distance">
+                                    <div slider>
                                         <div>
-                                          <div inverse-left style="width:70%;"></div>
-                                          <div inverse-right style="width:70%;"></div>
-                                          <div range id="range_limit" style="left:0%;right:0%;"></div>
-                                          <span thumb id="thumb_limit_start" style="left:0%;"></span>
-                                          <span thumb id="thumb_limit_end" style="left:100%;"></span>
-                                          <div sign id="sign_limit_start" style="left:0%;">
-                                            <span id="sign_limit_start_value">0</span>
-                                          </div>
-                                          <div sign id="sign_limit_end" style="left:100%;">
-                                            <span id="sign_limit_end_value">24</span>
-                                          </div>
+                                            <div inverse-left style="width:70%;"></div>
+                                            <div inverse-right style="width:70%;"></div>
+                                            <div range id="range_limit" style="left:0%;right:0%;"></div>
+                                            <span thumb id="thumb_limit_start" style="left:0%;"></span>
+                                            <span thumb id="thumb_limit_end" style="left:100%;"></span>
+                                            <div sign id="sign_limit_start" style="left:0%;">
+                                                <span id="sign_limit_start_value">0</span>
+                                            </div>
+                                            <div sign id="sign_limit_end" style="left:100%;">
+                                                <span id="sign_limit_end_value">24</span>
+                                            </div>
                                         </div>
-                                        <input id="Time_Limit_start" type="range" tabindex="0" value="0" max="24" min="0" step="0.25" oninput="
+                                        <input id="Time_Limit_start" type="range" tabindex="0" value="0" max="24"
+                                            min="0" step="0.25" oninput="
                                         this.value=Math.min(this.value,this.parentNode.childNodes[5].value-0.25);
                                         var value=(100/(parseFloat(this.max)-parseInt(this.min)))*parseFloat(this.value)-(100/(parseInt(this.max)-parseFloat(this.min)))*parseFloat(this.min);
                                         var children = this.parentNode.childNodes[1].childNodes;
@@ -270,7 +281,8 @@
                                         children[5].style.left=value+'%';
                                         children[7].style.left=value+'%';children[11].style.left=value+'%';
                                         children[11].childNodes[1].innerHTML=this.value;" />
-                                        <input id="Time_Limit_end" type="range" tabindex="0" value="24" max="24" min="0" step="0.25" oninput="
+                                        <input id="Time_Limit_end" type="range" tabindex="0" value="24" max="24" min="0"
+                                            step="0.25" oninput="
                                         this.value=Math.max(this.value,this.parentNode.childNodes[3].value-(-0.25));
                                         var value=(100/(parseFloat(this.max)-parseFloat(this.min)))*parseFloat(this.value)-(100/(parseFloat(this.max)-parseFloat(this.min)))*parseFloat(this.min);
                                         var children = this.parentNode.childNodes[1].childNodes;
@@ -303,92 +315,92 @@
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">人力</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Mw'), -0.1)">-</button>
+                                                        <button class="btn btn-default" type="button" style="border-radius: 0;"
+                                                            onclick="ChangeTarget($('#Mw'), -0.1)">&minus;</button>
                                                     </div>
                                                     <input type="text" class="form-control" placeholder="非负数" id="Mw"
-                                                        value=1 onclick="this.select()">
+                                                        value=1 onclick="this.select()" style="border-left-width: 0">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Mw'), 0.1)">+</button>
+                                                            onclick="ChangeTarget($('#Mw'), 0.1)">&plus;</button>
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">弹药</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Aw'), -0.1)">-</button>
+                                                        <button class="btn btn-default" type="button" style="border-radius: 0;"
+                                                            onclick="ChangeTarget($('#Aw'), -0.1)">&minus;</button>
                                                     </div>
                                                     <input type="text" class="form-control" placeholder="非负数" id="Aw"
-                                                        value=1 onclick="this.select()">
+                                                        value=1 onclick="this.select()" style="border-left-width: 0">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Aw'), 0.1)">+</button>
+                                                            onclick="ChangeTarget($('#Aw'), 0.1)">&plus;</button>
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">口粮</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Rw'), -0.1)">-</button>
+                                                        <button class="btn btn-default" type="button" style="border-radius: 0;"
+                                                            onclick="ChangeTarget($('#Rw'), -0.1)">&minus;</button>
                                                     </div>
                                                     <input type="text" class="form-control" placeholder="非负数" id="Rw"
-                                                        value=1 onclick="this.select()">
+                                                        value=1 onclick="this.select()" style="border-left-width: 0">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Rw'), 0.1)">+</button>
+                                                            onclick="ChangeTarget($('#Rw'), 0.1)">&plus;</button>
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">零件</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Pw'), -0.1)">-</button>
+                                                        <button class="btn btn-default" type="button" style="border-radius: 0;"
+                                                            onclick="ChangeTarget($('#Pw'), -0.1)">&minus;</button>
                                                     </div>
                                                     <input type="text" class="form-control" placeholder="非负数" id="Pw"
-                                                        value=1 onclick="this.select()">
+                                                        value=1 onclick="this.select()" style="border-left-width: 0">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Pw'), 0.1)">+</button>
+                                                            onclick="ChangeTarget($('#Pw'), 0.1)">&plus;</button>
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">人形</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Tw'), -0.1)">-</button>
+                                                        <button class="btn btn-default" type="button" style="border-radius: 0;"
+                                                            onclick="ChangeTarget($('#Tw'), -0.1)">&minus;</button>
                                                     </div>
                                                     <input type="text" class="form-control" placeholder="非负数" id="Tw"
-                                                        value=1 onclick="this.select()">
+                                                        value=1 onclick="this.select()" style="border-left-width: 0">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Tw'), 0.1)">+</button>
+                                                            onclick="ChangeTarget($('#Tw'), 0.1)">&plus;</button>
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">装备</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Ew'), -0.1)">-</button>
+                                                        <button class="btn btn-default" type="button" style="border-radius: 0;"
+                                                            onclick="ChangeTarget($('#Ew'), -0.1)">&minus;</button>
                                                     </div>
                                                     <input type="text" class="form-control" placeholder="非负数" id="Ew"
-                                                        value=1 onclick="this.select()">
+                                                        value=1 onclick="this.select()" style="border-left-width: 0">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Ew'), 0.1)">+</button>
+                                                            onclick="ChangeTarget($('#Ew'), 0.1)">&plus;</button>
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">快建</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Qw'), -0.1)">-</button>
+                                                        <button class="btn btn-default" type="button" style="border-radius: 0;"
+                                                            onclick="ChangeTarget($('#Qw'), -0.1)">&minus;</button>
                                                     </div>
                                                     <input type="text" class="form-control" placeholder="非负数" id="Qw"
-                                                        value=1 onclick="this.select()">
+                                                        value=1 onclick="this.select()" style="border-left-width: 0">
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-default" type="button"
-                                                            onclick="ChangeTarget($('#Qw'), 0.1)">+</button>
+                                                            onclick="ChangeTarget($('#Qw'), 0.1)">&plus;</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -417,123 +429,128 @@
                                         <button type="button" class="btn btn-default" onclick="setTarget(7)">均衡</button>
                                         <button type="button" class="btn btn-default" onclick="setTarget(8)">人力</button>
                                         <button type="button" class="btn btn-default" onclick="setTarget(9)">弹药</button>
-                                        <button type="button" class="btn btn-default" onclick="setTarget(10)">口粮</button>
-                                        <button type="button" class="btn btn-default" onclick="setTarget(11)">零件</button>
+                                        <button type="button" class="btn btn-default"
+                                            onclick="setTarget(10)">口粮</button>
+                                        <button type="button" class="btn btn-default"
+                                            onclick="setTarget(11)">零件</button>
                                     </p>
                                     <p>
-                                        <button type="button" class="btn btn-default" onclick="setTarget(12)">人形</button>
-                                        <button type="button" class="btn btn-default" onclick="setTarget(13)">装备</button>
-                                        <button type="button" class="btn btn-default" onclick="setTarget(14)">快建</button>
+                                        <button type="button" class="btn btn-default"
+                                            onclick="setTarget(12)">人形</button>
+                                        <button type="button" class="btn btn-default"
+                                            onclick="setTarget(13)">装备</button>
+                                        <button type="button" class="btn btn-default"
+                                            onclick="setTarget(14)">快建</button>
                                         <button type="button" class="btn btn-danger" onclick="setTarget(15)">清零</button>
                                     </p>
                                     <div class="row">
-                                        <div class="col-lg-9">
+                                        <div class="col-lg-9" style="padding-right: 5px;">
                                             <h4 class="Demand"><span>平均每小时需求量</span></h4>
                                             <div class="form-group input-group">
-                                                <span class="input-group-addon">人力</span>
+                                                <span class="input-group-addon" style="padding-right: 10px; padding-left: 10px;">人力</span>
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px; border-radius: 0;"
                                                         onclick="ChangeTarget($('#MT'), -100)"><b>&minus;</b></button>
-                                                    <button class="btn btn-default" type="button"
-                                                        onclick="ChangeTarget($('#MT'), -10)">-</button>
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px; border-radius: 0;"
+                                                    onclick="ChangeTarget($('#MT'), -10)">&minus;</button>
                                                 </div>
                                                 <input type="text" class="form-control" id="MT" placeholder="非负数"
-                                                    value=0 onclick="this.select()">
+                                                    value=0 onclick="this.select()" style="border-left-width: 0">
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px;"
                                                         onclick="ChangeTarget($('#MT'), 10)">+</button>
-                                                    <button class="btn btn-default" type="button"
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px;"
                                                         onclick="ChangeTarget($('#MT'), 100)"><b>&plus;</b></button>
                                                 </div>
                                             </div>
                                             <div class="form-group input-group">
-                                                <span class="input-group-addon">弹药</span>
+                                                <span class="input-group-addon" style="padding-right: 10px; padding-left: 10px;">弹药</span>
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px; border-radius: 0;"
                                                         onclick="ChangeTarget($('#AT'), -100)"><b>&minus;</b></button>
-                                                    <button class="btn btn-default" type="button"
-                                                        onclick="ChangeTarget($('#AT'), -10)">-</button>
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px; border-radius: 0;"
+                                                        onclick="ChangeTarget($('#AT'), -10)">&minus;</button>
                                                 </div>
                                                 <input type="text" class="form-control" id="AT" placeholder="非负数"
-                                                    value=0 onclick="this.select()">
+                                                    value=0 onclick="this.select()" style="border-left-width: 0">
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px;"
                                                         onclick="ChangeTarget($('#AT'), 10)">&plus;</button>
-                                                    <button class="btn btn-default" type="button"
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px;"
                                                         onclick="ChangeTarget($('#AT'), 100)"><b>&plus;</b></button>
                                                 </div>
                                             </div>
                                             <div class="form-group input-group">
-                                                <span class="input-group-addon">口粮</span>
+                                                <span class="input-group-addon" style="padding-right: 10px; padding-left: 10px;">口粮</span>
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px; border-radius: 0;"
                                                         onclick="ChangeTarget($('#RT'), -100)"><b>&minus;</b></button>
-                                                    <button class="btn btn-default" type="button"
-                                                        onclick="ChangeTarget($('#RT'), -10)">-</button>
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px; border-radius: 0;"
+                                                        onclick="ChangeTarget($('#RT'), -10)">&minus;</button>
                                                 </div>
                                                 <input type="text" class="form-control" id="RT" placeholder="非负数"
-                                                    value=0 onclick="this.select()">
+                                                    value=0 onclick="this.select()" style="border-left-width: 0">
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px;"
                                                         onclick="ChangeTarget($('#RT'), 10)">&plus;</button>
-                                                    <button class="btn btn-default" type="button"
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px;"
                                                         onclick="ChangeTarget($('#RT'), 100)"><b>&plus;</b></button>
                                                 </div>
                                             </div>
                                             <div class="form-group input-group">
-                                                <span class="input-group-addon">零件</span>
+                                                <span class="input-group-addon" style="padding-right: 10px; padding-left: 10px;">零件</span>
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px; border-radius: 0;"
                                                         onclick="ChangeTarget($('#PT'), -100)"><b>&minus;</b></button>
-                                                    <button class="btn btn-default" type="button"
-                                                        onclick="ChangeTarget($('#PT'), -10)">-</button>
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px; border-radius: 0;"
+                                                        onclick="ChangeTarget($('#PT'), -10)">&minus;</button>
                                                 </div>
                                                 <input type="text" class="form-control" id="PT" placeholder="非负数"
-                                                    value=0 onclick="this.select()">
+                                                    value=0 onclick="this.select()" style="border-left-width: 0">
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
-                                                        onclick="ChangeTarget($('#PT'), 10)">+</button>
-                                                    <button class="btn btn-default" type="button"
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px;"
+                                                        onclick="ChangeTarget($('#PT'), 10)">&plus;</button>
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px;"
                                                         onclick="ChangeTarget($('#PT'), 100)"><b>&plus;</b></button>
                                                 </div>
                                             </div>
                                             <div class="form-group input-group">
-                                                <span class="input-group-addon">人形</span>
+                                                <span class="input-group-addon" style="padding-right: 10px; padding-left: 10px;">人形</span>
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
-                                                        onclick="ChangeTarget($('#TT'), -1)">-</button>
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px; border-radius: 0;"
+                                                        onclick="ChangeTarget($('#TT'), -1)">&minus;</button>
                                                 </div>
                                                 <input type="text" class="form-control" id="TT" placeholder="非负数"
-                                                    value=0 onclick="this.select()">
+                                                    value=0 onclick="this.select()" style="border-left-width: 0">
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
-                                                        onclick="ChangeTarget($('#TT'), 1)">+</button>
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px;"
+                                                        onclick="ChangeTarget($('#TT'), 1)">&plus;</button>
                                                 </div>
                                             </div>
                                             <div class="form-group input-group">
-                                                <span class="input-group-addon">装备</span>
+                                                <span class="input-group-addon" style="padding-right: 10px; padding-left: 10px;">装备</span>
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
-                                                        onclick="ChangeTarget($('#ET'), -1)">-</button>
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px; border-radius: 0;"
+                                                        onclick="ChangeTarget($('#ET'), -1)">&minus;</button>
                                                 </div>
                                                 <input type="text" class="form-control" id="ET" placeholder="非负数"
-                                                    value=0 onclick="this.select()">
+                                                    value=0 onclick="this.select()" style="border-left-width: 0">
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
-                                                        onclick="ChangeTarget($('#ET'), 1)">+</button>
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px;"
+                                                        onclick="ChangeTarget($('#ET'), 1)">&plus;</button>
                                                 </div>
                                             </div>
                                             <div class="form-group input-group">
-                                                <span class="input-group-addon">快建</span>
+                                                <span class="input-group-addon" style="padding-right: 10px; padding-left: 10px;">快建</span>
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
-                                                        onclick="ChangeTarget($('#QT'), -1)">-</button>
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px; border-radius: 0;"
+                                                        onclick="ChangeTarget($('#QT'), -1)">&minus;</button>
                                                 </div>
                                                 <input type="text" class="form-control" id="QT" placeholder="非负数"
-                                                    value=0 onclick="this.select()">
+                                                    value=0 onclick="this.select()" style="border-left-width: 0">
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"
-                                                        onclick="ChangeTarget($('#QT'), 1)">+</button>
+                                                    <button class="btn btn-default" type="button" style="padding-right: 10px; padding-left: 10px;"
+                                                        onclick="ChangeTarget($('#QT'), 1)">&plus;</button>
                                                 </div>
                                             </div>
                                         </div>

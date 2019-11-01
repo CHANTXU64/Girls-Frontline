@@ -4,8 +4,6 @@ window.onload = function () {
     Table.innerHTML = tab;
 }
 
-if (window.screen.width < 360) alert("您的屏幕宽度小于360dp，会有显示不完整的情况，建议横屏浏览");
-
 //注释
 $(function (){$("[data-toggle='tooltip']").tooltip();})
 
@@ -74,30 +72,34 @@ function is_Tab_Timetable_CaculateOnce() {
 }
 
 function Tab_Anytime_hourorday() {
-    var hours = parseFloat($("#Time_Anytime_hours").val()) + parseFloat($("#Time_Anytime_minutes").val()) / 60;
+    var time = parseFloat($("#Tab_Anytime_Time").val());
     if (is_Tab_Anytime_CaculateOneDay()) {
         $(".Demand span").html("每天需求量");
         $("#Time_Anytime_hours").removeAttr("disabled");
         $("#Time_Anytime_minutes").removeAttr("disabled");
-        $("#MT").val($("#MT").val() * hours);
-        $("#AT").val($("#AT").val() * hours);
-        $("#RT").val($("#RT").val() * hours);
-        $("#PT").val($("#PT").val() * hours);
-        $("#TT").val($("#TT").val() * hours);
-        $("#ET").val($("#ET").val() * hours);
-        $("#QT").val($("#QT").val() * hours);
+        $("#Tab_Anytime_Time").removeAttr("disabled");
+        document.getElementById("Tab_Anytime_thumb").style.backgroundColor='rgb(112, 166, 236)';
+        $("#MT").val($("#MT").val() * time);
+        $("#AT").val($("#AT").val() * time);
+        $("#RT").val($("#RT").val() * time);
+        $("#PT").val($("#PT").val() * time);
+        $("#TT").val($("#TT").val() * time);
+        $("#ET").val($("#ET").val() * time);
+        $("#QT").val($("#QT").val() * time);
     }
     else {
         $(".Demand span").html("平均每小时需求量");
         $("#Time_Anytime_hours").attr('disabled', "true"); 
         $("#Time_Anytime_minutes").attr('disabled', "true");
-        $("#MT").val($("#MT").val() / hours);
-        $("#AT").val($("#AT").val() / hours);
-        $("#RT").val($("#RT").val() / hours);
-        $("#PT").val($("#PT").val() / hours);
-        $("#TT").val($("#TT").val() / hours);
-        $("#ET").val($("#ET").val() / hours);
-        $("#QT").val($("#QT").val() / hours);
+        $("#Tab_Anytime_Time").attr('disabled', "true");
+        document.getElementById("Tab_Anytime_thumb").style.backgroundColor='#CCC';
+        $("#MT").val($("#MT").val() / time);
+        $("#AT").val($("#AT").val() / time);
+        $("#RT").val($("#RT").val() / time);
+        $("#PT").val($("#PT").val() / time);
+        $("#TT").val($("#TT").val() / time);
+        $("#ET").val($("#ET").val() / time);
+        $("#QT").val($("#QT").val() / time);
     }
 }
 
