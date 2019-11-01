@@ -1,12 +1,6 @@
 class Tab {
-	TotalTime = 1;
-	
 	setTime() {}
-	_CheckDataLegalityAndCorrect_Time() {}
-
-	getTime() {
-		return this.TotalTime;
-	}
+	_checkDataLegalityAndCorrect_Time() {}
 
 	setResourceIncreasingRate() {
 		var GreatSuccessRate_UP = Function_GreatSuccessRateUP();
@@ -28,11 +22,11 @@ class Tab {
 		return Unable_2;
 	}
 	_setUnableLogisticCustomize_1(UnableLogistic) {
-		this._CheckDataLegalityAndCorrect_LimitTime()
+		this._checkDataLegalityAndCorrect_LimitTime()
 		var startTime = parseFloat($("#Time_Limit_start").val());
 		var endTime = parseFloat($("#Time_Limit_end").val());
 		for (var i = 0; i < Q.length; i++) {
-            if (this._NotInLimitTime(Q[i][8], startTime, endTime)) {
+            if (this._notInLimitTime(Q[i][8], startTime, endTime)) {
                 if (UnableLogistic.indexOf(i) == -1) {
                     UnableLogistic.push(i);
                 }
@@ -43,7 +37,7 @@ class Tab {
 	_setUnableLogisticCustomize_2(UnableLogistic) {
 		return UnableLogistic;
 	}
-	_CheckDataLegalityAndCorrect_LimitTime() {
+	_checkDataLegalityAndCorrect_LimitTime() {
 		var start = getPositiveValueFromHTML($("#Time_Limit_start"));
 		var end = getPositiveValueFromHTML($("#Time_Limit_end"));
 		if (start > end) {
@@ -51,14 +45,14 @@ class Tab {
 			throw"--";
 		}
 	}
-	_NotInLimitTime(xtime, startTime, endTime) {
+	_notInLimitTime(xtime, startTime, endTime) {
 		if (xtime < startTime && Math.abs(xtime - startTime) > 0.02) return true;
 		if (xtime > endTime && Math.abs(xtime - endTime) > 0.02) return true;
 		return false;
 	}
 
 	Calculate_Current(MissionsNumber) {}
-	_CalculateCurrentByResourceIncreasingRate(CurrentValue) {
+	_calculateCurrentByResourceIncreasingRate(CurrentValue) {
 		for (var i = 0; i < 4; i++) {
 			CurrentValue[i] *= this.ResourceIncreasingRate;
 		}
@@ -84,12 +78,12 @@ class Tab_Anytime extends Tab {
 			this.TotalTime = 1;
 			return;
 		}
-		this._CheckDataLegalityAndCorrect_Time();
+		this._checkDataLegalityAndCorrect_Time();
 		var Hours = parseFloat($("#Time_Anytime_hours").val());
 		var Minutes = parseFloat($("#Time_Anytime_minutes").val());
 		this.TotalTime = Hours + Minutes / 60;
 	}
-	_CheckDataLegalityAndCorrect_Time() {
+	_checkDataLegalityAndCorrect_Time() {
 		var Hours = getPositiveValueFromHTML($("#Time_Anytime_hours"));
 		var Minutes = getPositiveValueFromHTML($("#Time_Anytime_minutes"));
 		var total_time = Hours + Minutes / 60;
@@ -108,7 +102,7 @@ class Tab_Anytime extends Tab {
 		for (var i = 0; i < 7; i++) {
 			CurrentValue[i] = Q[Number[0]][i + 1] + Q[Number[1]][i + 1] + Q[Number[2]][i + 1] + Q[Number[3]][i + 1];
 		}
-		return this._CalculateCurrentByResourceIncreasingRate(CurrentValue);
+		return this._calculateCurrentByResourceIncreasingRate(CurrentValue);
 	}
 
 	PrintPlanTableTitle() {
@@ -137,12 +131,12 @@ class Tab_Anytime extends Tab {
 
 class Tab_SingleTime extends Tab {
 	setTime() {
-		this._CheckDataLegalityAndCorrect_Time();
+		this._checkDataLegalityAndCorrect_Time();
 		var Hours = parseFloat($("#Time_SingleTime_hours").val());
 		var Minutes = parseFloat($("#Time_SingleTime_minutes").val());
 		this.TotalTime = Hours + Minutes / 60;
 	}
-	_CheckDataLegalityAndCorrect_Time() {
+	_checkDataLegalityAndCorrect_Time() {
 		var Hours = getPositiveValueFromHTML($("#Time_SingleTime_hours"));
 		var Minutes = getPositiveValueFromHTML($("#Time_SingleTime_minutes"));
 		var total_time = Hours + Minutes / 60;
@@ -168,7 +162,7 @@ class Tab_SingleTime extends Tab {
 		for (var i = 0; i < 7; i++) {
 			CurrentValue[i] = (Q[Number[0]][i + 1] * Q[Number[0]][8] + Q[Number[1]][i + 1] * Q[Number[1]][8] + Q[Number[2]][i + 1] * Q[Number[2]][8] + Q[Number[3]][i + 1] * Q[Number[3]][8]) / this.TotalTime;
 		}
-		return this._CalculateCurrentByResourceIncreasingRate(CurrentValue);
+		return this._calculateCurrentByResourceIncreasingRate(CurrentValue);
 	}
 
 	PrintPlanTableTitle() {
@@ -182,14 +176,83 @@ class Tab_SingleTime extends Tab {
 	}
 }
 
+class Tab_Timetable extends Tab {
+	setTime() {
+		this.TimeList = tab_Timetable_time.sort(sortNumber);
+		this.TimeList.unshift(0);
+		this.TotalTime = Tab_Timetable_getMaxTime();
+		this.TimeList.push(this.TotalTime);
+	}
+
+	_setUnableLogisticCustomize_2(UnableLogistic) {//排除超时后勤
+		for (var i = 0; i < Q.length; i++) {
+            if (Q[i][8] > this.TotalTime) {
+                if (UnableLogistic.indexOf(i) == -1) {
+                    UnableLogistic.push(i);
+                }
+            }
+		}
+		return UnableLogistic;
+	}
+
+	Calculate_Current(Number) {
+		var CurrentValue = new Array(7);
+		var times = [0, 0, 0, 0];
+		var CurrentValue_n = new Array(7);
+		for (var i = 0; i < CurrentValue_n.length; i++) {
+			CurrentValue_n[i] = new Array(4);
+		}
+		for (var i = 0; i < 4; i++) {
+			var Time_List = [];
+			for (var ii = 0; ii < this.TimeList.length; ii++) {
+				Time_List[ii] = this.TimeList[ii];
+			}
+			for (var ii = 1; ii < Time_List.length; ii++) {
+				if (Q[Number[i]][8] <= Time_List[ii] - Time_List[0]) {
+					times[i]++;
+					Time_List.splice(0, ii);
+					ii = 0;
+				}
+			}
+			for (var ii = 0; ii < 7; ii++) {
+				CurrentValue_n[ii][i] = Q[Number[i]][ii + 1] * Q[Number[i]][8] * times[i] / this.TotalTime;
+			}
+		}
+		for (var i = 0; i < 7; i++) {
+			CurrentValue[i] = CurrentValue_n[i][0] + CurrentValue_n[i][1] + CurrentValue_n[i][2] + CurrentValue_n[i][3];
+		}
+		return this._calculateCurrentByResourceIncreasingRate(CurrentValue);
+	}
+
+	PrintPlanTableTitle() {
+		var title;
+		if (is_Tab_Anytime_CaculateOneDay()) {
+			title = this._title + '<th>人力</th><th>弹药</th><th>口粮</th><th>零件</th><th>人形</th><th>装备</th><th>快建</th>' + this._titleEnd;
+		}
+		else {
+			title = this._title + '<th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>人形/h</th><th>装备/h</th><th>快建/h</th>' + this._titleEnd;
+		}
+		return title;
+	}
+
+	get_Hours_PrintResourceContract() {
+		if (is_Tab_Timetable_CaculateOnce()) return this.TotalTime;
+		else return 1;
+	}
+}
+
+function sortNumber(a, b) {
+	return a - b;
+}
+
 class Tab_Intervals extends Tab {
 	setTime() {
-		this._CheckDataLegalityAndCorrect_Time();
+		this._checkDataLegalityAndCorrect_Time();
 		var Hours = parseFloat($("#Time_Intervals_hours").val());
 		var Minutes = parseFloat($("#Time_Intervals_minutes").val());
 		this.TotalTime = Hours + Minutes / 60;
 	}
-	_CheckDataLegalityAndCorrect_Time() {
+	_checkDataLegalityAndCorrect_Time() {
 		var Hours = getPositiveValueFromHTML($("#Time_Intervals_hours"));
 		var Minutes = getPositiveValueFromHTML($("#Time_Intervals_minutes"));
 		var total_time = Hours + Minutes / 60;
@@ -219,13 +282,13 @@ class Tab_Intervals extends Tab {
 		for (var i = 0; i < 7; i++) {
 			CurrentValue[i] = CurrentValue_n[i][0] + CurrentValue_n[i][1] + CurrentValue_n[i][2] + CurrentValue_n[i][3];
 		}
-		return this._CalculateCurrentByResourceIncreasingRate(CurrentValue);
+		return this._calculateCurrentByResourceIncreasingRate(CurrentValue);
 	}
 	_setPlanListCustomizer(times) {
-		var One_cycle_time = this._CalculateArrayLeastCommonMultiple(times) * this.TotalTime;
+		var One_cycle_time = this._calculateArrayLeastCommonMultiple(times) * this.TotalTime;
 		this._PlanListCustomizer = [One_cycle_time];
 	}
-	_CalculateArrayLeastCommonMultiple(array) {
+	_calculateArrayLeastCommonMultiple(array) {
 		var arr = array;
 		for (var i = 0; i < (arr.length - 1); i++) {
 			arr[i+1] = arr[i] * arr[i+1] / this._gcd(arr[i], arr[i + 1]);

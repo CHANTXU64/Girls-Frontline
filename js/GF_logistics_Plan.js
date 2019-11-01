@@ -154,7 +154,7 @@ class Plan {
         for (var i = 0; i < 4; i++) {
             MissionsNumber[i] = Q[this.List[row][i]][0];
         }
-        MissionsNumber = MissionsNumber.sort(sortNumber);
+        MissionsNumber = MissionsNumber.sort(sortStringNumber);
         for (var i = 0; i < 4; i++) {
             tab += ("<td>" + MissionsNumber[i] + "</td>");
         }
@@ -173,7 +173,7 @@ class Plan {
     }
 }
 
-function sortNumber(a, b) {
+function sortStringNumber(a, b) {
     var aa, bb;
     aa = parseInt(a.replace(/[^0-9]/ig,""));
     bb = parseInt(b.replace(/[^0-9]/ig,""));

@@ -5,4 +5,6 @@
 Reference from [FatalChapter](https://github.com/hycdes/GFTool)<br>
 
 Contract reference from https://bbs.nga.cn/read.php?tid=13814613<br>
-Picture archive https://imgur.com/XY6kEqh
+Picture archive https://imgur.com/XY6kEqh<br>
+
+"Multi Range Slider" By [GlitchWorker](https://codepen.io/glitchworker/pen/XVdKqj)

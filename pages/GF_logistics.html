@@ -6,13 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content=""> 
+    <meta name="author" content="">
     <title>少女前线-后勤组合排序器</title>
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
-    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/GF_logistics.css" rel="stylesheet">
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="../js/GF_logistics_html.js"></script>
@@ -20,16 +19,55 @@
     <script src="../js/GF_logistics_Tab.js"></script>
     <script src="../js/GF_logistics_Plan.js"></script>
     <script src="../js/GF_logistics.js"></script>
+    
 </head>
 
 <body>
     <div id="wrapper">
+        <!-- <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html"><span style="color:#FF0066">少女前线工具</span> by 命运の乐章 (GF tools)</a>
+            </div>
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav in" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </li>
+                        <li><a href="index.html"><i class="fa fa-home fa-fw"></i> 主页</a></li>
+                        <li><a href="GFT_Database.html"><i class="fa fa-book fa-fw"></i> 资料库</a></li>
+                        <li><a href="GFT_LogiRank.html" class="active"><i class="fa fa-briefcase fa-fw"></i> 后勤排序器</a></li>
+                        <li><a href="GFT_LevelCal.html"><i class="fa fa-upload fa-fw"></i> 练级计算器</a></li>
+                        <li><a href="GFT_IOPSimulate.html"><i class="fa fa-gears fa-fw"></i> 建造模拟器</a></li>
+                        <li><a href="GFT_ChipCal.html"><i class="fa fa-delicious fa-fw"></i> 芯片计算器</a></li>
+                        <li><a href="GFT_Echelon.html"><i class="glyphicon glyphicon-screenshot"></i> &nbsp;阵形模拟器</a></li>
+                        <li><a href="GFT_Stat.html"><i class="glyphicon glyphicon-stats"></i> &nbsp;掉落统计</a></li>
+                        <li><a href="GFT_Class.html"><i class="fa fa-search"></i> &nbsp;格里芬人事部</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav> -->
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="tooltip-demo">
-                            <h1 class="page-header">后勤组合排序器 <button type="button" data-toggle="tooltip" data-placement="bottom" title="各资源获取速率乘其权重求和排序 所缺的资源可将权重调大" class="btn btn-outline btn-default">?</button></h1>
+                            <h1 class="page-header">后勤组合排序器 <button type="button" data-toggle="tooltip"
+                                    data-placement="bottom" title="各资源获取速率乘其权重求和排序 所缺的资源可将权重调大"
+                                    class="btn btn-outline btn-default">?</button></h1>
                         </div>
                     </div>
                 </div>
@@ -40,275 +78,492 @@
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">设置</div>
-                                <div class="panel-body">
-                                    <div class="col-lg-6">
-                                        <h4>计算方式</h4>
-                                        <ul class="nav nav-pills nav-justified">
-                                            <li class="active">
-                                                <a href="#Tab_Anytime" data-toggle="tab">随时能收后勤</a>
-                                            </li>
-                                            <li>
-                                                <a href="#Tab_SingleTime" data-toggle="tab">单次后勤</a>
-                                            </li>
-                                            <li>
-                                                <a href="#Tab_Intervals" data-toggle="tab">每隔几小时收后勤</a>
-                                            </li>
-                                        </ul>
-                                        <div class="tab-content">
-                                            <div class="tab-pane fade in active" id="Tab_Anytime">
-                                                <div class="checkbox">
-                                                    <label><input id="toggle-event" type="checkbox" onclick="Tab_Anytime_hourorday()">按一天需求量计算</label>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group input-group">
-                                                            <input type="text" class="form-control" id="Time_Anytime_hours" placeholder="不超过24的非负数" value=16 onclick="this.select()" disabled>
-                                                            <span class="input-group-addon">小时</span>
-                                                        </div>
+                            <div class="panel-body">
+                                <div class="col-lg-7">
+                                    <h4>计算方式</h4>
+                                    <ul class="nav nav-pills nav-justified">
+                                        <li class="active">
+                                            <a href="#Tab_Anytime" data-toggle="tab">随时能收后勤</a>
+                                        </li>
+                                        <li>
+                                            <a href="#Tab_SingleTime" data-toggle="tab">单次后勤</a>
+                                        </li>
+                                        <li>
+                                            <a href="#Tab_Timetable" data-toggle="tab">时间计划表</a>
+                                        </li>
+                                        <li>
+                                            <a href="#Tab_Intervals" data-toggle="tab">每隔几小时收</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade in active" id="Tab_Anytime">
+                                            <div class="checkbox">
+                                                <label><input id="Tab_Anytime_toggle-event" type="checkbox"
+                                                        onclick="Tab_Anytime_hourorday()">按一天需求量计算</label>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group input-group">
+                                                        <input type="text" class="form-control" id="Time_Anytime_hours"
+                                                            placeholder="不超过24的非负数" value=16 onclick="this.select()"
+                                                            disabled>
+                                                        <span class="input-group-addon">小时</span>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group input-group">
-                                                            <input type="text" class="form-control" id="Time_Anytime_minutes" placeholder="不超过1440的非负数" value=0 onclick="this.select()" disabled>
-                                                            <span class="input-group-addon">分钟</span>
-                                                        </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group input-group">
+                                                        <input type="text" class="form-control"
+                                                            id="Time_Anytime_minutes" placeholder="不超过1440的非负数" value=0
+                                                            onclick="this.select()" disabled>
+                                                        <span class="input-group-addon">分钟</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="tab-pane fade" id="Tab_SingleTime">
-                                                <p>
-                                                    <div class="alert alert-warning" role="alert">
-                                                        计算的资源、契约结果为<a href="https://baike.baidu.com/item/%E6%95%B0%E5%AD%A6%E6%9C%9F%E6%9C%9B/5362790?fr=aladdin" class="alert-link">数学期望</a>。如果您是非酋，请将大成功概率减小或设置为15。:)
+                                        </div>
+                                        <div class="tab-pane fade" id="Tab_SingleTime">
+                                            <p>
+                                                <div class="alert alert-warning" role="alert">
+                                                    计算的资源、契约结果为<a
+                                                        href="https://baike.baidu.com/item/%E6%95%B0%E5%AD%A6%E6%9C%9F%E6%9C%9B/5362790?fr=aladdin"
+                                                        class="alert-link">均值</a>。
+                                                </div>
+                                            </p>
+                                            <h4>时长</h4>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group input-group">
+                                                        <input type="text" class="form-control"
+                                                            id="Time_SingleTime_hours" placeholder="非负数" value=8
+                                                            onclick="this.select()">
+                                                        <span class="input-group-addon">小时</span>
                                                     </div>
-                                                </p>
-                                                <h4>时长</h4>
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group input-group">
-                                                            <input type="text" class="form-control" id="Time_SingleTime_hours" placeholder="非负数" value=8 onclick="this.select()">
-                                                            <span class="input-group-addon">小时</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group input-group">
-                                                            <input type="text" class="form-control" id="Time_SingleTime_minutes" placeholder="非负数" value=0 onclick="this.select()">
-                                                            <span class="input-group-addon">分钟</span>
-                                                        </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group input-group">
+                                                        <input type="text" class="form-control"
+                                                            id="Time_SingleTime_minutes" placeholder="非负数" value=0
+                                                            onclick="this.select()">
+                                                        <span class="input-group-addon">分钟</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="tab-pane fade" id="Tab_Intervals">
-                                                <h4>间隔时长</h4>
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group input-group">
-                                                            <input type="text" class="form-control" id="Time_Intervals_hours" placeholder="非负数" value=3 onclick="this.select()">
-                                                            <span class="input-group-addon">小时</span>
-                                                        </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="Tab_Timetable">
+                                            <p>
+                                                <div class="alert alert-warning" role="alert">
+                                                    计算的资源、契约结果为<a
+                                                        href="https://baike.baidu.com/item/%E6%95%B0%E5%AD%A6%E6%9C%9F%E6%9C%9B/5362790?fr=aladdin"
+                                                        class="alert-link">均值</a>。
+                                                </div>
+                                            </p>
+                                            <h4>后勤总时长</h4>
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <div class="form-group input-group">
+                                                        <input type="text" class="form-control" id="Time_Timetable_hours"
+                                                            placeholder="非负数" value=5 onclick="this.select()">
+                                                        <span class="input-group-addon">小时</span>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group input-group">
-                                                            <input type="text" class="form-control" id="Time_Intervals_minutes" placeholder="非负数" value=0 onclick="this.select()">
-                                                            <span class="input-group-addon">分钟</span>
+                                                </div>
+                                                <div class="col-lg-5">
+                                                    <div class="form-group input-group">
+                                                        <input type="text" class="form-control" id="Time_Timetable_minutes"
+                                                            placeholder="非负数" value=0 onclick="this.select()">
+                                                        <span class="input-group-addon">分钟</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <button type="button" class="btn btn-default" onclick="Tab_Timetable_DeleteAllTimePoints()"><span class="glyphicon glyphicon-remove-sign" style="font-size: 17px;"/></button>
+                                                </div>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input id="Tab_Timetable_toggle-event" type="checkbox"
+                                                        onclick="Tab_Timetable_hourorday()">按平均每小时需求量计算</label>
+                                            </div>
+                                            <div slider style="margin: 30px 0 32px 0;">
+                                                <div id="Tab_Timetable_range" style="right: 49px;">
+                                                    <div inverse-left style="width:70%;"></div>
+                                                    <div inverse-right style="width:70%;"></div>
+                                                    <div range style="left:0%;right:0%; background-color:#CCC;"></div>
+                                                    <span thumb id="Tab_Timetable_range_thumb_0" style="left:100%; background-color:rgb(221, 155, 155); cursor:default;"></span>
+                                                    <div id="Tab_Timetable_range_tooltip_0" class="tooltip right custom-tooltip" style="right: -72px; top:-15px;">
+                                                        <div class="tooltip-arrow"></div>
+                                                        <div id="Tab_Timetable_range_tooltip_0_value" class="tooltip-inner">5:00</div>
+                                                    </div>
+                                                    <!-- <span thumb id="Tab_Timetable_range_thumb_1" style="left:80%; background-color:rgb(221, 155, 155);" onmousedown="Tab_Timetable_DeleteThisTimePoint(1)">
+                                                        <span class="glyphicon glyphicon-remove-circle" style="font-size: 22px;"></span>
+                                                    </span>
+                                                    <div id="Tab_Timetable_range_tooltip_1" class="tooltip bottom custom-tooltip" style="left: 80%; top:12px;">
+                                                        <div class="tooltip-arrow"></div>
+                                                        <div class="tooltip-inner">4:00</div>
+                                                    </div> -->
+
+                                                    <!-- <span thumb id="Tab_Timetable_range_thumb_2" style="left:0%; background-color:rgb(221, 155, 155);" onmousedown="Tab_Timetable_DeleteThisTimePoint(2)">
+                                                        <span class="glyphicon glyphicon-remove-circle" style="font-size: 22px;"></span>
+                                                    </span>
+                                                    <div id="Tab_Timetable_range_tooltip_2" class="tooltip top custom-tooltip" style="left: -7.45%; top:-32px;">
+                                                        <div class="tooltip-arrow"></div>
+                                                        <div class="tooltip-inner">0:00</div>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            <h5>新添加一个收取后勤时间点:</h5>
+                                            <div class="row">
+                                                <div class="col-lg-11">
+                                                    <div class="form-group input-group">
+                                                        <input type="text" class="form-control" id="Tab_Timetable_new_hours"
+                                                            onclick="this.select()">
+                                                        <span class="input-group-addon">小时</span>
+                                                        <input type="text" class="form-control" id="Tab_Timetable_new_minutes"
+                                                            onclick="this.select()">
+                                                        <span class="input-group-addon">分钟</span>
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-info" onclick="Tab_Timetable_AddNewTimePoint()"><span class="glyphicon glyphicon-plus" /></button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <h4>后勤队伍平均大成功概率</h4>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group input-group">
-                                                    <input type="text" class="form-control" id="GreatSuccessRate" placeholder="15~60之间的数" value=60 onclick="this.select()">
-                                                    <span class="input-group-addon" id="Display_UPRate"></span>
-                                                    <span class="input-group-addon">%</span>
+                                        <div class="tab-pane fade" id="Tab_Intervals">
+                                            <h4>间隔时长</h4>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group input-group">
+                                                        <input type="text" class="form-control"
+                                                            id="Time_Intervals_hours" placeholder="非负数" value=3
+                                                            onclick="this.select()">
+                                                        <span class="input-group-addon">小时</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="checkbox">
-                                                    <label> <input type="checkbox" id="GreatSuccessRateUp" onclick="Function_GreatSuccessRateUP()">后勤大成功UP</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <h4>各个后勤任务时间范围</h4>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon">最少</span>
-                                                    <input type="text" class="form-control" id="Time_Limit_start" placeholder="非负数" value=0 onclick="this.select()">
-                                                    <span class="input-group-addon">小时</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon">最多</span>
-                                                    <input type="text" class="form-control" id="Time_Limit_end" placeholder="正数" value=24 onclick="this.select()">
-                                                    <span class="input-group-addon">小时</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <h4>关卡解锁</h4>
-                                        <p>
-                                            <select class="form-control" id="MapLimit">
-                                                <option value=6>第六战役</option>
-                                                <option value=7>第七战役</option>
-                                                <option value=8>第八战役</option>
-                                                <option value=9>第九战役</option>
-                                                <option value=10>第十战役</option>
-                                                <option value=11 selected>第十一战役</option>
-                                            </select>
-                                        </p>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h4 class="panel-title">
-                                                    <a data-toggle="collapse" href="#colla-tdoll" class="collapsed">权重设置(高级设置)</a>
-                                                </h4>
-                                            </div>
-                                            <div id="colla-tdoll" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    一般不用更改，当对结果不满意可以进行适当修改
+                                                <div class="col-lg-6">
                                                     <div class="form-group input-group">
-                                                        <span class="input-group-addon">人力权重</span>
-                                                        <input type="text" class="form-control" placeholder="非负数" id="Mw" value=1 onclick="this.select()">
-                                                    </div>
-                                                    <div class="form-group input-group">
-                                                        <span class="input-group-addon">弹药权重</span>
-                                                        <input type="text" class="form-control" placeholder="非负数" id="Aw" value=1 onclick="this.select()">
-                                                    </div>
-                                                    <div class="form-group input-group">
-                                                        <span class="input-group-addon">口粮权重</span>
-                                                        <input type="text" class="form-control" placeholder="非负数" id="Rw" value=1 onclick="this.select()">
-                                                    </div>
-                                                    <div class="form-group input-group">
-                                                        <span class="input-group-addon">零件权重</span>
-                                                        <input type="text" class="form-control" placeholder="非负数" id="Pw" value=1 onclick="this.select()">
-                                                    </div>
-                                                    <div class="form-group input-group">
-                                                        <span class="input-group-addon">人形权重</span>
-                                                        <input type="text" class="form-control" placeholder="非负数" id="Tw" value=1 onclick="this.select()">
-                                                    </div>
-                                                    <div class="form-group input-group">
-                                                        <span class="input-group-addon">装备权重</span>
-                                                        <input type="text" class="form-control" placeholder="非负数" id="Ew" value=1 onclick="this.select()">
-                                                    </div>
-                                                    <div class="form-group input-group">
-                                                        <span class="input-group-addon">快建权重</span>
-                                                        <input type="text" class="form-control" placeholder="非负数" id="Qw" value=1 onclick="this.select()">
+                                                        <input type="text" class="form-control"
+                                                            id="Time_Intervals_minutes" placeholder="非负数" value=0
+                                                            onclick="this.select()">
+                                                        <span class="input-group-addon">分钟</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <h4>常用</h4>
-                                        <p>
-                                            <button type="button" class="btn btn-default" onclick="setTarget(1)">手枪HG</button>
-                                            <button type="button" class="btn btn-default" onclick="setTarget(2)">冲锋枪SMG</button>
-                                            <button type="button" class="btn btn-default" onclick="setTarget(3)">步枪RF</button>
-                                        </p>
-                                        <p>
-                                            <button type="button" class="btn btn-default" onclick="setTarget(4)">突击步枪AR</button>
-                                            <button type="button" class="btn btn-default" onclick="setTarget(5)">机枪MG</button>
-                                            <button type="button" class="btn btn-default" onclick="setTarget(6)">霰弹枪SG</button>
-                                        </p>
-                                        <p>
-                                            <button type="button" class="btn btn-default" onclick="setTarget(7)">平均</button>
-                                            <button type="button" class="btn btn-default" onclick="setTarget(8)">人力</button>
-                                            <button type="button" class="btn btn-default" onclick="setTarget(9)">弹药</button>
-                                            <button type="button" class="btn btn-default" onclick="setTarget(10)">口粮</button>
-                                            <button type="button" class="btn btn-default" onclick="setTarget(11)">零件</button>
-                                        </p>
-                                        <div class="row">
-                                            <div class="col-lg-8">
-                                                <h4 class="Demand"><span>平均每小时需求量</span></h4>
+                                    <h4>后勤队伍平均大成功概率</h4>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group input-group">
+                                                <input type="text" class="form-control" id="GreatSuccessRate"
+                                                    placeholder="15~60之间的数" value=60 onclick="this.select()">
+                                                <span class="input-group-addon" id="Display_UPRate"></span>
+                                                <span class="input-group-addon">%</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="checkbox">
+                                                <label> <input type="checkbox" id="GreatSuccessRateUp"
+                                                        onclick="Function_GreatSuccessRateUP()">后勤大成功UP</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4>各个后勤任务时间范围(小时)</h4>
+                                    <div slider id="slider-distance">
+                                        <div>
+                                          <div inverse-left style="width:70%;"></div>
+                                          <div inverse-right style="width:70%;"></div>
+                                          <div range id="range_limit" style="left:0%;right:0%;"></div>
+                                          <span thumb id="thumb_limit_start" style="left:0%;"></span>
+                                          <span thumb id="thumb_limit_end" style="left:100%;"></span>
+                                          <div sign id="sign_limit_start" style="left:0%;">
+                                            <span id="sign_limit_start_value">0</span>
+                                          </div>
+                                          <div sign id="sign_limit_end" style="left:100%;">
+                                            <span id="sign_limit_end_value">24</span>
+                                          </div>
+                                        </div>
+                                        <input id="Time_Limit_start" type="range" tabindex="0" value="0" max="24" min="0" step="0.25" oninput="
+                                        this.value=Math.min(this.value,this.parentNode.childNodes[5].value-0.25);
+                                        var value=(100/(parseFloat(this.max)-parseInt(this.min)))*parseFloat(this.value)-(100/(parseInt(this.max)-parseFloat(this.min)))*parseFloat(this.min);
+                                        var children = this.parentNode.childNodes[1].childNodes;
+                                        children[1].style.width=value+'%';
+                                        children[5].style.left=value+'%';
+                                        children[7].style.left=value+'%';children[11].style.left=value+'%';
+                                        children[11].childNodes[1].innerHTML=this.value;" />
+                                        <input id="Time_Limit_end" type="range" tabindex="0" value="24" max="24" min="0" step="0.25" oninput="
+                                        this.value=Math.max(this.value,this.parentNode.childNodes[3].value-(-0.25));
+                                        var value=(100/(parseFloat(this.max)-parseFloat(this.min)))*parseFloat(this.value)-(100/(parseFloat(this.max)-parseFloat(this.min)))*parseFloat(this.min);
+                                        var children = this.parentNode.childNodes[1].childNodes;
+                                        children[3].style.width=(100-value)+'%';
+                                        children[5].style.right=(100-value)+'%';
+                                        children[9].style.left=value+'%';children[13].style.left=value+'%';
+                                        children[13].childNodes[1].innerHTML=this.value;" />
+                                    </div>
+                                    <h4>关卡解锁</h4>
+                                    <p>
+                                        <select class="form-control" id="MapLimit">
+                                            <option value=6>第六战役</option>
+                                            <option value=7>第七战役</option>
+                                            <option value=8>第八战役</option>
+                                            <option value=9>第九战役</option>
+                                            <option value=10>第十战役</option>
+                                            <option value=11 selected>第十一战役</option>
+                                        </select>
+                                    </p>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#colla-tdoll"
+                                                    class="collapsed">权重设置(高级设置)</a>
+                                            </h4>
+                                        </div>
+                                        <div id="colla-tdoll" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                一般不用更改，当对结果不满意可以进行适当修改
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">人力</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#MT'), -100)">--</button>
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#MT'), -10)">-</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Mw'), -0.1)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="MT" placeholder="非负数" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" placeholder="非负数" id="Mw"
+                                                        value=1 onclick="this.select()">
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#MT'), 10)">+</button>
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#MT'), 100)">++</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Mw'), 0.1)">+</button>
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">弹药</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#AT'), -100)">--</button>
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#AT'), -10)">-</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Aw'), -0.1)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="AT" placeholder="非负数" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" placeholder="非负数" id="Aw"
+                                                        value=1 onclick="this.select()">
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#AT'), 10)">+</button>
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#AT'), 100)">++</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Aw'), 0.1)">+</button>
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">口粮</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#RT'), -100)">--</button>
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#RT'), -10)">-</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Rw'), -0.1)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="RT" placeholder="非负数" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" placeholder="非负数" id="Rw"
+                                                        value=1 onclick="this.select()">
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#RT'), 10)">+</button>
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#RT'), 100)">++</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Rw'), 0.1)">+</button>
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">零件</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#PT'), -100)">--</button>
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#PT'), -10)">-</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Pw'), -0.1)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="PT" placeholder="非负数" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" placeholder="非负数" id="Pw"
+                                                        value=1 onclick="this.select()">
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#PT'), 10)">+</button>
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#PT'), 100)">++</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Pw'), 0.1)">+</button>
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">人形</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#TT'), -1)">-</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Tw'), -0.1)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="TT" placeholder="非负数" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" placeholder="非负数" id="Tw"
+                                                        value=1 onclick="this.select()">
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#TT'), 1)">+</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Tw'), 0.1)">+</button>
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">装备</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#ET'), -1)">-</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Ew'), -0.1)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="ET" placeholder="非负数" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" placeholder="非负数" id="Ew"
+                                                        value=1 onclick="this.select()">
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#ET'), 1)">+</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Ew'), 0.1)">+</button>
                                                     </div>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">快建</span>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#QT'), -1)">-</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Qw'), -0.1)">-</button>
                                                     </div>
-                                                    <input type="text" class="form-control" id="QT" placeholder="非负数" value=0 onclick="this.select()">
+                                                    <input type="text" class="form-control" placeholder="非负数" id="Qw"
+                                                        value=1 onclick="this.select()">
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="ChangeTarget($('#QT'), 1)">+</button>
+                                                        <button class="btn btn-default" type="button"
+                                                            onclick="ChangeTarget($('#Qw'), 0.1)">+</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <br>
-                                        <p><button type="button" class="btn btn-info" onclick="Get_Plan_Main()">开始排序</button></p>
+                                </div>
+                                <div class="col-lg-5">
+                                    <h4>常用</h4>
+                                    <p>
+                                        <button type="button" class="btn btn-default"
+                                            onclick="setTarget(1)">手枪HG</button>
+                                        <button type="button" class="btn btn-default"
+                                            onclick="setTarget(2)">冲锋枪SMG</button>
+                                        <button type="button" class="btn btn-default"
+                                            onclick="setTarget(3)">步枪RF</button>
+                                    </p>
+                                    <p>
+                                        <button type="button" class="btn btn-default"
+                                            onclick="setTarget(4)">突击步枪AR</button>
+                                        <button type="button" class="btn btn-default"
+                                            onclick="setTarget(5)">机枪MG</button>
+                                        <button type="button" class="btn btn-default"
+                                            onclick="setTarget(6)">霰弹枪SG</button>
+                                    </p>
+                                    <p>
+                                        <button type="button" class="btn btn-default" onclick="setTarget(7)">均衡</button>
+                                        <button type="button" class="btn btn-default" onclick="setTarget(8)">人力</button>
+                                        <button type="button" class="btn btn-default" onclick="setTarget(9)">弹药</button>
+                                        <button type="button" class="btn btn-default" onclick="setTarget(10)">口粮</button>
+                                        <button type="button" class="btn btn-default" onclick="setTarget(11)">零件</button>
+                                    </p>
+                                    <p>
+                                        <button type="button" class="btn btn-default" onclick="setTarget(12)">人形</button>
+                                        <button type="button" class="btn btn-default" onclick="setTarget(13)">装备</button>
+                                        <button type="button" class="btn btn-default" onclick="setTarget(14)">快建</button>
+                                        <button type="button" class="btn btn-danger" onclick="setTarget(15)">清零</button>
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-lg-9">
+                                            <h4 class="Demand"><span>平均每小时需求量</span></h4>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">人力</span>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#MT'), -100)"><b>&minus;</b></button>
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#MT'), -10)">-</button>
+                                                </div>
+                                                <input type="text" class="form-control" id="MT" placeholder="非负数"
+                                                    value=0 onclick="this.select()">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#MT'), 10)">+</button>
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#MT'), 100)"><b>&plus;</b></button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">弹药</span>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#AT'), -100)"><b>&minus;</b></button>
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#AT'), -10)">-</button>
+                                                </div>
+                                                <input type="text" class="form-control" id="AT" placeholder="非负数"
+                                                    value=0 onclick="this.select()">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#AT'), 10)">&plus;</button>
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#AT'), 100)"><b>&plus;</b></button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">口粮</span>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#RT'), -100)"><b>&minus;</b></button>
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#RT'), -10)">-</button>
+                                                </div>
+                                                <input type="text" class="form-control" id="RT" placeholder="非负数"
+                                                    value=0 onclick="this.select()">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#RT'), 10)">&plus;</button>
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#RT'), 100)"><b>&plus;</b></button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">零件</span>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#PT'), -100)"><b>&minus;</b></button>
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#PT'), -10)">-</button>
+                                                </div>
+                                                <input type="text" class="form-control" id="PT" placeholder="非负数"
+                                                    value=0 onclick="this.select()">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#PT'), 10)">+</button>
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#PT'), 100)"><b>&plus;</b></button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">人形</span>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#TT'), -1)">-</button>
+                                                </div>
+                                                <input type="text" class="form-control" id="TT" placeholder="非负数"
+                                                    value=0 onclick="this.select()">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#TT'), 1)">+</button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">装备</span>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#ET'), -1)">-</button>
+                                                </div>
+                                                <input type="text" class="form-control" id="ET" placeholder="非负数"
+                                                    value=0 onclick="this.select()">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#ET'), 1)">+</button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">快建</span>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#QT'), -1)">-</button>
+                                                </div>
+                                                <input type="text" class="form-control" id="QT" placeholder="非负数"
+                                                    value=0 onclick="this.select()">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"
+                                                        onclick="ChangeTarget($('#QT'), 1)">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <br>
+                                    <p><button type="button" class="btn btn-info"
+                                            onclick="Get_Plan_Main()">开始排序</button></p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="panel panel-default">
@@ -327,6 +582,6 @@
             </div>
         </div>
     </div>
-    
 </body>
+
 </html>
