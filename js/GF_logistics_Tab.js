@@ -226,7 +226,7 @@ class Tab_Timetable extends Tab {
 
 	PrintPlanTableTitle() {
 		var title;
-		if (is_Tab_Anytime_CaculateOneDay()) {
+		if (is_Tab_Timetable_CaculateOnce()) {
 			title = this._title + '<th>人力</th><th>弹药</th><th>口粮</th><th>零件</th><th>人形</th><th>装备</th><th>快建</th>' + this._titleEnd;
 		}
 		else {
