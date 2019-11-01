@@ -1,7 +1,7 @@
 window.onload = function () {
-    var Table = document.getElementById("Plan_Table");
-    var tab = '点击 <span style="color:deepskyblue">开始排序</span> 按钮，排序前三十六的结果将在这里显示';
-    Table.innerHTML = tab;
+    loadHTML_PlanTable();
+    loadHTML_Weights();
+    loadHTML_Target();
 }
 
 //注释
@@ -79,13 +79,13 @@ function Tab_Anytime_hourorday() {
         $("#Time_Anytime_minutes").removeAttr("disabled");
         $("#Tab_Anytime_Time").removeAttr("disabled");
         document.getElementById("Tab_Anytime_thumb").style.backgroundColor='rgb(112, 166, 236)';
-        $("#MT").val($("#MT").val() * time);
-        $("#AT").val($("#AT").val() * time);
-        $("#RT").val($("#RT").val() * time);
-        $("#PT").val($("#PT").val() * time);
-        $("#TT").val($("#TT").val() * time);
-        $("#ET").val($("#ET").val() * time);
-        $("#QT").val($("#QT").val() * time);
+        $("#MT").val(Math.round($("#MT").val() * time * 100) / 100);
+        $("#AT").val(Math.round($("#AT").val() * time * 100) / 100);
+        $("#RT").val(Math.round($("#RT").val() * time * 100) / 100);
+        $("#PT").val(Math.round($("#PT").val() * time * 100) / 100);
+        $("#TT").val(Math.round($("#TT").val() * time * 100) / 100);
+        $("#ET").val(Math.round($("#ET").val() * time * 100) / 100);
+        $("#QT").val(Math.round($("#QT").val() * time * 100) / 100);
     }
     else {
         $(".Demand span").html("平均每小时需求量");
@@ -93,13 +93,13 @@ function Tab_Anytime_hourorday() {
         $("#Time_Anytime_minutes").attr('disabled', "true");
         $("#Tab_Anytime_Time").attr('disabled', "true");
         document.getElementById("Tab_Anytime_thumb").style.backgroundColor='#CCC';
-        $("#MT").val($("#MT").val() / time);
-        $("#AT").val($("#AT").val() / time);
-        $("#RT").val($("#RT").val() / time);
-        $("#PT").val($("#PT").val() / time);
-        $("#TT").val($("#TT").val() / time);
-        $("#ET").val($("#ET").val() / time);
-        $("#QT").val($("#QT").val() / time);
+        $("#MT").val(Math.round($("#MT").val() / time * 100) / 100);
+        $("#AT").val(Math.round($("#AT").val() / time * 100) / 100);
+        $("#RT").val(Math.round($("#RT").val() / time * 100) / 100);
+        $("#PT").val(Math.round($("#PT").val() / time * 100) / 100);
+        $("#TT").val(Math.round($("#TT").val() / time * 100) / 100);
+        $("#ET").val(Math.round($("#ET").val() / time * 100) / 100);
+        $("#QT").val(Math.round($("#QT").val() / time * 100) / 100);
     }
 }
 
