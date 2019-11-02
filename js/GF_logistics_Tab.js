@@ -166,7 +166,7 @@ class Tab_Timetable extends Tab {
 		if (this.TimeList[this.TimeList.length - 1] != this.TotalTime) this.TimeList.push(this.TotalTime);
 	}
 
-	_setUnableLogisticCustomize_2(UnableLogistic) {//排除超时后勤
+	_setUnableLogisticCustomize_2(UnableLogistic) { //排除超时后勤
 		for (var i = 0; i < Q.length; i++) {
             if (Q[i][8] > this.TotalTime) {
                 if (UnableLogistic.indexOf(i) == -1) {

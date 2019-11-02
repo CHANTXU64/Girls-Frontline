@@ -59,8 +59,8 @@ function TimeLimit_disable() {
     document.getElementById('thumb_limit_start').style.left='0%';
     document.getElementById('thumb_limit_end').style.backgroundColor='#CCC';
     document.getElementById('thumb_limit_end').style.left='100%';
-    document.getElementById('sign_limit_start_value').innerHTML=0;
-    document.getElementById('sign_limit_end_value').innerHTML=24;
+    document.getElementById('sign_limit_start_value').innerHTML='0';
+    document.getElementById('sign_limit_end_value').innerHTML='24';
 }
 function is_Tab_Anytime_CaculateOneDay() {
     if (document.getElementById('Tab_Anytime_toggle-event').checked) return true;
