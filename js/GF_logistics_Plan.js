@@ -93,7 +93,7 @@ class Plan {
         this._SortListByValue(row);
     }
     _push() {
-        if (this._PlanValue >= this.List[this.List.length - 1].Value) {
+        if (!this._thisPlanIsBetter(this.List.length - 1)) {
             test++;
             return;
         }
@@ -113,7 +113,7 @@ class Plan {
     }
     _SortListByValue(thisrow) {
         for (var i = thisrow - 1; i >= 0; i--) {
-            if (this._PlanValue < this.List[i].Value) {
+            if (this._thisPlanIsBetter(i)) {
                 test++;
                 this._ExchangeTheseTwoRows(i);
             }
@@ -130,6 +130,22 @@ class Plan {
         this.List[RowNumber + 1].Value = this.List[RowNumber].Value;
         this.List[RowNumber + 1].Customizer = this.List[RowNumber].Customizer;
         this._PushIntoThisRow(RowNumber);
+    }
+    _thisPlanIsBetter(number) {
+        if (this._eachCurrentValueIsBigger(number)) {
+            test_2++;
+            return true;
+        }
+        else {
+            if (this._PlanValue < this.List[number].Value) return true;
+            else return false;
+        }
+    }
+    _eachCurrentValueIsBigger(number) {
+        for (var i = 0; i < 7; i++) {
+            if (this._CurrentValue[i] <= this.List[number][i + 4]) return false;
+        }
+        return true;
     }
 
     print() {

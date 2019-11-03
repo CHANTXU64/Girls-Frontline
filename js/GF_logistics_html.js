@@ -142,7 +142,7 @@ function Tab_Timetable_AddNewTimePoint() {
         case total_time >= Tab_Timetable_getMaxTime():
             alert("添加的收取时间点不能超过最大时限");
             break;
-        case ShownTab.TimeList.indexOf(total_time) != -1:
+        case ShownTab.TimeList_html.indexOf(total_time) != -1:
             alert("已经添加过这个收取时间点");
             break;
         default:
@@ -160,7 +160,7 @@ function Tab_Timetable_emptyInputNewTime() {
 }
 
 function Tab_Timetable_AddNewTimePoint_main(time) {
-    ShownTab.TimeList.push(time);
+    ShownTab.TimeList_html.push(time);
     var maxtime = Tab_Timetable_getMaxTime();
     var position = (time / maxtime) * 100 + '%';
     Tab_Timetable_AddNewThumb(time, position);
@@ -176,7 +176,7 @@ function Tab_Timetable_AddNewThumb(time, position) {
 function Tab_Timetable_AddNewTooltip(time, position) {
     var stringTime = Tab_Timetable_OutputStringTime(time);
     var newTooltip = '<div id="Tab_Timetable_range_tooltip_' + time + '"';
-    if (ShownTab.TimeList.indexOf(time) % 2 == 0) {
+    if (ShownTab.TimeList_html.indexOf(time) % 2 == 0) {
         newTooltip += 'class="tooltip top custom-tooltip"';
         newTooltip += ('style="left:' + position + '; top:-32px; margin-left: -15px;">');
     }
@@ -190,7 +190,7 @@ function Tab_Timetable_AddNewTooltip(time, position) {
 }
 
 function Tab_Timetable_DeleteThisTimePoint(time) {
-    ShownTab.TimeList.remove(time);
+    ShownTab.TimeList_html.remove(time);
     var thumb_id = "Tab_Timetable_range_thumb_" + time;
     var tooltip_id = "Tab_Timetable_range_tooltip_" + time;
     var thumb_obj = document.getElementById(thumb_id);
@@ -198,7 +198,7 @@ function Tab_Timetable_DeleteThisTimePoint(time) {
     var parent_obj = document.getElementById('Tab_Timetable_range');
     parent_obj.removeChild(thumb_obj);
     parent_obj.removeChild(tooltip_obj);
-    if (ShownTab.TimeList.length == 0) Tab_Timetable_InputTotalTime_enable();
+    if (ShownTab.TimeList_html.length == 0) Tab_Timetable_InputTotalTime_enable();
 }
 Array.prototype.remove = function(val) {
     var index = this.indexOf(val);
@@ -212,9 +212,9 @@ function Tab_Timetable_InputTotalTime_enable() {
 }
 
 function Tab_Timetable_DeleteAllTimePoints() {
-    var times = ShownTab.TimeList.length;
+    var times = ShownTab.TimeList_html.length;
     for (var i = 0; i < times; i++) {
-        Tab_Timetable_DeleteThisTimePoint(ShownTab.TimeList[0]);
+        Tab_Timetable_DeleteThisTimePoint(ShownTab.TimeList_html[0]);
     }
     Tab_Timetable_InputTotalTime_enable();
 }

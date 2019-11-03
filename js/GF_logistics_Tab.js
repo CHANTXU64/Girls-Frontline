@@ -156,14 +156,18 @@ class Tab_SingleTime extends Tab {
 class Tab_Timetable extends Tab {
 	constructor() {
 		super();
+		this.TimeList_html = [];
 		this.TimeList = [];
 	}
 
 	setTime() {
+		for (var i = 0; i < this.TimeList_html.length; i++) {
+			this.TimeList[i] = this.TimeList_html[i];
+		}
 		this.TimeList = this.TimeList.sort(sortNumber);
-		if (this.TimeList[0] != 0) this.TimeList.unshift(0);
+		this.TimeList.unshift(0);
 		this.TotalTime = Tab_Timetable_getMaxTime();
-		if (this.TimeList[this.TimeList.length - 1] != this.TotalTime) this.TimeList.push(this.TotalTime);
+		this.TimeList.push(this.TotalTime);
 	}
 
 	_setUnableLogisticCustomize_2(UnableLogistic) { //排除超时后勤

@@ -1,9 +1,11 @@
 var ShownTab = new Tab_Anytime;
 var Q_Backup = [];
 var test = 0;
+var test_2 = 0;
 
 function Get_Plan_Main() {
     test = 0;
+    test_2 = 0;
     Q_init_Contract();
     Q_AdjustTheOrder();
     ShownTab.setTime();
