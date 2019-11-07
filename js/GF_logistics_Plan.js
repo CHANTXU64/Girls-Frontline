@@ -45,7 +45,7 @@ class Plan {
     }
     _CorrectResourceValue() {
         var ResourceValue = new Array(4);
-        var Resource_CalibrationValue = 1500;
+        var Resource_CalibrationValue = 1000;
         for (var i = 0; i < 4; i++) {
             ResourceValue[i] = this.TargetValue[i];
         }
@@ -56,7 +56,7 @@ class Plan {
     }
     _CorrectContractValue() {
         var ContractValue = new Array(3);
-        var Contract_CalibrationValue = 3;
+        var Contract_CalibrationValue = 1000;
         for (var i = 0; i < 3; i++) {
             ContractValue[i] = this.TargetValue[i + 4];
         }
@@ -88,10 +88,10 @@ class Plan {
         return norm;
 	}
 
-    CaculateAndPush(MissionsNumber) {
+    CalculateAndPush(MissionsNumber) {
         this._MissionsNumber = MissionsNumber;
         this._CurrentValue = ShownTab.Calculate_Current(MissionsNumber);
-        this._PlanValue = this._caculateValue();
+        this._PlanValue = this._calculateValue();
         if (!(0 in this.List[this.List.length - 1])) {
             this._push_FirstEmptyRow();
         }
@@ -104,7 +104,7 @@ class Plan {
         this._SortListByValue(row);
     }
     _push() {
-        if (!this._thisPlanIsBetter(this.List.length - 1)) {
+        if (!this._thisPlanIsBetterThan(this.List.length - 1)) {
             test++;
             return;
         }
@@ -124,7 +124,7 @@ class Plan {
     }
     _SortListByValue(thisrow) {
         for (var i = thisrow - 1; i >= 0; i--) {
-            if (this._thisPlanIsBetter(i)) {
+            if (this._thisPlanIsBetterThan(i)) {
                 test++;
                 this._ExchangeTheseTwoRows(i);
             }
@@ -142,7 +142,7 @@ class Plan {
         this.List[RowNumber + 1].Customizer = this.List[RowNumber].Customizer;
         this._PushIntoThisRow(RowNumber);
     }
-    _thisPlanIsBetter(number) {
+    _thisPlanIsBetterThan(number) {
         if (this._eachCurrentValueIsBigger(number)) {
             test_2++;
             return true;
@@ -159,14 +159,27 @@ class Plan {
         return true;
     }
 
-    _caculateValue() {
-        var Norm_Current = this._getNorm(this._CurrentValue);
-        var Dot_product = this._getDotProduct(this._CurrentValue, this.TargetValue);
+    _calculateValue() {
+        var CurrentValue = new Array(7);
+        for (var i = 0; i < 7; i++) {
+            CurrentValue[i] = this._CurrentValue[i];
+        }
+        CurrentValue[4] *= 500;
+        CurrentValue[5] *= 500;
+        CurrentValue[6] *= 500;
+        var Norm_Current = this._getNorm(CurrentValue);
+        var Dot_product = this._getDotProduct(CurrentValue, this.TargetValue);
         var CurrentScalarProjection = Dot_product / this._Norm_Target;
-        var COStheta = CurrentScalarProjection / Norm_Current;
+        for (var i = 0; i < 7; i++) {
+            if (this.TargetValue[i] == 0) CurrentValue[i] = 0;
+        }
+        Norm_Current = this._getNorm(CurrentValue);
+        Dot_product = this._getDotProduct(CurrentValue, this.TargetValue);
+        var COStheta = Dot_product / this._Norm_Target / Norm_Current;
+        //var COStheta = CurrentScalarProjection / Norm_Current;
         var theta = Math.acos(COStheta);
         var CosineSimilarity_0 = 1 - 2 * theta / Math.PI;
-        var CosineSimilarity = Math.pow(CosineSimilarity_0, 3);
+        var CosineSimilarity = Math.pow(CosineSimilarity_0, 2);
         return CurrentScalarProjection * CosineSimilarity;
     }
     _getDotProduct(vector1, vector2) {

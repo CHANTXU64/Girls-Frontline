@@ -11,7 +11,7 @@ $(function (){$("[data-toggle='tooltip']").tooltip();})
 $(function (){
     $('[href=#Tab_Anytime]').on("shown.bs.tab", function(){
         ShownTab = new Tab_Anytime;
-        if (is_Tab_Anytime_CaculateOneDay()) {
+        if (is_Tab_Anytime_CalculateOneDay()) {
             $(".Demand span").html("每天需求量");
         }
         else {
@@ -26,7 +26,7 @@ $(function (){
     });
     $('[href=#Tab_Timetable]').on("shown.bs.tab", function(){
         ShownTab = new Tab_Timetable;
-        if (is_Tab_Timetable_CaculateOnce()) {
+        if (is_Tab_Timetable_CalculateOnce()) {
             $(".Demand span").html("总共需求量");
         }
         else {
@@ -62,21 +62,19 @@ function TimeLimit_disable() {
     document.getElementById('sign_limit_start_value').innerHTML='0';
     document.getElementById('sign_limit_end_value').innerHTML='24';
 }
-function is_Tab_Anytime_CaculateOneDay() {
+function is_Tab_Anytime_CalculateOneDay() {
     if (document.getElementById('Tab_Anytime_toggle-event').checked) return true;
     else return false;
 }
-function is_Tab_Timetable_CaculateOnce() {
+function is_Tab_Timetable_CalculateOnce() {
     if (document.getElementById('Tab_Timetable_toggle-event').checked) return false;
     else return true;
 }
 
 function Tab_Anytime_hourorday() {
     var time = parseFloat($("#Tab_Anytime_Time").val());
-    if (is_Tab_Anytime_CaculateOneDay()) {
+    if (is_Tab_Anytime_CalculateOneDay()) {
         $(".Demand span").html("每天需求量");
-        $("#Time_Anytime_hours").removeAttr("disabled");
-        $("#Time_Anytime_minutes").removeAttr("disabled");
         $("#Tab_Anytime_Time").removeAttr("disabled");
         document.getElementById("Tab_Anytime_thumb").style.backgroundColor='rgb(112, 166, 236)';
         $("#MT").val(Math.round($("#MT").val() * time * 100) / 100);
@@ -89,8 +87,6 @@ function Tab_Anytime_hourorday() {
     }
     else {
         $(".Demand span").html("平均每小时需求量");
-        $("#Time_Anytime_hours").attr('disabled', "true"); 
-        $("#Time_Anytime_minutes").attr('disabled', "true");
         $("#Tab_Anytime_Time").attr('disabled', "true");
         document.getElementById("Tab_Anytime_thumb").style.backgroundColor='#CCC';
         $("#MT").val(Math.round($("#MT").val() / time * 100) / 100);
@@ -220,7 +216,7 @@ function Tab_Timetable_DeleteAllTimePoints() {
 }
 
 function Tab_Timetable_hourorday() {
-    if (is_Tab_Timetable_CaculateOnce()) $(".Demand span").html("总共需求量");
+    if (is_Tab_Timetable_CalculateOnce()) $(".Demand span").html("总共需求量");
     else $(".Demand span").html("平均每小时需求量");
 }
 //-----------

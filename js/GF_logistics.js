@@ -20,7 +20,7 @@ function Get_Plan_Main() {
                 if (UnableLogistic.indexOf(n3) != -1) continue;
                 for (var n4 = n3 + 1; n4 < Q.length; n4++) {
                     if (UnableLogistic.indexOf(n4) != -1) continue;
-                    plan.CaculateAndPush([n1, n2, n3, n4]);
+                    plan.CalculateAndPush([n1, n2, n3, n4]);
                 }
             }
         }

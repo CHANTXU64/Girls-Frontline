@@ -67,7 +67,7 @@ class Tab {
 
 class Tab_Anytime extends Tab {
 	setTime() {
-		if (!is_Tab_Anytime_CaculateOneDay()) {
+		if (!is_Tab_Anytime_CalculateOneDay()) {
 			this.TotalTime = 1;
 			return;
 		}
@@ -84,7 +84,7 @@ class Tab_Anytime extends Tab {
 
 	PrintPlanTableTitle() {
 		var title;
-		if (is_Tab_Anytime_CaculateOneDay()) {
+		if (is_Tab_Anytime_CalculateOneDay()) {
 			title = this._title + '<th>人力/d</th><th>弹药/d</th><th>口粮/d</th><th>零件/d</th><th>人形/d</th><th>装备/d</th><th>快建/d</th><th>最短时间</th><th>最长时间</th>' + this._titleEnd;
 		}
 		else {
@@ -94,7 +94,7 @@ class Tab_Anytime extends Tab {
 	}
 
 	get_Hours_PrintResourceContract() {
-		if (is_Tab_Anytime_CaculateOneDay()) return this.TotalTime;
+		if (is_Tab_Anytime_CalculateOneDay()) return this.TotalTime;
 		else return 1;
 	}
 
@@ -212,7 +212,7 @@ class Tab_Timetable extends Tab {
 
 	PrintPlanTableTitle() {
 		var title;
-		if (is_Tab_Timetable_CaculateOnce()) {
+		if (is_Tab_Timetable_CalculateOnce()) {
 			title = this._title + '<th>人力</th><th>弹药</th><th>口粮</th><th>零件</th><th>人形</th><th>装备</th><th>快建</th>' + this._titleEnd;
 		}
 		else {
@@ -222,7 +222,7 @@ class Tab_Timetable extends Tab {
 	}
 
 	get_Hours_PrintResourceContract() {
-		if (is_Tab_Timetable_CaculateOnce()) return this.TotalTime;
+		if (is_Tab_Timetable_CalculateOnce()) return this.TotalTime;
 		else return 1;
 	}
 }
