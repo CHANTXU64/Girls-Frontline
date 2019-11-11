@@ -133,9 +133,15 @@ function Tab_Timetable_AddNewTimePoint() {
     var total_time = hours + minutes / 60;
     switch(true) {
         case total_time == 0:
+            if (ShownTab.TimeList_html.length == 0) {
+                Tab_Timetable_InputTotalTime_enable();
+            }
             alert("不需要在后勤开始点再添加收取时间点");
             break;
         case total_time >= Tab_Timetable_getMaxTime():
+            if (ShownTab.TimeList_html.length == 0) {
+                Tab_Timetable_InputTotalTime_enable();
+            }
             alert("添加的收取时间点不能超过最大时限");
             break;
         case ShownTab.TimeList_html.indexOf(total_time) != -1:
