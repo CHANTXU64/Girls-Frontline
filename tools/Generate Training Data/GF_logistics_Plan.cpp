@@ -2,7 +2,7 @@
 #include"Tab.h"
 #define PI acos(-1)
 
-extern array<double, 7> TargetValue_0;
+extern array<double, 7> TargetValue_html;
 extern Tab* ShownTab;
 
 extern array<int, 48> MissionsNumber_times;
@@ -13,26 +13,30 @@ extern fstream txt_noOk;
 
 class Plan {
     public:
-		Plan(int length);
-		void CalculateAndPush(int* MissionsNumber);
-		void printMissionsNumber_times();
-		void print();
+        Plan(int length);
+        Plan(int length, array<double, 7> CalibratedTarget);
+        void CalculateAndPush(int* MissionsNumber);
+        void printMissionsNumber_times();
+        void print();
+        vector<array<double, 14>> getList();
+        array<double, 7> getCurrentValueMAX();
 
     private:
-		vector<array<double, 14>> List;
+        vector<array<double, 14>> List;
         array<double, 7> TargetValue;
         int List_length;
+        array<double, 7> CurrentValue_MAX;
 
         double Norm_Target;
         int _MissionsNumber[4];
         array<double, 7> _CurrentValue;
         double _PlanValue_1;
-		double _PlanValue_2;
+        double _PlanValue_2;
 
         double getDotProduct(array<double, 7>vector1, array<double, 7>vector2);
         double calculateValue_1();
-		double Value_0(double Target, double Current);
-		double calculateValue_2();
+        double Value_0(double Target, double Current);
+        double calculateValue_2();
         bool thisPlanIsBetterThan(int row);
         bool eachCurrentValueIsBigger(int row);
 
@@ -52,7 +56,7 @@ class Plan {
             array<double, 4> ResourceValue;
             double Resource_CalibrationValue = 1000;
             for (int i = 0; i < 4; i++) {
-                ResourceValue[i] = TargetValue_0[i];
+                ResourceValue[i] = TargetValue_html[i];
             }
             if (ValuesNotAll0(ResourceValue)) {
                 ResourceValue = CorrectValue(ResourceValue, Resource_CalibrationValue);
@@ -63,7 +67,7 @@ class Plan {
             array<double, 3> ContractValue;
             double Contract_CalibrationValue = 1000;
             for (int i = 0; i < 3; i++) {
-                ContractValue[i] = TargetValue_0[i + 4];
+                ContractValue[i] = TargetValue_html[i + 4];
             }
             if (ValuesNotAll0(ContractValue)) {
                 ContractValue = CorrectValue(ContractValue, Contract_CalibrationValue);
@@ -121,7 +125,7 @@ class Plan {
                 List[RowNumber][i + 4] = _CurrentValue[i];
             }
             List[RowNumber][11] = _PlanValue_1;
-			List[RowNumber][12] = _PlanValue_2;
+            List[RowNumber][12] = _PlanValue_2;
         }
         void SortListByValue(int thisrow) {
             for (int i = thisrow - 1; i >= 0; i--) {
@@ -140,32 +144,45 @@ class Plan {
 };
 
 Plan::Plan(int length) {
-	List_length = length;
-	array<double, 14> row = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
-	for (int i = 0; i < List_length; i++) {
-		//List.insert(List.begin(), 1, row);
-		List.push_back(row);
-	}
-	TargetValue = CorrectTargetValue();
-	Norm_Target = getNorm(TargetValue);
+    List_length = length;
+    array<double, 14> row = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+    for (int i = 0; i < List_length; i++) {
+        List.push_back(row);
+    }
+    TargetValue = CorrectTargetValue();
+    Norm_Target = getNorm(TargetValue);
+    CurrentValue_MAX.fill(0);
+}
+Plan::Plan(int length, array<double, 7> CalibratedTarget) {
+    List_length = length;
+    array<double, 14> row = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+    for (int i = 0; i < List_length; i++) {
+        List.push_back(row);
+    }
+    TargetValue = CalibratedTarget;
+    Norm_Target = getNorm(TargetValue);
+    CurrentValue_MAX.fill(0);
 }
 
 void Plan::CalculateAndPush(int* MissionsNumber) {
-	_MissionsNumber[0] = MissionsNumber[0];
-	_MissionsNumber[1] = MissionsNumber[1];
-	_MissionsNumber[2] = MissionsNumber[2];
-	_MissionsNumber[3] = MissionsNumber[3];
-	_CurrentValue = ShownTab->Calculate_Current(MissionsNumber);
-	_PlanValue_1 = calculateValue_1();
-	_PlanValue_2 = calculateValue_2();
-	if (List[List_length - 1][2] == 0 && List[List_length - 1][3] == 0) {
-		push_FirstEmptyrow();
-	}
-	else push();
+    _MissionsNumber[0] = MissionsNumber[0];
+    _MissionsNumber[1] = MissionsNumber[1];
+    _MissionsNumber[2] = MissionsNumber[2];
+    _MissionsNumber[3] = MissionsNumber[3];
+    _CurrentValue = ShownTab->Calculate_Current(MissionsNumber);
+    for (int i = 0; i < 7; i++) {
+        CurrentValue_MAX[i] = max(CurrentValue_MAX[i], _CurrentValue[i]);
+    }
+    _PlanValue_1 = calculateValue_1();
+    _PlanValue_2 = calculateValue_2();
+    if (List[List_length - 1][2] == 0 && List[List_length - 1][3] == 0) {
+        push_FirstEmptyrow();
+    }
+    else push();
 }
 
 double Plan::calculateValue_1() {
-	test++;
+    test++;
     _CurrentValue[4] *= 500;
     _CurrentValue[5] *= 500;
     _CurrentValue[6] *= 500;
@@ -190,83 +207,83 @@ double Plan::getDotProduct(array<double, 7>vector1, array<double, 7>vector2) {
 }
 
 double Plan::calculateValue_2() {
-	return Value_0(TargetValue[0], _CurrentValue[0]) + Value_0(TargetValue[1], _CurrentValue[1]) +
-		Value_0(TargetValue[2], _CurrentValue[2]) + Value_0(TargetValue[3], _CurrentValue[3]);
+    return Value_0(TargetValue[0], _CurrentValue[0]) + Value_0(TargetValue[1], _CurrentValue[1]) +
+        Value_0(TargetValue[2], _CurrentValue[2]) + Value_0(TargetValue[3], _CurrentValue[3]);
 }
 double Plan::Value_0(double Target, double Current) {
-	if (Target == 0) return 0;
-	if (Target > Current) {//Y=5.5*x^3+4.5*x
-		return (Target - Current) * (5.5 * pow((Target - Current) / Target, 3) + 4.5 * (Target - Current) / Target);
-	}
-	else {//Y=-0.04*x^3 -0.01*x
-		return (Target - Current) * (-0.04 * pow((Target - Current) / Target, 3) - 0.01 * (Target - Current) / Target);
-	}
+    if (Target == 0) return 0;
+    if (Target > Current) {//Y=5.5*x^3+4.5*x
+        return (Target - Current) * (5.5 * pow((Target - Current) / Target, 3) + 4.5 * (Target - Current) / Target);
+    }
+    else {//Y=-0.04*x^3 -0.01*x
+        return (Target - Current) * (-0.04 * pow((Target - Current) / Target, 3) - 0.01 * (Target - Current) / Target);
+    }
 }
 
 bool Plan::thisPlanIsBetterThan(int number) {
-	test_2++;
+    test_2++;
     /*if (eachCurrentValueIsBigger(number)) return true;
     else {
         if (_PlanValue_1 > List[number][11]) return true;
         else return false;
     }*/
-	if ((_PlanValue_1 > List[number][11] && _PlanValue_2 < List[number][12])|| (_PlanValue_1 <= List[number][11] && _PlanValue_2 >= List[number][12])) {
-		txt_Ok << TargetValue[0] << ",";
-		txt_Ok << TargetValue[1] << ",";
-		txt_Ok << TargetValue[2] << ",";
-		txt_Ok << TargetValue[3] << ",";
-		txt_Ok << TargetValue[4] << ",";
-		txt_Ok << TargetValue[5] << ",";
-		txt_Ok << TargetValue[6] << ",";
-		txt_Ok << _CurrentValue[0] << ",";
-		txt_Ok << _CurrentValue[1] << ",";
-		txt_Ok << _CurrentValue[2] << ",";
-		txt_Ok << _CurrentValue[3] << ",";
-		txt_Ok << _CurrentValue[4] << ",";
-		txt_Ok << _CurrentValue[5] << ",";
-		txt_Ok << _CurrentValue[6] << ",";
-		txt_Ok << List[number][4] << ",";
-		txt_Ok << List[number][5] << ",";
-		txt_Ok << List[number][6] << ",";
-		txt_Ok << List[number][7] << ",";
-		txt_Ok << List[number][8] << ",";
-		txt_Ok << List[number][9] << ",";
-		txt_Ok << List[number][10] << ",";
-		if (_PlanValue_1 > List[number][11] && _PlanValue_2 < List[number][12]) {
-			txt_Ok << 0 << endl;
-		}
-		else {
-			txt_Ok << 1 << endl;
-		}
-		
-	}
-	else {
-		txt_noOk << TargetValue[0] << ",";
-		txt_noOk << TargetValue[1] << ",";
-		txt_noOk << TargetValue[2] << ",";
-		txt_noOk << TargetValue[3] << ",";
-		txt_noOk << TargetValue[4] << ",";
-		txt_noOk << TargetValue[5] << ",";
-		txt_noOk << TargetValue[6] << ",";
-		txt_noOk << _CurrentValue[0] << ",";
-		txt_noOk << _CurrentValue[1] << ",";
-		txt_noOk << _CurrentValue[2] << ",";
-		txt_noOk << _CurrentValue[3] << ",";
-		txt_noOk << _CurrentValue[4] << ",";
-		txt_noOk << _CurrentValue[5] << ",";
-		txt_noOk << _CurrentValue[6] << ",";
-		txt_noOk << List[number][4] << ",";
-		txt_noOk << List[number][5] << ",";
-		txt_noOk << List[number][6] << ",";
-		txt_noOk << List[number][7] << ",";
-		txt_noOk << List[number][8] << ",";
-		txt_noOk << List[number][9] << ",";
-		txt_noOk << List[number][10] << ",";
-		txt_noOk << endl;
-	}
+    if ((_PlanValue_1 > List[number][11] && _PlanValue_2 < List[number][12])|| (_PlanValue_1 <= List[number][11] && _PlanValue_2 >= List[number][12])) {
+        txt_Ok << TargetValue[0] << ",";
+        txt_Ok << TargetValue[1] << ",";
+        txt_Ok << TargetValue[2] << ",";
+        txt_Ok << TargetValue[3] << ",";
+        txt_Ok << TargetValue[4] << ",";
+        txt_Ok << TargetValue[5] << ",";
+        txt_Ok << TargetValue[6] << ",";
+        txt_Ok << _CurrentValue[0] << ",";
+        txt_Ok << _CurrentValue[1] << ",";
+        txt_Ok << _CurrentValue[2] << ",";
+        txt_Ok << _CurrentValue[3] << ",";
+        txt_Ok << _CurrentValue[4] << ",";
+        txt_Ok << _CurrentValue[5] << ",";
+        txt_Ok << _CurrentValue[6] << ",";
+        txt_Ok << List[number][4] << ",";
+        txt_Ok << List[number][5] << ",";
+        txt_Ok << List[number][6] << ",";
+        txt_Ok << List[number][7] << ",";
+        txt_Ok << List[number][8] << ",";
+        txt_Ok << List[number][9] << ",";
+        txt_Ok << List[number][10] << ",";
+        if (_PlanValue_1 > List[number][11] && _PlanValue_2 < List[number][12]) {
+            txt_Ok << 0 << endl;
+        }
+        else {
+            txt_Ok << 1 << endl;
+        }
+        
+    }
+    else {
+        txt_noOk << TargetValue[0] << ",";
+        txt_noOk << TargetValue[1] << ",";
+        txt_noOk << TargetValue[2] << ",";
+        txt_noOk << TargetValue[3] << ",";
+        txt_noOk << TargetValue[4] << ",";
+        txt_noOk << TargetValue[5] << ",";
+        txt_noOk << TargetValue[6] << ",";
+        txt_noOk << _CurrentValue[0] << ",";
+        txt_noOk << _CurrentValue[1] << ",";
+        txt_noOk << _CurrentValue[2] << ",";
+        txt_noOk << _CurrentValue[3] << ",";
+        txt_noOk << _CurrentValue[4] << ",";
+        txt_noOk << _CurrentValue[5] << ",";
+        txt_noOk << _CurrentValue[6] << ",";
+        txt_noOk << List[number][4] << ",";
+        txt_noOk << List[number][5] << ",";
+        txt_noOk << List[number][6] << ",";
+        txt_noOk << List[number][7] << ",";
+        txt_noOk << List[number][8] << ",";
+        txt_noOk << List[number][9] << ",";
+        txt_noOk << List[number][10] << ",";
+        txt_noOk << endl;
+    }
 
-	if (_PlanValue_1 > List[number][11]) return true;
-	else return false;
+    if (_PlanValue_1 > List[number][11]) return true;
+    else return false;
 }
 bool Plan::eachCurrentValueIsBigger(int number) {
     for (int i = 0; i < 7; i++) {
@@ -276,13 +293,21 @@ bool Plan::eachCurrentValueIsBigger(int number) {
 }
 
 void Plan::printMissionsNumber_times() {
-	for (int i = 0; i < List_length; i++) {
-		for (int ii = 0; ii < 4; ii++) {
-			MissionsNumber_times[List[i][ii]]++;
-		}
-	}
+    for (int i = 0; i < List_length; i++) {
+        for (int ii = 0; ii < 4; ii++) {
+            MissionsNumber_times[List[i][ii]]++;
+        }
+    }
 }
 
 void Plan::print() {
 
+}
+
+vector<array<double, 14>> Plan::getList() {
+    return List;
+}
+
+array<double, 7> Plan::getCurrentValueMAX() {
+    return CurrentValue_MAX;
 }

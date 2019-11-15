@@ -1,9 +1,16 @@
 class Plan {
-    constructor(length) {
+    constructor(length, Target) {
         this._setList(length);
-        this.TargetValue = this._getLegalityTargetValue();
-        this._CorrectTargetValue();
+        if (Target === undefined) {
+            this.TargetValue_html = this._getLegalityTargetValue();
+            this.TargetValue = this._CorrectTargetValue();
+        }
+        else {
+            this.TargetValue = Target;
+        }
         this._Norm_Target = this._getNorm(this.TargetValue);
+        this.CurrentValue_MAX = new Array(7);
+        this.CurrentValue_MAX.fill(0);
     }
     _setList(length) {
         this.List = new Array(length);
@@ -26,12 +33,12 @@ class Plan {
         this._TargetValueMultiplyWeight();
         var ResourceValue = this._CorrectResourceValue();
         var ContractValue = this._CorrectContractValue();
-        this.TargetValue = ResourceValue.concat(ContractValue);
+        return ResourceValue.concat(ContractValue);
     }
     _TargetValueMultiplyWeight() {
         var Weights = this._getLegalityWeights();
         for(var i = 0; i < 7; i++) {
-            this.TargetValue[i] *= Weights[i];
+            this.TargetValue_html[i] *= Weights[i];
         }
     }
     _getLegalityWeights() {
@@ -44,22 +51,16 @@ class Plan {
         return WeightsArr;
     }
     _CorrectResourceValue() {
-        var ResourceValue = new Array(4);
+        var ResourceValue = this.TargetValue_html.slice(0, 4);
         var Resource_CalibrationValue = 1000;
-        for (var i = 0; i < 4; i++) {
-            ResourceValue[i] = this.TargetValue[i];
-        }
         if (this._ValuesNotAll0(ResourceValue)) {
             this._CorrectValue(ResourceValue, Resource_CalibrationValue);
         }
         return ResourceValue;
     }
     _CorrectContractValue() {
-        var ContractValue = new Array(3);
+        var ContractValue = this.TargetValue_html.slice(4, 7);
         var Contract_CalibrationValue = 1000;
-        for (var i = 0; i < 3; i++) {
-            ContractValue[i] = this.TargetValue[i + 4];
-        }
         if (this._ValuesNotAll0(ContractValue)) {
             this._CorrectValue(ContractValue, Contract_CalibrationValue);
         }
@@ -91,6 +92,9 @@ class Plan {
     CalculateAndPush(MissionsNumber) {
         this._MissionsNumber = MissionsNumber;
         this._CurrentValue = ShownTab.Calculate_Current(MissionsNumber);
+        for (var i = 0; i < 7; i++) {
+            this.CurrentValue_MAX[i] = Math.max(this.CurrentValue_MAX[i], this._CurrentValue[i]);
+        }
         this._PlanValue = this._calculateValue();
         if (!(0 in this.List[this.List.length - 1])) {
             this._push_FirstEmptyRow();
@@ -113,12 +117,7 @@ class Plan {
         this._SortListByValue(this.List.length - 1);
     }
     _PushIntoThisRow(RowNumber) {
-        for (var i = 0; i < 4; i++) {
-            this.List[RowNumber][i] = this._MissionsNumber[i];
-        }
-        for (var i = 0; i < 7; i++) {
-            this.List[RowNumber][i + 4] = this._CurrentValue[i];
-        }
+        this.List[RowNumber] = this._MissionsNumber.concat(this._CurrentValue);
         this.List[RowNumber].Value = this._PlanValue;
         this.List[RowNumber].Customizer = ShownTab.getPlanListCustomizer();
     }
@@ -135,9 +134,7 @@ class Plan {
         }
     }
     _ExchangeTheseTwoRows(RowNumber) {
-        for (var i = 0; i < 11; i++) {
-            this.List[RowNumber + 1][i] = this.List[RowNumber][i];
-        }
+        this.List[RowNumber + 1] = this.List[RowNumber].slice();
         this.List[RowNumber + 1].Value = this.List[RowNumber].Value;
         this.List[RowNumber + 1].Customizer = this.List[RowNumber].Customizer;
         this._PushIntoThisRow(RowNumber);
@@ -153,30 +150,27 @@ class Plan {
         }
     }
     _eachCurrentValueIsBigger(number) {
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < 7; i++) {
             if (this._CurrentValue[i] < this.List[number][i + 4]) return false;
         }
         return true;
     }
 
     _calculateValue() {
-        var CurrentValue = new Array(7);
-        for (var i = 0; i < 7; i++) {
-            CurrentValue[i] = this._CurrentValue[i];
-        }
+        var CurrentValue = this._CurrentValue.slice();
         CurrentValue[4] *= 500;
         CurrentValue[5] *= 500;
         CurrentValue[6] *= 500;
         var Norm_Current = this._getNorm(CurrentValue);
         var Dot_product = this._getDotProduct(CurrentValue, this.TargetValue);
         var CurrentScalarProjection = Dot_product / this._Norm_Target;
-        for (var i = 0; i < 7; i++) {
-            if (this.TargetValue[i] == 0) CurrentValue[i] = 0;
-        }
-        Norm_Current = this._getNorm(CurrentValue);
-        Dot_product = this._getDotProduct(CurrentValue, this.TargetValue);
-        var COStheta = Dot_product / this._Norm_Target / Norm_Current;
-        //var COStheta = CurrentScalarProjection / Norm_Current;
+        //for (var i = 0; i < 7; i++) {
+        //   if (this.TargetValue[i] == 0) CurrentValue[i] = 0;
+        //}
+        //Norm_Current = this._getNorm(CurrentValue);
+        //Dot_product = this._getDotProduct(CurrentValue, this.TargetValue);
+        //var COStheta = Dot_product / this._Norm_Target / Norm_Current;
+        var COStheta = CurrentScalarProjection / Norm_Current;
         var theta = Math.acos(COStheta);
         var CosineSimilarity_0 = 1 - 2 * theta / Math.PI;
         var CosineSimilarity = Math.pow(CosineSimilarity_0, 2);

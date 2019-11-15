@@ -10,8 +10,26 @@ function Get_Plan_Main() {
     Q_AdjustTheOrder();
     ShownTab.setTime();
     ShownTab.setResourceIncreasingRate();
-    var plan = new Plan(10);
     var UnableLogistic = ShownTab.getUnableLogistic();
+    //调整目标值
+    //----------
+    var plan = new Plan(8);
+    for (var n1 = 0; n1 < (Q.length - 3); n1++) {
+        if (UnableLogistic.indexOf(n1) != -1) continue;
+        for (var n2 = n1 + 1; n2 < (Q.length - 2); n2++) {
+            if (UnableLogistic.indexOf(n2) != -1) continue;
+            for (var n3 = n2 + 1; n3 < (Q.length - 1); n3++) {
+                if (UnableLogistic.indexOf(n3) != -1) continue;
+                for (var n4 = n3 + 1; n4 < Q.length; n4++) {
+                    if (UnableLogistic.indexOf(n4) != -1) continue;
+                    plan.CalculateAndPush([n1, n2, n3, n4]);
+                }
+            }
+        }
+    }
+    var TargetValue = CorrectTargetValueByPlanList(plan);
+    //----------
+    plan = new Plan(30, TargetValue);
     for (var n1 = 0; n1 < (Q.length - 3); n1++) {
         if (UnableLogistic.indexOf(n1) != -1) continue;
         for (var n2 = n1 + 1; n2 < (Q.length - 2); n2++) {
@@ -29,17 +47,98 @@ function Get_Plan_Main() {
     Q_RecoveryOrder();
 }
 
+function CorrectTargetValueByPlanList(plan) {
+    var TargetValue = getTargetByList(plan.List);
+    var Target_Resource = TargetValue.slice(0, 4);
+    var Target_Contract = TargetValue.slice(4, 7);
+    var Resource_CalibrationValue = getCalibration(Target_Resource, plan);
+    var Contract_CalibrationValue = getCalibration(Target_Contract, plan);
+    for (var i = 0; i < 4; i++) {
+        if (Resource_CalibrationValue != 0) {
+            TargetValue[i] = plan.TargetValue_html[i] / Resource_CalibrationValue;
+        }
+        else {
+            TargetValue[i] = 0;
+        }
+    }
+    for (var i = 4; i < 7; i++) {
+        if (Contract_CalibrationValue != 0) {
+            TargetValue[i] = plan.TargetValue_html[i] / Contract_CalibrationValue;
+        }
+        else {
+            TargetValue[i] = 0;
+        }
+    }
+    return TargetValue;
+}
+function getTargetByList(List) {
+    var TargetValue = new Array(7);
+    TargetValue.fill(0);
+    for (var i = 0; i < List.length; i++) {
+        for (var ii = 0; ii < 7; ii++) {
+            TargetValue[ii] += List[i][ii + 4];
+            if (i != 0) {
+                TargetValue[ii] /= 2;
+            }
+        }
+    }
+    return TargetValue;
+}
+function getCalibration(Target_0, plan) {
+    var Target_0_html = getTarget0html(Target_0.length, plan);
+    var Current_0_MAX = getCurrent0MAX(Target_0.length, plan);
+    var Calibration = 0;
+    for (var i = 0; i < Target_0.length; i++) {
+        if (Target_0[i] != 0) {
+            Calibration += (Target_0_html[i] / Target_0[i]);
+            if (i != 0) {
+                Calibration /= 2;
+            }
+        }
+    }
+    if (Calibration == 0) {
+        var Current_0_AMAX = 0;
+        for (var i = 0; i < Target_0.length; i++) {
+            if (Current_0_MAX[i] != 0) {
+                Current_0_AMAX += Current_0_MAX[i];
+                if (i != 0) {
+                    Current_0_AMAX /= 2;
+                }
+            }
+        }
+        var Target_0_html_MAX = ArrayMax(Target_0_html);
+        Calibration = Target_0_html_MAX / Current_0_AMAX;
+    }
+    return Calibration;
+}
+function getTarget0html(Target0length, plan) {
+    var Target_0_html = new Array(Target0length);
+    if (Target0length == 4) {
+        Target_0_html = plan.TargetValue_html.slice(0, 4);
+    }
+    else {
+        Target_0_html = plan.TargetValue_html.slice(4, 7);
+    }
+    return Target_0_html;
+}
+function getCurrent0MAX(Target0length, plan) {
+    var Current_0_MAX = new Array(Target0length);
+    if (Target0length == 4) {
+        Current_0_MAX = plan.CurrentValue_MAX.slice(0, 4);
+    }
+    else {
+        Current_0_MAX = plan.CurrentValue_MAX.slice(4, 7);
+    }
+    return Current_0_MAX;
+}
+
 //为了减少方案之间的比较次数, 优先排出场率高的后勤
 function Q_AdjustTheOrder() {
-    for(var i = 0; i < Q.length; i++) {
-        Q_Backup[i] = Q[i];
-    }
+    Q_Backup = Q.slice();
     _AdjustTheOrder();
 }
 function Q_RecoveryOrder() {
-    for (var i = 0; i < Q.length; i++) {
-        Q[i] = Q_Backup[i];
-    }
+    Q = Q_Backup.slice();
 }
 
 function IsGreatSuccessRateUp() {
@@ -124,52 +223,52 @@ function setUnableLogistic() {
 }
 
 function _AdjustTheOrder() {
-    // Q[0] = Q_Backup[47];
-    // Q[1] = Q_Backup[46];
-    // Q[2] = Q_Backup[45];
-    // Q[3] = Q_Backup[44];
-    // Q[4] = Q_Backup[0];
-    // Q[5] = Q_Backup[1];
-    // Q[6] = Q_Backup[2];
-    // Q[7] = Q_Backup[3];
-    // Q[8] = Q_Backup[39];
-    // Q[9] = Q_Backup[38];
-    // Q[10] = Q_Backup[37];
-    // Q[11] = Q_Backup[36];
-    // Q[12] = Q_Backup[35];
-    // Q[13] = Q_Backup[34];
-    // Q[14] = Q_Backup[33];
-    // Q[15] = Q_Backup[32];
-    // Q[16] = Q_Backup[31];
-    // Q[17] = Q_Backup[30];
-    // Q[18] = Q_Backup[29];
-    // Q[19] = Q_Backup[28];
-    // Q[20] = Q_Backup[27];
-    // Q[21] = Q_Backup[26];
-    // Q[22] = Q_Backup[25];
-    // Q[23] = Q_Backup[24];
-    // Q[24] = Q_Backup[23];
-    // Q[25] = Q_Backup[22];
-    // Q[26] = Q_Backup[21];
-    // Q[27] = Q_Backup[20];
-    // Q[28] = Q_Backup[19];
-    // Q[29] = Q_Backup[18];
-    // Q[30] = Q_Backup[17];
-    // Q[31] = Q_Backup[16];
-    // Q[32] = Q_Backup[15];
-    // Q[33] = Q_Backup[14];
-    // Q[34] = Q_Backup[13];
-    // Q[35] = Q_Backup[12];
-    // Q[36] = Q_Backup[11];
-    // Q[37] = Q_Backup[10];
-    // Q[38] = Q_Backup[9];
-    // Q[39] = Q_Backup[8];
-    // Q[40] = Q_Backup[7];
-    // Q[41] = Q_Backup[6];
-    // Q[42] = Q_Backup[5];
-    // Q[43] = Q_Backup[4];
-    // Q[44] = Q_Backup[43];
-    // Q[45] = Q_Backup[42];
-    // Q[46] = Q_Backup[41];
-    // Q[47] = Q_Backup[40];
+    Q[0] = Q_Backup[28];
+    Q[1] = Q_Backup[1];
+    Q[2] = Q_Backup[22];
+    Q[3] = Q_Backup[30];
+    Q[4] = Q_Backup[17];
+    Q[5] = Q_Backup[32];
+    Q[6] = Q_Backup[37];
+    Q[7] = Q_Backup[24];
+    Q[8] = Q_Backup[41];
+    Q[9] = Q_Backup[46];
+    Q[10] = Q_Backup[44];
+    Q[11] = Q_Backup[25];
+    Q[12] = Q_Backup[47];
+    Q[13] = Q_Backup[16];
+    Q[14] = Q_Backup[26];
+    Q[15] = Q_Backup[35];
+    Q[16] = Q_Backup[33];
+    Q[17] = Q_Backup[21];
+    Q[18] = Q_Backup[23];
+    Q[19] = Q_Backup[39];
+    Q[20] = Q_Backup[40];
+    Q[21] = Q_Backup[34];
+    Q[22] = Q_Backup[45];
+    Q[23] = Q_Backup[38];
+    Q[24] = Q_Backup[7];
+    Q[25] = Q_Backup[11];
+    Q[26] = Q_Backup[36];
+    Q[27] = Q_Backup[18];
+    Q[28] = Q_Backup[14];
+    Q[29] = Q_Backup[15];
+    Q[30] = Q_Backup[8];
+    Q[31] = Q_Backup[29];
+    Q[32] = Q_Backup[2];
+    Q[33] = Q_Backup[20];
+    Q[34] = Q_Backup[0];
+    Q[35] = Q_Backup[31];
+    Q[36] = Q_Backup[10];
+    Q[37] = Q_Backup[12];
+    Q[38] = Q_Backup[6];
+    Q[39] = Q_Backup[4];
+    Q[40] = Q_Backup[13];
+    Q[41] = Q_Backup[43];
+    Q[42] = Q_Backup[19];
+    Q[43] = Q_Backup[5];
+    Q[44] = Q_Backup[42];
+    Q[45] = Q_Backup[9];
+    Q[46] = Q_Backup[27];
+    Q[47] = Q_Backup[3];
 }

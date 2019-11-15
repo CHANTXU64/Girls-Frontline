@@ -9,7 +9,7 @@ double Time_Limit_end;
 double Time_TotalTime;
 vector<double> Time_Tab_Timetable_TimeList;
 int MapLimit;
-array<double, 7> TargetValue_0;
+array<double, 7> TargetValue_html;
 Tab* ShownTab = nullptr;
 
 array<array<double, 9>, 48> Q = {{
@@ -112,21 +112,21 @@ int Function_GreatSuccessRateUP();
 void initdata(vector<double> init) {
     GreatSuccessRate = init[0];
     IsGreatSuccessRateUp = init[1];
-    TargetValue_0[0] = init[2];
-	TargetValue_0[1] = init[3];
-	TargetValue_0[2] = init[4];
-	TargetValue_0[3] = init[5];
-	TargetValue_0[4] = init[6];
-	TargetValue_0[5] = init[7];
-	TargetValue_0[6] = init[8];
+    TargetValue_html[0] = init[2];
+    TargetValue_html[1] = init[3];
+    TargetValue_html[2] = init[4];
+    TargetValue_html[3] = init[5];
+    TargetValue_html[4] = init[6];
+    TargetValue_html[5] = init[7];
+    TargetValue_html[6] = init[8];
     Time_Limit_start = init[9];
     Time_Limit_end = init[10];
     Time_TotalTime = init[11];
     MapLimit = init[12];
     int Tab_number = init[13];
-	for (int i = 14; i < init.size(); i++) {
-		Time_Tab_Timetable_TimeList.push_back(init[i]);
-	}
+    for (int i = 14; i < init.size(); i++) {
+        Time_Tab_Timetable_TimeList.push_back(init[i]);
+    }
     switch (Tab_number) {
         case 1:
             ShownTab = new Tab_Anytime;
@@ -153,6 +153,6 @@ int Function_GreatSuccessRateUP() {
 }
 
 void deletedata() {
-	delete ShownTab;
-	ShownTab = nullptr;
+    delete ShownTab;
+    ShownTab = nullptr;
 }
