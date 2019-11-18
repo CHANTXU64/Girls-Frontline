@@ -2,16 +2,17 @@ var ShownTab = new Tab_Anytime;
 var Q_Backup = [];
 var test = 0;
 var test_2 = 0;
+var test_3 = 0;
 
 function Get_Plan_Main() {
     test = 0;
     test_2 = 0;
+    test_3 = 0;
     Q_init_Contract();
     Q_AdjustTheOrder();
     ShownTab.setTime();
-    ShownTab.setResourceIncreasingRate();
     var UnableLogistic = ShownTab.getUnableLogistic();
-    //调整目标值
+    //调整目标值, 标准化归一化
     //----------
     var plan = new Plan(8);
     for (var n1 = 0; n1 < (Q.length - 3); n1++) {
@@ -22,14 +23,20 @@ function Get_Plan_Main() {
                 if (UnableLogistic.indexOf(n3) != -1) continue;
                 for (var n4 = n3 + 1; n4 < Q.length; n4++) {
                     if (UnableLogistic.indexOf(n4) != -1) continue;
-                    plan.CalculateAndPush([n1, n2, n3, n4]);
+                    plan.CalculateAndPush_Normalization([n1, n2, n3, n4]);
                 }
             }
         }
     }
     var TargetValue = CorrectTargetValueByPlanList(plan);
+    for (var i = 0; i < 7; i++) {
+        TargetValue[i] /= plan.CurrentValue_MAX[i];
+    }
     //----------
-    plan = new Plan(30, TargetValue);
+    test = 0;
+    test_2 = 0;
+    test_3 = 0;
+    plan = new Plan(30, TargetValue, plan.CurrentValue_MAX);
     for (var n1 = 0; n1 < (Q.length - 3); n1++) {
         if (UnableLogistic.indexOf(n1) != -1) continue;
         for (var n2 = n1 + 1; n2 < (Q.length - 2); n2++) {
@@ -74,12 +81,22 @@ function CorrectTargetValueByPlanList(plan) {
 function getTargetByList(List) {
     var TargetValue = new Array(7);
     TargetValue.fill(0);
-    for (var i = 0; i < List.length; i++) {
-        for (var ii = 0; ii < 7; ii++) {
-            TargetValue[ii] += List[i][ii + 4];
-            if (i != 0) {
-                TargetValue[ii] /= 2;
+    var validlength = new Array(7);
+    validlength.fill(List.length);
+    for (var i = 0; i < 7; i++) {
+        for (var ii = 0; ii < List.length; ii++) {
+            TargetValue[i] += List[ii][i + 4];
+            if (List[ii][i + 4] == 0) {
+                validlength[i]--;
             }
+        }
+    }
+    for (var i = 0; i < 7; i++) {
+        if (validlength[i] == 0) {
+            TargetValue[i] = 0;
+        }
+        else {
+            TargetValue[i] /= validlength[i];
         }
     }
     return TargetValue;
@@ -88,23 +105,37 @@ function getCalibration(Target_0, plan) {
     var Target_0_html = getTarget0html(Target_0.length, plan);
     var Current_0_MAX = getCurrent0MAX(Target_0.length, plan);
     var Calibration = 0;
+    var validlength = Target_0.length;
     for (var i = 0; i < Target_0.length; i++) {
         if (Target_0[i] != 0) {
             Calibration += (Target_0_html[i] / Target_0[i]);
-            if (i != 0) {
-                Calibration /= 2;
+            if (Target_0_html[i] == 0) {
+                validlength--;
             }
         }
+        else {
+            validlength--;
+        }
     }
-    if (Calibration == 0) {
+    if (Calibration != 0) {
+        Calibration /= validlength;
+    }
+    else {
         var Current_0_AMAX = 0;
+        var validlength = Target_0.length;
         for (var i = 0; i < Target_0.length; i++) {
             if (Current_0_MAX[i] != 0) {
                 Current_0_AMAX += Current_0_MAX[i];
-                if (i != 0) {
-                    Current_0_AMAX /= 2;
-                }
             }
+            else {
+                validlength--;
+            }
+        }
+        if (validlength == 0) {
+            Current_0_AMAX = 0;
+        }
+        else {
+            Current_0_AMAX /= validlength;
         }
         var Target_0_html_MAX = ArrayMax(Target_0_html);
         Calibration = Target_0_html_MAX / Current_0_AMAX;
@@ -185,7 +216,8 @@ function ArrayMax(Arr) {
 //有问题
 function Value(TargetValue, CurrentValue) {
     return Value_0(TargetValue[0], CurrentValue[0]) + Value_0(TargetValue[1], CurrentValue[1]) +
-        Value_0(TargetValue[2], CurrentValue[2]) + Value_0(TargetValue[3], CurrentValue[3]);
+        Value_0(TargetValue[2], CurrentValue[2]) + Value_0(TargetValue[3], CurrentValue[3] +
+        Value_0(TargetValue[4], CurrentValue[4]) + Value_0(TargetValue[5], CurrentValue[5]) + Value_0(TargetValue[6], CurrentValue[6]));
 }
 function Value_0(Target, Current) {
     if (Target == 0) return 0;

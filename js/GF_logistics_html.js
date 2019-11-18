@@ -1,6 +1,5 @@
 window.onload = function () {
     loadHTML_PlanTable();
-    loadHTML_Weights();
     loadHTML_Target();
 }
 
@@ -281,15 +280,15 @@ function setTarget(TargetInfo) {
         case 6:
             MT.val(800); AT.val(200); RT.val(800); PT.val(400); TT.val(0); ET.val(0); QT.val(0); break;
         case 7:
-            MT.val(20); AT.val(20); RT.val(20); PT.val(10); TT.val(0); ET.val(0); QT.val(0); break;
+            MT.val(400); AT.val(400); RT.val(400); PT.val(200); TT.val(0); ET.val(0); QT.val(0); break;
         case 8:
-            MT.val(10); AT.val(0); RT.val(0); PT.val(0); TT.val(0); ET.val(0); QT.val(0); break;
+            MT.val(600); AT.val(0); RT.val(0); PT.val(0); TT.val(0); ET.val(0); QT.val(0); break;
         case 9:
-            MT.val(0); AT.val(10); RT.val(0); PT.val(0); TT.val(0); ET.val(0); QT.val(0); break;
+            MT.val(0); AT.val(600); RT.val(0); PT.val(0); TT.val(0); ET.val(0); QT.val(0); break;
         case 10:
-            MT.val(0); AT.val(0); RT.val(10); PT.val(0); TT.val(0); ET.val(0); QT.val(0); break;
+            MT.val(0); AT.val(0); RT.val(600); PT.val(0); TT.val(0); ET.val(0); QT.val(0); break;
         case 11:
-            MT.val(0); AT.val(0); RT.val(0); PT.val(10); TT.val(0); ET.val(0); QT.val(0); break;
+            MT.val(0); AT.val(0); RT.val(0); PT.val(300); TT.val(0); ET.val(0); QT.val(0); break;
         case 12:
             MT.val(0); AT.val(0); RT.val(0); PT.val(0); TT.val(1); ET.val(0); QT.val(0); break;
         case 13:

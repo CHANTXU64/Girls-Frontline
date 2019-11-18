@@ -4,12 +4,6 @@ class Tab {
     setTime() {}
     _checkDataLegalityAndCorrect_Time() {}
 
-    setResourceIncreasingRate() {
-        var GreatSuccessRate_UP = Function_GreatSuccessRateUP();
-        var GreatSuccessRate = parseFloat($("#GreatSuccessRate").val());
-        this.ResourceIncreasingRate = 1 + (GreatSuccessRate + GreatSuccessRate_UP) / 200;
-    }
-
     _setPlanListCustomizer() {
         this._PlanListCustomizer = [];
     }
@@ -45,12 +39,6 @@ class Tab {
     }
 
     Calculate_Current(MissionsNumber) {}
-    _calculateCurrentByResourceIncreasingRate(CurrentValue) {
-        for (var i = 0; i < 4; i++) {
-            CurrentValue[i] *= this.ResourceIncreasingRate;
-        }
-        return CurrentValue;
-    }
 
     PrintPlanTableTitle() {}
     _title = '<thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th>';
@@ -79,7 +67,7 @@ class Tab_Anytime extends Tab {
         for (var i = 0; i < 7; i++) {
             CurrentValue[i] = Q[Number[0]][i + 1] + Q[Number[1]][i + 1] + Q[Number[2]][i + 1] + Q[Number[3]][i + 1];
         }
-        return this._calculateCurrentByResourceIncreasingRate(CurrentValue);
+        return CurrentValue;
     }
 
     PrintPlanTableTitle() {
@@ -139,7 +127,7 @@ class Tab_SingleTime extends Tab {
         for (var i = 0; i < 7; i++) {
             CurrentValue[i] = (Q[Number[0]][i + 1] * Q[Number[0]][8] + Q[Number[1]][i + 1] * Q[Number[1]][8] + Q[Number[2]][i + 1] * Q[Number[2]][8] + Q[Number[3]][i + 1] * Q[Number[3]][8]) / this.TotalTime;
         }
-        return this._calculateCurrentByResourceIncreasingRate(CurrentValue);
+        return CurrentValue;
     }
 
     PrintPlanTableTitle() {
@@ -207,7 +195,7 @@ class Tab_Timetable extends Tab {
         for (var i = 0; i < 7; i++) {
             CurrentValue[i] = CurrentValue_n[i][0] + CurrentValue_n[i][1] + CurrentValue_n[i][2] + CurrentValue_n[i][3];
         }
-        return this._calculateCurrentByResourceIncreasingRate(CurrentValue);
+        return CurrentValue;
     }
 
     PrintPlanTableTitle() {
@@ -268,7 +256,7 @@ class Tab_Intervals extends Tab {
         for (var i = 0; i < 7; i++) {
             CurrentValue[i] = CurrentValue_n[i][0] + CurrentValue_n[i][1] + CurrentValue_n[i][2] + CurrentValue_n[i][3];
         }
-        return this._calculateCurrentByResourceIncreasingRate(CurrentValue);
+        return CurrentValue;
     }
     _setPlanListCustomizer(times) {
         var One_cycle_time = this._calculateArrayLeastCommonMultiple(times) * this.TotalTime;
