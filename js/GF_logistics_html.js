@@ -7,9 +7,10 @@ window.onload = function () {
 $(function (){$("[data-toggle='tooltip']").tooltip();})
 
 //标签页
+var HTMLtab = "Anytime";
 $(function (){
     $('[href=#Tab_Anytime]').on("shown.bs.tab", function(){
-        ShownTab = new Tab_Anytime;
+        HTMLtab = "Anytime";
         if (is_Tab_Anytime_CalculateOneDay()) {
             $(".Demand span").html("每天需求量");
         }
@@ -19,12 +20,12 @@ $(function (){
         TimeLimit_enable();
     });
     $('[href=#Tab_SingleTime]').on("shown.bs.tab", function(){
-        ShownTab = new Tab_SingleTime;
+        HTMLtab = "SingleTime";
         $(".Demand span").html("单次需求量");
         TimeLimit_disable();
     });
     $('[href=#Tab_Timetable]').on("shown.bs.tab", function(){
-        ShownTab = new Tab_Timetable;
+        HTMLtab = "Timetable";
         if (is_Tab_Timetable_CalculateOnce()) {
             $(".Demand span").html("总共需求量");
         }
@@ -34,7 +35,7 @@ $(function (){
         TimeLimit_disable();
     });
     $('[href=#Tab_Intervals]').on("shown.bs.tab", function(){
-        ShownTab = new Tab_Intervals;
+        HTMLtab = "Intervals";
         $(".Demand span").html("平均每小时需求量");
         TimeLimit_disable();
     });
@@ -82,7 +83,8 @@ function Tab_Anytime_hourorday() {
         $("#PT").val(Math.round($("#PT").val() * time * 100) / 100);
         $("#TT").val(Math.round($("#TT").val() * time * 100) / 100);
         $("#ET").val(Math.round($("#ET").val() * time * 100) / 100);
-        $("#QT").val(Math.round($("#QT").val() * time * 100) / 100);
+        $("#QPT").val(Math.round($("#QPT").val() * time * 100) / 100);
+        $("#QRT").val(Math.round($("#QRT").val() * time * 100) / 100);
     }
     else {
         $(".Demand span").html("平均每小时需求量");
@@ -94,12 +96,14 @@ function Tab_Anytime_hourorday() {
         $("#PT").val(Math.round($("#PT").val() / time * 100) / 100);
         $("#TT").val(Math.round($("#TT").val() / time * 100) / 100);
         $("#ET").val(Math.round($("#ET").val() / time * 100) / 100);
-        $("#QT").val(Math.round($("#QT").val() / time * 100) / 100);
+        $("#QPT").val(Math.round($("#QPT").val() / time * 100) / 100);
+        $("#QRT").val(Math.round($("#QRT").val() / time * 100) / 100);
     }
 }
 
 //Tab_Timetable\
 //-----------
+var Tab_Timetable_TimeList_html = new Array();
 $(function (){
     $("#Time_Timetable_hours").on('input propertychange',function() {Tab_Timetable_ChangeMaxTime()});
     $("#Time_Timetable_minutes").on('input propertychange',function() {Tab_Timetable_ChangeMaxTime()});
@@ -132,18 +136,18 @@ function Tab_Timetable_AddNewTimePoint() {
     var total_time = hours + minutes / 60;
     switch(true) {
         case total_time == 0:
-            if (ShownTab.TimeList_html.length == 0) {
+            if (Tab_Timetable_TimeList_html.length == 0) {
                 Tab_Timetable_InputTotalTime_enable();
             }
             alert("不需要在后勤开始点再添加收取时间点");
             break;
         case total_time >= Tab_Timetable_getMaxTime():
-            if (ShownTab.TimeList_html.length == 0) {
+            if (Tab_Timetable_TimeList_html.length == 0) {
                 Tab_Timetable_InputTotalTime_enable();
             }
             alert("添加的收取时间点不能超过最大时限");
             break;
-        case ShownTab.TimeList_html.indexOf(total_time) != -1:
+        case Tab_Timetable_TimeList_html.indexOf(total_time) != -1:
             alert("已经添加过这个收取时间点");
             break;
         default:
@@ -161,7 +165,7 @@ function Tab_Timetable_emptyInputNewTime() {
 }
 
 function Tab_Timetable_AddNewTimePoint_main(time) {
-    ShownTab.TimeList_html.push(time);
+    Tab_Timetable_TimeList_html.push(time);
     var maxtime = Tab_Timetable_getMaxTime();
     var position = (time / maxtime) * 100 + '%';
     Tab_Timetable_AddNewThumb(time, position);
@@ -177,7 +181,7 @@ function Tab_Timetable_AddNewThumb(time, position) {
 function Tab_Timetable_AddNewTooltip(time, position) {
     var stringTime = Tab_Timetable_OutputStringTime(time);
     var newTooltip = '<div id="Tab_Timetable_range_tooltip_' + time + '"';
-    if (ShownTab.TimeList_html.indexOf(time) % 2 == 0) {
+    if (Tab_Timetable_TimeList_html.indexOf(time) % 2 == 0) {
         newTooltip += 'class="tooltip top custom-tooltip"';
         newTooltip += ('style="left:' + position + '; top:-32px; margin-left: -15px;">');
     }
@@ -191,7 +195,7 @@ function Tab_Timetable_AddNewTooltip(time, position) {
 }
 
 function Tab_Timetable_DeleteThisTimePoint(time) {
-    ShownTab.TimeList_html.remove(time);
+    Tab_Timetable_TimeList_html.remove(time);
     var thumb_id = "Tab_Timetable_range_thumb_" + time;
     var tooltip_id = "Tab_Timetable_range_tooltip_" + time;
     var thumb_obj = document.getElementById(thumb_id);
@@ -199,7 +203,7 @@ function Tab_Timetable_DeleteThisTimePoint(time) {
     var parent_obj = document.getElementById('Tab_Timetable_range');
     parent_obj.removeChild(thumb_obj);
     parent_obj.removeChild(tooltip_obj);
-    if (ShownTab.TimeList_html.length == 0) Tab_Timetable_InputTotalTime_enable();
+    if (Tab_Timetable_TimeList_html.length == 0) Tab_Timetable_InputTotalTime_enable();
 }
 Array.prototype.remove = function(val) {
     var index = this.indexOf(val);
@@ -213,9 +217,9 @@ function Tab_Timetable_InputTotalTime_enable() {
 }
 
 function Tab_Timetable_DeleteAllTimePoints() {
-    var times = ShownTab.TimeList_html.length;
+    var times = Tab_Timetable_TimeList_html.length;
     for (var i = 0; i < times; i++) {
-        Tab_Timetable_DeleteThisTimePoint(ShownTab.TimeList_html[0]);
+        Tab_Timetable_DeleteThisTimePoint(Tab_Timetable_TimeList_html[0]);
     }
     Tab_Timetable_InputTotalTime_enable();
 }
@@ -265,38 +269,25 @@ function setTarget(TargetInfo) {
     var PT = $("#PT");
     var TT = $("#TT");
     var ET = $("#ET");
-    var QT = $("#QT");
+    var QPT = $("#QPT");
+    var QRT = $("#QRT");
     switch (TargetInfo) {
         case 1:
-            MT.val(130); AT.val(130); RT.val(130); PT.val(130); TT.val(0); ET.val(0); QT.val(0); break;
+            MT.val(130); AT.val(130); RT.val(130); PT.val(130); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
         case 2:
-            MT.val(430); AT.val(430); RT.val(130); PT.val(230); TT.val(0); ET.val(0); QT.val(0); break;
+            MT.val(430); AT.val(430); RT.val(130); PT.val(230); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
         case 3:
-            MT.val(430); AT.val(130); RT.val(430); PT.val(230); TT.val(0); ET.val(0); QT.val(0); break;
+            MT.val(430); AT.val(130); RT.val(430); PT.val(230); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
         case 4:
-            MT.val(130); AT.val(430); RT.val(430); PT.val(130); TT.val(0); ET.val(0); QT.val(0); break;
+            MT.val(130); AT.val(430); RT.val(430); PT.val(130); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
         case 5:
-            MT.val(730); AT.val(630); RT.val(130); PT.val(430); TT.val(0); ET.val(0); QT.val(0); break;
+            MT.val(730); AT.val(630); RT.val(130); PT.val(430); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
         case 6:
-            MT.val(800); AT.val(200); RT.val(800); PT.val(400); TT.val(0); ET.val(0); QT.val(0); break;
+            MT.val(800); AT.val(200); RT.val(800); PT.val(400); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
         case 7:
-            MT.val(400); AT.val(400); RT.val(400); PT.val(200); TT.val(0); ET.val(0); QT.val(0); break;
+            MT.val(400); AT.val(400); RT.val(400); PT.val(200); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
         case 8:
-            MT.val(600); AT.val(0); RT.val(0); PT.val(0); TT.val(0); ET.val(0); QT.val(0); break;
-        case 9:
-            MT.val(0); AT.val(600); RT.val(0); PT.val(0); TT.val(0); ET.val(0); QT.val(0); break;
-        case 10:
-            MT.val(0); AT.val(0); RT.val(600); PT.val(0); TT.val(0); ET.val(0); QT.val(0); break;
-        case 11:
-            MT.val(0); AT.val(0); RT.val(0); PT.val(300); TT.val(0); ET.val(0); QT.val(0); break;
-        case 12:
-            MT.val(0); AT.val(0); RT.val(0); PT.val(0); TT.val(1); ET.val(0); QT.val(0); break;
-        case 13:
-            MT.val(0); AT.val(0); RT.val(0); PT.val(0); TT.val(0); ET.val(1); QT.val(0); break;
-        case 14:
-            MT.val(0); AT.val(0); RT.val(0); PT.val(0); TT.val(0); ET.val(0); QT.val(1); break;
-        case 15:
-            MT.val(0); AT.val(0); RT.val(0); PT.val(0); TT.val(0); ET.val(0); QT.val(0); break;
+            MT.val(0); AT.val(0); RT.val(0); PT.val(0); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
     }
 }
 

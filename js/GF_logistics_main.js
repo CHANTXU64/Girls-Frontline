@@ -1,63 +1,101 @@
-var ShownTab = new Tab_Anytime;
-var Q_Backup = [];
 var test = 0;
 var test_2 = 0;
 var test_3 = 0;
 
 function Get_Plan_Main() {
+    console.time('total');
     test = 0;
     test_2 = 0;
     test_3 = 0;
     Q_init_Contract();
-    Q_AdjustTheOrder();
+    var ShownTab = getShownTab();
     ShownTab.setTime();
-    var UnableLogistic = ShownTab.getUnableLogistic();
+    var Q_Valid_length = ShownTab.setValidQAndReturnLength();
+    var CurrentValue_MAX = getCurrentMax(ShownTab.Qvalid);
     //调整目标值, 标准化归一化
     //----------
-    var plan = new Plan(8);
-    for (var n1 = 0; n1 < (Q.length - 3); n1++) {
-        if (UnableLogistic.indexOf(n1) != -1) continue;
-        for (var n2 = n1 + 1; n2 < (Q.length - 2); n2++) {
-            if (UnableLogistic.indexOf(n2) != -1) continue;
-            for (var n3 = n2 + 1; n3 < (Q.length - 1); n3++) {
-                if (UnableLogistic.indexOf(n3) != -1) continue;
-                for (var n4 = n3 + 1; n4 < Q.length; n4++) {
-                    if (UnableLogistic.indexOf(n4) != -1) continue;
+    var plan = new Plan(ShownTab, 8, CurrentValue_MAX);
+    console.time();
+    for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
+        for (var n2 = n1 + 1; n2 < (Q_Valid_length - 2); n2++) {
+            for (var n3 = n2 + 1; n3 < (Q_Valid_length - 1); n3++) {
+                for (var n4 = n3 + 1; n4 < Q_Valid_length; n4++) {
                     plan.CalculateAndPush_Normalization([n1, n2, n3, n4]);
                 }
             }
         }
     }
+    console.timeEnd();
+    console.time();
     var TargetValue = CorrectTargetValueByPlanList(plan);
     for (var i = 0; i < 7; i++) {
-        TargetValue[i] /= plan.CurrentValue_MAX[i];
+        TargetValue[i] /= CurrentValue_MAX[i];
     }
     //----------
     test = 0;
     test_2 = 0;
     test_3 = 0;
-    plan = new Plan(30, TargetValue, plan.CurrentValue_MAX);
-    for (var n1 = 0; n1 < (Q.length - 3); n1++) {
-        if (UnableLogistic.indexOf(n1) != -1) continue;
-        for (var n2 = n1 + 1; n2 < (Q.length - 2); n2++) {
-            if (UnableLogistic.indexOf(n2) != -1) continue;
-            for (var n3 = n2 + 1; n3 < (Q.length - 1); n3++) {
-                if (UnableLogistic.indexOf(n3) != -1) continue;
-                for (var n4 = n3 + 1; n4 < Q.length; n4++) {
-                    if (UnableLogistic.indexOf(n4) != -1) continue;
+    plan = new Plan(ShownTab, 30, CurrentValue_MAX, TargetValue);
+    for (var i = 0; i < ShownTab.Qvalid.length; i++) {
+        for (var ii = 0; ii < 8; ii++) {
+            if (CurrentValue_MAX[ii] != 0) {
+                ShownTab.Qvalid[i][ii + 1] /= CurrentValue_MAX[ii];
+            }
+        }
+    }
+    for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
+        for (var n2 = n1 + 1; n2 < (Q_Valid_length - 2); n2++) {
+            for (var n3 = n2 + 1; n3 < (Q_Valid_length - 1); n3++) {
+                for (var n4 = n3 + 1; n4 < Q_Valid_length; n4++) {
                     plan.CalculateAndPush([n1, n2, n3, n4]);
                 }
             }
         }
     }
     plan.print();
-    Q_RecoveryOrder();
+    console.timeEnd();
+    console.timeEnd('total');
+}
+
+function getShownTab() {
+    var ShownTab;
+    switch (HTMLtab) {
+        case "Anytime":
+            ShownTab = new Tab_Anytime;
+            break;
+        case "SingleTime":
+            ShownTab = new Tab_SingleTime;
+            break;
+        case "Timetable":
+            ShownTab = new Tab_Timetable;
+            break;
+        case "Intervals":
+            ShownTab = new Tab_Intervals;
+            break;
+    }
+    return ShownTab;
+}
+
+function getCurrentMax(Qvalid) {
+    var CurrentValueMax = new Array(8);
+    for (var i = 0; i < 8; i++) {
+        var CurrentValueMax_0 = new Array(Qvalid.length);
+        for (var ii = 0; ii < Qvalid.length; ii++) {
+            CurrentValueMax_0[ii] = Qvalid[ii][i + 1];
+        }
+        CurrentValueMax_0.sort(sortNumber0);
+        CurrentValueMax[i] = CurrentValueMax_0[0] + CurrentValueMax_0[1] + CurrentValueMax_0[2] + CurrentValueMax_0[3];
+    }
+    return CurrentValueMax;
+}
+function sortNumber0(a, b) {
+    return b - a;
 }
 
 function CorrectTargetValueByPlanList(plan) {
     var TargetValue = getTargetByList(plan.List);
     var Target_Resource = TargetValue.slice(0, 4);
-    var Target_Contract = TargetValue.slice(4, 7);
+    var Target_Contract = TargetValue.slice(4, 8);
     var Resource_CalibrationValue = getCalibration(Target_Resource, plan);
     var Contract_CalibrationValue = getCalibration(Target_Contract, plan);
     for (var i = 0; i < 4; i++) {
@@ -68,7 +106,7 @@ function CorrectTargetValueByPlanList(plan) {
             TargetValue[i] = 0;
         }
     }
-    for (var i = 4; i < 7; i++) {
+    for (var i = 4; i < 8; i++) {
         if (Contract_CalibrationValue != 0) {
             TargetValue[i] = plan.TargetValue_html[i] / Contract_CalibrationValue;
         }
@@ -79,11 +117,11 @@ function CorrectTargetValueByPlanList(plan) {
     return TargetValue;
 }
 function getTargetByList(List) {
-    var TargetValue = new Array(7);
+    var TargetValue = new Array(8);
     TargetValue.fill(0);
-    var validlength = new Array(7);
+    var validlength = new Array(8);
     validlength.fill(List.length);
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 8; i++) {
         for (var ii = 0; ii < List.length; ii++) {
             TargetValue[i] += List[ii][i + 4];
             if (List[ii][i + 4] == 0) {
@@ -91,7 +129,7 @@ function getTargetByList(List) {
             }
         }
     }
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 8; i++) {
         if (validlength[i] == 0) {
             TargetValue[i] = 0;
         }
@@ -148,7 +186,7 @@ function getTarget0html(Target0length, plan) {
         Target_0_html = plan.TargetValue_html.slice(0, 4);
     }
     else {
-        Target_0_html = plan.TargetValue_html.slice(4, 7);
+        Target_0_html = plan.TargetValue_html.slice(4, 8);
     }
     return Target_0_html;
 }
@@ -158,18 +196,9 @@ function getCurrent0MAX(Target0length, plan) {
         Current_0_MAX = plan.CurrentValue_MAX.slice(0, 4);
     }
     else {
-        Current_0_MAX = plan.CurrentValue_MAX.slice(4, 7);
+        Current_0_MAX = plan.CurrentValue_MAX.slice(4, 8);
     }
     return Current_0_MAX;
-}
-
-//为了减少方案之间的比较次数, 优先排出场率高的后勤
-function Q_AdjustTheOrder() {
-    Q_Backup = Q.slice();
-    _AdjustTheOrder();
-}
-function Q_RecoveryOrder() {
-    Q = Q_Backup.slice();
 }
 
 function IsGreatSuccessRateUp() {
@@ -199,7 +228,9 @@ function _getPositiveValueFromHTML_one(HTMLNumber) {
 function _getPositiveValueFromHTML_array(HTMLArr) {
     var Arr = new Array(HTMLArr.length);
     for (var i = 0; i < HTMLArr.length; i++) {
-        if (is_Non_positive_number(HTMLArr[i].val())) HTMLArr[i].val(0);
+        if (is_Non_positive_number(HTMLArr[i].val())) {
+            HTMLArr[i].val(0);
+        }
         Arr[i] = parseFloat(HTMLArr[i].val());
     }
     return Arr;
@@ -215,92 +246,36 @@ function ArrayMax(Arr) {
 
 //有问题
 function Value(TargetValue, CurrentValue) {
-    return Value_0(TargetValue[0], CurrentValue[0]) + Value_0(TargetValue[1], CurrentValue[1]) +
-        Value_0(TargetValue[2], CurrentValue[2]) + Value_0(TargetValue[3], CurrentValue[3] +
-        Value_0(TargetValue[4], CurrentValue[4]) + Value_0(TargetValue[5], CurrentValue[5]) + Value_0(TargetValue[6], CurrentValue[6]));
+    var Value = 0;
+    for (var i = 0; i < 7; i++) {
+        Value += Value_0(TargetValue[i], CurrentValue[i]);
+    }
+    return Value;
 }
 function Value_0(Target, Current) {
     if (Target == 0) return 0;
     if (Target > Current) {//Y=5.5*x^3+4.5*x
-        return (Target - Current) * (5.5 * Math.pow((Target - Current) / Target, 3) + 4.5 * (Target - Current) / Target);
+        return (Target - Current) * (-5.5 * Math.pow((Target - Current) / Target, 3) - 4.5 * (Target - Current) / Target);
     }
-    else {//Y=-0.04*x^3 -0.01*x
-        return (Target - Current) * (- 0.04 * Math.pow((Target - Current) / Target, 3) - 0.01 * (Target - Current) / Target);
+    else {//Y=-4*x^3 -x
+        return (Target - Current) * (-0.01 * Math.pow((Target - Current) / Target, 3) - 0.3 * (Target - Current) / Target);
     }
 }
-
-function setUnableLogistic() {
-    var UnableMap;
-    switch (parseFloat($("#MapLimit").val())) {
-        case 6:
-            UnableMap = ["7-1","7-2","7-3","7-4","8-1","8-2","8-3","8-4","9-1","9-2","9-3","9-4","10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4"]; break;
-        case 7:
-            UnableMap = ["8-1","8-2","8-3","8-4","9-1","9-2","9-3","9-4","10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4"]; break;
-        case 8:
-            UnableMap = ["9-1","9-2","9-3","9-4","10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4"]; break;
-        case 9:
-            UnableMap = ["10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4"]; break;
-        case 10:
-            UnableMap = ["11-1","11-2","11-3","11-4"]; break;
-        case 11:
-            UnableMap = []; break;
-        default:
-            UnableMap = [];
+function Value2(TargetValue, CurrentValue) {
+    var Value = 0;
+    var minval = 99999999999;
+    for (var i = 0; i < 7; i++) {
+        if (TargetValue[i] != 0) {
+            minval = Math.min(minval, CurrentValue[i] / TargetValue[i]);
+        }
     }
-    var UnableNumber = [];
-    for (var i = 0; i < Q.length; i++) {
-        if (UnableMap.indexOf(Q[i][0]) != -1) UnableNumber.push(i);
+    for (var i = 0; i < 7; i++) {
+        // Value += Value_2(TargetValue[i], CurrentValue[i], minval);
+        Value += Value_0(TargetValue[i], CurrentValue[i]);
     }
-    return UnableNumber;
+    return Value;
 }
-
-function _AdjustTheOrder() {
-    Q[0] = Q_Backup[28];
-    Q[1] = Q_Backup[1];
-    Q[2] = Q_Backup[22];
-    Q[3] = Q_Backup[30];
-    Q[4] = Q_Backup[17];
-    Q[5] = Q_Backup[32];
-    Q[6] = Q_Backup[37];
-    Q[7] = Q_Backup[24];
-    Q[8] = Q_Backup[41];
-    Q[9] = Q_Backup[46];
-    Q[10] = Q_Backup[44];
-    Q[11] = Q_Backup[25];
-    Q[12] = Q_Backup[47];
-    Q[13] = Q_Backup[16];
-    Q[14] = Q_Backup[26];
-    Q[15] = Q_Backup[35];
-    Q[16] = Q_Backup[33];
-    Q[17] = Q_Backup[21];
-    Q[18] = Q_Backup[23];
-    Q[19] = Q_Backup[39];
-    Q[20] = Q_Backup[40];
-    Q[21] = Q_Backup[34];
-    Q[22] = Q_Backup[45];
-    Q[23] = Q_Backup[38];
-    Q[24] = Q_Backup[7];
-    Q[25] = Q_Backup[11];
-    Q[26] = Q_Backup[36];
-    Q[27] = Q_Backup[18];
-    Q[28] = Q_Backup[14];
-    Q[29] = Q_Backup[15];
-    Q[30] = Q_Backup[8];
-    Q[31] = Q_Backup[29];
-    Q[32] = Q_Backup[2];
-    Q[33] = Q_Backup[20];
-    Q[34] = Q_Backup[0];
-    Q[35] = Q_Backup[31];
-    Q[36] = Q_Backup[10];
-    Q[37] = Q_Backup[12];
-    Q[38] = Q_Backup[6];
-    Q[39] = Q_Backup[4];
-    Q[40] = Q_Backup[13];
-    Q[41] = Q_Backup[43];
-    Q[42] = Q_Backup[19];
-    Q[43] = Q_Backup[5];
-    Q[44] = Q_Backup[42];
-    Q[45] = Q_Backup[9];
-    Q[46] = Q_Backup[27];
-    Q[47] = Q_Backup[3];
+function Value_2(Target, Current, minval) {
+    if (Target == 0) return 0;
+    return Math.min(Current, 1.5 * Target * minval) + 0.5 * Math.min(Current, Target) - Math.min(Current, 1.5 * Target * minval);
 }
