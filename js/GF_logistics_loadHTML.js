@@ -51,5 +51,19 @@ function loadHTML_language() {
     }
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
     document.getElementById("tab_Timetable_deleteall").title = language.HTMLJS.tab_Timetable_deleteall;
+    switch(HTMLtab) {
+        case "Anytime":
+            ChangeTab_Anytime();
+            break;
+        case "SingleTime":
+            ChangeTab_SingleTime();
+            break;
+        case "Timetable":
+            ChangeTab_Timetable();
+            break;
+        case "Intervals":
+            ChangeTab_Intervals();
+            break;
+    }
     alertLocalstorageDoesNotWork();
 }
