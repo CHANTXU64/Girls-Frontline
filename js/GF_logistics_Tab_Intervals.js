@@ -10,9 +10,10 @@ class Tab_Intervals extends Tab {
         var Minutes = getPositiveValueFromHTML($("#Time_Intervals_minutes"));
         var total_time = Hours + Minutes / 60;
         if (total_time == 0) {
-            var r = confirm("间隔时长为0，请使用\"随时能收后勤\"一栏来计算组合方案");
+            var r = confirm(language.JS.tab_Intervals_confirm);
             if (r == true) {
-                location.reload();
+                $('[href=#Tab_Anytime]').tab("show");
+                ChangeTab_Anytime();
             }
             throw"--";
         }
@@ -39,7 +40,7 @@ class Tab_Intervals extends Tab {
 
     PrintPlanTableTitle() {
         var title;
-        title = this._title + '<th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>人形/h</th><th>装备/h</th><th>快建/h</th><th>快修/h</th><th>最长时间</th><th><a href="#" data-toggle="tooltip" data-placement="top" title="一周期指从全部后勤同时开始到下一次全部后勤同时收取这段时间">一个周期</a></th>' + this._titleEnd;
+        title = this._title + '<th>'+language.JS.Manp+'/h</th><th>'+language.JS.Ammu+'/h</th><th>'+language.JS.Rati+'/h</th><th>'+language.JS.Part+'/h</th><th>'+language.JS.TPro+'/h</th><th>'+language.JS.Equi+'/h</th><th>'+language.JS.QPro+'/h</th><th>'+language.JS.QRes+'/h</th><th>'+language.JS.MaxTime+'</th><th><a href="#" data-toggle="tooltip" data-placement="top" title="'+language.JS.tab_Intervals_onecycle_tip+'">'+language.JS.tab_Intervals_onecycle+'</a></th>' + this._titleEnd;
         return title;
     }
 

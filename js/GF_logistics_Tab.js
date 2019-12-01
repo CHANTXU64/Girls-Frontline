@@ -46,7 +46,7 @@ class Tab {
     }
 
     PrintPlanTableTitle() {}
-    _title = '<thead><tr><th class="col-0.3">#</th><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th>';
+    _title = '<thead><tr><th class="col-0.3">#</th><th>'+ language.JS.Mission +'1</th><th>'+ language.JS.Mission +'2</th><th>'+ language.JS.Mission +'3</th><th>'+ language.JS.Mission +'4</th>';
     _titleEnd = '</tr></thead>';
 
     get_Hours_PrintResourceContract() {//用于计算平均每小时还是总共 资源和契约量

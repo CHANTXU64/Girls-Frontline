@@ -12,6 +12,10 @@ class Tab_Timetable extends Tab {
         this.TimeList = this.TimeList.sort(sortNumber);
         this.TimeList.unshift(0);
         this.TotalTime = Tab_Timetable_getMaxTime();
+        if (this.TotalTime == 0) {
+            alert(language.JS.tab_Timetable_alert4);
+            throw"--";
+        }
         this.TimeList.push(this.TotalTime);
     }
 
@@ -52,10 +56,10 @@ class Tab_Timetable extends Tab {
     PrintPlanTableTitle() {
         var title;
         if (is_Tab_Timetable_CalculateOnce()) {
-            title = this._title + '<th>人力</th><th>弹药</th><th>口粮</th><th>零件</th><th>人形</th><th>装备</th><th>快建</th><th>快修</th>' + this._titleEnd;
+            title = this._title + '<th>'+language.JS.Manp+'</th><th>'+language.JS.Ammu+'</th><th>'+language.JS.Rati+'</th><th>'+language.JS.Part+'</th><th>'+language.JS.TPro+'</th><th>'+language.JS.Equi+'</th><th>'+language.JS.QPro+'</th><th>'+language.JS.QRes+'</th>' + this._titleEnd;
         }
         else {
-            title = this._title + '<th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>人形/h</th><th>装备/h</th><th>快建/h</th><th>快修/h</th>' + this._titleEnd;
+            title = this._title + '<th>'+language.JS.Manp+'/h</th><th>'+language.JS.Ammu+'/h</th><th>'+language.JS.Rati+'/h</th><th>'+language.JS.Part+'/h</th><th>'+language.JS.TPro+'/h</th><th>'+language.JS.Equi+'/h</th><th>'+language.JS.QPro+'/h</th><th>'+language.JS.QRes+'/h</th>' + this._titleEnd;
         }
         return title;
     }

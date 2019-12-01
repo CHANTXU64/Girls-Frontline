@@ -10,7 +10,7 @@ class Tab_SingleTime extends Tab {
         var Minutes = getPositiveValueFromHTML($("#Time_SingleTime_minutes"));
         var total_time = Hours + Minutes / 60;
         if (total_time == 0) {
-            alert("时长不能为0！");
+            alert(language.JS.tab_SingleTime_alert1);
             throw"--";
         }
     }
@@ -43,7 +43,7 @@ class Tab_SingleTime extends Tab {
 
     PrintPlanTableTitle() {
         var title;
-        title = this._title + '<th>人力</th><th>弹药</th><th>口粮</th><th>零件</th><th>人形</th><th>装备</th><th>快建</th><th>快修</th>' + this._titleEnd;
+        title = this._title + '<th>'+language.JS.Manp+'</th><th>'+language.JS.Ammu+'</th><th>'+language.JS.Rati+'</th><th>'+language.JS.Part+'</th><th>'+language.JS.TPro+'</th><th>'+language.JS.Equi+'</th><th>'+language.JS.QPro+'</th><th>'+language.JS.QRes+'</th>' + this._titleEnd;
         return title;
     }
 

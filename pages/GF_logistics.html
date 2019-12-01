@@ -14,6 +14,8 @@
     <link href="../css/GF_logistics.css" rel="stylesheet">
     <script src="../vendor/jquery-v2.1.1/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../lang/languages.js"></script>
+    <script src="../js/GF_logistics_localStorage.js"></script>
     <script src="../js/GF_logistics_loadHTML.js"></script>
     <script src="../js/GF_logistics_html.js"></script>
     <script src="../js/GF_logistics_data.js"></script>
@@ -69,103 +71,116 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="tooltip-demo">
-                            <h1 class="page-header">后勤组合排序器 <button type="button" data-toggle="tooltip"
-                                    data-placement="bottom" title="" class="btn btn-outline btn-default">?</button></h1>
+                            <h1 class="page-header">
+                                <span id="header"></span> <button type="button" data-toggle="tooltip"
+                                    data-placement="bottom" title="" class="btn btn-outline btn-default">?</button>
+                                <div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown">中文 <span class="caret"></span></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#" onclick="changelang('zh-cn')">简体中文</a></li>
+                                        <li><a href="#" onclick="changelang('zh-hk')">繁體中文</a></li>
+                                    </ul>
+                                </div>
+                            </h1>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-8">
-                        <div class="alert alert-warning" role="alert">
-                            计算结果只和资源契约之间的<b>比例</b>有关。计算结果为<a href="https://baike.baidu.com/item/%E6%95%B0%E5%AD%A6%E6%9C%9F%E6%9C%9B/5362790?fr=aladdin" class="alert-link">均值</a>。
-                        </div>
+                        <div id="localstorageDoesNotWork" class=""></div>
+                        <div class="alert alert-warning" role="alert" id="description" style="color:#000000"></div>
                         <div class="panel panel-default">
-                            <div class="panel-heading">设置</div>
+                            <div class="panel-heading" id="setting"></div>
                             <div class="panel-body" style="padding-left: 5px; padding-right: 5px;">
                                 <div class="col-lg-7">
-                                    <h4>计算方式</h4>
+                                    <h4 id="calculation_method"></h4>
                                     <ul class="nav nav-pills nav-justified">
                                         <li class="active">
-                                            <a href="#Tab_Anytime" data-toggle="tab">随时能收后勤</a>
+                                            <a href="#Tab_Anytime" id="tab_Anytime" data-toggle="tab"></a>
                                         </li>
                                         <li>
-                                            <a href="#Tab_SingleTime" data-toggle="tab">单次后勤</a>
+                                            <a href="#Tab_SingleTime" id="tab_SingleTime" data-toggle="tab"></a>
                                         </li>
                                         <li>
-                                            <a href="#Tab_Timetable" data-toggle="tab">时间计划表</a>
+                                            <a href="#Tab_Timetable" id="tab_Timetable" data-toggle="tab"></a>
                                         </li>
                                         <li>
-                                            <a href="#Tab_Intervals" data-toggle="tab">每隔几小时收</a>
+                                            <a href="#Tab_Intervals" id="tab_Intervals" data-toggle="tab"></a>
                                         </li>
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane fade in active" id="Tab_Anytime">
                                             <div class="checkbox">
                                                 <label><input id="Tab_Anytime_toggle-event" type="checkbox"
-                                                        onclick="Tab_Anytime_hourorday()">按一天需求量计算</label>
+                                                        onclick="Tab_Anytime_hourorday()">
+                                                    <div id="tab_Anytime_hourorday"></div>
+                                                </label>
                                             </div>
-                                            <h4>每天执行该后勤时长(小时)</h4>
+                                            <h4 id="tab_Anytime_hours"></h4>
                                             <div slider>
                                                 <div>
                                                     <div inverse-left style="width:100%;"></div>
-                                                    <div range id="Tab_Anytime_range" style="left:0%;right:33.3333%;"></div>
-                                                    <span thumb id="Tab_Anytime_thumb" style="left:66.6666%; background-color:#CCC;"></span>
+                                                    <div range id="Tab_Anytime_range"
+                                                        style="left:0%;right:33.3333%;background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(252,252,252,0.08) 5px, rgba(252,252,252,0.08) 10px) !important;">
+                                                    </div>
+                                                    <span thumb id="Tab_Anytime_thumb"
+                                                        style="left:66.6666%; background-color:#CCC;"></span>
                                                     <div sign id="Tab_Anytime_sign" style="left:66.6666%;">
                                                         <span id="Tab_Anytime_sign_value">16</span>
                                                     </div>
                                                 </div>
-                                                <input id="Tab_Anytime_Time" type="range" tabindex="0" value="16" max="24"
-                                                    min="0" step="0.25" oninput="
+                                                <input id="Tab_Anytime_Time" type="range" tabindex="0" value="16"
+                                                    max="24" min="0" step="0.25" oninput="
                                                 var value=(100/(parseFloat(this.max)-parseInt(this.min)))*parseFloat(this.value)-(100/(parseInt(this.max)-parseFloat(this.min)))*parseFloat(this.min);
                                                 var children = this.parentNode.childNodes[1].childNodes;
                                                 children[3].style.right=(100-value)+'%';
                                                 children[5].style.left=value+'%';
                                                 children[7].style.left=value+'%';
-                                                children[7].childNodes[1].innerHTML=this.value;" disabled="disabled"/>
+                                                children[7].childNodes[1].innerHTML=this.value;" disabled="disabled" />
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="Tab_SingleTime">
-                                            <h4>时长</h4>
+                                            <h4 id="tab_SingleTime_time"></h4>
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="form-group input-group">
                                                         <input type="text" class="form-control"
-                                                            id="Time_SingleTime_hours" placeholder="非负数" value=8
-                                                            onclick="this.select()">
-                                                        <span class="input-group-addon">小时</span>
+                                                            id="Time_SingleTime_hours" value=8 onclick="this.select()">
+                                                        <span class="input-group-addon" id="tab_SingleTime_hour"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group input-group">
                                                         <input type="text" class="form-control"
-                                                            id="Time_SingleTime_minutes" placeholder="非负数" value=0
+                                                            id="Time_SingleTime_minutes" value=0
                                                             onclick="this.select()">
-                                                        <span class="input-group-addon">分钟</span>
+                                                        <span class="input-group-addon"
+                                                            id="tab_SingleTime_minute"></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="Tab_Timetable">
-                                            <h4>后勤总时长</h4>
+                                            <h4 id="tab_Timetable_time"></h4>
                                             <div class="row">
                                                 <div class="col-lg-5" style="padding-left: 10px; padding-right: 10px;">
                                                     <div class="form-group input-group">
                                                         <input type="text" class="form-control"
-                                                            id="Time_Timetable_hours" placeholder="非负数" value=5
-                                                            onclick="this.select()">
-                                                        <span class="input-group-addon">小时</span>
+                                                            id="Time_Timetable_hours" value=5 onclick="this.select()">
+                                                        <span class="input-group-addon" id="tab_Timetable_hour"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-5" style="padding-left: 10px; padding-right: 10px;">
                                                     <div class="form-group input-group">
                                                         <input type="text" class="form-control"
-                                                            id="Time_Timetable_minutes" placeholder="非负数" value=0
-                                                            onclick="this.select()">
-                                                        <span class="input-group-addon">分钟</span>
+                                                            id="Time_Timetable_minutes" value=0 onclick="this.select()">
+                                                        <span class="input-group-addon"
+                                                            id="tab_Timetable_minute"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2" style="padding-left: 10px; padding-right: 10px;">
                                                     <button type="button" class="btn btn-default"
+                                                        id="tab_Timetable_deleteall" title=""
                                                         onclick="Tab_Timetable_DeleteAllTimePoints()"><span
                                                             class="glyphicon glyphicon-remove-sign"
                                                             style="font-size: 17px; top: 3px;" /></button>
@@ -187,16 +202,19 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h5>新添加一个收取后勤时间点:</h5>
+                                            <h5 id="tab_Timetable_addtimeh5"></h5>
                                             <div class="row">
                                                 <div class="col-lg-11">
                                                     <div class="form-group input-group">
                                                         <input type="text" class="form-control"
                                                             id="Tab_Timetable_new_hours" onclick="this.select()">
-                                                        <span class="input-group-addon" style="border-left-width: 0">小时</span>
-                                                        <input type="text" class="form-control" style="border-left-width: 0"
-                                                            id="Tab_Timetable_new_minutes" onclick="this.select()">
-                                                        <span class="input-group-addon" style="border-left-width: 0">分钟</span>
+                                                        <span class="input-group-addon" style="border-left-width: 0"
+                                                            id="tab_Timetable_new_hour"></span>
+                                                        <input type="text" class="form-control"
+                                                            style="border-left-width: 0" id="Tab_Timetable_new_minutes"
+                                                            onclick="this.select()">
+                                                        <span class="input-group-addon" style="border-left-width: 0"
+                                                            id="tab_Timetable_new_minute"></span>
                                                         <div class="input-group-btn">
                                                             <button type="button" class="btn btn-info"
                                                                 onclick="Tab_Timetable_AddNewTimePoint()"><span
@@ -206,65 +224,72 @@
                                                 </div>
                                             </div>
                                             <div class="checkbox" style="margin-top: 0; margin-bottom: 16px;">
-                                                <label><input id="Tab_Timetable_toggle-event" type="checkbox" onclick="Tab_Timetable_hourorday()">按平均每小时需求量计算</label>
+                                                <label><input id="Tab_Timetable_toggle-event" type="checkbox"
+                                                        onclick="Tab_Timetable_hourorday()">
+                                                    <div id="tab_Timetable_hourorday"></div>
+                                                </label>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="Tab_Intervals">
-                                            <h4>间隔时长</h4>
+                                            <h4 id="tab_Intervals_time"></h4>
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="form-group input-group">
                                                         <input type="text" class="form-control"
-                                                            id="Time_Intervals_hours" placeholder="非负数" value=3
-                                                            onclick="this.select()">
-                                                        <span class="input-group-addon">小时</span>
+                                                            id="Time_Intervals_hours" value=3 onclick="this.select()">
+                                                        <span class="input-group-addon" id="tab_Intervals_hour"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group input-group">
                                                         <input type="text" class="form-control"
-                                                            id="Time_Intervals_minutes" placeholder="非负数" value=0
-                                                            onclick="this.select()">
-                                                        <span class="input-group-addon">分钟</span>
+                                                            id="Time_Intervals_minutes" value=0 onclick="this.select()">
+                                                        <span class="input-group-addon"
+                                                            id="tab_Intervals_minute"></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <h4>后勤队伍平均大成功概率</h4>
+                                    <h4 id="h4GreatSuccessRate"></h4>
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group input-group">
-                                                <input type="text" class="form-control" id="GreatSuccessRate"
-                                                    placeholder="15~60之间的数" value=60 onclick="this.select()">
-                                                <span class="input-group-addon" id="Display_UPRate" style="border-left-width: 0"></span>
+                                                <input type="text" class="form-control" id="GreatSuccessRate" value=60
+                                                    onclick="this.select()">
+                                                <span class="input-group-addon" id="Display_UPRate"
+                                                    style="border-left-width: 0"></span>
                                                 <span class="input-group-addon">%</span>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="checkbox">
                                                 <label> <input type="checkbox" id="GreatSuccessRateUp"
-                                                        onclick="Function_GreatSuccessRateUP()">后勤大成功UP</label>
+                                                        onclick="Function_GreatSuccessRateUP()">
+                                                    <div id="greatsuccessrateup"></div>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
-                                    <h4>各个后勤任务时间范围(小时)</h4>
+                                    <h4 id="h4timelimit"></h4>
                                     <div slider>
                                         <div>
                                             <div inverse-left style="width:70%;"></div>
                                             <div inverse-right style="width:70%;"></div>
-                                            <div range id="range_limit" style="left:0%;right:0%;"></div>
+                                            <div range id="range_limit"
+                                                style="left:0%;right:0%;background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(252,252,252,0.08) 5px, rgba(252,252,252,0.08) 10px) !important;">
+                                            </div>
                                             <span thumb id="thumb_limit_start" style="left:0%;"></span>
                                             <span thumb id="thumb_limit_end" style="left:100%;"></span>
                                             <div sign id="sign_limit_start" style="left:0%;">
                                                 <span id="sign_limit_start_value">0</span>
                                             </div>
                                             <div sign id="sign_limit_end" style="left:100%;">
-                                                <span id="sign_limit_end_value">24</span>
+                                                <span id="sign_limit_end_value"></span>
                                             </div>
                                         </div>
-                                        <input id="Time_Limit_start" type="range" tabindex="0" value="0" max="24"
-                                            min="0" step="0.25" oninput="
+                                        <input id="Time_Limit_start" type="range" tabindex="0" value="0" max="0" min="0"
+                                            step="0.25" oninput="
                                         this.value=Math.min(this.value,this.parentNode.childNodes[5].value-0.25);
                                         var value=(100/(parseFloat(this.max)-parseInt(this.min)))*parseFloat(this.value)-(100/(parseInt(this.max)-parseFloat(this.min)))*parseFloat(this.min);
                                         var children = this.parentNode.childNodes[1].childNodes;
@@ -272,7 +297,7 @@
                                         children[5].style.left=value+'%';
                                         children[7].style.left=value+'%';children[11].style.left=value+'%';
                                         children[11].childNodes[1].innerHTML=this.value;" />
-                                        <input id="Time_Limit_end" type="range" tabindex="0" value="24" max="24" min="0"
+                                        <input id="Time_Limit_end" type="range" tabindex="0" value="0" max="0" min="0"
                                             step="0.25" oninput="
                                         this.value=Math.max(this.value,this.parentNode.childNodes[3].value-(-0.25));
                                         var value=(100/(parseFloat(this.max)-parseFloat(this.min)))*parseFloat(this.value)-(100/(parseFloat(this.max)-parseFloat(this.min)))*parseFloat(this.min);
@@ -281,16 +306,26 @@
                                         children[5].style.right=(100-value)+'%';
                                         children[9].style.left=value+'%';children[13].style.left=value+'%';
                                         children[13].childNodes[1].innerHTML=this.value;" />
+                                        <script>
+                                            var MissionsTimeMax = 0;
+                                            for (var i = 0; i < Q.length; i++) {
+                                                MissionsTimeMax = Math.max(MissionsTimeMax, Q[i][9]);
+                                            }
+                                            $("#sign_limit_end_value").html(MissionsTimeMax);
+                                            document.getElementById("Time_Limit_start").max = MissionsTimeMax;
+                                            document.getElementById("Time_Limit_end").max = MissionsTimeMax;
+                                            document.getElementById("Time_Limit_end").value = MissionsTimeMax;
+                                        </script>
                                     </div>
-                                    <h4>关卡解锁</h4>
+                                    <h4 id="h4MapLimit"></h4>
                                     <p>
                                         <select class="form-control" id="MapLimit">
-                                            <option value=6>第六战役</option>
-                                            <option value=7>第七战役</option>
-                                            <option value=8>第八战役</option>
-                                            <option value=9>第九战役</option>
-                                            <option value=10>第十战役</option>
-                                            <option value=11 selected>第十一战役</option>
+                                            <option value=6 id="chapter6"></option>
+                                            <option value=7 id="chapter7"></option>
+                                            <option value=8 id="chapter8"></option>
+                                            <option value=9 id="chapter9"></option>
+                                            <option value=10 id="chapter10"></option>
+                                            <option value=11 id="chapter11" selected></option>
                                         </select>
                                     </p>
                                 </div>
@@ -301,8 +336,8 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <br>
-                                    <p><button type="button" class="btn btn-info"
-                                            onclick="Get_Plan_Main()">开始排序</button></p>
+                                    <p><button type="button" class="btn btn-info" onclick="Get_Plan_Main()"
+                                            id="start_sortint"></button></p>
                                 </div>
                             </div>
                         </div>
@@ -311,15 +346,10 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                排序结果
-                            </div>
-                            <!-- /.panel-heading -->
+                            <div class="panel-heading" id="result"></div>
                             <div class="panel-body">
                                 <div class="table-responsive" id="Plan_Table"></div>
-                                <!-- /.table-responsive -->
                             </div>
-                            <!-- /.panel-body -->
                         </div>
                     </div>
                 </div>
@@ -327,4 +357,5 @@
         </div>
     </div>
 </body>
+
 </html>

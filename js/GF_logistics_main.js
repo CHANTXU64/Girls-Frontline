@@ -28,7 +28,7 @@ function Get_Plan_Main() {
     console.timeEnd();
     console.time();
     var TargetValue = CorrectTargetValueByPlanList(plan);
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 8; i++) {
         TargetValue[i] /= CurrentValue_MAX[i];
     }
     //----------
@@ -95,7 +95,9 @@ function sortNumber0(a, b) {
 function CorrectTargetValueByPlanList(plan) {
     var TargetValue = getTargetByList(plan.List);
     var Target_Resource = TargetValue.slice(0, 4);
+    Target_Resource.class = "Resource";
     var Target_Contract = TargetValue.slice(4, 8);
+    Target_Contract.class = "Contract";
     var Resource_CalibrationValue = getCalibration(Target_Resource, plan);
     var Contract_CalibrationValue = getCalibration(Target_Contract, plan);
     for (var i = 0; i < 4; i++) {
@@ -140,8 +142,8 @@ function getTargetByList(List) {
     return TargetValue;
 }
 function getCalibration(Target_0, plan) {
-    var Target_0_html = getTarget0html(Target_0.length, plan);
-    var Current_0_MAX = getCurrent0MAX(Target_0.length, plan);
+    var Target_0_html = getTarget0html(Target_0.class, plan);
+    var Current_0_MAX = getCurrent0MAX(Target_0.class, plan);
     var Calibration = 0;
     var validlength = Target_0.length;
     for (var i = 0; i < Target_0.length; i++) {
@@ -180,9 +182,9 @@ function getCalibration(Target_0, plan) {
     }
     return Calibration;
 }
-function getTarget0html(Target0length, plan) {
-    var Target_0_html = new Array(Target0length);
-    if (Target0length == 4) {
+function getTarget0html(Target0class, plan) {
+    var Target_0_html = new Array(4);
+    if (Target0class == "Resource") {
         Target_0_html = plan.TargetValue_html.slice(0, 4);
     }
     else {
@@ -190,9 +192,9 @@ function getTarget0html(Target0length, plan) {
     }
     return Target_0_html;
 }
-function getCurrent0MAX(Target0length, plan) {
-    var Current_0_MAX = new Array(Target0length);
-    if (Target0length == 4) {
+function getCurrent0MAX(Target0class, plan) {
+    var Current_0_MAX = new Array(4);
+    if (Target0class == "Resource") {
         Current_0_MAX = plan.CurrentValue_MAX.slice(0, 4);
     }
     else {

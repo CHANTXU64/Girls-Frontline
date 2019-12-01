@@ -1,45 +1,85 @@
 window.onload = function () {
-    loadHTML_PlanTable();
+    checkDefaultLanguage();
+    checkLocalStorage();
     loadHTML_Target();
+    ChangeTab_Anytime();
+    loadHTML_language();
+}
+
+function checkDefaultLanguage() {
+    var lang = navigator.language||navigator.userLanguage;
+    if (lang.substr(0, 2) == 'zh') {
+        switch(lang) {
+            case 'zh-HK':
+            case 'zh-TW':
+            case 'zh-MO':
+                language = languages["zh-hk"];
+                break;
+            default:
+                language = languages["zh-cn"];
+        }
+    }
+    else {
+        language = languages["zh-cn"];
+    }
+}
+
+function changelang(lang) {
+    switch(lang) {
+        case 'zh-cn':
+            storageSetItem("lang", 'zh-cn');
+            language = languages["zh-cn"];
+            break;
+        case 'zh-hk':
+            storageSetItem("lang", 'zh-hk');
+            language = languages["zh-hk"];
+            break;
+    }
+    loadHTML_language();
 }
 
 //注释
 $(function (){$("[data-toggle='tooltip']").tooltip();})
 
 //标签页
-var HTMLtab = "Anytime";
+var HTMLtab;
 $(function (){
-    $('[href=#Tab_Anytime]').on("shown.bs.tab", function(){
-        HTMLtab = "Anytime";
-        if (is_Tab_Anytime_CalculateOneDay()) {
-            $(".Demand span").html("每天需求量");
-        }
-        else {
-            $(".Demand span").html("平均每小时需求量");
-        }
-        TimeLimit_enable();
-    });
-    $('[href=#Tab_SingleTime]').on("shown.bs.tab", function(){
-        HTMLtab = "SingleTime";
-        $(".Demand span").html("单次需求量");
-        TimeLimit_disable();
-    });
-    $('[href=#Tab_Timetable]').on("shown.bs.tab", function(){
+    $('[href=#Tab_Anytime]').on("shown.bs.tab", function(){ChangeTab_Anytime()});
+    $('[href=#Tab_SingleTime]').on("shown.bs.tab", function(){ChangeTab_SingleTime()});
+    $('[href=#Tab_Timetable]').on("shown.bs.tab", function(){ChangeTab_Timetable()});
+    $('[href=#Tab_Intervals]').on("shown.bs.tab", function(){ChangeTab_Intervals()});
+})
+
+function ChangeTab_Anytime() {
+    HTMLtab = "Anytime";
+    if (is_Tab_Anytime_CalculateOneDay()) {
+        $("#Demand").html(language.HTMLJS.Demand_daily);
+    }
+    else {
+        $("#Demand").html(language.HTMLJS.Demand_hour);
+    }
+    TimeLimit_enable();
+}
+function ChangeTab_SingleTime() {
+    HTMLtab = "SingleTime";
+    $("#Demand").html(language.HTMLJS.Demand_single);
+    TimeLimit_disable();
+}
+function ChangeTab_Timetable() {
         HTMLtab = "Timetable";
         if (is_Tab_Timetable_CalculateOnce()) {
-            $(".Demand span").html("总共需求量");
+            $("#Demand").html(language.HTMLJS.Demand_total);
         }
         else {
-            $(".Demand span").html("平均每小时需求量");
+            $("#Demand").html(language.HTMLJS.Demand_hour);
         }
         TimeLimit_disable();
-    });
-    $('[href=#Tab_Intervals]').on("shown.bs.tab", function(){
+}
+function ChangeTab_Intervals() {
         HTMLtab = "Intervals";
-        $(".Demand span").html("平均每小时需求量");
+        $("#Demand").html(language.HTMLJS.Demand_hour);
         TimeLimit_disable();
-    });
-})
+}
 function TimeLimit_enable() {
     $("#Time_Limit_start").removeAttr("disabled");
     $("#Time_Limit_end").removeAttr("disabled");
@@ -49,7 +89,7 @@ function TimeLimit_enable() {
 function TimeLimit_disable() {
     $("#Time_Limit_start").val(0);
     $("#Time_Limit_start").attr('disabled', "true");
-    $("#Time_Limit_end").val(24);
+    $("#Time_Limit_end").val(MissionsTimeMax);
     $("#Time_Limit_end").attr('disabled', "true");
     document.getElementById('range_limit').style.left='0%';
     document.getElementById('range_limit').style.right='0%';
@@ -60,7 +100,7 @@ function TimeLimit_disable() {
     document.getElementById('thumb_limit_end').style.backgroundColor='#CCC';
     document.getElementById('thumb_limit_end').style.left='100%';
     document.getElementById('sign_limit_start_value').innerHTML='0';
-    document.getElementById('sign_limit_end_value').innerHTML='24';
+    document.getElementById('sign_limit_end_value').innerHTML=MissionsTimeMax;
 }
 function is_Tab_Anytime_CalculateOneDay() {
     if (document.getElementById('Tab_Anytime_toggle-event').checked) return true;
@@ -74,30 +114,22 @@ function is_Tab_Timetable_CalculateOnce() {
 function Tab_Anytime_hourorday() {
     var time = parseFloat($("#Tab_Anytime_Time").val());
     if (is_Tab_Anytime_CalculateOneDay()) {
-        $(".Demand span").html("每天需求量");
+        $("#Demand").html(language.HTMLJS.Demand_daily);
         $("#Tab_Anytime_Time").removeAttr("disabled");
         document.getElementById("Tab_Anytime_thumb").style.backgroundColor='rgb(112, 166, 236)';
-        $("#MT").val(Math.round($("#MT").val() * time * 100) / 100);
-        $("#AT").val(Math.round($("#AT").val() * time * 100) / 100);
-        $("#RT").val(Math.round($("#RT").val() * time * 100) / 100);
-        $("#PT").val(Math.round($("#PT").val() * time * 100) / 100);
-        $("#TT").val(Math.round($("#TT").val() * time * 100) / 100);
-        $("#ET").val(Math.round($("#ET").val() * time * 100) / 100);
-        $("#QPT").val(Math.round($("#QPT").val() * time * 100) / 100);
-        $("#QRT").val(Math.round($("#QRT").val() * time * 100) / 100);
+        var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
+        for (var i = 0 ; i < 8; i++) {
+            $(id[i]).val(Math.round($(id[i]).val() * time * 100) / 100);
+        }
     }
     else {
-        $(".Demand span").html("平均每小时需求量");
+        $("#Demand").html(language.HTMLJS.Demand_hour);
         $("#Tab_Anytime_Time").attr('disabled', "true");
         document.getElementById("Tab_Anytime_thumb").style.backgroundColor='#CCC';
-        $("#MT").val(Math.round($("#MT").val() / time * 100) / 100);
-        $("#AT").val(Math.round($("#AT").val() / time * 100) / 100);
-        $("#RT").val(Math.round($("#RT").val() / time * 100) / 100);
-        $("#PT").val(Math.round($("#PT").val() / time * 100) / 100);
-        $("#TT").val(Math.round($("#TT").val() / time * 100) / 100);
-        $("#ET").val(Math.round($("#ET").val() / time * 100) / 100);
-        $("#QPT").val(Math.round($("#QPT").val() / time * 100) / 100);
-        $("#QRT").val(Math.round($("#QRT").val() / time * 100) / 100);
+        var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
+        for (var i = 0 ; i < 8; i++) {
+            $(id[i]).val(Math.round($(id[i]).val() / time * 100) / 100);
+        }
     }
 }
 
@@ -139,16 +171,16 @@ function Tab_Timetable_AddNewTimePoint() {
             if (Tab_Timetable_TimeList_html.length == 0) {
                 Tab_Timetable_InputTotalTime_enable();
             }
-            alert("不需要在后勤开始点再添加收取时间点");
+            alert(language.HTMLJS.tab_Timetable_alert1);
             break;
         case total_time >= Tab_Timetable_getMaxTime():
             if (Tab_Timetable_TimeList_html.length == 0) {
                 Tab_Timetable_InputTotalTime_enable();
             }
-            alert("添加的收取时间点不能超过最大时限");
+            alert(language.HTMLJS.tab_Timetable_alert2);
             break;
         case Tab_Timetable_TimeList_html.indexOf(total_time) != -1:
-            alert("已经添加过这个收取时间点");
+            alert(language.HTMLJS.tab_Timetable_alert3);
             break;
         default:
             Tab_Timetable_AddNewTimePoint_main(total_time);
@@ -225,8 +257,8 @@ function Tab_Timetable_DeleteAllTimePoints() {
 }
 
 function Tab_Timetable_hourorday() {
-    if (is_Tab_Timetable_CalculateOnce()) $(".Demand span").html("总共需求量");
-    else $(".Demand span").html("平均每小时需求量");
+    if (is_Tab_Timetable_CalculateOnce()) $("#Demand").html(language.HTMLJS.Demand_total);
+    else $("#Demand").html(language.HTMLJS.Demand_hour);
 }
 //-----------
 

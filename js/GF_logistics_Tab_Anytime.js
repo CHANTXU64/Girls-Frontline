@@ -20,10 +20,10 @@ class Tab_Anytime extends Tab {
     PrintPlanTableTitle() {
         var title;
         if (is_Tab_Anytime_CalculateOneDay()) {
-            title = this._title + '<th>人力/d</th><th>弹药/d</th><th>口粮/d</th><th>零件/d</th><th>人形/d</th><th>装备/d</th><th>快建/d</th><th>快修/d</th><th>最短时间</th><th>最长时间</th>' + this._titleEnd;
+            title = this._title + '<th>'+language.JS.Manp+'/d</th><th>'+language.JS.Ammu+'/d</th><th>'+language.JS.Rati+'/d</th><th>'+language.JS.Part+'/d</th><th>'+language.JS.TPro+'/d</th><th>'+language.JS.Equi+'/d</th><th>'+language.JS.QPro+'/d</th><th>'+language.JS.QRes+'/d</th><th>'+language.JS.MinTime+'</th><th>'+language.JS.MaxTime+'</th>' + this._titleEnd;
         }
         else {
-            title = this._title + '<th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>人形/h</th><th>装备/h</th><th>快建/h</th><th>快修/h</th><th>最短时间</th><th>最长时间</th>' + this._titleEnd;
+            title = this._title + '<th>'+language.JS.Manp+'/h</th><th>'+language.JS.Ammu+'/h</th><th>'+language.JS.Rati+'/h</th><th>'+language.JS.Part+'/h</th><th>'+language.JS.TPro+'/h</th><th>'+language.JS.Equi+'/h</th><th>'+language.JS.QPro+'/h</th><th>'+language.JS.QRes+'/h</th><th>'+language.JS.MinTime+'</th><th>'+language.JS.MaxTime+'</th>' + this._titleEnd;
         }
         return title;
     }
