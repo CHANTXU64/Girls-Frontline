@@ -63,14 +63,8 @@ function getShownTab() {
         case "Anytime":
             ShownTab = new Tab_Anytime;
             break;
-        case "SingleTime":
-            ShownTab = new Tab_SingleTime;
-            break;
         case "Timetable":
             ShownTab = new Tab_Timetable;
-            break;
-        case "Intervals":
-            ShownTab = new Tab_Intervals;
             break;
     }
     return ShownTab;
@@ -249,7 +243,7 @@ function ArrayMax(Arr) {
 //有问题
 function Value(TargetValue, CurrentValue) {
     var Value = 0;
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 8; i++) {
         Value += Value_0(TargetValue[i], CurrentValue[i]);
     }
     return Value;
@@ -266,14 +260,14 @@ function Value_0(Target, Current) {
 function Value2(TargetValue, CurrentValue) {
     var Value = 0;
     var minval = 99999999999;
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 8; i++) {
         if (TargetValue[i] != 0) {
             minval = Math.min(minval, CurrentValue[i] / TargetValue[i]);
         }
     }
-    for (var i = 0; i < 7; i++) {
-        // Value += Value_2(TargetValue[i], CurrentValue[i], minval);
-        Value += Value_0(TargetValue[i], CurrentValue[i]);
+    for (var i = 0; i < 8; i++) {
+        Value += Value_2(TargetValue[i], CurrentValue[i], minval);
+        //Value += Value_0(TargetValue[i], CurrentValue[i]);
     }
     return Value;
 }

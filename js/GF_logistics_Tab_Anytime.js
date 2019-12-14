@@ -1,10 +1,25 @@
 class Tab_Anytime extends Tab {
+    // setTime() {
+    //     if (!is_Tab_Anytime_CalculateOneDay()) {
+    //         this.TotalTime = 1;
+    //         return;
+    //     }
+    //     this.TotalTime = parseFloat($("#Tab_Anytime_Time").val());
+    // }
     setTime() {
-        if (!is_Tab_Anytime_CalculateOneDay()) {
-            this.TotalTime = 1;
-            return;
+        this._checkDataLegalityAndCorrect_Time();
+        var Hours = parseFloat($("#Time_Anytime_hours").val());
+        var Minutes = parseFloat($("#Time_Anytime_minutes").val());
+        this.TotalTime = Hours + Minutes / 60;
+    }
+    _checkDataLegalityAndCorrect_Time() {
+        var Hours = getPositiveValueFromHTML($("#Time_Anytime_hours"));
+        var Minutes = getPositiveValueFromHTML($("#Time_Anytime_minutes"));
+        var total_time = Hours + Minutes / 60;
+        if (total_time == 0) {
+            alert(language.JS.tab_Anytime_alert1);/////////////////////////////////////////////////////
+            throw"--";
         }
-        this.TotalTime = parseFloat($("#Tab_Anytime_Time").val());
     }
 
     setValidQAndReturnLength() {

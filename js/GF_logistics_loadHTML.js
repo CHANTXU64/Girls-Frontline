@@ -55,14 +55,8 @@ function loadHTML_language() {
         case "Anytime":
             ChangeTab_Anytime();
             break;
-        case "SingleTime":
-            ChangeTab_SingleTime();
-            break;
         case "Timetable":
             ChangeTab_Timetable();
-            break;
-        case "Intervals":
-            ChangeTab_Intervals();
             break;
     }
     alertLocalstorageDoesNotWork();

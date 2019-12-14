@@ -45,9 +45,7 @@ $(function (){$("[data-toggle='tooltip']").tooltip();})
 var HTMLtab;
 $(function (){
     $('[href=#Tab_Anytime]').on("shown.bs.tab", function(){ChangeTab_Anytime()});
-    $('[href=#Tab_SingleTime]').on("shown.bs.tab", function(){ChangeTab_SingleTime()});
     $('[href=#Tab_Timetable]').on("shown.bs.tab", function(){ChangeTab_Timetable()});
-    $('[href=#Tab_Intervals]').on("shown.bs.tab", function(){ChangeTab_Intervals()});
 })
 
 function ChangeTab_Anytime() {
@@ -58,49 +56,17 @@ function ChangeTab_Anytime() {
     else {
         $("#Demand").html(language.HTMLJS.Demand_hour);
     }
-    TimeLimit_enable();
-}
-function ChangeTab_SingleTime() {
-    HTMLtab = "SingleTime";
-    $("#Demand").html(language.HTMLJS.Demand_single);
-    TimeLimit_disable();
+    document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
 }
 function ChangeTab_Timetable() {
-        HTMLtab = "Timetable";
-        if (is_Tab_Timetable_CalculateOnce()) {
-            $("#Demand").html(language.HTMLJS.Demand_total);
-        }
-        else {
-            $("#Demand").html(language.HTMLJS.Demand_hour);
-        }
-        TimeLimit_disable();
-}
-function ChangeTab_Intervals() {
-        HTMLtab = "Intervals";
+    HTMLtab = "Timetable";
+    if (is_Tab_Timetable_CalculateOnce()) {
+        $("#Demand").html(language.HTMLJS.Demand_total);
+    }
+    else {
         $("#Demand").html(language.HTMLJS.Demand_hour);
-        TimeLimit_disable();
-}
-function TimeLimit_enable() {
-    $("#Time_Limit_start").removeAttr("disabled");
-    $("#Time_Limit_end").removeAttr("disabled");
-    document.getElementById('thumb_limit_start').style.backgroundColor='rgb(112, 166, 236)';
-    document.getElementById('thumb_limit_end').style.backgroundColor='rgb(112, 166, 236)';
-}
-function TimeLimit_disable() {
-    $("#Time_Limit_start").val(0);
-    $("#Time_Limit_start").attr('disabled', "true");
-    $("#Time_Limit_end").val(MissionsTimeMax);
-    $("#Time_Limit_end").attr('disabled', "true");
-    document.getElementById('range_limit').style.left='0%';
-    document.getElementById('range_limit').style.right='0%';
-    document.getElementById('sign_limit_start').style.left='0%';
-    document.getElementById('sign_limit_end').style.left='100%';
-    document.getElementById('thumb_limit_start').style.backgroundColor='#CCC';
-    document.getElementById('thumb_limit_start').style.left='0%';
-    document.getElementById('thumb_limit_end').style.backgroundColor='#CCC';
-    document.getElementById('thumb_limit_end').style.left='100%';
-    document.getElementById('sign_limit_start_value').innerHTML='0';
-    document.getElementById('sign_limit_end_value').innerHTML=MissionsTimeMax;
+    }
+    document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
 }
 function is_Tab_Anytime_CalculateOneDay() {
     if (document.getElementById('Tab_Anytime_toggle-event').checked) return true;
@@ -115,8 +81,6 @@ function Tab_Anytime_hourorday() {
     var time = parseFloat($("#Tab_Anytime_Time").val());
     if (is_Tab_Anytime_CalculateOneDay()) {
         $("#Demand").html(language.HTMLJS.Demand_daily);
-        $("#Tab_Anytime_Time").removeAttr("disabled");
-        document.getElementById("Tab_Anytime_thumb").style.backgroundColor='rgb(112, 166, 236)';
         var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
         for (var i = 0 ; i < 8; i++) {
             $(id[i]).val(Math.round($(id[i]).val() * time * 100) / 100);
@@ -124,8 +88,6 @@ function Tab_Anytime_hourorday() {
     }
     else {
         $("#Demand").html(language.HTMLJS.Demand_hour);
-        $("#Tab_Anytime_Time").attr('disabled', "true");
-        document.getElementById("Tab_Anytime_thumb").style.backgroundColor='#CCC';
         var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
         for (var i = 0 ; i < 8; i++) {
             $(id[i]).val(Math.round($(id[i]).val() / time * 100) / 100);

@@ -136,13 +136,19 @@ class Plan {
         this._PushIntoThisRow(RowNumber);
     }
     _thisPlanIsBetterThan(number) {
-        if (this._eachCurrentValueIsBigger(number)) {
-            test_2++;
+        // if (this._eachCurrentValueIsBigger(number)) {
+        //     test_2++;
+        //     return true;
+        // }
+        // else {
+        //     if (this._PlanValue > this.List[number].Value) return true;
+        //     else return false;
+        // }
+        if (this._PlanValue > this.List[number].Value) {
             return true;
         }
         else {
-            if (this._PlanValue > this.List[number].Value) return true;
-            else return false;
+            return false;
         }
     }
     _eachCurrentValueIsBigger(number) {
@@ -164,18 +170,17 @@ class Plan {
         var Norm_Current = this._getNorm(CurrentValue);
         var Dot_product = this._getDotProduct(CurrentValue, this.TargetValue);
         var CurrentScalarProjection = Dot_product / this._Norm_Target;
-        var COStheta = CurrentScalarProjection / Norm_Current;
+        var COStheta = Math.min(1, CurrentScalarProjection / Norm_Current);
         var theta = Math.acos(COStheta);
         var CosineSimilarity_0 = 1 - 2 * theta / Math.PI;
         var CosineSimilarity = Math.pow(CosineSimilarity_0, 2);
         return CurrentScalarProjection * CosineSimilarity;
     }
     _calculateValue_2() {
-        var CurrentValue = this._CurrentValue.slice();
-        var Norm_Current = this._getNorm(CurrentValue);
-        var Dot_product = this._getDotProduct(CurrentValue, this.TargetValue);
+        var Norm_Current = this._getNorm(this._CurrentValue);
+        var Dot_product = this._getDotProduct(this._CurrentValue, this.TargetValue);
         var CurrentScalarProjection = Dot_product / this._Norm_Target;
-        var COStheta = CurrentScalarProjection / Norm_Current;
+        var COStheta = Math.min(1, CurrentScalarProjection / Norm_Current);
         var theta = Math.acos(COStheta);
         var CosineSimilarity_0 = 1 - 2 * theta / Math.PI;
         var CosineSimilarity = Math.pow(CosineSimilarity_0, 1);
@@ -191,13 +196,11 @@ class Plan {
     }
 
     _calculateValue_3() {
-        var CurrentValue = this._CurrentValue.slice();
-        return Value(this.TargetValue, CurrentValue);
+        return Value(this.TargetValue, this._CurrentValue);
     }
 
     _calculateValue_4() {
-        var CurrentValue = this._CurrentValue.slice();
-        return Value2(this.TargetValue, CurrentValue);
+        return Value2(this.TargetValue, this._CurrentValue);
     }
 
     print() {
@@ -224,7 +227,7 @@ class Plan {
         }
         MissionsNumber = MissionsNumber.sort(sortStringNumber);
         for (var i = 0; i < 4; i++) {
-            tab += ("<td>" + MissionsNumber[i] + "</td>");
+            tab += "<td>" + MissionsNumber[i] + "</td>";
         }
         return tab;
     }
@@ -232,10 +235,10 @@ class Plan {
         var tab = "";
         var Hours = this.ShownTab.get_Hours_PrintResourceContract();
         for (var i = 4; i < 8; i++) {
-            tab += ("<td>" + (Math.round(this.List[row][i] * this.ResourceIncreasingRate * Hours * 10 * this.CurrentValue_MAX[i - 4]) / 10) + "</td>");
+            tab += "<td>" + (Math.round(this.List[row][i] * this.ResourceIncreasingRate * Hours * 10 * this.CurrentValue_MAX[i - 4]) / 10) + "</td>";
         }
         for (var i = 8; i < 12; i++) {
-            tab += (this.List[row][i] == 0 ? ("<td>--</td>") : ("<td>" + (Math.round(this.List[row][i] * Hours * 100 * this.CurrentValue_MAX[i - 4]) / 100) + "</td>"));
+            tab += "<td>" + (Math.round(this.List[row][i] * Hours * 100 * this.CurrentValue_MAX[i - 4]) / 100) + "</td>";
         }
         return tab;
     }

@@ -17,15 +17,6 @@ class Tab {
         return Unable_2;
     }
     _setUnableLogisticCustomize_1(UnableLogistic) {
-        var startTime = parseFloat($("#Time_Limit_start").val());
-        var endTime = parseFloat($("#Time_Limit_end").val());
-        for (var i = 0; i < Q.length; i++) {
-            if (this._notInLimitTime(Q[i][9], startTime, endTime)) {
-                if (UnableLogistic.indexOf(i) == -1) {
-                    UnableLogistic.push(i);
-                }
-            }
-        }
         return UnableLogistic;
     }
     _notInLimitTime(xtime, startTime, endTime) {
