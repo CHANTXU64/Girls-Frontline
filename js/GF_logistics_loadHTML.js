@@ -51,6 +51,12 @@ function loadHTML_language() {
     }
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
     document.getElementById("tab_Timetable_deleteall").title = language.HTMLJS.tab_Timetable_deleteall;
+    if (is_CalculateByHour()) {
+        $("#Demand").html(language.HTMLJS.Demand_hour);
+    }
+    else {
+        $("#Demand").html(language.HTMLJS.Demand_total);
+    }
     switch(HTMLtab) {
         case "Anytime":
             ChangeTab_Anytime();

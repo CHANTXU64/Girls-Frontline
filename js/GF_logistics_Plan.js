@@ -1,14 +1,14 @@
 class Plan {
-    constructor(ShownTab, length, CurrentValue_MAX, Target) {
+    constructor(ShownTab, List_length, CurrentValue_MAX, Target_Value) {
         this._setResourceIncreasingRate();
-        this._setList(length);
+        this._setList(List_length);
         this.ShownTab = ShownTab;
-        if (Target === undefined) {
+        if (Target_Value === undefined) {
             this.TargetValue_html = this._getLegalityTargetValue();
             this.TargetValue = this._CorrectTargetValue();
         }
         else {
-            this.TargetValue = Target;
+            this.TargetValue = Target_Value;
         }
         this.CurrentValue_MAX = CurrentValue_MAX;
         this._Norm_Target = this._getNorm(this.TargetValue);
@@ -233,7 +233,13 @@ class Plan {
     }
     _PrintResourceContract(row) {
         var tab = "";
-        var Hours = this.ShownTab.get_Hours_PrintResourceContract();
+        var Hours;
+        if (is_CalculateByHour()) {
+            Hours = 1;
+        }
+        else {
+            Hours = this.ShownTab.TotalTime;
+        }
         for (var i = 4; i < 8; i++) {
             tab += "<td>" + (Math.round(this.List[row][i] * this.ResourceIncreasingRate * Hours * 10 * this.CurrentValue_MAX[i - 4]) / 10) + "</td>";
         }

@@ -20,8 +20,6 @@
     <script src="../js/GF_logistics_html.js"></script>
     <script src="../js/GF_logistics_data.js"></script>
     <script src="../js/GF_logistics_Tab.js"></script>
-    <script src="../js/GF_logistics_Tab_Anytime.js"></script>
-    <script src="../js/GF_logistics_Tab_Timetable.js"></script>
     <script src="../js/GF_logistics_Plan.js"></script>
     <script src="../js/GF_logistics_main.js"></script>
 </head>
@@ -75,8 +73,8 @@
                                 <div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle"
                                         data-toggle="dropdown">中文 <span class="caret"></span></button>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#" onclick="changelang('zh-cn')">简体中文</a></li>
-                                        <li><a href="#" onclick="changelang('zh-hk')">繁體中文</a></li>
+                                        <li><a href="#lang-zh-CN">简体中文</a></li>
+                                        <li><a href="#lang-zh-TW">繁體中文</a></li>
                                     </ul>
                                 </div>
                             </h1>
@@ -101,21 +99,15 @@
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane fade in active" id="Tab_Anytime">
-                                            <div class="checkbox">
-                                                <label><input id="Tab_Anytime_toggle-event" type="checkbox"
-                                                        onclick="Tab_Anytime_hourorday()">
-                                                    <div id="tab_Anytime_hourorday"></div>
-                                                </label>
-                                            </div>
                                             <h4 id="tab_Anytime_time"></h4>
                                             <div class="form-group input-group">
-                                                <input type="text" class="form-control"
-                                                    id="Time_Anytime_hours" value=16 onclick="this.select()">
-                                                <span class="input-group-addon"style="border-left-width: 0" id="tab_Anytime_hour"></span>
+                                                <input type="text" class="form-control" id="Time_Anytime_hours" value=16
+                                                    onclick="this.select()">
+                                                <span class="input-group-addon" style="border-left-width: 0"
+                                                    id="tab_Anytime_hour"></span>
                                                 <input type="text" class="form-control" style="border-left-width: 0"
                                                     id="Time_Anytime_minutes" value=0 onclick="this.select()">
-                                                <span class="input-group-addon"
-                                                    id="tab_Anytime_minute"></span>
+                                                <span class="input-group-addon" id="tab_Anytime_minute"></span>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="Tab_Timetable">
@@ -125,18 +117,19 @@
                                                     <div class="form-group input-group">
                                                         <input type="text" class="form-control"
                                                             id="Time_Timetable_hours" value=5 onclick="this.select()">
-                                                        <span class="input-group-addon"style="border-left-width: 0" id="tab_Timetable_hour"></span>
-                                                        <input type="text" class="form-control" style="border-left-width: 0"
-                                                            id="Time_Timetable_minutes" value=0 onclick="this.select()">
+                                                        <span class="input-group-addon" style="border-left-width: 0"
+                                                            id="tab_Timetable_hour"></span>
+                                                        <input type="text" class="form-control"
+                                                            style="border-left-width: 0" id="Time_Timetable_minutes"
+                                                            value=0 onclick="this.select()">
                                                         <span class="input-group-addon"
                                                             id="tab_Timetable_minute"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2" style="padding-left: 15px; padding-right: 10px;">
                                                     <button type="button" class="btn btn-default"
-                                                        id="tab_Timetable_deleteall" title=""
-                                                        onclick="Tab_Timetable_DeleteAllTimePoints()"><span
-                                                            class="glyphicon glyphicon-remove-sign"
+                                                        id="tab_Timetable_deleteall" title="">
+                                                        <span class="glyphicon glyphicon-remove-sign"
                                                             style="font-size: 17px; top: 3px;" /></button>
                                                 </div>
                                             </div>
@@ -171,17 +164,12 @@
                                                             id="tab_Timetable_new_minute"></span>
                                                         <div class="input-group-btn">
                                                             <button type="button" class="btn btn-info"
-                                                                onclick="Tab_Timetable_AddNewTimePoint()"><span
-                                                                    class="glyphicon glyphicon-plus" /></button>
+                                                                id="Tab_Timetable_AddNewTimePoint">
+                                                                <span class="glyphicon glyphicon-plus" />
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="checkbox" style="margin-top: 0; margin-bottom: 16px;">
-                                                <label><input id="Tab_Timetable_toggle-event" type="checkbox"
-                                                        onclick="Tab_Timetable_hourorday()">
-                                                    <div id="tab_Timetable_hourorday"></div>
-                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -198,8 +186,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="checkbox">
-                                                <label> <input type="checkbox" id="GreatSuccessRateUp"
-                                                        onclick="Function_GreatSuccessRateUP()">
+                                                <label> <input type="checkbox" id="GreatSuccessRateUp">
                                                     <div id="greatsuccessrateup"></div>
                                                 </label>
                                             </div>
@@ -216,6 +203,12 @@
                                             <option value=11 id="chapter11" selected></option>
                                         </select>
                                     </p>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="hourOrTotal">
+                                            <div id="hourOrTotal_text" style="font-weight:bold"></div>
+                                        </label>
+                                    </div>
                                 </div>
                                 <div class="col-lg-5">
                                     <div class="row">
@@ -224,9 +217,8 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <br>
-                                    <p><button type="button" class="btn btn-primary" onclick="Get_Plan_Main()"
-                                            style="outline:none;"
-                                            id="start_sortint"></button></p>
+                                    <p><button type="button" class="btn btn-primary" style="outline:none;"
+                                            id="start_sorting"></button></p>
                                 </div>
                             </div>
                         </div>

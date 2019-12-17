@@ -2,6 +2,9 @@ var test = 0;
 var test_2 = 0;
 var test_3 = 0;
 
+$(function() {
+    $('#start_sorting').on('click', function() {Get_Plan_Main()});
+})
 function Get_Plan_Main() {
     console.time('total');
     test = 0;

@@ -24,13 +24,18 @@ function checkDefaultLanguage() {
     }
 }
 
+//change language
+$(function (){
+    $('[href=#lang-zh-CN]').on('click', function(){changelang('zh-CN')});
+    $('[href=#lang-zh-TW]').on('click', function(){changelang('zh-TW')});
+})
 function changelang(lang) {
     switch(lang) {
-        case 'zh-cn':
+        case 'zh-CN':
             storageSetItem("lang", 'zh-cn');
             language = languages["zh-cn"];
             break;
-        case 'zh-hk':
+        case 'zh-TW':
             storageSetItem("lang", 'zh-hk');
             language = languages["zh-hk"];
             break;
@@ -50,48 +55,50 @@ $(function (){
 
 function ChangeTab_Anytime() {
     HTMLtab = "Anytime";
-    if (is_Tab_Anytime_CalculateOneDay()) {
-        $("#Demand").html(language.HTMLJS.Demand_daily);
-    }
-    else {
-        $("#Demand").html(language.HTMLJS.Demand_hour);
-    }
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
 }
 function ChangeTab_Timetable() {
     HTMLtab = "Timetable";
-    if (is_Tab_Timetable_CalculateOnce()) {
-        $("#Demand").html(language.HTMLJS.Demand_total);
-    }
-    else {
-        $("#Demand").html(language.HTMLJS.Demand_hour);
-    }
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
 }
-function is_Tab_Anytime_CalculateOneDay() {
-    if (document.getElementById('Tab_Anytime_toggle-event').checked) return true;
-    else return false;
-}
-function is_Tab_Timetable_CalculateOnce() {
-    if (document.getElementById('Tab_Timetable_toggle-event').checked) return false;
-    else return true;
-}
 
-function Tab_Anytime_hourorday() {
-    var time = parseFloat($("#Tab_Anytime_Time").val());
-    if (is_Tab_Anytime_CalculateOneDay()) {
-        $("#Demand").html(language.HTMLJS.Demand_daily);
-        var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
-        for (var i = 0 ; i < 8; i++) {
-            $(id[i]).val(Math.round($(id[i]).val() * time * 100) / 100);
-        }
+function is_CalculateByHour() {
+    if (document.getElementById('hourOrTotal').checked) {
+        return true;
     }
     else {
-        $("#Demand").html(language.HTMLJS.Demand_hour);
-        var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
-        for (var i = 0 ; i < 8; i++) {
-            $(id[i]).val(Math.round($(id[i]).val() / time * 100) / 100);
+        return false;
+    }
+}
+
+$(function (){
+    $('[id=hourOrTotal]').on("click", function(){
+        if (is_CalculateByHour()) {
+            changeCalculateOutput_Hour();
         }
+        else {
+            changeCalculateOutput_Total();
+        }
+    })
+})
+function changeCalculateOutput_Hour() {
+    $("#Demand").html(language.HTMLJS.Demand_hour);
+    var ShownTab = getShownTab();
+    ShownTab.setTime();
+    var time = ShownTab.TotalTime;
+    var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
+    for (var i = 0 ; i < 8; i++) {
+        $(id[i]).val(Math.round($(id[i]).val() / time * 100) / 100);
+    }
+}
+function changeCalculateOutput_Total() {
+    $("#Demand").html(language.HTMLJS.Demand_total);
+    var ShownTab = getShownTab();
+    ShownTab.setTime();
+    var time = ShownTab.TotalTime;
+    var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
+    for (var i = 0 ; i < 8; i++) {
+        $(id[i]).val(Math.round($(id[i]).val() * time * 100) / 100);
     }
 }
 
@@ -123,6 +130,9 @@ function Tab_Timetable_OutputStringTime(time) {
     return hours + ":" + minutes;
 }
 
+$(function() {
+    $('#Tab_Timetable_AddNewTimePoint').on('click', function() {Tab_Timetable_AddNewTimePoint()});
+})
 function Tab_Timetable_AddNewTimePoint() {
     Tab_Timetable_InputTotalTime_disable();
     var hours = getPositiveValueFromHTML($("#Tab_Timetable_new_hours"));
@@ -210,18 +220,15 @@ function Tab_Timetable_InputTotalTime_enable() {
     $("#Time_Timetable_minutes").removeAttr("disabled");
 }
 
-function Tab_Timetable_DeleteAllTimePoints() {
-    var times = Tab_Timetable_TimeList_html.length;
-    for (var i = 0; i < times; i++) {
-        Tab_Timetable_DeleteThisTimePoint(Tab_Timetable_TimeList_html[0]);
+$(function (){
+    $('#tab_Timetable_deleteall').on('click', function() {
+        var times = Tab_Timetable_TimeList_html.length;
+        for (var i = 0; i < times; i++) {
+            Tab_Timetable_DeleteThisTimePoint(Tab_Timetable_TimeList_html[0]);
+        }
+        Tab_Timetable_InputTotalTime_enable();
     }
-    Tab_Timetable_InputTotalTime_enable();
-}
-
-function Tab_Timetable_hourorday() {
-    if (is_Tab_Timetable_CalculateOnce()) $("#Demand").html(language.HTMLJS.Demand_total);
-    else $("#Demand").html(language.HTMLJS.Demand_hour);
-}
+)})
 //-----------
 
 //同步更新大成功UP增加概率
@@ -240,6 +247,7 @@ $(function (){
             document.getElementById('Display_UPRate').innerHTML = ("+" + UpRate);
         }
     });
+    $('#GreatSuccessRateUp').on('click', function() {Function_GreatSuccessRateUP()});
 })
 
 function Function_GreatSuccessRateUP() {
