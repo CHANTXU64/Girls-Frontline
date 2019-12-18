@@ -41,7 +41,7 @@ class Plan {
     }
     _CorrectResourceValue() {
         var ResourceValue = this.TargetValue_html.slice(0, 4);
-        var Resource_CalibrationValue = 100;
+        var Resource_CalibrationValue = 100 - parseInt($('#ContractWeight').val());
         if (this._ValuesNotAll0(ResourceValue)) {
             this._CorrectValue(ResourceValue, Resource_CalibrationValue);
         }
@@ -49,7 +49,7 @@ class Plan {
     }
     _CorrectContractValue() {
         var ContractValue = this.TargetValue_html.slice(4, 8);
-        var Contract_CalibrationValue = 100;
+        var Contract_CalibrationValue = parseInt($('#ContractWeight').val());
         if (this._ValuesNotAll0(ContractValue)) {
             this._CorrectValue(ContractValue, Contract_CalibrationValue);
         }

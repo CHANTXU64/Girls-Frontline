@@ -176,10 +176,10 @@ function Tab_Timetable_AddNewTimePoint_main(time) {
     Tab_Timetable_AddNewTooltip(time, position);
 }
 function Tab_Timetable_AddNewThumb(time, position) {
-    var newThumb = '<span thumb id="Tab_Timetable_range_thumb_' + time + '"';
-    newThumb += ('style="left:' + position + '; background-color:rgb(221, 155, 155);"');
-    newThumb += ('onmousedown="Tab_Timetable_DeleteThisTimePoint(' + time + ')">');
-    newThumb += ('<span class="glyphicon glyphicon-remove-circle" style="font-size: 22px;"></span></span>');
+    var newThumb = '<div class="slider-button" id="Tab_Timetable_range_thumb_' + time + '"';
+    newThumb += 'style="left:' + position + ';"';
+    newThumb += 'onclick="Tab_Timetable_DeleteThisTimePoint(' + time + ')">';
+    newThumb += '<span class="glyphicon glyphicon-remove-circle" style="font-size: 22px;"></span></div>';
     $("#Tab_Timetable_range").append(newThumb);
 }
 function Tab_Timetable_AddNewTooltip(time, position) {
@@ -187,14 +187,14 @@ function Tab_Timetable_AddNewTooltip(time, position) {
     var newTooltip = '<div id="Tab_Timetable_range_tooltip_' + time + '"';
     if (Tab_Timetable_TimeList_html.indexOf(time) % 2 == 0) {
         newTooltip += 'class="tooltip top custom-tooltip"';
-        newTooltip += ('style="left:' + position + '; top:-32px; margin-left: -15px;">');
+        newTooltip += 'style="left:' + position + '; top:-32px; margin-left: -15px;">';
     }
     else {
         newTooltip += 'class="tooltip bottom custom-tooltip"';
-        newTooltip += ('style="left:' + position + '; top:12px; margin-left: -15px;">');
+        newTooltip += 'style="left:' + position + '; top:12px; margin-left: -15px;">';
     }
     newTooltip += '<div class="tooltip-arrow"></div><div class="tooltip-inner">';
-    newTooltip += (stringTime + '</div></div>');
+    newTooltip += stringTime + '</div></div>';
     $("#Tab_Timetable_range").append(newTooltip);
 }
 

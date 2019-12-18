@@ -12,20 +12,23 @@ class Tab {
     }
     _getUnableLogistic() {
         var Unable_0 = _setUnableLogistic();
-        var Unable_1 = this._setUnableLogisticCustomize_1(Unable_0);
-        var Unable_2 = this._setUnableLogisticCustomize_2(Unable_1);
-        return Unable_2;
+        var Unable_1 = this._setUnableLogisticCustomize(Unable_0);
+        return Unable_1;
     }
-    _setUnableLogisticCustomize_1(UnableLogistic) {
+    _setUnableLogisticCustomize(UnableLogistic) { //排除超时后勤
+        for (var i = 0; i < Q.length; i++) {
+            if (Q[i][9] > this.TotalTime) {
+                if (UnableLogistic.indexOf(i) == -1) {
+                    UnableLogistic.push(i);
+                }
+            }
+        }
         return UnableLogistic;
     }
     _notInLimitTime(xtime, startTime, endTime) {
         if (xtime < startTime && Math.abs(xtime - startTime) > 0.02) return true;
         if (xtime > endTime && Math.abs(xtime - endTime) > 0.02) return true;
         return false;
-    }
-    _setUnableLogisticCustomize_2(UnableLogistic) {
-        return UnableLogistic;
     }
 
     Calculate_Current(Number) {
@@ -70,13 +73,6 @@ function _setUnableLogistic() {
 }
 
 class Tab_Anytime extends Tab {
-    // setTime() {
-    //     if (!is_Tab_Anytime_CalculateOneDay()) {
-    //         this.TotalTime = 1;
-    //         return;
-    //     }
-    //     this.TotalTime = parseFloat($("#Tab_Anytime_Time").val());
-    // }
     setTime() {
         this._checkDataLegalityAndCorrect_Time();
         var Hours = parseFloat($("#Time_Anytime_hours").val());
@@ -88,7 +84,7 @@ class Tab_Anytime extends Tab {
         var Minutes = getPositiveValueFromHTML($("#Time_Anytime_minutes"));
         var total_time = Hours + Minutes / 60;
         if (total_time == 0) {
-            alert(language.JS.tab_Anytime_alert1);/////////////////////////////////////////////////////
+            alert(language.JS.tab_Anytime_alert1);
             throw"--";
         }
     }
@@ -164,17 +160,6 @@ class Tab_Timetable extends Tab {
             }
         }
         return this.Qvalid.length;
-    }
-
-    _setUnableLogisticCustomize_2(UnableLogistic) { //排除超时后勤
-        for (var i = 0; i < Q.length; i++) {
-            if (Q[i][9] > this.TotalTime) {
-                if (UnableLogistic.indexOf(i) == -1) {
-                    UnableLogistic.push(i);
-                }
-            }
-        }
-        return UnableLogistic;
     }
 
     PrintPlanTableTitle() {

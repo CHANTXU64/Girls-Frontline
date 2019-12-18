@@ -212,6 +212,22 @@
                                 </div>
                                 <div class="col-lg-5">
                                     <div class="row">
+                                        <div class="col-lg-11">
+                                            <div slider>
+                                                <div>
+                                                    <div inverse-left style="width:100%;"></div>
+                                                    <div range style="left:0%;right:50%;"></div>
+                                                    <span thumb
+                                                        style="left:50%; background-color:rgb(112, 166, 236);"></span>
+                                                </div>
+                                                <input id="ContractWeight" type="range" tabindex="0" value="50"
+                                                    max="100" min="0" step="2" oninput="
+                                                var value=(100/(parseFloat(this.max)-parseInt(this.min)))*parseFloat(this.value)-(100/(parseInt(this.max)-parseFloat(this.min)))*parseFloat(this.min);
+                                                var children = this.parentNode.childNodes[1].childNodes;
+                                                children[3].style.right=(100-value)+'%';
+                                                children[5].style.left=value+'%';" />
+                                            </div>
+                                        </div>
                                         <div class="col-lg-11" style="padding-right: 5px;" id="target"></div>
                                     </div>
                                 </div>

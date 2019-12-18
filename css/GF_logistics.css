@@ -199,3 +199,18 @@ div[slider]>input[type=range]::-ms-tooltip {
 [slider]:hover>div>[sign] {
     opacity: 1;
 }
+
+.slider-button {
+    position: absolute;
+    background-color: rgb(221, 155, 155);
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 0px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0px;
+    margin: -4px -7px;
+    border-radius: 100%;
+    cursor: pointer;
+}
