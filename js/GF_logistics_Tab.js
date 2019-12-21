@@ -4,12 +4,9 @@ class Tab {
     }
 
     setTime() {}
-    _checkDataLegalityAndCorrect_Time() {}
 
-    setValidQAndReturnLength() {
-        this.Qvalid = Q.slice(0);
-        return this.Qvalid.length;
-    }
+    setValidQAndReturnLength() {}
+
     _getUnableLogistic() {
         var Unable_0 = _setUnableLogistic();
         var Unable_1 = this._setUnableLogisticCustomize(Unable_0);
@@ -25,16 +22,12 @@ class Tab {
         }
         return UnableLogistic;
     }
-    _notInLimitTime(xtime, startTime, endTime) {
-        if (xtime < startTime && Math.abs(xtime - startTime) > 0.02) return true;
-        if (xtime > endTime && Math.abs(xtime - endTime) > 0.02) return true;
-        return false;
-    }
 
     Calculate_Current(Number) {
         var CurrentValue = new Array(8);
+        var Qvalid = this.Qvalid;
         for (var i = 0; i < 8; i++) {
-            CurrentValue[i] = this.Qvalid[Number[0]][i + 1] + this.Qvalid[Number[1]][i + 1] + this.Qvalid[Number[2]][i + 1] + this.Qvalid[Number[3]][i + 1];
+            CurrentValue[i] = Qvalid[Number[0]][i + 1] + Qvalid[Number[1]][i + 1] + Qvalid[Number[2]][i + 1] + Qvalid[Number[3]][i + 1];
         }
         return CurrentValue;
     }
@@ -51,16 +44,18 @@ function _setUnableLogistic() {
     var UnableMap;
     switch (parseFloat($("#MapLimit").val())) {
         case 6:
-            UnableMap = ["7-1","7-2","7-3","7-4","8-1","8-2","8-3","8-4","9-1","9-2","9-3","9-4","10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4"]; break;
+            UnableMap = ["7-1","7-2","7-3","7-4","8-1","8-2","8-3","8-4","9-1","9-2","9-3","9-4","10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4","12-1","12-2","12-3","12-4"]; break;
         case 7:
-            UnableMap = ["8-1","8-2","8-3","8-4","9-1","9-2","9-3","9-4","10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4"]; break;
+            UnableMap = ["8-1","8-2","8-3","8-4","9-1","9-2","9-3","9-4","10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4","12-1","12-2","12-3","12-4"]; break;
         case 8:
-            UnableMap = ["9-1","9-2","9-3","9-4","10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4"]; break;
+            UnableMap = ["9-1","9-2","9-3","9-4","10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4","12-1","12-2","12-3","12-4"]; break;
         case 9:
-            UnableMap = ["10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4"]; break;
+            UnableMap = ["10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4","12-1","12-2","12-3","12-4"]; break;
         case 10:
-            UnableMap = ["11-1","11-2","11-3","11-4"]; break;
+            UnableMap = ["11-1","11-2","11-3","11-4","12-1","12-2","12-3","12-4"]; break;
         case 11:
+            UnableMap = ["12-1","12-2","12-3","12-4"]; break;
+        case 12:
             UnableMap = []; break;
         default:
             UnableMap = [];
@@ -74,29 +69,112 @@ function _setUnableLogistic() {
 
 class Tab_Anytime extends Tab {
     setTime() {
-        this._checkDataLegalityAndCorrect_Time();
-        var Hours = parseFloat($("#Time_Anytime_hours").val());
-        var Minutes = parseFloat($("#Time_Anytime_minutes").val());
-        this.TotalTime = Hours + Minutes / 60;
+        this.TotalTime = this._checkDataLegalityAndCorrect_TotalTime();
+        this.MinimumIntervalTime = this._checkDataLegalityAndCorrect_MinimumIntervalTime();
     }
-    _checkDataLegalityAndCorrect_Time() {
+    _checkDataLegalityAndCorrect_TotalTime() {
         var Hours = getPositiveValueFromHTML($("#Time_Anytime_hours"));
         var Minutes = getPositiveValueFromHTML($("#Time_Anytime_minutes"));
-        var total_time = Hours + Minutes / 60;
+        var total_time = Hours * 60 + Minutes;
         if (total_time == 0) {
             alert(language.JS.tab_Anytime_alert1);
             throw"--";
         }
+        return total_time;
+    }
+    _checkDataLegalityAndCorrect_MinimumIntervalTime() {
+        var Hours = getPositiveValueFromHTML($('#Tab_Anytime_MinimumIntervalTime_hours'));
+        var Minutes = getPositiveValueFromHTML($('#Tab_Anytime_MinimumIntervalTime_minutes'));
+        var MinimumIntervalTime = Hours * 60 + Minutes;
+        return MinimumIntervalTime;
     }
 
     setValidQAndReturnLength() {
         var UnableLogistic = this._getUnableLogistic();
         for (var i = 0; i < Q.length; i++) {
             if (UnableLogistic.indexOf(i) == -1) {
-                this.Qvalid.push(Q[i].slice(0, 10));
+                var newrow = [];
+                newrow.push(Q[i][0]);
+                var times = 0;
+                while((++times + 1) * Q[i][9] <= this.TotalTime);
+                for (var ii = 1; ii < 9; ii++) {
+                    newrow.push(Q[i][ii] * times / this.TotalTime);
+                }
+                newrow.push(Q[i][9]);
+                var CollectTimetable = [];
+                for (var ii = 1; ii <= times; ii++) {
+                    CollectTimetable.push(Q[i][9] * ii);
+                }
+                newrow.push(CollectTimetable);
+                /////////////////
+                newrow.push(0);
+                ////////////////
+                this.Qvalid.push(newrow);
             }
         }
         return this.Qvalid.length;
+    }
+    _setUnableLogisticCustomize(UnableLogistic) {
+        for (var i = 0; i < Q.length; i++) {
+            if (Q[i][9] > this.TotalTime || Q[i][9] < this.MinimumIntervalTime) {
+                if (UnableLogistic.indexOf(i) == -1) {
+                    UnableLogistic.push(i);
+                }
+            }
+        }
+        return UnableLogistic;
+    }
+
+    Calculate_Current(Number) {
+        var Qvalid = this.Qvalid;
+        if (this.MinimumIntervalTime) {
+            var Time = [Qvalid[Number[0]][9], Qvalid[Number[1]][9], Qvalid[Number[2]][9], Qvalid[Number[3]][9]];
+            Time.sort(sortNumber);
+            var IntervalTime_1 = Math.min((Time[1] - Time[0])===0?this.MinimumIntervalTime:Time[1] - Time[0], (Time[2] - Time[1])===0?this.MinimumIntervalTime:Time[2] - Time[1], (Time[3] - Time[2])===0?this.MinimumIntervalTime:Time[3] - Time[2]);
+            if (IntervalTime_1 < this.MinimumIntervalTime) {
+                test_2++;
+                return [-1, -1, -1, -1, -1, -1, -1, -1];
+            }
+            var IntervalTime = this._calculateIntervalTimeMin(Number);
+            if (IntervalTime < this.MinimumIntervalTime) {
+                test++;
+                return [-1, -1, -1, -1, -1, -1, -1, -1];
+            }
+        }
+        var CurrentValue = new Array(8);
+        for (var i = 0; i < 8; i++) {
+            CurrentValue[i] = Qvalid[Number[0]][i + 1] + Qvalid[Number[1]][i + 1] + Qvalid[Number[2]][i + 1] + Qvalid[Number[3]][i + 1];
+        }
+        return CurrentValue;
+    }
+    _calculateIntervalTimeMin(Number) {
+        var CollectTimetable_0 = [this.Qvalid[Number[0]][10], this.Qvalid[Number[1]][10], this.Qvalid[Number[2]][10], this.Qvalid[Number[3]][10]];
+        var A = [CollectTimetable_0[0].length - 1, CollectTimetable_0[1].length - 1, CollectTimetable_0[2].length - 1, CollectTimetable_0[3].length - 1];
+        var IntervalTime = 999999999;
+        var maxTime = 999999999;
+        while(!(A[0] === -1 && A[1] === -1 && A[2] === -1 && A[3] === -1)) {
+            var a = 0;
+            var b = 0;
+            while(A[a] === -1) {
+                a++;
+                b++;
+            }
+            while(++b < 4) {
+                if (A[b] !== -1) {
+                    if (CollectTimetable_0[a][A[a]] < CollectTimetable_0[b][A[b]]) {
+                        a = b;
+                    }
+                    else if (CollectTimetable_0[a][A[a]] === CollectTimetable_0[b][A[b]]) {
+                        A[b]--;
+                    }
+                }
+            }
+            var maxValue = CollectTimetable_0[a][A[a]];
+            A[a]--;
+            IntervalTime = Math.min(IntervalTime, maxTime - maxValue);
+            maxTime = maxValue;
+        }
+        return IntervalTime;
     }
 
     PrintPlanTableTitle() {
@@ -112,8 +190,9 @@ class Tab_Anytime extends Tab {
 
     PrintTableCustomize(plan, row) {
         var tab = "";
-        tab += ("<td>" + (Math.round(Math.min(this.Qvalid[plan.List[row][0]][9],this.Qvalid[plan.List[row][1]][9],this.Qvalid[plan.List[row][2]][9],this.Qvalid[plan.List[row][3]][9]) * 100) / 100) + "h</td>");
-        tab += ("<td>" + (Math.round(Math.max(this.Qvalid[plan.List[row][0]][9],this.Qvalid[plan.List[row][1]][9],this.Qvalid[plan.List[row][2]][9],this.Qvalid[plan.List[row][3]][9]) * 100) / 100) + "h</td>");
+        var Number = [plan.List[row][0], plan.List[row][1], plan.List[row][2], plan.List[row][3]];
+        tab += "<td>" + this._calculateIntervalTimeMin(Number) + "m</td>";
+        tab += ("<td>" + (Math.round(Math.max(this.Qvalid[Number[0]][9],this.Qvalid[Number[1]][9],this.Qvalid[Number[2]][9],this.Qvalid[Number[3]][9]) * 100 / 60) / 100) + "h</td>");
         return tab;
     }
 };
@@ -143,7 +222,7 @@ class Tab_Timetable extends Tab {
         var UnableLogistic = this._getUnableLogistic();
         for (var i = 0; i < Q.length; i++) {
             if (UnableLogistic.indexOf(i) == -1) {
-                var newrow = new Array;
+                var newrow = [];
                 newrow.push(Q[i][0]);
                 var times = 0;
                 var ii0 = 0;
@@ -154,7 +233,7 @@ class Tab_Timetable extends Tab {
                     }
                 }
                 for (var ii = 1; ii < 9; ii++) {
-                    newrow.push(Q[i][ii] * Q[i][9] * times / this.TotalTime);
+                    newrow.push(Q[i][ii] * times / this.TotalTime);
                 }
                 this.Qvalid.push(newrow);
             }

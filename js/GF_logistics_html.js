@@ -88,7 +88,7 @@ function changeCalculateOutput_Hour() {
     var time = ShownTab.TotalTime;
     var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
     for (var i = 0 ; i < 8; i++) {
-        $(id[i]).val(Math.round($(id[i]).val() / time * 100) / 100);
+        $(id[i]).val(Math.round($(id[i]).val() / time * 6000) / 100);
     }
 }
 function changeCalculateOutput_Total() {
@@ -98,7 +98,7 @@ function changeCalculateOutput_Total() {
     var time = ShownTab.TotalTime;
     var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
     for (var i = 0 ; i < 8; i++) {
-        $(id[i]).val(Math.round($(id[i]).val() * time * 100) / 100);
+        $(id[i]).val(Math.round($(id[i]).val() * time * 100 / 60) / 100);
     }
 }
 
@@ -117,15 +117,23 @@ function Tab_Timetable_ChangeMaxTime() {
 }
 function Tab_Timetable_getMaxTime() {
     var hours, minutes;
-    if (is_Non_positive_number($("#Time_Timetable_hours").val())) hours = 0;
-    else hours = parseFloat($("#Time_Timetable_hours").val());
-    if (is_Non_positive_number($("#Time_Timetable_minutes").val())) minutes = 0;
-    else minutes = parseFloat($("#Time_Timetable_minutes").val());
-    return hours + minutes / 60;
+    if (is_Non_positive_number($("#Time_Timetable_hours").val())) {
+        hours = 0;
+    }
+    else {
+        hours = parseFloat($("#Time_Timetable_hours").val());
+    }
+    if (is_Non_positive_number($("#Time_Timetable_minutes").val())) {
+        minutes = 0;
+    }
+    else {
+        minutes = parseFloat($("#Time_Timetable_minutes").val());
+    }
+    return hours * 60 + minutes;
 }
 function Tab_Timetable_OutputStringTime(time) {
-    var hours = parseInt(time);
-    var minutes = Math.round((time - hours) * 60);
+    var hours = parseInt(time / 60);
+    var minutes = time % 60;
     if ((minutes + "").length < 2) minutes = "0" + minutes;
     return hours + ":" + minutes;
 }
@@ -137,22 +145,22 @@ function Tab_Timetable_AddNewTimePoint() {
     Tab_Timetable_InputTotalTime_disable();
     var hours = getPositiveValueFromHTML($("#Tab_Timetable_new_hours"));
     var minutes = getPositiveValueFromHTML($("#Tab_Timetable_new_minutes"));
-    var total_time = hours + minutes / 60;
+    var total_time = hours * 60 + minutes;
     switch(true) {
         case total_time == 0:
             if (Tab_Timetable_TimeList_html.length == 0) {
                 Tab_Timetable_InputTotalTime_enable();
             }
-            alert(language.HTMLJS.tab_Timetable_alert1);
+            alert(language.JS.tab_Timetable_alert1);
             break;
         case total_time >= Tab_Timetable_getMaxTime():
             if (Tab_Timetable_TimeList_html.length == 0) {
                 Tab_Timetable_InputTotalTime_enable();
             }
-            alert(language.HTMLJS.tab_Timetable_alert2);
+            alert(language.JS.tab_Timetable_alert2);
             break;
         case Tab_Timetable_TimeList_html.indexOf(total_time) != -1:
-            alert(language.HTMLJS.tab_Timetable_alert3);
+            alert(language.JS.tab_Timetable_alert3);
             break;
         default:
             Tab_Timetable_AddNewTimePoint_main(total_time);
@@ -232,6 +240,78 @@ $(function (){
 //-----------
 
 //同步更新大成功UP增加概率
+var Array_GreatSuccessRate = [
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15 / 16",
+ "15 / 16",
+ "16",
+ "16",
+ "16 / 17",
+ "17",
+ "17 / 18",
+ "17 / 18",
+ "17 / 18",
+ "18 / 19",
+ "18 / 19",
+ "19",
+ "19",
+ "19 / 20",
+ "20",
+ "20 / 21",
+ "20 / 21",
+ "20 / 21",
+ "21 / 22",
+ "21 / 22",
+ "22",
+ "22",
+ "22 / 23",
+ "23",
+ "23 / 24",
+ "23 / 24",
+ "23 / 24",
+ "24 / 25",
+ "24 / 25",
+ "25",
+ "25",
+ "25 / 26",
+ "26",
+ "26 / 27",
+ "26 / 27",
+ "26 / 27",
+ "27 / 28",
+ "27 / 28",
+ "28",
+ "28",
+ "28 / 29",
+ "29",
+ "29 / 30",
+ "29 / 30",
+ "29 / 30",
+ "30 / 31",
+ "30 / 31",
+ "31",
+ "31",
+ "31 / 21",
+ "32",
+ "32 / 33",
+ "32 / 33",
+ "32",
+ "31"
+]
 $(function (){
     $("#GreatSuccessRate").on('input propertychange',function() {
         if (IsGreatSuccessRateUp()) {
@@ -240,9 +320,12 @@ $(function (){
             if (is_Non_positive_number(GreatSuccessRate.val()) || GreatSuccessRate.val() < 15) {
                 UpRate = 15;
             }
+            else if (GreatSuccessRate.val() > 69) {
+                UpRate = 30;
+            }
             else {
-                if (GreatSuccessRate.val() > 60) UpRate = 30;
-                else UpRate = 15 + Math.floor((GreatSuccessRate.val() - 15) / 3);
+                var Rate = Math.round(GreatSuccessRate.val());
+                UpRate = Array_GreatSuccessRate[Rate];
             }
             document.getElementById('Display_UPRate').innerHTML = ("+" + UpRate);
         }
@@ -254,13 +337,13 @@ function Function_GreatSuccessRateUP() {
     CheckDataLegalityAndCorrect_GreatSuccessRate();
     var UpRate = 0;
     if (IsGreatSuccessRateUp()) {
-        UpRate = 15 + Math.floor(($("#GreatSuccessRate").val() - 15) / 3);
+        UpRate = Array_GreatSuccessRate[Math.round($("#GreatSuccessRate").val())];
         document.getElementById('Display_UPRate').innerHTML = ("+" + UpRate);
-        return UpRate;
+        return "" + UpRate;
     }
     else {
         document.getElementById('Display_UPRate').innerHTML = "";
-        return UpRate;
+        return "" + UpRate;
     }
 }
 

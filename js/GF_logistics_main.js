@@ -1,15 +1,12 @@
 var test = 0;
 var test_2 = 0;
-var test_3 = 0;
-
 $(function() {
     $('#start_sorting').on('click', function() {Get_Plan_Main()});
 })
 function Get_Plan_Main() {
-    console.time('total');
     test = 0;
     test_2 = 0;
-    test_3 = 0;
+    console.time('total');
     Q_init_Contract();
     var ShownTab = getShownTab();
     ShownTab.setTime();
@@ -31,14 +28,31 @@ function Get_Plan_Main() {
     console.timeEnd();
     console.time();
     var TargetValue = CorrectTargetValueByPlanList(plan);
+    
+
+    var log1 = new Array(8);
+    for (var i = 0; i < 8; i++) {
+        log1[i] = TargetValue[i] * 60;
+    }
+    console.log(log1);
+    var log2 = new Array(ShownTab.Qvalid.length);
+    for (var i = 0; i < ShownTab.Qvalid.length; i++) {
+        var log2_0 = new Array(2);
+        log2_0[0] = ShownTab.Qvalid[i][0];
+        log2_0[1] = ShownTab.Qvalid[i][11];
+        log2 [i] = log2_0;
+    }
+    console.log(log2);
+    console.log(plan.List);
+
+
+
+
     for (var i = 0; i < 8; i++) {
         TargetValue[i] /= CurrentValue_MAX[i];
     }
     //----------
-    test = 0;
-    test_2 = 0;
-    test_3 = 0;
-    plan = new Plan(ShownTab, 30, CurrentValue_MAX, TargetValue);
+    plan = new Plan(ShownTab, 16, CurrentValue_MAX, TargetValue);
     for (var i = 0; i < ShownTab.Qvalid.length; i++) {
         for (var ii = 0; ii < 8; ii++) {
             if (CurrentValue_MAX[ii] != 0) {
@@ -58,6 +72,8 @@ function Get_Plan_Main() {
     plan.print();
     console.timeEnd();
     console.timeEnd('total');
+    console.log(test / 2);
+    console.log(test_2 / 2);
 }
 
 function getShownTab() {
@@ -208,7 +224,8 @@ function IsGreatSuccessRateUp() {
 function CheckDataLegalityAndCorrect_GreatSuccessRate() {
     var Rate = $("#GreatSuccessRate");
     if (is_Non_positive_number(Rate.val()) || Rate.val() < 15) Rate.val(15);
-    if (Rate.val() > 60) Rate.val(60);
+    if (Rate.val() > 69) Rate.val(69);
+    Rate.val(Math.round(Rate.val()));
 }
 
 function is_Non_positive_number(x) {

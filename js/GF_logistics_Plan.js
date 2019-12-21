@@ -14,9 +14,8 @@ class Plan {
         this._Norm_Target = this._getNorm(this.TargetValue);
     }
     _setResourceIncreasingRate() {
-        var GreatSuccessRate_UP = Function_GreatSuccessRateUP();
-        var GreatSuccessRate = parseFloat($("#GreatSuccessRate").val());
-        this.ResourceIncreasingRate = 1 + (GreatSuccessRate + GreatSuccessRate_UP) / 200;
+        var TotalRate = CalculateTotalGreatSuccessRate();
+        this.ResourceIncreasingRate = 1 + (TotalRate) / 200;
     }
     _setList(length) {
         this.List = new Array(length);
@@ -80,19 +79,29 @@ class Plan {
 
     CalculateAndPush_Normalization(MissionsNumber) {
         this._CurrentValue = this.ShownTab.Calculate_Current(MissionsNumber);
+        if (this._CurrentValue[0] === -1) {
+            return;
+        }
         this._MissionsNumber = MissionsNumber;
         this._PlanValue = this._calculateValue();
+        ////////////////
+        this.ShownTab.Qvalid[MissionsNumber[0]][11] += this._PlanValue;
+        this.ShownTab.Qvalid[MissionsNumber[1]][11] += this._PlanValue;
+        this.ShownTab.Qvalid[MissionsNumber[2]][11] += this._PlanValue;
+        this.ShownTab.Qvalid[MissionsNumber[3]][11] += this._PlanValue;
+        /////////////////
         if (!(0 in this.List[this.List.length - 1])) {
             this._push_FirstEmptyRow();
         }
         else this._push();
     }
     CalculateAndPush(MissionsNumber) {
-        test++;
         this._CurrentValue = this.ShownTab.Calculate_Current(MissionsNumber);
+        if (this._CurrentValue[0] === -1) {
+            return;
+        }
         for (var i = 0; i < 7; i++) {
             if (this._CurrentValue[i] < (this.TargetValue[i] * 0.5)) {
-                test_3++;
                 return;
             }
         }
@@ -137,7 +146,6 @@ class Plan {
     }
     _thisPlanIsBetterThan(number) {
         // if (this._eachCurrentValueIsBigger(number)) {
-        //     test_2++;
         //     return true;
         // }
         // else {
@@ -233,18 +241,18 @@ class Plan {
     }
     _PrintResourceContract(row) {
         var tab = "";
-        var Hours;
+        var Minutes;
         if (is_CalculateByHour()) {
-            Hours = 1;
+            Minutes = 60;
         }
         else {
-            Hours = this.ShownTab.TotalTime;
+            Minutes = this.ShownTab.TotalTime;
         }
         for (var i = 4; i < 8; i++) {
-            tab += "<td>" + (Math.round(this.List[row][i] * this.ResourceIncreasingRate * Hours * 10 * this.CurrentValue_MAX[i - 4]) / 10) + "</td>";
+            tab += "<td>" + (Math.round(this.List[row][i] * this.ResourceIncreasingRate * Minutes * 10 * this.CurrentValue_MAX[i - 4]) / 10) + "</td>";
         }
         for (var i = 8; i < 12; i++) {
-            tab += "<td>" + (Math.round(this.List[row][i] * Hours * 100 * this.CurrentValue_MAX[i - 4]) / 100) + "</td>";
+            tab += "<td>" + (Math.round(this.List[row][i] * Minutes * 100 * this.CurrentValue_MAX[i - 4]) / 100) + "</td>";
         }
         return tab;
     }
