@@ -106,9 +106,8 @@ class Tab_Anytime extends Tab {
                     CollectTimetable.push(Q[i][9] * ii);
                 }
                 newrow.push(CollectTimetable);
-                /////////////////
+                //用于储存该方案的价值， 以减少下一次计算的总方案个数
                 newrow.push(0);
-                ////////////////
                 this.Qvalid.push(newrow);
             }
         }
@@ -225,16 +224,22 @@ class Tab_Timetable extends Tab {
                 var newrow = [];
                 newrow.push(Q[i][0]);
                 var times = 0;
+                var CollectTimetable = [];
                 var ii0 = 0;
                 for (var ii = 1; ii < this.TimeList.length; ii++) {
                     if (Q[i][9] <= this.TimeList[ii] - this.TimeList[ii0]) {
                         times++;
+                        CollectTimetable.push(this.TimeList[ii0] + Q[i][9]);
                         ii0 = ii;
                     }
                 }
                 for (var ii = 1; ii < 9; ii++) {
                     newrow.push(Q[i][ii] * times / this.TotalTime);
                 }
+                newrow.push(Q[i][9]);
+                newrow.push(CollectTimetable);
+                //用于储存该方案的价值， 以减少下一次计算的总方案个数
+                newrow.push(0);
                 this.Qvalid.push(newrow);
             }
         }

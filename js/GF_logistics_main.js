@@ -16,11 +16,37 @@ function Get_Plan_Main() {
     //----------
     var plan = new Plan(ShownTab, 8, CurrentValue_MAX);
     console.time();
-    for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
-        for (var n2 = n1 + 1; n2 < (Q_Valid_length - 2); n2++) {
-            for (var n3 = n2 + 1; n3 < (Q_Valid_length - 1); n3++) {
-                for (var n4 = n3 + 1; n4 < Q_Valid_length; n4++) {
-                    plan.CalculateAndPush_Normalization([n1, n2, n3, n4]);
+    if (Q_Valid_length > 36) {
+        for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
+            for (var n2 = n1 + 1; n2 < (Q_Valid_length - 2); n2++) {
+                for (var n3 = n2 + 1; n3 < (Q_Valid_length - 1); n3++) {
+                    for (var n4 = n3 + 1; n4 < Q_Valid_length; n4++) {
+                        plan.CalculateAndPush_Normalization_And_CalculateMissionsValue([n1, n2, n3, n4]);
+                    }
+                }
+            }
+        }
+        ///////////////////////////////////
+        var log2 = new Array(ShownTab.Qvalid.length);
+        for (var i = 0; i < ShownTab.Qvalid.length; i++) {
+            var log2_0 = new Array(2);
+            log2_0[0] = ShownTab.Qvalid[i][0];
+            log2_0[1] = ShownTab.Qvalid[i][11];
+            log2 [i] = log2_0;
+        }
+        console.log(log2);
+        ///////////////////////////////////
+        quick_sort_expand(ShownTab.Qvalid, 11);
+        ShownTab.Qvalid.splice(36, Q_Valid_length - 36);
+        Q_Valid_length = 36;
+    }
+    else {
+        for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
+            for (var n2 = n1 + 1; n2 < (Q_Valid_length - 2); n2++) {
+                for (var n3 = n2 + 1; n3 < (Q_Valid_length - 1); n3++) {
+                    for (var n4 = n3 + 1; n4 < Q_Valid_length; n4++) {
+                        plan.CalculateAndPush_Normalization([n1, n2, n3, n4]);
+                    }
                 }
             }
         }
@@ -28,26 +54,14 @@ function Get_Plan_Main() {
     console.timeEnd();
     console.time();
     var TargetValue = CorrectTargetValueByPlanList(plan);
-    
-
+    ///////////////////////////////////////
     var log1 = new Array(8);
     for (var i = 0; i < 8; i++) {
         log1[i] = TargetValue[i] * 60;
     }
     console.log(log1);
-    var log2 = new Array(ShownTab.Qvalid.length);
-    for (var i = 0; i < ShownTab.Qvalid.length; i++) {
-        var log2_0 = new Array(2);
-        log2_0[0] = ShownTab.Qvalid[i][0];
-        log2_0[1] = ShownTab.Qvalid[i][11];
-        log2 [i] = log2_0;
-    }
-    console.log(log2);
     console.log(plan.List);
-
-
-
-
+    ///////////////////////////////////////
     for (var i = 0; i < 8; i++) {
         TargetValue[i] /= CurrentValue_MAX[i];
     }

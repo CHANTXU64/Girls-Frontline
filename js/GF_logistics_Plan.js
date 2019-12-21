@@ -75,7 +75,24 @@ class Plan {
 		}
         norm = Math.pow(SumOfSquares, 0.5);
         return norm;
-	}
+    }
+    
+    CalculateAndPush_Normalization_And_CalculateMissionsValue(MissionsNumber) {
+        this._CurrentValue = this.ShownTab.Calculate_Current(MissionsNumber);
+        if (this._CurrentValue[0] === -1) {
+            return;
+        }
+        this._MissionsNumber = MissionsNumber;
+        this._PlanValue = this._calculateValue();
+        this.ShownTab.Qvalid[MissionsNumber[0]][11] += this._PlanValue;
+        this.ShownTab.Qvalid[MissionsNumber[1]][11] += this._PlanValue;
+        this.ShownTab.Qvalid[MissionsNumber[2]][11] += this._PlanValue;
+        this.ShownTab.Qvalid[MissionsNumber[3]][11] += this._PlanValue;
+        if (!(0 in this.List[this.List.length - 1])) {
+            this._push_FirstEmptyRow();
+        }
+        else this._push();
+    }
 
     CalculateAndPush_Normalization(MissionsNumber) {
         this._CurrentValue = this.ShownTab.Calculate_Current(MissionsNumber);
@@ -84,12 +101,6 @@ class Plan {
         }
         this._MissionsNumber = MissionsNumber;
         this._PlanValue = this._calculateValue();
-        ////////////////
-        this.ShownTab.Qvalid[MissionsNumber[0]][11] += this._PlanValue;
-        this.ShownTab.Qvalid[MissionsNumber[1]][11] += this._PlanValue;
-        this.ShownTab.Qvalid[MissionsNumber[2]][11] += this._PlanValue;
-        this.ShownTab.Qvalid[MissionsNumber[3]][11] += this._PlanValue;
-        /////////////////
         if (!(0 in this.List[this.List.length - 1])) {
             this._push_FirstEmptyRow();
         }
