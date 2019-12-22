@@ -117,7 +117,7 @@ class Plan {
             }
         }
         this._MissionsNumber = MissionsNumber;
-        this._PlanValue = this._calculateValue_4();
+        this._PlanValue = this._calculateValue_2();
         if (!(0 in this.List[this.List.length - 1])) {
             this._push_FirstEmptyRow();
         }
@@ -187,22 +187,14 @@ class Plan {
             if (this.TargetValue[i] == 0) CurrentValue[i] = 0;
         }
         var Norm_Current = this._getNorm(CurrentValue);
+        if (Norm_Current === 0)
+            return 0;
         var Dot_product = this._getDotProduct(CurrentValue, this.TargetValue);
         var CurrentScalarProjection = Dot_product / this._Norm_Target;
         var COStheta = Math.min(1, CurrentScalarProjection / Norm_Current);
         var theta = Math.acos(COStheta);
         var CosineSimilarity_0 = 1 - 2 * theta / Math.PI;
         var CosineSimilarity = Math.pow(CosineSimilarity_0, 2);
-        return CurrentScalarProjection * CosineSimilarity;
-    }
-    _calculateValue_2() {
-        var Norm_Current = this._getNorm(this._CurrentValue);
-        var Dot_product = this._getDotProduct(this._CurrentValue, this.TargetValue);
-        var CurrentScalarProjection = Dot_product / this._Norm_Target;
-        var COStheta = Math.min(1, CurrentScalarProjection / Norm_Current);
-        var theta = Math.acos(COStheta);
-        var CosineSimilarity_0 = 1 - 2 * theta / Math.PI;
-        var CosineSimilarity = Math.pow(CosineSimilarity_0, 1);
         return CurrentScalarProjection * CosineSimilarity;
     }
     _getDotProduct(vector1, vector2) {
@@ -214,11 +206,7 @@ class Plan {
         return Dot_product;
     }
 
-    _calculateValue_3() {
-        return Value(this.TargetValue, this._CurrentValue);
-    }
-
-    _calculateValue_4() {
+    _calculateValue_2() {
         return Value2(this.TargetValue, this._CurrentValue);
     }
 

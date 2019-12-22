@@ -45,8 +45,10 @@ $('#start_sorting').on('click', function() {
             Q_valid_backup[i] = [i, ShownTab.Qvalid[i][11]];
         }
         quick_sort_expand_descending(Q_valid_backup, 1);
-        while (Q_Valid_length > 36) {
-            ShownTab.Qvalid.splice(Q_valid_backup[Q_Valid_length - 1][0], 1);
+        Q_valid_backup.splice(0, 36);
+        quick_sort_expand_descending(Q_valid_backup, 0);
+        for (var i = 0; i < Q_valid_backup.length; i++) {
+            ShownTab.Qvalid.splice(Q_valid_backup[i][0], 1);
             Q_Valid_length--;
         }
         ///////////////////////////////////
@@ -85,12 +87,14 @@ $('#start_sorting').on('click', function() {
     for (var i = 0; i < 8; i++) {
         TargetValue[i] /= CurrentValue_MAX[i];
     }
+    console.log(TargetValue);
     //----------
     plan = new Plan(ShownTab, 16, CurrentValue_MAX, TargetValue);
     for (var i = 0; i < ShownTab.Qvalid.length; i++) {
         for (var ii = 0; ii < 8; ii++) {
-            if (CurrentValue_MAX[ii] != 0) 
+            if (CurrentValue_MAX[ii] != 0) {
                 ShownTab.Qvalid[i][ii + 1] /= CurrentValue_MAX[ii];
+            }
         }
     }
     for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
@@ -240,21 +244,6 @@ function ArrayMax(Arr) {
 }
 
 //有问题
-function Value(TargetValue, CurrentValue) {
-    var Value = 0;
-    for (var i = 0; i < 8; i++) {
-        Value += Value_0(TargetValue[i], CurrentValue[i]);
-    }
-    return Value;
-}
-function Value_0(Target, Current) {
-    if (Target == 0)
-        return 0;
-    if (Target > Current)//Y=5.5*x^3+4.5*x
-        return (Target - Current) * (-5.5 * Math.pow((Target - Current) / Target, 3) - 4.5 * (Target - Current) / Target);
-    else//Y=-4*x^3 -x
-        return (Target - Current) * (-0.01 * Math.pow((Target - Current) / Target, 3) - 0.3 * (Target - Current) / Target);
-}
 function Value2(TargetValue, CurrentValue) {
     var Value = 0;
     var minval = 99999999999;
@@ -264,12 +253,11 @@ function Value2(TargetValue, CurrentValue) {
     }
     for (var i = 0; i < 8; i++) {
         Value += Value_2(TargetValue[i], CurrentValue[i], minval);
-        //Value += Value_0(TargetValue[i], CurrentValue[i]);
     }
     return Value;
 }
 function Value_2(Target, Current, minval) {
     if (Target == 0)
         return 0;
-    return Math.min(Current, 1.5 * Target * minval) + 0.5 * Math.min(Current, Target) - Math.min(Current, 1.5 * Target * minval);
+    return Math.min(Current, 1.5 * Target * minval) + 0.5 * (Math.min(Current, Target) - Math.min(Current, 1.5 * Target * minval));
 }
