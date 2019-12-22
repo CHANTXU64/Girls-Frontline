@@ -111,6 +111,8 @@ class Tab_Anytime extends Tab {
                 this.Qvalid.push(newrow);
             }
         }
+        //为优化后面计算最小间隔时间做准备
+        quick_sort_expand_ascending(this.Qvalid, 9);
         return this.Qvalid.length;
     }
     _setUnableLogisticCustomize(UnableLogistic) {
@@ -128,13 +130,14 @@ class Tab_Anytime extends Tab {
         var Qvalid = this.Qvalid;
         if (this.MinimumIntervalTime) {
             var Time = [Qvalid[Number[0]][9], Qvalid[Number[1]][9], Qvalid[Number[2]][9], Qvalid[Number[3]][9]];
-            Time.sort(sortNumber);
             var IntervalTime_1 = Math.min((Time[1] - Time[0])===0?this.MinimumIntervalTime:Time[1] - Time[0], (Time[2] - Time[1])===0?this.MinimumIntervalTime:Time[2] - Time[1], (Time[3] - Time[2])===0?this.MinimumIntervalTime:Time[3] - Time[2]);
+            test_3++;
             if (IntervalTime_1 < this.MinimumIntervalTime) {
                 test_2++;
                 return [-1, -1, -1, -1, -1, -1, -1, -1];
             }
             var IntervalTime = this._calculateIntervalTimeMin(Number);
+            test_4++;
             if (IntervalTime < this.MinimumIntervalTime) {
                 test++;
                 return [-1, -1, -1, -1, -1, -1, -1, -1];
@@ -149,15 +152,41 @@ class Tab_Anytime extends Tab {
     _calculateIntervalTimeMin(Number) {
         var CollectTimetable_0 = [this.Qvalid[Number[0]][10], this.Qvalid[Number[1]][10], this.Qvalid[Number[2]][10], this.Qvalid[Number[3]][10]];
         var A = [CollectTimetable_0[0].length - 1, CollectTimetable_0[1].length - 1, CollectTimetable_0[2].length - 1, CollectTimetable_0[3].length - 1];
+        for (var i = 0; i < 3; i++) {
+            if (CollectTimetable_0[i][0] == CollectTimetable_0[i + 1][0]) {
+                A[i + 1] = -1;
+                test_5++;
+            }
+        }
+        if (CollectTimetable_0[3][0] % CollectTimetable_0[2][0] === 0) {
+            A[3] = -1;
+            test_5++;
+        }
+        else if (CollectTimetable_0[3][0] % CollectTimetable_0[1][0] === 0) {
+            A[3] = -1;
+            test_5++;
+        }
+        else if (CollectTimetable_0[3][0] % CollectTimetable_0[0][0] === 0) {
+            A[3] = -1;
+            test_5++;
+        }
+        if (CollectTimetable_0[2][0] % CollectTimetable_0[1][0] === 0) {
+            A[2] = -1;
+            test_5++;
+        }
+        else if (CollectTimetable_0[2][0] % CollectTimetable_0[0][0] === 0) {
+            A[2] = -1;
+            test_5++;
+        }
+        if (CollectTimetable_0[1][0] % CollectTimetable_0[0][0] === 0) {
+            A[1] = -1;
+            test_5++;
+        }
         var IntervalTime = 999999999;
         var maxTime = 999999999;
-        while(!(A[0] === -1 && A[1] === -1 && A[2] === -1 && A[3] === -1)) {
+        while(A[0] !== -1) {
             var a = 0;
             var b = 0;
-            while(A[a] === -1) {
-                a++;
-                b++;
-            }
             while(++b < 4) {
                 if (A[b] !== -1) {
                     if (CollectTimetable_0[a][A[a]] < CollectTimetable_0[b][A[b]]) {

@@ -1,11 +1,15 @@
 var test = 0;
 var test_2 = 0;
+var test_3 = 0;
+var test_4 = 0;
+var test_5 = 0;
 $(function() {
-    $('#start_sorting').on('click', function() {Get_Plan_Main()});
-})
-function Get_Plan_Main() {
+$('#start_sorting').on('click', function() {
     test = 0;
     test_2 = 0;
+    test_3 = 0;
+    test_4 = 0;
+    test_5 = 0;
     console.time('total');
     Q_init_Contract();
     var ShownTab = getShownTab();
@@ -36,9 +40,25 @@ function Get_Plan_Main() {
         }
         console.log(log2);
         ///////////////////////////////////
-        quick_sort_expand(ShownTab.Qvalid, 11);
-        ShownTab.Qvalid.splice(36, Q_Valid_length - 36);
-        Q_Valid_length = 36;
+        var Q_valid_backup = new Array(ShownTab.Qvalid.length);
+        for (var i = 0; i < ShownTab.Qvalid.length; i++) {
+            Q_valid_backup[i] = [i, ShownTab.Qvalid[i][11]];
+        }
+        quick_sort_expand_descending(Q_valid_backup, 1);
+        while (Q_Valid_length > 36) {
+            ShownTab.Qvalid.splice(Q_valid_backup[Q_Valid_length - 1][0], 1);
+            Q_Valid_length--;
+        }
+        ///////////////////////////////////
+        log2 = new Array(ShownTab.Qvalid.length);
+        for (var i = 0; i < ShownTab.Qvalid.length; i++) {
+            var log2_0 = new Array(2);
+            log2_0[0] = ShownTab.Qvalid[i][0];
+            log2_0[1] = ShownTab.Qvalid[i][11];
+            log2 [i] = log2_0;
+        }
+        console.log(log2);
+        ///////////////////////////////////
     }
     else {
         for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
@@ -69,9 +89,8 @@ function Get_Plan_Main() {
     plan = new Plan(ShownTab, 16, CurrentValue_MAX, TargetValue);
     for (var i = 0; i < ShownTab.Qvalid.length; i++) {
         for (var ii = 0; ii < 8; ii++) {
-            if (CurrentValue_MAX[ii] != 0) {
+            if (CurrentValue_MAX[ii] != 0) 
                 ShownTab.Qvalid[i][ii + 1] /= CurrentValue_MAX[ii];
-            }
         }
     }
     for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
@@ -86,9 +105,13 @@ function Get_Plan_Main() {
     plan.print();
     console.timeEnd();
     console.timeEnd('total');
-    console.log(test / 2);
-    console.log(test_2 / 2);
-}
+    console.log(test);
+    console.log(test_2);
+    console.log(test_3);
+    console.log(test_4);
+    console.log(test_5);
+})
+})
 
 function getShownTab() {
     var ShownTab;
@@ -110,13 +133,10 @@ function getCurrentMax(Qvalid) {
         for (var ii = 0; ii < Qvalid.length; ii++) {
             CurrentValueMax_0[ii] = Qvalid[ii][i + 1];
         }
-        CurrentValueMax_0.sort(sortNumber0);
+        quick_sort_descending(CurrentValueMax_0);
         CurrentValueMax[i] = CurrentValueMax_0[0] + CurrentValueMax_0[1] + CurrentValueMax_0[2] + CurrentValueMax_0[3];
     }
     return CurrentValueMax;
-}
-function sortNumber0(a, b) {
-    return b - a;
 }
 
 function CorrectTargetValueByPlanList(plan) {
@@ -128,20 +148,16 @@ function CorrectTargetValueByPlanList(plan) {
     var Resource_CalibrationValue = getCalibration(Target_Resource, plan);
     var Contract_CalibrationValue = getCalibration(Target_Contract, plan);
     for (var i = 0; i < 4; i++) {
-        if (Resource_CalibrationValue != 0) {
+        if (Resource_CalibrationValue != 0)
             TargetValue[i] = plan.TargetValue_html[i] / Resource_CalibrationValue;
-        }
-        else {
+        else
             TargetValue[i] = 0;
-        }
     }
     for (var i = 4; i < 8; i++) {
-        if (Contract_CalibrationValue != 0) {
+        if (Contract_CalibrationValue != 0)
             TargetValue[i] = plan.TargetValue_html[i] / Contract_CalibrationValue;
-        }
-        else {
+        else
             TargetValue[i] = 0;
-        }
     }
     return TargetValue;
 }
@@ -153,18 +169,15 @@ function getTargetByList(List) {
     for (var i = 0; i < 8; i++) {
         for (var ii = 0; ii < List.length; ii++) {
             TargetValue[i] += List[ii][i + 4];
-            if (List[ii][i + 4] == 0) {
+            if (List[ii][i + 4] == 0)
                 validlength[i]--;
-            }
         }
     }
     for (var i = 0; i < 8; i++) {
-        if (validlength[i] == 0) {
+        if (validlength[i] == 0)
             TargetValue[i] = 0;
-        }
-        else {
+        else
             TargetValue[i] /= validlength[i];
-        }
     }
     return TargetValue;
 }
@@ -176,34 +189,27 @@ function getCalibration(Target_0, plan) {
     for (var i = 0; i < Target_0.length; i++) {
         if (Target_0[i] != 0) {
             Calibration += (Target_0_html[i] / Target_0[i]);
-            if (Target_0_html[i] == 0) {
+            if (Target_0_html[i] == 0)
                 validlength--;
-            }
         }
-        else {
+        else
             validlength--;
-        }
     }
-    if (Calibration != 0) {
+    if (Calibration != 0)
         Calibration /= validlength;
-    }
     else {
         var Current_0_AMAX = 0;
         var validlength = Target_0.length;
         for (var i = 0; i < Target_0.length; i++) {
-            if (Current_0_MAX[i] != 0) {
+            if (Current_0_MAX[i] != 0)
                 Current_0_AMAX += Current_0_MAX[i];
-            }
-            else {
+            else
                 validlength--;
-            }
         }
-        if (validlength == 0) {
+        if (validlength == 0)
             Current_0_AMAX = 0;
-        }
-        else {
+        else
             Current_0_AMAX /= validlength;
-        }
         var Target_0_html_MAX = ArrayMax(Target_0_html);
         Calibration = Target_0_html_MAX / Current_0_AMAX;
     }
@@ -211,56 +217,60 @@ function getCalibration(Target_0, plan) {
 }
 function getTarget0html(Target0class, plan) {
     var Target_0_html = new Array(4);
-    if (Target0class == "Resource") {
+    if (Target0class == "Resource")
         Target_0_html = plan.TargetValue_html.slice(0, 4);
-    }
-    else {
+    else
         Target_0_html = plan.TargetValue_html.slice(4, 8);
-    }
     return Target_0_html;
 }
 function getCurrent0MAX(Target0class, plan) {
     var Current_0_MAX = new Array(4);
-    if (Target0class == "Resource") {
+    if (Target0class == "Resource")
         Current_0_MAX = plan.CurrentValue_MAX.slice(0, 4);
-    }
-    else {
+    else
         Current_0_MAX = plan.CurrentValue_MAX.slice(4, 8);
-    }
     return Current_0_MAX;
 }
 
 function IsGreatSuccessRateUp() {
-    if (document.getElementById('GreatSuccessRateUp').checked) return 1;
-    else return 0;
+    if (document.getElementById('GreatSuccessRateUp').checked)
+        return 1;
+    else
+        return 0;
 }
 
 function CheckDataLegalityAndCorrect_GreatSuccessRate() {
     var Rate = $("#GreatSuccessRate");
-    if (is_Non_positive_number(Rate.val()) || Rate.val() < 15) Rate.val(15);
-    if (Rate.val() > 69) Rate.val(69);
+    if (is_Non_positive_number(Rate.val()) || Rate.val() < 15)
+        Rate.val(15);
+    if (Rate.val() > 69)
+        Rate.val(69);
     Rate.val(Math.round(Rate.val()));
 }
 
 function is_Non_positive_number(x) {
-    if (x === "" || isNaN(x) || x < 0 || x === "Infinity") return true;
-    else return false;
+    if (x === "" || isNaN(x) || x < 0 || x === "Infinity")
+        return true;
+    else
+        return false;
 }
 
 function getPositiveValueFromHTML(HTMLValue) {
-    if (Array.isArray(HTMLValue)) return _getPositiveValueFromHTML_array(HTMLValue);
-    else return _getPositiveValueFromHTML_one(HTMLValue);
+    if (Array.isArray(HTMLValue))
+        return _getPositiveValueFromHTML_array(HTMLValue);
+    else
+        return _getPositiveValueFromHTML_one(HTMLValue);
 }
 function _getPositiveValueFromHTML_one(HTMLNumber) {
-    if (is_Non_positive_number(HTMLNumber.val())) HTMLNumber.val(0);
+    if (is_Non_positive_number(HTMLNumber.val()))
+        HTMLNumber.val(0);
     return parseFloat(HTMLNumber.val());
 }
 function _getPositiveValueFromHTML_array(HTMLArr) {
     var Arr = new Array(HTMLArr.length);
     for (var i = 0; i < HTMLArr.length; i++) {
-        if (is_Non_positive_number(HTMLArr[i].val())) {
+        if (is_Non_positive_number(HTMLArr[i].val()))
             HTMLArr[i].val(0);
-        }
         Arr[i] = parseFloat(HTMLArr[i].val());
     }
     return Arr;
@@ -268,9 +278,8 @@ function _getPositiveValueFromHTML_array(HTMLArr) {
 
 function ArrayMax(Arr) {
     var max = 0;
-    for (var i = 0; i < Arr.length; i++) {
+    for (var i = 0; i < Arr.length; i++)
         max = Math.max(max, Arr[i]);
-    }
     return max;
 }
 
@@ -283,21 +292,19 @@ function Value(TargetValue, CurrentValue) {
     return Value;
 }
 function Value_0(Target, Current) {
-    if (Target == 0) return 0;
-    if (Target > Current) {//Y=5.5*x^3+4.5*x
+    if (Target == 0)
+        return 0;
+    if (Target > Current)//Y=5.5*x^3+4.5*x
         return (Target - Current) * (-5.5 * Math.pow((Target - Current) / Target, 3) - 4.5 * (Target - Current) / Target);
-    }
-    else {//Y=-4*x^3 -x
+    else//Y=-4*x^3 -x
         return (Target - Current) * (-0.01 * Math.pow((Target - Current) / Target, 3) - 0.3 * (Target - Current) / Target);
-    }
 }
 function Value2(TargetValue, CurrentValue) {
     var Value = 0;
     var minval = 99999999999;
     for (var i = 0; i < 8; i++) {
-        if (TargetValue[i] != 0) {
+        if (TargetValue[i] != 0)
             minval = Math.min(minval, CurrentValue[i] / TargetValue[i]);
-        }
     }
     for (var i = 0; i < 8; i++) {
         Value += Value_2(TargetValue[i], CurrentValue[i], minval);
@@ -306,6 +313,7 @@ function Value2(TargetValue, CurrentValue) {
     return Value;
 }
 function Value_2(Target, Current, minval) {
-    if (Target == 0) return 0;
+    if (Target == 0)
+        return 0;
     return Math.min(Current, 1.5 * Target * minval) + 0.5 * Math.min(Current, Target) - Math.min(Current, 1.5 * Target * minval);
 }
