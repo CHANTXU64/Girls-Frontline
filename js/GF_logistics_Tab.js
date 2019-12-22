@@ -33,7 +33,7 @@ class Tab {
     }
 
     PrintPlanTableTitle() {}
-    _title = '<thead><tr><th class="col-0.3">#</th><th>'+ language.JS.Mission +'1</th><th>'+ language.JS.Mission +'2</th><th>'+ language.JS.Mission +'3</th><th>'+ language.JS.Mission +'4</th>';
+    _title = '<thead><tr><th>'+ language.JS.Mission +'1</th><th>'+ language.JS.Mission +'2</th><th>'+ language.JS.Mission +'3</th><th>'+ language.JS.Mission +'4</th>';
     _titleEnd = '</tr></thead>';
 
     PrintTableCustomize(plan, row) {

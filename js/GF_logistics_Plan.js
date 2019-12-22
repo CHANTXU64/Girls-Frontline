@@ -28,7 +28,7 @@ class Plan {
         var HTMLTargetArr = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QPT"), $("#QRT")];
         var TargetArr = getPositiveValueFromHTML(HTMLTargetArr);
         if (TargetArr.toString() == "0,0,0,0,0,0,0,0") {
-            alert("需求不能全为0！");
+            alert(language.JS.TargetValue0_alert);
             throw"--";
         }
         return TargetArr;
@@ -36,7 +36,12 @@ class Plan {
     _CorrectTargetValue() {
         var ResourceValue = this._CorrectResourceValue();
         var ContractValue = this._CorrectContractValue();
-        return ResourceValue.concat(ContractValue);
+        var TargetValue = ResourceValue.concat(ContractValue);
+        if (TargetValue.toString() == "0,0,0,0,0,0,0,0") {
+            alert(language.JS.TargetValue0_alert);
+            throw"--";
+        }
+        return TargetValue;
     }
     _CorrectResourceValue() {
         var ResourceValue = this.TargetValue_html.slice(0, 4);
@@ -216,7 +221,7 @@ class Plan {
         tab += (this.ShownTab.PrintPlanTableTitle() + '<tbody>');
         for (var i = 0; i < this.List.length; i++) {
             if (!(0 in this.List[i])) break;
-            tab += ("<tr><td>" + (i+1) + "</td>");
+            tab += "<tr>";
             tab += this._PrintMissionsNumber(i);
             tab += this._PrintResourceContract(i);
             tab += this.ShownTab.PrintTableCustomize(this, i);
