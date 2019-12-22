@@ -14,7 +14,7 @@ class Plan {
         this._Norm_Target = this._getNorm(this.TargetValue);
     }
     _setResourceIncreasingRate() {
-        var TotalRate = CalculateTotalGreatSuccessRate();
+        var TotalRate = getTotalGreatSuccessRate();
         this.ResourceIncreasingRate = 1 + (TotalRate) / 200;
     }
     _setList(length) {

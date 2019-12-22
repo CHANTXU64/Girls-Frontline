@@ -58,7 +58,7 @@ var Q = [
 ];
 
 function Q_init_Contract() {
-    var TotalRate = CalculateTotalGreatSuccessRate() / 100;
+    var TotalRate = getTotalGreatSuccessRate() / 100;
     //人形契约 T-Doll Production Contract
     Q[1][5] = CalculateContractValue(50, 50, TotalRate);//0-2
     Q[7][5] = CalculateContractValue(20, 20, TotalRate);//1-4
@@ -111,11 +111,6 @@ function Q_init_Contract() {
     Q[34][8] = CalculateContractValue(30, 90, TotalRate);//???//8-3 
     Q[42][8] = CalculateContractValue(50, 80, TotalRate);//???//10-3 
     Q[46][8] = 7 / 10;//???//11-3
-}
-function CalculateTotalGreatSuccessRate() {
-    var GreatSuccessRate_UP = parseInt(Function_GreatSuccessRateUP().substr(0, 2));
-    var GreatSuccessRate = parseInt($("#GreatSuccessRate").val());
-    return GreatSuccessRate_UP + GreatSuccessRate;
 }
 function CalculateContractValue(BaseValue, SumValue, TotalRate) {
     return BaseValue / 100 + (BaseValue / SumValue - BaseValue / 100) * TotalRate;

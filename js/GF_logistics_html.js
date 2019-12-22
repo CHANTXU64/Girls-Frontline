@@ -333,20 +333,6 @@ $(function (){
     $('#GreatSuccessRateUp').on('click', function() {Function_GreatSuccessRateUP()});
 })
 
-function Function_GreatSuccessRateUP() {
-    CheckDataLegalityAndCorrect_GreatSuccessRate();
-    var UpRate = 0;
-    if (IsGreatSuccessRateUp()) {
-        UpRate = Array_GreatSuccessRate[Math.round($("#GreatSuccessRate").val())];
-        document.getElementById('Display_UPRate').innerHTML = ("+" + UpRate);
-        return "" + UpRate;
-    }
-    else {
-        document.getElementById('Display_UPRate').innerHTML = "";
-        return "" + UpRate;
-    }
-}
-
 function setTarget(TargetInfo) {
     var MT = $("#MT");
     var AT = $("#AT");
