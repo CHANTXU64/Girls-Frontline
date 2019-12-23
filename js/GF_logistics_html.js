@@ -4,6 +4,7 @@ window.onload = function () {
     loadHTML_Target();
     ChangeTab_Anytime();
     loadHTML_language();
+    setQContract(getTotalGreatSuccessRate());
 }
 
 function checkDefaultLanguage() {
@@ -56,10 +57,12 @@ $(function (){
 function ChangeTab_Anytime() {
     HTMLtab = "Anytime";
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
+    clear_sorting_html();
 }
 function ChangeTab_Timetable() {
     HTMLtab = "Timetable";
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
+    clear_sorting_html();
 }
 
 function is_CalculateByHour() {
@@ -184,10 +187,10 @@ function Tab_Timetable_AddNewTimePoint_main(time) {
     Tab_Timetable_AddNewTooltip(time, position);
 }
 function Tab_Timetable_AddNewThumb(time, position) {
-    var newThumb = '<div class="slider-button" id="Tab_Timetable_range_thumb_' + time + '"';
+    var newThumb = '<button class="slider-button" id="Tab_Timetable_range_thumb_' + time + '"';
     newThumb += 'style="left:' + position + ';"';
     newThumb += 'onclick="Tab_Timetable_DeleteThisTimePoint(' + time + ')">';
-    newThumb += '<span class="glyphicon glyphicon-remove-circle" style="font-size: 22px;"></span></div>';
+    newThumb += '<span class="glyphicon glyphicon-remove-circle" style="font-size: 22px;"></span></button>';
     $("#Tab_Timetable_range").append(newThumb);
 }
 function Tab_Timetable_AddNewTooltip(time, position) {
@@ -239,100 +242,6 @@ $(function (){
 )})
 //-----------
 
-//同步更新大成功UP增加概率
-var Array_GreatSuccessRate = [
- "15",
- "15",
- "15",
- "15",
- "15",
- "15",
- "15",
- "15",
- "15",
- "15",
- "15",
- "15",
- "15",
- "15",
- "15",
- "15 / 16",
- "15 / 16",
- "16",
- "16",
- "16 / 17",
- "17",
- "17 / 18",
- "17 / 18",
- "17 / 18",
- "18 / 19",
- "18 / 19",
- "19",
- "19",
- "19 / 20",
- "20",
- "20 / 21",
- "20 / 21",
- "20 / 21",
- "21 / 22",
- "21 / 22",
- "22",
- "22",
- "22 / 23",
- "23",
- "23 / 24",
- "23 / 24",
- "23 / 24",
- "24 / 25",
- "24 / 25",
- "25",
- "25",
- "25 / 26",
- "26",
- "26 / 27",
- "26 / 27",
- "26 / 27",
- "27 / 28",
- "27 / 28",
- "28",
- "28",
- "28 / 29",
- "29",
- "29 / 30",
- "29 / 30",
- "29 / 30",
- "30 / 31",
- "30 / 31",
- "31",
- "31",
- "31 / 21",
- "32",
- "32 / 33",
- "32 / 33",
- "32",
- "31"
-]
-$(function (){
-    $("#GreatSuccessRate").on('input propertychange',function() {
-        if (IsGreatSuccessRateUp()) {
-            var UpRate;
-            var GreatSuccessRate = $("#GreatSuccessRate");
-            if (is_Non_positive_number(GreatSuccessRate.val()) || GreatSuccessRate.val() < 15) {
-                UpRate = 15;
-            }
-            else if (GreatSuccessRate.val() > 69) {
-                UpRate = 30;
-            }
-            else {
-                var Rate = Math.round(GreatSuccessRate.val());
-                UpRate = Array_GreatSuccessRate[Rate];
-            }
-            document.getElementById('Display_UPRate').innerHTML = ("+" + UpRate);
-        }
-    });
-    $('#GreatSuccessRateUp').on('click', function() {Function_GreatSuccessRateUP()});
-})
-
 function setTarget(TargetInfo) {
     var MT = $("#MT");
     var AT = $("#AT");
@@ -367,4 +276,80 @@ function ChangeTarget(ID, changevalue) {
     var totalValue = Math.round((OriginalValue + changevalue) * 1000) / 1000;
     ID.val(totalValue);
     if (ID.val() < 0) ID.val(0);
+}
+
+function start_sorting_html() {
+    $("#Time_Anytime_hours").attr('disabled', "true");
+    $("#Time_Anytime_minutes").attr('disabled', "true");
+    $("#Tab_Anytime_MinimumIntervalTime_minutes").attr('disabled', "true");
+    $("#Time_Timetable_hours").attr('disabled', "true");
+    $("#Time_Timetable_minutes").attr('disabled', "true");
+    $("#tab_Timetable_deleteall").attr('disabled', "true");
+    $("button[id^=Tab_Timetable_range_thumb_").attr('disabled', "true");
+    $("#Tab_Timetable_new_hours").attr('disabled', "true");
+    $("#Tab_Timetable_new_minutes").attr('disabled', "true");
+    $("#Tab_Timetable_AddNewTimePoint").attr('disabled', "true");
+    $("#GreatSuccessRate").attr('disabled', "true");
+    $("#GreatSuccessRateUp").attr('disabled', "true");
+    document.getElementById("greatsuccessrateup").style.cursor='not-allowed';
+    document.getElementById("GreatSuccessRateUp_label").style.cursor='not-allowed';
+    $("#MapLimit").attr('disabled', "true");
+    $("#hourOrTotal").attr('disabled', "true");
+    document.getElementById("hourOrTotal_text").style.cursor='not-allowed';
+    document.getElementById("hourOrTotal_label").style.cursor='not-allowed';
+    $("#ContractWeight").attr('disabled', "true");
+    document.getElementById("ContractWeight_thumb").style.backgroundColor='#CCC';
+    $("button[id^=setTarget").attr('disabled', "true");
+    $("#MT").attr('disabled', "true");
+    $("#AT").attr('disabled', "true");
+    $("#RT").attr('disabled', "true");
+    $("#PT").attr('disabled', "true");
+    $("#TT").attr('disabled', "true");
+    $("#ET").attr('disabled', "true");
+    $("#QPT").attr('disabled', "true");
+    $("#QRT").attr('disabled', "true");
+    $("button[id^=Target_decrease_").attr('disabled', "true");
+    $("button[id^=Target_plus_").attr('disabled', "true");
+    $("#start_sorting").attr('disabled', "true");
+    $("#clear_sorting").removeAttr("disabled");
+}
+
+$(function() {
+    $("#clear_sorting").on('click', function() {clear_sorting_html()});
+})
+function clear_sorting_html() {
+    $("#Time_Anytime_hours").removeAttr("disabled");
+    $("#Time_Anytime_minutes").removeAttr("disabled");
+    $("#Tab_Anytime_MinimumIntervalTime_minutes").removeAttr("disabled");
+    $("#Time_Timetable_hours").removeAttr("disabled");
+    $("#Time_Timetable_minutes").removeAttr("disabled");
+    $("#tab_Timetable_deleteall").removeAttr("disabled");
+    $("button[id^=Tab_Timetable_range_thumb_").removeAttr("disabled");
+    $("#Tab_Timetable_new_hours").removeAttr("disabled");
+    $("#Tab_Timetable_new_minutes").removeAttr("disabled");
+    $("#Tab_Timetable_AddNewTimePoint").removeAttr("disabled");
+    $("#GreatSuccessRate").removeAttr("disabled");
+    $("#GreatSuccessRateUp").removeAttr("disabled");
+    document.getElementById("greatsuccessrateup").style.cursor='pointer';
+    document.getElementById("GreatSuccessRateUp_label").style.cursor='pointer';
+    $("#MapLimit").removeAttr("disabled");
+    $("#hourOrTotal").removeAttr("disabled");
+    document.getElementById("hourOrTotal_text").style.cursor='pointer';
+    document.getElementById("hourOrTotal_label").style.cursor='pointer';
+    $("#ContractWeight").removeAttr("disabled");
+    document.getElementById("ContractWeight_thumb").style.backgroundColor='rgb(112, 166, 236)';
+    $("button[id^=setTarget").removeAttr("disabled");
+    $("#MT").removeAttr("disabled");
+    $("#AT").removeAttr("disabled");
+    $("#RT").removeAttr("disabled");
+    $("#PT").removeAttr("disabled");
+    $("#TT").removeAttr("disabled");
+    $("#ET").removeAttr("disabled");
+    $("#QPT").removeAttr("disabled");
+    $("#QRT").removeAttr("disabled");
+    $("button[id^=Target_decrease_").removeAttr("disabled");
+    $("button[id^=Target_plus_").removeAttr("disabled");
+    $("#start_sorting").removeAttr("disabled");
+    $("#clear_sorting").attr('disabled', "true");
+    document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
 }

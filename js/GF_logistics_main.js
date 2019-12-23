@@ -1,47 +1,26 @@
-var test = 0;
-var test_2 = 0;
-var test_3 = 0;
-var test_4 = 0;
-var test_5 = 0;
 $(function() {
 $('#start_sorting').on('click', function() {
-    test = 0;
-    test_2 = 0;
-    test_3 = 0;
-    test_4 = 0;
-    test_5 = 0;
     console.time('total');
-    Q_init_Contract();
+    start_sorting_html();
     var ShownTab = getShownTab();
     ShownTab.setTime();
-    var Q_Valid_length = ShownTab.setValidQAndReturnLength();
-    var CurrentValue_MAX = getCurrentMax(ShownTab.Qvalid);
+    var Q_Valid_length = ShownTab.setValidQAndReturnLengthAndSetCurrentMax();
     //调整目标值, 标准化归一化
     //----------
-    var plan = new Plan(ShownTab, 8, CurrentValue_MAX);
+    var plan = new Plan(ShownTab, 8);
     console.time();
     if (Q_Valid_length > 36) {
         for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
             for (var n2 = n1 + 1; n2 < (Q_Valid_length - 2); n2++) {
                 for (var n3 = n2 + 1; n3 < (Q_Valid_length - 1); n3++) {
                     for (var n4 = n3 + 1; n4 < Q_Valid_length; n4++) {
-                        plan.CalculateAndPush_Normalization_And_CalculateMissionsValue([n1, n2, n3, n4]);
+                        plan.CalculateAndPush_Standardization_And_CalculateMissionsValue([n1, n2, n3, n4]);
                     }
                 }
             }
         }
-        ///////////////////////////////////
-        var log2 = new Array(ShownTab.Qvalid.length);
-        for (var i = 0; i < ShownTab.Qvalid.length; i++) {
-            var log2_0 = new Array(2);
-            log2_0[0] = ShownTab.Qvalid[i][0];
-            log2_0[1] = ShownTab.Qvalid[i][11];
-            log2 [i] = log2_0;
-        }
-        console.log(log2);
-        ///////////////////////////////////
-        var Q_valid_backup = new Array(ShownTab.Qvalid.length);
-        for (var i = 0; i < ShownTab.Qvalid.length; i++) {
+        var Q_valid_backup = new Array(Q_Valid_length);
+        for (var i = 0; i < Q_Valid_length; i++) {
             Q_valid_backup[i] = [i, ShownTab.Qvalid[i][11]];
         }
         quick_sort_expand_descending(Q_valid_backup, 1);
@@ -51,23 +30,13 @@ $('#start_sorting').on('click', function() {
             ShownTab.Qvalid.splice(Q_valid_backup[i][0], 1);
             Q_Valid_length--;
         }
-        ///////////////////////////////////
-        log2 = new Array(ShownTab.Qvalid.length);
-        for (var i = 0; i < ShownTab.Qvalid.length; i++) {
-            var log2_0 = new Array(2);
-            log2_0[0] = ShownTab.Qvalid[i][0];
-            log2_0[1] = ShownTab.Qvalid[i][11];
-            log2 [i] = log2_0;
-        }
-        console.log(log2);
-        ///////////////////////////////////
     }
     else {
         for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
             for (var n2 = n1 + 1; n2 < (Q_Valid_length - 2); n2++) {
                 for (var n3 = n2 + 1; n3 < (Q_Valid_length - 1); n3++) {
                     for (var n4 = n3 + 1; n4 < Q_Valid_length; n4++) {
-                        plan.CalculateAndPush_Normalization([n1, n2, n3, n4]);
+                        plan.CalculateAndPush_Standardization([n1, n2, n3, n4]);
                     }
                 }
             }
@@ -85,18 +54,14 @@ $('#start_sorting').on('click', function() {
     console.log(plan.List);
     ///////////////////////////////////////
     for (var i = 0; i < 8; i++) {
-        TargetValue[i] /= CurrentValue_MAX[i];
+        TargetValue[i] /= ShownTab.CurrentValue_MAX[i];
     }
     console.log(TargetValue);
     //----------
-    plan = new Plan(ShownTab, 16, CurrentValue_MAX, TargetValue);
-    for (var i = 0; i < ShownTab.Qvalid.length; i++) {
-        for (var ii = 0; ii < 8; ii++) {
-            if (CurrentValue_MAX[ii] != 0) {
-                ShownTab.Qvalid[i][ii + 1] /= CurrentValue_MAX[ii];
-            }
-        }
-    }
+    setFineTuning_TargetValue(TargetValue);
+    setFineTuning_ShownTab(ShownTab);
+    ShownTab.normalizedQValid();
+    plan = new Plan(ShownTab, 16, TargetValue);
     for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
         for (var n2 = n1 + 1; n2 < (Q_Valid_length - 2); n2++) {
             for (var n3 = n2 + 1; n3 < (Q_Valid_length - 1); n3++) {
@@ -106,14 +71,9 @@ $('#start_sorting').on('click', function() {
             }
         }
     }
-    plan.print();
+    plan.print(false);
     console.timeEnd();
     console.timeEnd('total');
-    console.log(test);
-    console.log(test_2);
-    console.log(test_3);
-    console.log(test_4);
-    console.log(test_5);
 })
 })
 
@@ -128,19 +88,6 @@ function getShownTab() {
             break;
     }
     return ShownTab;
-}
-
-function getCurrentMax(Qvalid) {
-    var CurrentValueMax = new Array(8);
-    for (var i = 0; i < 8; i++) {
-        var CurrentValueMax_0 = new Array(Qvalid.length);
-        for (var ii = 0; ii < Qvalid.length; ii++) {
-            CurrentValueMax_0[ii] = Qvalid[ii][i + 1];
-        }
-        quick_sort_descending(CurrentValueMax_0);
-        CurrentValueMax[i] = CurrentValueMax_0[0] + CurrentValueMax_0[1] + CurrentValueMax_0[2] + CurrentValueMax_0[3];
-    }
-    return CurrentValueMax;
 }
 
 function CorrectTargetValueByPlanList(plan) {

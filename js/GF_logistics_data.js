@@ -57,8 +57,8 @@ var Q = [
     ["12-4", 1800, 0,     1800,  0,     0, 0, 0, 0, 720]
 ];
 
-function Q_init_Contract() {
-    var TotalRate = getTotalGreatSuccessRate() / 100;
+function setQContract(TotalGreatSuccessRate) {
+    var TotalRate = TotalGreatSuccessRate / 100;
     //人形契约 T-Doll Production Contract
     Q[1][5] = CalculateContractValue(50, 50, TotalRate);//0-2
     Q[7][5] = CalculateContractValue(20, 20, TotalRate);//1-4

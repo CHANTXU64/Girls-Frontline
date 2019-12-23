@@ -61,3 +61,104 @@ function Function_GreatSuccessRateUP() {
         return "" + UpRate;
     }
 }
+
+$(function (){
+    $("#GreatSuccessRate").on('input propertychange',function() {
+        var UpRate;
+        var GreatSuccessRate = $("#GreatSuccessRate");
+        var Rate;
+        if (is_Non_positive_number(GreatSuccessRate.val()) || GreatSuccessRate.val() < 15) {
+            Rate = 15;
+            UpRate = "" + 15;
+        }
+        else if (GreatSuccessRate.val() > 69) {
+            Rate = 60;
+            UpRate = "" + 30;
+        }
+        else {
+            var Rate = Math.round(GreatSuccessRate.val());
+            UpRate = Array_GreatSuccessRate[Rate];
+        }
+        if (IsGreatSuccessRateUp()) {
+            document.getElementById('Display_UPRate').innerHTML = ("+" + UpRate);
+        }
+        UpRate = parseInt(UpRate.substr(0, 2));
+        setQContract(Rate + UpRate);
+    });
+    $('#GreatSuccessRateUp').on('click', function() {
+        var TotalRate = getTotalGreatSuccessRate();
+        setQContract(TotalRate);
+    });
+})
+var Array_GreatSuccessRate = [
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15",
+ "15 / 16",
+ "15 / 16",
+ "16",
+ "16",
+ "16 / 17",
+ "17",
+ "17 / 18",
+ "17 / 18",
+ "17 / 18",
+ "18 / 19",
+ "18 / 19",
+ "19",
+ "19",
+ "19 / 20",
+ "20",
+ "20 / 21",
+ "20 / 21",
+ "20 / 21",
+ "21 / 22",
+ "21 / 22",
+ "22",
+ "22",
+ "22 / 23",
+ "23",
+ "23 / 24",
+ "23 / 24",
+ "23 / 24",
+ "24 / 25",
+ "24 / 25",
+ "25",
+ "25",
+ "25 / 26",
+ "26",
+ "26 / 27",
+ "26 / 27",
+ "26 / 27",
+ "27 / 28",
+ "27 / 28",
+ "28",
+ "28",
+ "28 / 29",
+ "29",
+ "29 / 30",
+ "29 / 30",
+ "29 / 30",
+ "30 / 31",
+ "30 / 31",
+ "31",
+ "31",
+ "31 / 21",
+ "32",
+ "32 / 33",
+ "32 / 33",
+ "32",
+ "31"
+]

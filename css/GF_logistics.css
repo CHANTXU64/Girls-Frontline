@@ -214,3 +214,7 @@ div[slider]>input[type=range]::-ms-tooltip {
     border-radius: 100%;
     cursor: pointer;
 }
+
+button:disabled {
+    background: #DADADA;
+}

@@ -1,11 +1,33 @@
 class Tab {
     constructor() {
-        this.Qvalid = new Array;
+        this.Qvalid = [];
     }
 
     setTime() {}
 
-    setValidQAndReturnLength() {}
+    setValidQAndReturnLengthAndSetCurrentMax() {}
+    _setCurrentMax() {
+        var CurrentValueMax = new Array(8);
+        for (var i = 0; i < 8; i++) {
+            var CurrentValueMax_0 = new Array(this.Qvalid.length);
+            for (var ii = 0; ii < this.Qvalid.length; ii++) {
+                CurrentValueMax_0[ii] = this.Qvalid[ii][i + 1];
+            }
+            quick_sort_descending(CurrentValueMax_0);
+            CurrentValueMax[i] = CurrentValueMax_0[0] + CurrentValueMax_0[1] + CurrentValueMax_0[2] + CurrentValueMax_0[3];
+        }
+        this.CurrentValue_MAX = CurrentValueMax;
+    }
+
+    normalizedQValid() {
+        for (var i = 0; i < this.Qvalid.length; i++) {
+            for (var ii = 0; ii < 8; ii++) {
+                if (this.CurrentValue_MAX[ii] != 0) {
+                    this.Qvalid[i][ii + 1] /= this.CurrentValue_MAX[ii];
+                }
+            }
+        }
+    }
 
     _getUnableLogistic() {
         var Unable_0 = _setUnableLogistic();
@@ -83,13 +105,12 @@ class Tab_Anytime extends Tab {
         return total_time;
     }
     _checkDataLegalityAndCorrect_MinimumIntervalTime() {
-        var Hours = getPositiveValueFromHTML($('#Tab_Anytime_MinimumIntervalTime_hours'));
         var Minutes = getPositiveValueFromHTML($('#Tab_Anytime_MinimumIntervalTime_minutes'));
-        var MinimumIntervalTime = Hours * 60 + Minutes;
+        var MinimumIntervalTime = Minutes;
         return MinimumIntervalTime;
     }
 
-    setValidQAndReturnLength() {
+    setValidQAndReturnLengthAndSetCurrentMax() {
         var UnableLogistic = this._getUnableLogistic();
         for (var i = 0; i < Q.length; i++) {
             if (UnableLogistic.indexOf(i) == -1) {
@@ -113,6 +134,7 @@ class Tab_Anytime extends Tab {
         }
         //为优化后面计算最小间隔时间做准备
         quick_sort_expand_ascending(this.Qvalid, 9);
+        this._setCurrentMax();
         return this.Qvalid.length;
     }
     _setUnableLogisticCustomize(UnableLogistic) {
@@ -131,15 +153,11 @@ class Tab_Anytime extends Tab {
         if (this.MinimumIntervalTime) {
             var Time = [Qvalid[Number[0]][9], Qvalid[Number[1]][9], Qvalid[Number[2]][9], Qvalid[Number[3]][9]];
             var IntervalTime_1 = Math.min((Time[1] - Time[0])===0?this.MinimumIntervalTime:Time[1] - Time[0], (Time[2] - Time[1])===0?this.MinimumIntervalTime:Time[2] - Time[1], (Time[3] - Time[2])===0?this.MinimumIntervalTime:Time[3] - Time[2]);
-            test_3++;
             if (IntervalTime_1 < this.MinimumIntervalTime) {
-                test_2++;
                 return [-1, -1, -1, -1, -1, -1, -1, -1];
             }
             var IntervalTime = this._calculateIntervalTimeMin(Number);
-            test_4++;
             if (IntervalTime < this.MinimumIntervalTime) {
-                test++;
                 return [-1, -1, -1, -1, -1, -1, -1, -1];
             }
         }
@@ -155,32 +173,25 @@ class Tab_Anytime extends Tab {
         for (var i = 0; i < 3; i++) {
             if (CollectTimetable_0[i][0] == CollectTimetable_0[i + 1][0]) {
                 A[i + 1] = -1;
-                test_5++;
             }
         }
         if (CollectTimetable_0[3][0] % CollectTimetable_0[2][0] === 0) {
             A[3] = -1;
-            test_5++;
         }
         else if (CollectTimetable_0[3][0] % CollectTimetable_0[1][0] === 0) {
             A[3] = -1;
-            test_5++;
         }
         else if (CollectTimetable_0[3][0] % CollectTimetable_0[0][0] === 0) {
             A[3] = -1;
-            test_5++;
         }
         if (CollectTimetable_0[2][0] % CollectTimetable_0[1][0] === 0) {
             A[2] = -1;
-            test_5++;
         }
         else if (CollectTimetable_0[2][0] % CollectTimetable_0[0][0] === 0) {
             A[2] = -1;
-            test_5++;
         }
         if (CollectTimetable_0[1][0] % CollectTimetable_0[0][0] === 0) {
             A[1] = -1;
-            test_5++;
         }
         var IntervalTime = 999999999;
         var maxTime = 999999999;
@@ -228,7 +239,7 @@ class Tab_Anytime extends Tab {
 class Tab_Timetable extends Tab {
     constructor() {
         super();
-        this.Qvalid = new Array(0);
+        this.Qvalid = [];
         this.TimeList = [];
     }
 
@@ -246,7 +257,7 @@ class Tab_Timetable extends Tab {
         this.TimeList.push(this.TotalTime);
     }
 
-    setValidQAndReturnLength() {
+    setValidQAndReturnLengthAndSetCurrentMax() {
         var UnableLogistic = this._getUnableLogistic();
         for (var i = 0; i < Q.length; i++) {
             if (UnableLogistic.indexOf(i) == -1) {
@@ -272,6 +283,7 @@ class Tab_Timetable extends Tab {
                 this.Qvalid.push(newrow);
             }
         }
+        this._setCurrentMax();
         return this.Qvalid.length;
     }
 

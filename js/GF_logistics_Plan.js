@@ -1,8 +1,9 @@
 class Plan {
-    constructor(ShownTab, List_length, CurrentValue_MAX, Target_Value) {
+    constructor(ShownTab, List_length, Target_Value) {
         this._setResourceIncreasingRate();
         this._setList(List_length);
         this.ShownTab = ShownTab;
+        this.CurrentValue_MAX = ShownTab.CurrentValue_MAX;
         if (Target_Value === undefined) {
             this.TargetValue_html = this._getLegalityTargetValue();
             this.TargetValue = this._CorrectTargetValue();
@@ -10,7 +11,6 @@ class Plan {
         else {
             this.TargetValue = Target_Value;
         }
-        this.CurrentValue_MAX = CurrentValue_MAX;
         this._Norm_Target = this._getNorm(this.TargetValue);
     }
     _setResourceIncreasingRate() {
@@ -82,7 +82,7 @@ class Plan {
         return norm;
     }
     
-    CalculateAndPush_Normalization_And_CalculateMissionsValue(MissionsNumber) {
+    CalculateAndPush_Standardization_And_CalculateMissionsValue(MissionsNumber) {
         this._CurrentValue = this.ShownTab.Calculate_Current(MissionsNumber);
         if (this._CurrentValue[0] === -1) {
             return;
@@ -99,7 +99,7 @@ class Plan {
         else this._push();
     }
 
-    CalculateAndPush_Normalization(MissionsNumber) {
+    CalculateAndPush_Standardization(MissionsNumber) {
         this._CurrentValue = this.ShownTab.Calculate_Current(MissionsNumber);
         if (this._CurrentValue[0] === -1) {
             return;
@@ -215,9 +215,11 @@ class Plan {
         return Value2(this.TargetValue, this._CurrentValue);
     }
 
-    print() {
+    print(fineTuningExpanded) {
         var Table = document.getElementById("Plan_Table");
-        var tab = '<table class="table table-striped table-bordered table-hover">';
+        var tab = getHTMLFineTuningTool(fineTuningExpanded);
+        tab += '<div class="table-responsive">';
+        tab += '<table class="table table-striped table-hover table-responsive text-nowrap">';//table-bordered
         tab += (this.ShownTab.PrintPlanTableTitle() + '<tbody>');
         for (var i = 0; i < this.List.length; i++) {
             if (!(0 in this.List[i])) break;
