@@ -14,7 +14,7 @@ function getHTMLFineTuningTool(expanded) {
         HTML += '<div class="form-group input-group" style="margin-bottom: 10px;">';
         HTML += '<span class="input-group-addon" id="FineTuningTool_' + TargetName[i] + '">' + TargetHTMLText[i] + '</span>';
         HTML += '<div class="input-group-btn">';
-        HTML += '<button class="btn btn-default col-lg-6" type="button" onclick="FineTuning(-1,\''+TargetName[i]+'\')"';
+        HTML += '<button class="btn btn-default col-lg-6" type="button" id="FineTuning_minus_' + TargetName[i] + '"';
         if (FineTuning_TargetValue_Original[i] == 0)
             HTML += 'disabled="disabled"';
         else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 100 <= 0)
@@ -22,7 +22,7 @@ function getHTMLFineTuningTool(expanded) {
         else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 100 < FineTuning_TargetValue_Original[i] * 0.9)
             HTML += 'disabled="disabled"';
         HTML += '><b>-</b></button>';
-        HTML += '<button class="btn btn-default col-lg-6" type="button" onclick="FineTuning(1,\''+TargetName[i]+'\')"';
+        HTML += '<button class="btn btn-default col-lg-6" type="button" id="FineTuning_plus_' + TargetName[i] + '"';
         if (FineTuning_TargetValue_Original[i] == 0)
             HTML += 'disabled="disabled"';
         else if (FineTuning_TargetValue[i] + FineTuning_TargetValue_Original[i] / 100 >= 1)
@@ -78,3 +78,8 @@ function FineTuning_main() {
     }
     plan.print(true); 
 }
+
+$(function() {
+    $("#Plan_Table").on('click', 'button[id^=FineTuning_minus_]', function() {FineTuning(-1, stringSliceFromLast_(this.id))});
+    $("#Plan_Table").on('click', 'button[id^=FineTuning_plus_]', function() {FineTuning(1, stringSliceFromLast_(this.id))});
+})

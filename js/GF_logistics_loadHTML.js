@@ -1,44 +1,36 @@
 function loadHTML_Target() {
     var HTML = '<h4 id="Demand"></h4>';
-    HTML += '<p><button type="button" class="btn btn-default"onclick="setTarget(1)"id="setTargetHG"></button> ';
-    HTML += '<button type="button" class="btn btn-default"onclick="setTarget(2)"id="setTargetSMG"></button> ';
-    HTML += '<button type="button" class="btn btn-default"onclick="setTarget(3)"id="setTargetRF"></button></p>';
-    HTML += '<p><button type="button" class="btn btn-default"onclick="setTarget(4)"id="setTargetAR"></button> ';
-    HTML += '<button type="button" class="btn btn-default"onclick="setTarget(5)"id="setTargetMG"></button> ';
-    HTML += '<button type="button" class="btn btn-default"onclick="setTarget(6)"id="setTargetSG"></button></p>';
-    HTML += '<p><button type="button" class="btn btn-default" onclick="setTarget(7)"id="setTarget2221"></button> ';
-    HTML += '<button type="button" class="btn btn-danger" onclick="setTarget(8)"id="setTargetClear"></button></p>';
+    HTML += '<p><button type="button" class="btn btn-default"id="setTarget_HG"></button> ';
+    HTML += '<button type="button" class="btn btn-default"id="setTarget_SMG"></button> ';
+    HTML += '<button type="button" class="btn btn-default"id="setTarget_RF"></button></p>';
+    HTML += '<p><button type="button" class="btn btn-default"id="setTarget_AR"></button> ';
+    HTML += '<button type="button" class="btn btn-default"id="setTarget_MG"></button> ';
+    HTML += '<button type="button" class="btn btn-default"id="setTarget_SG"></button></p>';
+    HTML += '<p><button type="button" class="btn btn-default"id="setTarget_2221"></button> ';
+    HTML += '<button type="button" class="btn btn-danger"id="setTarget_Clear"></button></p>';
     var TargetName = ["Manp", "Ammu", "Rati", "Part", "TPro", "Equi", "QPro", "QRes"];
     var Target = ['MT', 'AT', 'RT', 'PT', 'TT', 'ET', 'QPT', 'QRT'];
     for (var i = 0; i < 4; i++) {
         HTML += '<div class="form-group input-group"style="margin-bottom: 10px;"><span class="input-group-addon"style="padding-right:10px;padding-left:10px;"';
         HTML += 'id=' + TargetName[i] + '>';
-        HTML += '</span><div class="input-group-btn"><button class="btn btn-default"type="button"id="Target_decrease_100_'+Target[i]+'"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1 onclick="ChangeTarget($(\'#';
+        HTML += '</span><div class="input-group-btn"><button class="btn btn-default"type="button"id="Target_minus_100_'+Target[i]+'"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1>';
+        HTML += '<b>&minus;</b></button><button class="btn btn-default"type="button"id="Target_minus_10_'+Target[i]+'"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1>';
+        HTML += '&minus;</button></div><input type="number" pattern="\d*" min="0"class="form-control"id="';
         HTML += Target[i];
-        HTML += '\'),-100)"><b>&minus;</b></button><button class="btn btn-default"type="button"id="Target_decrease_10_'+Target[i]+'"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1 onclick="ChangeTarget($(\'#';
-        HTML += Target[i];
-        HTML += '\'),-10)">&minus;</button></div><input type="number" pattern="\d*" min="0"class="form-control"id="';
-        HTML += Target[i];
-        HTML += '"value=0 onclick="this.select()"style="border-left-width:0"><div class="input-group-btn"><button class="btn btn-default"type="button"id="Target_plus_10_'+Target[i]+'"style="padding-right:10px;padding-left:10px;"tabindex=-1 onclick="ChangeTarget($(\'#';
-        HTML += Target[i];
-        HTML += '\'),10)">+</button><button class="btn btn-default"type="button"id="Target_plus_100_'+Target[i]+'"style="padding-right:10px;padding-left:10px;"tabindex=-1 onclick="ChangeTarget($(\'#';
-        HTML += Target[i];
-        HTML += '\'),100)"><b>&plus;</b></button></div></div>';
+        HTML += '"value=0 onclick="this.select()"style="border-left-width:0"><div class="input-group-btn"><button class="btn btn-default"type="button"id="Target_plus_10_'+Target[i]+'"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '+</button><button class="btn btn-default"type="button"id="Target_plus_100_'+Target[i]+'"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '<b>&plus;</b></button></div></div>';
     }
     for (var i = 4; i < 8; i++) {
         HTML += '<div class="form-group input-group"style="margin-bottom: 10px;"><span class="input-group-addon"style="padding-right:10px;padding-left:10px;"';
         HTML += 'id=' + TargetName[i] + '>';
-        HTML += '</span><div class="input-group-btn"><button class="btn btn-default"id="Target_decrease_1_'+Target[i]+'"type="button"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1 onclick="ChangeTarget($(\'#';
+        HTML += '</span><div class="input-group-btn"><button class="btn btn-default"id="Target_minus_1_'+Target[i]+'"type="button"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1>';
+        HTML += '<b>&minus;</b></button><button class="btn btn-default"type="button"id="Target_minus_0.1_'+Target[i]+'"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1>';
+        HTML += '&minus;</button></div><input type="number" pattern="\d*" min="0" step="0.01" class="form-control"id="';
         HTML += Target[i];
-        HTML += '\'),-1)"><b>&minus;</b></button><button class="btn btn-default"type="button"id="Target_decrease_01_'+Target[i]+'"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1 onclick="ChangeTarget($(\'#';
-        HTML += Target[i];
-        HTML += '\'),-0.1)">&minus;</button></div><input type="number" pattern="\d*" min="0" step="0.01" class="form-control"id="';
-        HTML += Target[i];
-        HTML += '"value=0 onclick="this.select()"style="border-left-width:0"><div class="input-group-btn"><button class="btn btn-default"type="button"id="Target_plus_01_'+Target[i]+'"style="padding-right:10px;padding-left:10px;"tabindex=-1 onclick="ChangeTarget($(\'#';
-        HTML += Target[i];
-        HTML += '\'),0.1)">+</button><button class="btn btn-default"type="button"id="Target_plus_1_'+Target[i]+'"style="padding-right:10px;padding-left:10px;"tabindex=-1 onclick="ChangeTarget($(\'#';
-        HTML += Target[i];
-        HTML += '\'),1)"><b>&plus;</b></button></div></div>';
+        HTML += '"value=0 onclick="this.select()"style="border-left-width:0"><div class="input-group-btn"><button class="btn btn-default"type="button"id="Target_plus_0.1_'+Target[i]+'"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '+</button><button class="btn btn-default"type="button"id="Target_plus_1_'+Target[i]+'"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '<b>&plus;</b></button></div></div>';
     }
     document.getElementById("target").innerHTML = HTML;
 }

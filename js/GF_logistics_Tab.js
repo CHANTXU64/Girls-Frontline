@@ -100,6 +100,7 @@ class Tab_Anytime extends Tab {
         var total_time = Hours * 60 + Minutes;
         if (total_time == 0) {
             alert(language.JS.tab_Anytime_alert1);
+            clear_sorting_html();
             throw"--";
         }
         return total_time;
@@ -252,6 +253,7 @@ class Tab_Timetable extends Tab {
         this.TotalTime = Tab_Timetable_getMaxTime();
         if (this.TotalTime == 0) {
             alert(language.JS.tab_Timetable_alert4);
+            clear_sorting_html();
             throw"--";
         }
         this.TimeList.push(this.TotalTime);

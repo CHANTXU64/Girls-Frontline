@@ -5,6 +5,7 @@ window.onload = function () {
     ChangeTab_Anytime();
     loadHTML_language();
     setQContract(getTotalGreatSuccessRate());
+    PrintMissionTable();
 }
 
 function checkDefaultLanguage() {
@@ -188,8 +189,7 @@ function Tab_Timetable_AddNewTimePoint_main(time) {
 }
 function Tab_Timetable_AddNewThumb(time, position) {
     var newThumb = '<button class="slider-button" id="Tab_Timetable_range_thumb_' + time + '"';
-    newThumb += 'style="left:' + position + ';"';
-    newThumb += 'onclick="Tab_Timetable_DeleteThisTimePoint(' + time + ')">';
+    newThumb += 'style="left:' + position + ';">';
     newThumb += '<span class="glyphicon glyphicon-remove-circle" style="font-size: 22px;"></span></button>';
     $("#Tab_Timetable_range").append(newThumb);
 }
@@ -209,6 +209,11 @@ function Tab_Timetable_AddNewTooltip(time, position) {
     $("#Tab_Timetable_range").append(newTooltip);
 }
 
+$(function() {
+    $("#Tab_Timetable_range").on('click', 'button[id^=Tab_Timetable_range_thumb_]', function() {
+        Tab_Timetable_DeleteThisTimePoint(stringSliceFromLast_(this.id));
+    })
+})
 function Tab_Timetable_DeleteThisTimePoint(time) {
     Tab_Timetable_TimeList_html.remove(time);
     var thumb_id = "Tab_Timetable_range_thumb_" + time;
@@ -242,6 +247,11 @@ $(function (){
 )})
 //-----------
 
+$(function() {
+    $("#target").on('click', 'button[id^=setTarget_]', function() {
+        setTarget(stringSliceFromLast_(this.id));
+    })
+})
 function setTarget(TargetInfo) {
     var MT = $("#MT");
     var AT = $("#AT");
@@ -252,30 +262,41 @@ function setTarget(TargetInfo) {
     var QPT = $("#QPT");
     var QRT = $("#QRT");
     switch (TargetInfo) {
-        case 1:
+        case 'HG':
             MT.val(130); AT.val(130); RT.val(130); PT.val(130); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
-        case 2:
+        case 'SMG':
             MT.val(430); AT.val(430); RT.val(130); PT.val(230); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
-        case 3:
+        case 'RF':
             MT.val(430); AT.val(130); RT.val(430); PT.val(230); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
-        case 4:
+        case 'AR':
             MT.val(130); AT.val(430); RT.val(430); PT.val(130); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
-        case 5:
+        case 'MG':
             MT.val(730); AT.val(630); RT.val(130); PT.val(430); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
-        case 6:
+        case 'SG':
             MT.val(800); AT.val(200); RT.val(800); PT.val(400); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
-        case 7:
+        case '2221':
             MT.val(400); AT.val(400); RT.val(400); PT.val(200); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
-        case 8:
+        case 'Clear':
             MT.val(0); AT.val(0); RT.val(0); PT.val(0); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
     }
 }
 
-function ChangeTarget(ID, changevalue) {
-    var OriginalValue = getPositiveValueFromHTML(ID);
+$(function() {
+    $("#target").on('click', 'button[id^=Target_minus_]', function() {ChangeTarget(this.id)});
+    $("#target").on('click', 'button[id^=Target_plus_]', function() {ChangeTarget(this.id)});
+})
+function ChangeTarget(FullID) {
+    var ID = stringSliceFromLast_(FullID);
+    var IDstart = FullID.indexOf(ID);
+    var FullID_2 = FullID.slice(0, IDstart - 1);
+    var changevalue = parseFloat(stringSliceFromLast_(FullID_2));
+    var a = FullID_2.slice(7, 8);
+    if (FullID_2.slice(7, 8) == "m")
+        changevalue *= -1;
+    var OriginalValue = getPositiveValueFromHTML($('#' + ID));
     var totalValue = Math.round((OriginalValue + changevalue) * 1000) / 1000;
-    ID.val(totalValue);
-    if (ID.val() < 0) ID.val(0);
+    $('#' + ID).val(totalValue);
+    if ($('#' + ID).val() < 0) $('#' + ID).val(0);
 }
 
 function start_sorting_html() {
@@ -299,7 +320,7 @@ function start_sorting_html() {
     document.getElementById("hourOrTotal_label").style.cursor='not-allowed';
     $("#ContractWeight").attr('disabled', "true");
     document.getElementById("ContractWeight_thumb").style.backgroundColor='#CCC';
-    $("button[id^=setTarget").attr('disabled', "true");
+    $("button[id^=setTarget_").attr('disabled', "true");
     $("#MT").attr('disabled', "true");
     $("#AT").attr('disabled', "true");
     $("#RT").attr('disabled', "true");
@@ -308,7 +329,7 @@ function start_sorting_html() {
     $("#ET").attr('disabled', "true");
     $("#QPT").attr('disabled', "true");
     $("#QRT").attr('disabled', "true");
-    $("button[id^=Target_decrease_").attr('disabled', "true");
+    $("button[id^=Target_minus_").attr('disabled', "true");
     $("button[id^=Target_plus_").attr('disabled', "true");
     $("#start_sorting").attr('disabled', "true");
     $("#clear_sorting").removeAttr("disabled");
@@ -338,7 +359,7 @@ function clear_sorting_html() {
     document.getElementById("hourOrTotal_label").style.cursor='pointer';
     $("#ContractWeight").removeAttr("disabled");
     document.getElementById("ContractWeight_thumb").style.backgroundColor='rgb(112, 166, 236)';
-    $("button[id^=setTarget").removeAttr("disabled");
+    $("button[id^=setTarget_").removeAttr("disabled");
     $("#MT").removeAttr("disabled");
     $("#AT").removeAttr("disabled");
     $("#RT").removeAttr("disabled");
@@ -347,7 +368,7 @@ function clear_sorting_html() {
     $("#ET").removeAttr("disabled");
     $("#QPT").removeAttr("disabled");
     $("#QRT").removeAttr("disabled");
-    $("button[id^=Target_decrease_").removeAttr("disabled");
+    $("button[id^=Target_minus_").removeAttr("disabled");
     $("button[id^=Target_plus_").removeAttr("disabled");
     $("#start_sorting").removeAttr("disabled");
     $("#clear_sorting").attr('disabled', "true");

@@ -29,6 +29,7 @@ class Plan {
         var TargetArr = getPositiveValueFromHTML(HTMLTargetArr);
         if (TargetArr.toString() == "0,0,0,0,0,0,0,0") {
             alert(language.JS.TargetValue0_alert);
+            clear_sorting_html();
             throw"--";
         }
         return TargetArr;
@@ -39,6 +40,7 @@ class Plan {
         var TargetValue = ResourceValue.concat(ContractValue);
         if (TargetValue.toString() == "0,0,0,0,0,0,0,0") {
             alert(language.JS.TargetValue0_alert);
+            clear_sorting_html();
             throw"--";
         }
         return TargetValue;
