@@ -219,10 +219,10 @@ class Tab_Anytime extends Tab {
     PrintPlanTableTitle() {
         var title;
         if (is_CalculateByHour()) {
-            title = this._title + '<th>'+language.JS.Manp+'/h</th><th>'+language.JS.Ammu+'/h</th><th>'+language.JS.Rati+'/h</th><th>'+language.JS.Part+'/h</th><th>'+language.JS.TPro+'/h</th><th>'+language.JS.Equi+'/h</th><th>'+language.JS.QPro+'/h</th><th>'+language.JS.QRes+'/h</th><th>'+language.JS.MinTime+'</th><th>'+language.JS.MaxTime+'</th>' + this._titleEnd;
+            title = this._title + '<th>'+language.JS.Manp+'/h</th><th>'+language.JS.Ammu+'/h</th><th>'+language.JS.Rati+'/h</th><th>'+language.JS.Part+'/h</th><th>'+language.JS.TPro+'/h</th><th>'+language.JS.Equi+'/h</th><th>'+language.JS.QPro+'/h</th><th>'+language.JS.QRes+'/h</th><th>'+language.JS.MinIntervalTime+'</th><th>'+language.JS.MaxTime+'</th>' + this._titleEnd;
         }
         else {
-            title = this._title + '<th>'+language.JS.Manp+'</th><th>'+language.JS.Ammu+'</th><th>'+language.JS.Rati+'</th><th>'+language.JS.Part+'</th><th>'+language.JS.TPro+'</th><th>'+language.JS.Equi+'</th><th>'+language.JS.QPro+'</th><th>'+language.JS.QRes+'</th><th>'+language.JS.MinTime+'</th><th>'+language.JS.MaxTime+'</th>' + this._titleEnd;
+            title = this._title + '<th>'+language.JS.Manp+'</th><th>'+language.JS.Ammu+'</th><th>'+language.JS.Rati+'</th><th>'+language.JS.Part+'</th><th>'+language.JS.TPro+'</th><th>'+language.JS.Equi+'</th><th>'+language.JS.QPro+'</th><th>'+language.JS.QRes+'</th><th>'+language.JS.MinIntervalTime+'</th><th>'+language.JS.MaxTime+'</th>' + this._titleEnd;
         }
         return title;
     }

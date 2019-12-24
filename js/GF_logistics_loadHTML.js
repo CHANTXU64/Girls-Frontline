@@ -17,7 +17,7 @@ function loadHTML_Target() {
         HTML += Target[i];
         HTML += '\'),-100)"><b>&minus;</b></button><button class="btn btn-default"type="button"id="Target_decrease_10_'+Target[i]+'"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1 onclick="ChangeTarget($(\'#';
         HTML += Target[i];
-        HTML += '\'),-10)">&minus;</button></div><input type="text"class="form-control"id="';
+        HTML += '\'),-10)">&minus;</button></div><input type="number" pattern="\d*" min="0"class="form-control"id="';
         HTML += Target[i];
         HTML += '"value=0 onclick="this.select()"style="border-left-width:0"><div class="input-group-btn"><button class="btn btn-default"type="button"id="Target_plus_10_'+Target[i]+'"style="padding-right:10px;padding-left:10px;"tabindex=-1 onclick="ChangeTarget($(\'#';
         HTML += Target[i];
@@ -32,7 +32,7 @@ function loadHTML_Target() {
         HTML += Target[i];
         HTML += '\'),-1)"><b>&minus;</b></button><button class="btn btn-default"type="button"id="Target_decrease_01_'+Target[i]+'"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1 onclick="ChangeTarget($(\'#';
         HTML += Target[i];
-        HTML += '\'),-0.1)">&minus;</button></div><input type="text"class="form-control"id="';
+        HTML += '\'),-0.1)">&minus;</button></div><input type="number" pattern="\d*" min="0" step="0.01" class="form-control"id="';
         HTML += Target[i];
         HTML += '"value=0 onclick="this.select()"style="border-left-width:0"><div class="input-group-btn"><button class="btn btn-default"type="button"id="Target_plus_01_'+Target[i]+'"style="padding-right:10px;padding-left:10px;"tabindex=-1 onclick="ChangeTarget($(\'#';
         HTML += Target[i];

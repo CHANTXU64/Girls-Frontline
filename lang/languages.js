@@ -77,7 +77,8 @@ var languages =
             "tab_Timetable_alert4": "总时长不能为0！",
             "Mission": "关卡",
             "MaxTime": "最长时间",
-            "MinTime": "最短时间",
+            "MinIntervalTime": "最短间隔",
+            "NoPlan": "没有合适的方案",
         }
     },
     "zh-hk": {
@@ -156,7 +157,8 @@ var languages =
             "tab_Timetable_alert4": "總時長不能為0！",
             "Mission": "關卡",
             "MaxTime": "最長時間",
-            "MinTime": "最短時間",
+            "MinIntervalTime": "最短間隔",
+            "NoPlan": "沒有合適的方案",
         }
     }
 }

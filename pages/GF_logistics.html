@@ -110,17 +110,17 @@
                                         <div class="tab-pane fade in active" id="Tab_Anytime">
                                             <h4 id="tab_Anytime_time"></h4>
                                             <div class="form-group input-group">
-                                                <input type="text" class="form-control" id="Time_Anytime_hours" value=16
+                                                <input type="number" pattern="\d*" min="0" max="168" class="form-control" id="Time_Anytime_hours" value=16
                                                     onclick="this.select()">
                                                 <span class="input-group-addon" style="border-left-width: 0"
                                                     id="tab_Anytime_hour"></span>
-                                                <input type="text" class="form-control" style="border-left-width: 0"
+                                                <input type="number" pattern="\d*" min="0" max="60" class="form-control" style="border-left-width: 0"
                                                     id="Time_Anytime_minutes" value=0 onclick="this.select()">
                                                 <span class="input-group-addon" id="tab_Anytime_minute"></span>
                                             </div>
                                             <h4 id="tab_Anytime_MinimumIntervalTime"></h4>
                                             <div class="form-group input-group">
-                                                <input type="number" pattern="\d*" class="form-control"
+                                                <input type="number" pattern="\d*" min="0" max="60" class="form-control"
                                                     id="Tab_Anytime_MinimumIntervalTime_minutes" value=0 onclick="this.select()">
                                                 <span class="input-group-addon" id="tab_Anytime_MinimumIntervalTime_minute"></span>
                                             </div>
@@ -130,11 +130,11 @@
                                             <div class="row">
                                                 <div class="col-lg-10">
                                                     <div class="form-group input-group">
-                                                        <input type="text" class="form-control"
+                                                        <input type="number" pattern="\d*" min="0" max="168" class="form-control"
                                                             id="Time_Timetable_hours" value=5 onclick="this.select()">
                                                         <span class="input-group-addon" style="border-left-width: 0"
                                                             id="tab_Timetable_hour"></span>
-                                                        <input type="text" class="form-control"
+                                                        <input type="number" pattern="\d*" min="0" max="60" class="form-control"
                                                             style="border-left-width: 0" id="Time_Timetable_minutes"
                                                             value=0 onclick="this.select()">
                                                         <span class="input-group-addon"
@@ -168,11 +168,11 @@
                                             <div class="row">
                                                 <div class="col-lg-11">
                                                     <div class="form-group input-group">
-                                                        <input type="text" class="form-control"
+                                                        <input type="number" pattern="\d*" min="0" max="168" class="form-control"
                                                             id="Tab_Timetable_new_hours" onclick="this.select()">
                                                         <span class="input-group-addon" style="border-left-width: 0"
                                                             id="tab_Timetable_new_hour"></span>
-                                                        <input type="text" class="form-control"
+                                                        <input type="number" pattern="\d*" min="0" max="60" class="form-control"
                                                             style="border-left-width: 0" id="Tab_Timetable_new_minutes"
                                                             onclick="this.select()">
                                                         <span class="input-group-addon" style="border-left-width: 0"
@@ -192,7 +192,7 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group input-group">
-                                                <input type="text" class="form-control" id="GreatSuccessRate" value=60
+                                                <input type="number" pattern="\d*" min="15" max="69" class="form-control" id="GreatSuccessRate" value=60
                                                     onclick="this.select()">
                                                 <span class="input-group-addon" id="Display_UPRate"
                                                     style="border-left-width: 0"></span>
@@ -261,7 +261,6 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="table-responsive"><table class="table table-striped table-hover table-responsive text-nowrap"><thead><tr><th>关卡1</th><th>关卡2</th><th>关卡3</th><th>关卡4</th><th>人力</th><th>弹药</th><th>口粮</th><th>零件</th><th>人形</th><th>装备</th><th>快建</th><th>快修</th><th>最短时间</th><th>最长时间</th></tr></thead><tbody><tr><td>5-1</td><td>9-1</td><td>10-1</td><td>12-1</td><td>4368</td><td>10816</td><td>12896</td><td>3952</td><td>0</td><td>0</td><td>0</td><td>0</td><td>10m</td><td>1h</td></tr><tr><td>4-1</td><td>5-1</td><td>9-1</td><td>10-1</td><td>4368</td><td>10088</td><td>12168</td><td>3952</td><td>0</td><td>10.88</td><td>0</td><td>0</td><td>10m</td><td>1h</td></tr><tr><td>9-1</td><td>10-1</td><td>11-3</td><td>12-1</td><td>4368</td><td>12766</td><td>12636</td><td>2730</td><td>0</td><td>0</td><td>0</td><td>1.4</td><td>10m</td><td>8h</td></tr><tr><td>9-1</td><td>10-1</td><td>10-3</td><td>12-1</td><td>4368</td><td>12688</td><td>10608</td><td>3250</td><td>0</td><td>0</td><td>1.04</td><td>1.73</td><td>10m</td><td>5.33h</td></tr><tr><td>3-2</td><td>9-1</td><td>10-1</td><td>12-1</td><td>4368</td><td>14092</td><td>10647</td><td>2899</td><td>0</td><td>0</td><td>0</td><td>0</td><td>5m</td><td>1h</td></tr><tr><td>0-1</td><td>5-1</td><td>9-1</td><td>10-1</td><td>4368</td><td>9821.5</td><td>11901.5</td><td>3952</td><td>0</td><td>0</td><td>4.78</td><td>11.94</td><td>10m</td><td>0.83h</td></tr><tr><td>7-2</td><td>8-1</td><td>9-1</td><td>12-1</td><td>3120</td><td>11076</td><td>11856</td><td>3640</td><td>2.4</td><td>12.16</td><td>0</td><td>1.6</td><td>30m</td><td>4h</td></tr><tr><td>5-1</td><td>5-2</td><td>9-1</td><td>10-1</td><td>4368</td><td>10920</td><td>10660</td><td>3952</td><td>0</td><td>0</td><td>0</td><td>5.52</td><td>10m</td><td>2.5h</td></tr><tr><td>9-1</td><td>9-2</td><td>10-1</td><td>12-1</td><td>6708</td><td>10816</td><td>11076</td><td>3380</td><td>0</td><td>0</td><td>7</td><td>0</td><td>10m</td><td>1.5h</td></tr><tr><td>6-1</td><td>8-1</td><td>9-1</td><td>12-1</td><td>6240</td><td>10816</td><td>11856</td><td>3120</td><td>0</td><td>12.16</td><td>0</td><td>0</td><td>30m</td><td>2h</td></tr><tr><td>6-2</td><td>9-1</td><td>10-1</td><td>12-1</td><td>4368</td><td>12116</td><td>12311</td><td>2730</td><td>0</td><td>0</td><td>1.26</td><td>3.14</td><td>10m</td><td>3h</td></tr><tr><td>4-1</td><td>6-1</td><td>9-1</td><td>12-1</td><td>3120</td><td>11544</td><td>12584</td><td>3120</td><td>0</td><td>10.88</td><td>0</td><td>0</td><td>30m</td><td>2h</td></tr><tr><td>5-1</td><td>7-2</td><td>8-1</td><td>12-1</td><td>3120</td><td>11076</td><td>11856</td><td>3432</td><td>2.4</td><td>12.16</td><td>0</td><td>1.6</td><td>30m</td><td>4h</td></tr><tr><td>4-1</td><td>9-1</td><td>10-1</td><td>11-3</td><td>4368</td><td>12038</td><td>11908</td><td>2730</td><td>0</td><td>10.88</td><td>0</td><td>1.4</td><td>10m</td><td>8h</td></tr><tr><td>5-1</td><td>10-1</td><td>10-3</td><td>12-1</td><td>4368</td><td>12688</td><td>10608</td><td>3042</td><td>0</td><td>0</td><td>1.04</td><td>1.73</td><td>10m</td><td>5.33h</td></tr><tr><td>5-1</td><td>10-1</td><td>11-3</td><td>12-1</td><td>4368</td><td>12766</td><td>12636</td><td>2522</td><td>0</td><td>0</td><td>0</td><td>1.4</td><td>10m</td><td>8h</td></tr></tbody></table></div>
                     </div>
                 </div>
                 <div class="row">

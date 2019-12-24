@@ -217,6 +217,10 @@ class Plan {
 
     print(fineTuningExpanded) {
         var Table = document.getElementById("Plan_Table");
+        if (!(0 in this.List[0])) {
+            Table.innerHTML = language.JS.NoPlan;
+            throw"--";
+        }
         var tab = getHTMLFineTuningTool(fineTuningExpanded);
         tab += '<div class="table-responsive">';
         tab += '<table class="table table-striped table-hover table-responsive text-nowrap">';//table-bordered
