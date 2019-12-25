@@ -84,10 +84,12 @@ $(function (){
         }
         UpRate = parseInt(UpRate.substr(0, 2));
         setQContract(Rate + UpRate);
+        PrintMissionTable();
     });
     $('#GreatSuccessRateUp').on('click', function() {
         var TotalRate = getTotalGreatSuccessRate();
         setQContract(TotalRate);
+        PrintMissionTable();
     });
 })
 var Array_GreatSuccessRate = [

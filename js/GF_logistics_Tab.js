@@ -5,6 +5,8 @@ class Tab {
 
     setTime() {}
 
+    setTime_NotCorrected() {}
+
     setValidQAndReturnLengthAndSetCurrentMax() {}
     _setCurrentMax() {
         var CurrentValueMax = new Array(8);
@@ -55,7 +57,7 @@ class Tab {
     }
 
     PrintPlanTableTitle() {}
-    _title = '<thead><tr><th>'+ language.JS.Mission +'1</th><th>'+ language.JS.Mission +'2</th><th>'+ language.JS.Mission +'3</th><th>'+ language.JS.Mission +'4</th>';
+    _title = '<thead><tr><th style="text-align: center;width:5%;" id="resultPlan_Mission_1">'+ language.JS.Mission +'1</th><th style="text-align: center;width:5%;" id="resultPlan_Mission_2">'+ language.JS.Mission +'2</th><th style="text-align: center;width:5%;" id="resultPlan_Mission_3">'+ language.JS.Mission +'3</th><th style="text-align: center;width:5%;" id="resultPlan_Mission_4">'+ language.JS.Mission +'4</th>';
     _titleEnd = '</tr></thead>';
 
     PrintTableCustomize(plan, row) {
@@ -109,6 +111,31 @@ class Tab_Anytime extends Tab {
         var Minutes = getPositiveValueFromHTML($('#Tab_Anytime_MinimumIntervalTime_minutes'));
         var MinimumIntervalTime = Minutes;
         return MinimumIntervalTime;
+    }
+
+    setTime_NotCorrected() {
+        this.TotalTime = this._checkDataLegality_TotalTime();
+        this.MinimumIntervalTime = this._checkDataLegality_MinimumIntervalTime();
+    }
+    _checkDataLegality_TotalTime() {
+        var Hours, Minutes;
+        if (is_Non_positive_number($("#Time_Anytime_hours").val()))
+            Hours = 0;
+        else
+            Hours = parseFloat($("#Time_Anytime_hours").val());
+        if (is_Non_positive_number($("#Time_Anytime_minutes").val()))
+            Minutes = 0;
+        else
+            Minutes = parseFloat($("#Time_Anytime_minutes").val());
+        return Hours * 60 + Minutes;
+    }
+    _checkDataLegality_MinimumIntervalTime() {
+        var Minutes;
+        if (is_Non_positive_number($('#Tab_Anytime_MinimumIntervalTime_minutes').val()))
+            Minutes = 0;
+        else
+            Minutes = parseFloat($('#Tab_Anytime_MinimumIntervalTime_minutes').val());
+        return Minutes;
     }
 
     setValidQAndReturnLengthAndSetCurrentMax() {
@@ -194,7 +221,7 @@ class Tab_Anytime extends Tab {
         if (CollectTimetable_0[1][0] % CollectTimetable_0[0][0] === 0) {
             A[1] = -1;
         }
-        var IntervalTime = 999999999;
+        var IntervalTime = CollectTimetable_0[0][0];
         var maxTime = 999999999;
         while(A[0] !== -1) {
             var a = 0;
@@ -220,19 +247,19 @@ class Tab_Anytime extends Tab {
     PrintPlanTableTitle() {
         var title;
         if (is_CalculateByHour()) {
-            title = this._title + '<th>'+language.JS.Manp+'/h</th><th>'+language.JS.Ammu+'/h</th><th>'+language.JS.Rati+'/h</th><th>'+language.JS.Part+'/h</th><th>'+language.JS.TPro+'/h</th><th>'+language.JS.Equi+'/h</th><th>'+language.JS.QPro+'/h</th><th>'+language.JS.QRes+'/h</th><th>'+language.JS.MinIntervalTime+'</th><th>'+language.JS.MaxTime+'</th>' + this._titleEnd;
+            title = this._title + '<th style="text-align: center;width:8%;" id="resultPlan_Manp">'+language.JS.Manp+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_Ammu">'+language.JS.Ammu+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_Rati">'+language.JS.Rati+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_Part">'+language.JS.Part+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_TPro">'+language.JS.TPro+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_Equi">'+language.JS.Equi+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_QPro">'+language.JS.QPro+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_QRes">'+language.JS.QRes+'/h</th><th style="text-align: center;width:8%;">'+language.JS.MinIntervalTime+'</th><th style="text-align: center;width:8%;">'+language.JS.MaxTime+'</th>' + this._titleEnd;
         }
         else {
-            title = this._title + '<th>'+language.JS.Manp+'</th><th>'+language.JS.Ammu+'</th><th>'+language.JS.Rati+'</th><th>'+language.JS.Part+'</th><th>'+language.JS.TPro+'</th><th>'+language.JS.Equi+'</th><th>'+language.JS.QPro+'</th><th>'+language.JS.QRes+'</th><th>'+language.JS.MinIntervalTime+'</th><th>'+language.JS.MaxTime+'</th>' + this._titleEnd;
+            title = this._title + '<th style="text-align: center;width:8%;" id="resultPlan_Manp">'+language.JS.Manp+'</th><th style="text-align: center;width:8%;" id="resultPlan_Ammu">'+language.JS.Ammu+'</th><th style="text-align: center;width:8%;" id="resultPlan_Rati">'+language.JS.Rati+'</th><th style="text-align: center;width:8%;" id="resultPlan_Part">'+language.JS.Part+'</th><th style="text-align: center;width:8%;" id="resultPlan_TPro">'+language.JS.TPro+'</th><th style="text-align: center;width:8%;" id="resultPlan_Equi">'+language.JS.Equi+'</th><th style="text-align: center;width:8%;" id="resultPlan_QPro">'+language.JS.QPro+'</th><th style="text-align: center;width:8%;" id="resultPlan_QRes">'+language.JS.QRes+'</th><th style="text-align: center;width:8%;">'+language.JS.MinIntervalTime+'</th><th style="text-align: center;width:8%;">'+language.JS.MaxTime+'</th>' + this._titleEnd;
         }
         return title;
     }
 
     PrintTableCustomize(plan, row) {
-        var tab = "";
+        var tab = [];
         var Number = [plan.List[row][0], plan.List[row][1], plan.List[row][2], plan.List[row][3]];
-        tab += "<td>" + this._calculateIntervalTimeMin(Number) + "m</td>";
-        tab += ("<td>" + (Math.round(Math.max(this.Qvalid[Number[0]][9],this.Qvalid[Number[1]][9],this.Qvalid[Number[2]][9],this.Qvalid[Number[3]][9]) * 100 / 60) / 100) + "h</td>");
+        tab.push(this._calculateIntervalTimeMin(Number) + "m");
+        tab.push((Math.round(Math.max(this.Qvalid[Number[0]][9],this.Qvalid[Number[1]][9],this.Qvalid[Number[2]][9],this.Qvalid[Number[3]][9]) * 100 / 60) / 100) + "h");
         return tab;
     }
 };
@@ -245,10 +272,7 @@ class Tab_Timetable extends Tab {
     }
 
     setTime() {
-        for (var i = 0; i < Tab_Timetable_TimeList_html.length; i++) {
-            this.TimeList[i] = Tab_Timetable_TimeList_html[i];
-        }
-        this.TimeList = this.TimeList.sort(sortNumber);
+        this.TimeList = Tab_Timetable_TimeList_html.slice().sort(sortNumber);
         this.TimeList.unshift(0);
         this.TotalTime = Tab_Timetable_getMaxTime();
         if (this.TotalTime == 0) {
@@ -256,6 +280,13 @@ class Tab_Timetable extends Tab {
             clear_sorting_html();
             throw"--";
         }
+        this.TimeList.push(this.TotalTime);
+    }
+
+    setTime_NotCorrected() {
+        this.TimeList = Tab_Timetable_TimeList_html.slice().sort(sortNumber);
+        this.TimeList.unshift(0);
+        this.TotalTime = Tab_Timetable_getMaxTime();
         this.TimeList.push(this.TotalTime);
     }
 
@@ -292,10 +323,10 @@ class Tab_Timetable extends Tab {
     PrintPlanTableTitle() {
         var title;
         if (is_CalculateByHour()) {
-            title = this._title + '<th>'+language.JS.Manp+'/h</th><th>'+language.JS.Ammu+'/h</th><th>'+language.JS.Rati+'/h</th><th>'+language.JS.Part+'/h</th><th>'+language.JS.TPro+'/h</th><th>'+language.JS.Equi+'/h</th><th>'+language.JS.QPro+'/h</th><th>'+language.JS.QRes+'/h</th>' + this._titleEnd;
+            title = this._title + '<th style="text-align: center;width:10%;" id="resultPlan_Manp">'+language.JS.Manp+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_Ammu">'+language.JS.Ammu+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_Rati">'+language.JS.Rati+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_Part">'+language.JS.Part+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_TPro">'+language.JS.TPro+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_Equi">'+language.JS.Equi+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_QPro">'+language.JS.QPro+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_QRes">'+language.JS.QRes+'/h</th>' + this._titleEnd;
         }
         else {
-            title = this._title + '<th>'+language.JS.Manp+'</th><th>'+language.JS.Ammu+'</th><th>'+language.JS.Rati+'</th><th>'+language.JS.Part+'</th><th>'+language.JS.TPro+'</th><th>'+language.JS.Equi+'</th><th>'+language.JS.QPro+'</th><th>'+language.JS.QRes+'</th>' + this._titleEnd;
+            title = this._title + '<th style="text-align: center;width:10%;" id="resultPlan_Manp">'+language.JS.Manp+'</th><th style="text-align: center;width:10%;" id="resultPlan_Ammu">'+language.JS.Ammu+'</th><th style="text-align: center;width:10%;" id="resultPlan_Rati">'+language.JS.Rati+'</th><th style="text-align: center;width:10%;" id="resultPlan_Part">'+language.JS.Part+'</th><th style="text-align: center;width:10%;" id="resultPlan_TPro">'+language.JS.TPro+'</th><th style="text-align: center;width:10%;" id="resultPlan_Equi">'+language.JS.Equi+'</th><th style="text-align: center;width:10%;" id="resultPlan_QPro">'+language.JS.QPro+'</th><th style="text-align: center;width:10%;" id="resultPlan_QRes">'+language.JS.QRes+'</th>' + this._titleEnd;
         }
         return title;
     }

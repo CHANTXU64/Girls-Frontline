@@ -9,11 +9,13 @@
     <meta name="author" content="">
     <title>少女前线-后勤组合排序器</title>
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../vendor/startbootstrap/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../css/GF_logistics.css" rel="stylesheet">
     <script src="../vendor/jquery-v2.1.1/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link href="../vendor/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <script src="../vendor/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="../js/GF_logistics_function.js"></script>
     <script src="../js/GF_logistics_input.js"></script>
     <script src="../js/Quick_Sort.js"></script>
@@ -26,7 +28,7 @@
     <script src="../js/GF_logistics_Plan.js"></script>
     <script src="../js/GF_logistics_main.js"></script>
     <script src="../js/GF_logistics_FineTuning.js"></script>
-
+    <script src="../js/GF_logistics_MissionTable.js"></script>
 </head>
 
 <body>
@@ -87,14 +89,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-7">
                         <div id="localstorageDoesNotWork" class=""></div>
                         <div class="alert alert-warning" role="alert" id="description" style="color:#000000"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-8">
-
+                    <div class="col-lg-7">
                         <div class="panel panel-default">
                             <div class="panel-heading" id="setting"></div>
                             <div class="panel-body" style="padding-left: 5px; padding-right: 5px;">
@@ -128,8 +129,8 @@
                                         </div>
                                         <div class="tab-pane fade" id="Tab_Timetable">
                                             <h4 id="tab_Timetable_time"></h4>
-                                            <div class="row">
-                                                <div class="col-lg-10">
+                                            <div class="row" style="margin-left: 0px; margin-right: 0px;">
+                                                <div class="col-lg-10" style="padding-left: 0px; padding-right: 0px;">
                                                     <div class="form-group input-group">
                                                         <input type="number" pattern="\d*" min="0" max="168" class="form-control"
                                                             id="Time_Timetable_hours" value=5 onclick="this.select()">
@@ -142,7 +143,7 @@
                                                             id="tab_Timetable_minute"></span>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2" style="padding-left: 15px; padding-right: 10px;">
+                                                <div class="col-lg-2" align="right" style="padding-left: 0px; padding-right: 0px;">
                                                     <button type="button" class="btn btn-default"
                                                         id="tab_Timetable_deleteall" title="">
                                                         <span class="glyphicon glyphicon-remove-sign"
@@ -167,7 +168,7 @@
                                             </div>
                                             <h5 id="tab_Timetable_addtimeh5"></h5>
                                             <div class="row">
-                                                <div class="col-lg-11">
+                                                <div class="col-lg-12">
                                                     <div class="form-group input-group">
                                                         <input type="number" pattern="\d*" min="0" max="168" class="form-control"
                                                             id="Tab_Timetable_new_hours" onclick="this.select()">
@@ -261,7 +262,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title"><a data-toggle="collapse" id="MissionTableTitle" href="#MissionTable_panel" class="" aria-expanded="true"></a>
@@ -269,37 +270,51 @@
                             </div>
                             <div id="MissionTable_panel" class="panel-collapse collapse in" aria-expanded="true">
                                 <div class="panel-body" style="padding-left: 0px;padding-top: 0px;padding-right: 0px;padding-bottom: 0px;">
-                                    <div class="table-responsive" style="max-height: 600px;">
-                                        <table class="table table-striped table-hover table-responsive text-nowrap table-sm" id="MissionTable">
-                                            <thead><tr><th>关卡</th><th>人力</th><th>弹药</th><th>口粮</th><th>零件</th><th>人形</th><th>装备</th><th>快建</th><th>快修</th><th>时间</th></tr></thead>
-                                            <tbody id="MissionTable_tbody">
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                                <tr><td>5-1</td><td>438</td><td>116</td><td>126</td><td>352</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1h</td></tr>
-                                            </tbody>
+                                    <table data-toggle="table" id="MissionTable" data-classes="table table-hover table-sm text-nowrap table-condensed" data-height=527>
+                                        <thead>
+                                            <th id="MissionTable_head_Mission" data-align="center" style="width: 10%;">Mission</th>
+                                            <th id="MissionTable_head_Manp" data-align="center" style="width: 10%;">M</th>
+                                            <th id="MissionTable_head_Ammu" data-align="center" style="width: 10%;">A</th>
+                                            <th id="MissionTable_head_Rati" data-align="center" style="width: 10%;">R</th>
+                                            <th id="MissionTable_head_Part" data-align="center" style="width: 10%;">P</th>
+                                            <th id="MissionTable_head_TPro" data-align="center" style="width: 10%;">T</th>
+                                            <th id="MissionTable_head_Equi" data-align="center" style="width: 10%;">E</th>
+                                            <th id="MissionTable_head_QPro" data-align="center" style="width: 10%;">Q</th>
+                                            <th id="MissionTable_head_QRes" data-align="center" style="width: 10%;">Q</th>
+                                            <th id="MissionTable_head_Time" data-align="center" style="width: 10%;">Time</th>
+                                        </thead>
+                                        <tbody id="MissionTable_tbody">
+                                        </tbody>
+                                    </table>
+                                    <!-- <div class="table-responsive">
+                                        <table calss="table table-responsive text-nowrap" id="MissionTable_head">
+                                            <thead>
+                                                <th id="MissionTable_head_Mission" style="width: 59px; text-align: center;">关卡</th>
+                                                <th id="MissionTable_head_Manp" style="width: 59px; text-align: center;">人力</th>
+                                                <th id="MissionTable_head_Ammu" style="width: 59px; text-align: center;">弹药</th>
+                                                <th id="MissionTable_head_Rati" style="width: 59px; text-align: center;">口粮</th>
+                                                <th id="MissionTable_head_Part" style="width: 59px; text-align: center;">零件</th>
+                                                <th id="MissionTable_head_TPro" style="width: 59px; text-align: center;">人形</th>
+                                                <th id="MissionTable_head_Equi" style="width: 59px; text-align: center;">装备</th>
+                                                <th id="MissionTable_head_QPro" style="width: 59px; text-align: center;">快建</th>
+                                                <th id="MissionTable_head_QRes" style="width: 59px; text-align: center;">快修</th>
+                                                <th id="MissionTable_head_Time" style="width: 59px; text-align: center;">时间</th>
+                                            </thead>
                                         </table>
                                     </div>
+                                    <div class="table-responsive"style="max-height: 527px;">
+                                        <table class="table table-striped table-hover text-nowrap table-condensed" id="MissionTable" style="margin-bottom: 0px;">
+                                            <tbody id="MissionTable_tbody">
+                                            </tbody>
+                                        </table>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-7">
                         <div class="panel panel-default">
                             <div class="panel-heading" id="result"></div>
                             <div class="panel-body" id="Plan_Table"></div>

@@ -1,3 +1,5 @@
+var RESULT_PLAN = [];
+
 $(function() {
 $('#start_sorting').on('click', function() {
     console.time('total');
@@ -8,8 +10,9 @@ $('#start_sorting').on('click', function() {
     //调整目标值, 标准化归一化
     //----------
     var plan = new Plan(ShownTab, 8);
+    console.log(plan.TargetValue);
     console.time();
-    if (Q_Valid_length > 36) {
+    if (Q_Valid_length > 38) {
         for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
             for (var n2 = n1 + 1; n2 < (Q_Valid_length - 2); n2++) {
                 for (var n3 = n2 + 1; n3 < (Q_Valid_length - 1); n3++) {
@@ -24,9 +27,11 @@ $('#start_sorting').on('click', function() {
             Q_valid_backup[i] = [i, ShownTab.Qvalid[i][11]];
         }
         quick_sort_expand_descending(Q_valid_backup, 1);
-        Q_valid_backup.splice(0, 36);
+        Q_valid_backup.splice(0, 38);
         quick_sort_expand_descending(Q_valid_backup, 0);
         for (var i = 0; i < Q_valid_backup.length; i++) {
+            console.log(ShownTab.Qvalid[Q_valid_backup[i][0]][0]);
+            console.log(ShownTab.Qvalid[Q_valid_backup[i][0]][11]);
             ShownTab.Qvalid.splice(Q_valid_backup[i][0], 1);
             Q_Valid_length--;
         }

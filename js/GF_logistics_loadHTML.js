@@ -43,6 +43,21 @@ function loadHTML_language() {
     }
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
     document.getElementById("tab_Timetable_deleteall").title = language.HTMLJS.tab_Timetable_deleteall;
+
+    //------
+    var MissionTabHead = document.getElementsByClassName("th-inner");
+    var lang = language.JS;
+    var MissionTabHead_text = [lang.Mission, lang.Manp, lang.Ammu, lang.Rati, lang.Part, lang.TPro, lang.Equi, lang.QPro, lang.QRes, lang.Time];
+    for (var i = 0; i < 10; i++) {
+        MissionTabHead[i].innerHTML = MissionTabHead_text[i];
+    }
+    if (MissionTabHead.length > 10) {
+        for (var i = 0; i < 10; i++) {
+            MissionTabHead[10 + i].innerHTML = MissionTabHead_text[i];
+        }
+    }
+    //-------
+
     if (is_CalculateByHour()) {
         $("#Demand").html(language.HTMLJS.Demand_hour);
     }

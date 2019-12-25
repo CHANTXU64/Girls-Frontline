@@ -72,6 +72,7 @@ function setQContract(TotalGreatSuccessRate) {
     Q[41][5] = 0.75;//10-2
     Q[44][5] = 8 / 16;//???//11-1
     Q[45][5] = 12 / 12;//???//11-2
+    Q[51][5] = 11 / 11;//???//12-4
     //装备契约 Equipment Development Contract
     Q[2][6] = CalculateContractValue(40, 80, TotalRate);//0-3
     Q[15][6] = CalculateContractValue(40, 80, TotalRate);//???//3-4
@@ -83,6 +84,7 @@ function setQContract(TotalGreatSuccessRate) {
     Q[39][6] = 1;//9-4
     Q[43][6] = 10 / 12;//???//10-4
     Q[44][6] = 8 / 16;//???//11-1
+    Q[48][6] = CalculateContractValue(60, 60, TotalRate);//12-1 (42 / 7) 60%GreatSuccessRate
     //快建 Quick Production Contract
     Q[0][7] = CalculateContractValue(20, 70, TotalRate);//0-1
     Q[10][7] = 0.5;//2-3
@@ -96,6 +98,7 @@ function setQContract(TotalGreatSuccessRate) {
     Q[41][7] = 0.25;//10-2
     Q[42][7] = CalculateContractValue(30, 80, TotalRate);//???//10-3
     Q[47][7] = 1;//???//11-4
+    Q[50][7] = 12 / 12;//???//12-3
     //快修 Quick Restoration Contract
     Q[0][8] = CalculateContractValue(50, 70, TotalRate);//0-1
     Q[2][8] = CalculateContractValue(40, 80, TotalRate);//0-3

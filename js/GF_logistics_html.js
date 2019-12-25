@@ -59,11 +59,13 @@ function ChangeTab_Anytime() {
     HTMLtab = "Anytime";
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
     clear_sorting_html();
+    PrintMissionTable();
 }
 function ChangeTab_Timetable() {
     HTMLtab = "Timetable";
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
     clear_sorting_html();
+    PrintMissionTable();
 }
 
 function is_CalculateByHour() {
@@ -118,6 +120,7 @@ function Tab_Timetable_ChangeMaxTime() {
     var total_time = Tab_Timetable_getMaxTime();
     var stringTime = Tab_Timetable_OutputStringTime(total_time);
     document.getElementById('Tab_Timetable_range_tooltip_0_value').innerHTML = stringTime;
+    PrintMissionTable();
 }
 function Tab_Timetable_getMaxTime() {
     var hours, minutes;
@@ -170,6 +173,7 @@ function Tab_Timetable_AddNewTimePoint() {
             Tab_Timetable_AddNewTimePoint_main(total_time);
     }
     Tab_Timetable_emptyInputNewTime(total_time);
+    PrintMissionTable();
 }
 function Tab_Timetable_InputTotalTime_disable() {
     $("#Time_Timetable_hours").attr('disabled', "true");
@@ -211,7 +215,8 @@ function Tab_Timetable_AddNewTooltip(time, position) {
 
 $(function() {
     $("#Tab_Timetable_range").on('click', 'button[id^=Tab_Timetable_range_thumb_]', function() {
-        Tab_Timetable_DeleteThisTimePoint(stringSliceFromLast_(this.id));
+        var time = parseFloat(stringSliceFromLast_(this.id));
+        Tab_Timetable_DeleteThisTimePoint(time);
     })
 })
 function Tab_Timetable_DeleteThisTimePoint(time) {
@@ -223,7 +228,9 @@ function Tab_Timetable_DeleteThisTimePoint(time) {
     var parent_obj = document.getElementById('Tab_Timetable_range');
     parent_obj.removeChild(thumb_obj);
     parent_obj.removeChild(tooltip_obj);
-    if (Tab_Timetable_TimeList_html.length == 0) Tab_Timetable_InputTotalTime_enable();
+    if (Tab_Timetable_TimeList_html.length == 0)
+        Tab_Timetable_InputTotalTime_enable();
+    PrintMissionTable();
 }
 Array.prototype.remove = function(val) {
     var index = this.indexOf(val);
@@ -373,4 +380,30 @@ function clear_sorting_html() {
     $("#start_sorting").removeAttr("disabled");
     $("#clear_sorting").attr('disabled', "true");
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
+}
+
+//对排序结果某一项排序
+$(function() {
+    $("#Plan_Table").on('click', 'th[id^=resultPlan_Mission_]', function() {resultPlan_sortByRanking()});
+    $("#Plan_Table").on('click', '#resultPlan_Manp', function() {resultPlan_sortByColumn(5, "descending")});
+    $("#Plan_Table").on('click', '#resultPlan_Ammu', function() {resultPlan_sortByColumn(6, "descending")});
+    $("#Plan_Table").on('click', '#resultPlan_Rati', function() {resultPlan_sortByColumn(7, "descending")});
+    $("#Plan_Table").on('click', '#resultPlan_Part', function() {resultPlan_sortByColumn(8, "descending")});
+    $("#Plan_Table").on('click', '#resultPlan_TPro', function() {resultPlan_sortByColumn(9, "descending")});
+    $("#Plan_Table").on('click', '#resultPlan_Equi', function() {resultPlan_sortByColumn(10, "descending")});
+    $("#Plan_Table").on('click', '#resultPlan_QPro', function() {resultPlan_sortByColumn(11, "descending")});
+    $("#Plan_Table").on('click', '#resultPlan_QRes', function() {resultPlan_sortByColumn(12, "descending")});
+})
+function resultPlan_sortByRanking() {
+    resultPlan_sortByColumn(0, "ascending");
+}
+function resultPlan_sortByColumn(Column, method) {
+    if (method === "ascending") {
+        quick_sort_expand_ascending(RESULT_PLAN, Column);
+        print_result_plan(false, RESULT_PLAN, 60);
+    }
+    else {
+        quick_sort_expand_descending(RESULT_PLAN, Column);
+        print_result_plan(false, RESULT_PLAN, 60);
+    }
 }
