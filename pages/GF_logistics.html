@@ -16,6 +16,8 @@
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
     <link href="../vendor/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
     <script src="../vendor/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="../vendor/echarts/echarts.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/echarts@4.5.0/dist/echarts.min.js"></script> -->
     <script src="../js/GF_logistics_function.js"></script>
     <script src="../js/GF_logistics_input.js"></script>
     <script src="../js/Quick_Sort.js"></script>
@@ -29,6 +31,7 @@
     <script src="../js/GF_logistics_main.js"></script>
     <script src="../js/GF_logistics_FineTuning.js"></script>
     <script src="../js/GF_logistics_MissionTable.js"></script>
+    <script src="../js/GF_logistics_PlanDetails.js"></script>
 </head>
 
 <body>
@@ -90,14 +93,23 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-7">
-                        <div id="localstorageDoesNotWork" class=""></div>
                         <div class="alert alert-warning" role="alert" id="description" style="color:#000000"></div>
+                        <div id="localstorageDoesNotWork" class=""></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-7">
                         <div class="panel panel-default">
-                            <div class="panel-heading" id="setting"></div>
+                            <div class="panel-heading" style="padding-top: 8px; padding-bottom: 8px;">
+                                <span id="setting" style="width: auto; float: left; padding-top: 2px; padding-bottom: 2px;"></span>
+                                <div class="switch" style="margin-left: auto;">
+                                    <input type="radio" class="switch-input" name="Display_PerHourOrTotal" value="" id="Display_PerHour">
+                                    <label for="Display_PerHour" class="switch-label switch-label-off" id="Display_PerHour_text">以每小时显示</label>
+                                    <input type="radio" class="switch-input" name="Display_PerHourOrTotal" value="" id="Display_Total" checked>
+                                    <label for="Display_Total" class="switch-label switch-label-on" id="Display_Total_text">以总计显示</label>
+                                    <span class="switch-selection"></span>
+                                </div>
+                            </div>
                             <div class="panel-body" style="padding-left: 5px; padding-right: 5px;">
                                 <div class="col-lg-7">
                                     <ul class="nav nav nav-tabs nav-justified">
@@ -222,12 +234,6 @@
 
                                         </select>
                                     </p>
-                                    <div class="checkbox">
-                                        <label id="hourOrTotal_label">
-                                            <input type="checkbox" id="hourOrTotal">
-                                            <div id="hourOrTotal_text" style="font-weight:bold"></div>
-                                        </label>
-                                    </div>
                                 </div>
                                 <div class="col-lg-5">
                                     <div class="row">
@@ -265,12 +271,14 @@
                     <div class="col-lg-5">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h4 class="panel-title"><a data-toggle="collapse" id="MissionTableTitle" href="#MissionTable_panel" class="" aria-expanded="true"></a>
-                                </h4>
+                                <div data-toggle="collapse" href="#MissionTable_panel" class="" aria-expanded="true" style="cursor: pointer;">
+                                    <span class="glyphicon glyphicon-align-justify" style="font-size: 14px;" id="MissionTableTitle"></span>
+                                </div>
+                                <!-- glyphicon glyphicon-menu-hamburger -->
                             </div>
                             <div id="MissionTable_panel" class="panel-collapse collapse in" aria-expanded="true">
                                 <div class="panel-body" style="padding-left: 0px;padding-top: 0px;padding-right: 0px;padding-bottom: 0px;">
-                                    <table data-toggle="table" id="MissionTable" data-classes="table table-hover table-sm text-nowrap table-condensed" data-height=527>
+                                    <table data-toggle="table" id="MissionTable" data-classes="table table-hover table-sm text-nowrap table-condensed" data-height=527 style="text-align: center; cursor: default;">
                                         <thead>
                                             <th id="MissionTable_head_Mission" data-align="center" style="width: 10%;">Mission</th>
                                             <th id="MissionTable_head_Manp" data-align="center" style="width: 10%;">M</th>
@@ -286,28 +294,46 @@
                                         <tbody id="MissionTable_tbody">
                                         </tbody>
                                     </table>
-                                    <!-- <div class="table-responsive">
-                                        <table calss="table table-responsive text-nowrap" id="MissionTable_head">
-                                            <thead>
-                                                <th id="MissionTable_head_Mission" style="width: 59px; text-align: center;">关卡</th>
-                                                <th id="MissionTable_head_Manp" style="width: 59px; text-align: center;">人力</th>
-                                                <th id="MissionTable_head_Ammu" style="width: 59px; text-align: center;">弹药</th>
-                                                <th id="MissionTable_head_Rati" style="width: 59px; text-align: center;">口粮</th>
-                                                <th id="MissionTable_head_Part" style="width: 59px; text-align: center;">零件</th>
-                                                <th id="MissionTable_head_TPro" style="width: 59px; text-align: center;">人形</th>
-                                                <th id="MissionTable_head_Equi" style="width: 59px; text-align: center;">装备</th>
-                                                <th id="MissionTable_head_QPro" style="width: 59px; text-align: center;">快建</th>
-                                                <th id="MissionTable_head_QRes" style="width: 59px; text-align: center;">快修</th>
-                                                <th id="MissionTable_head_Time" style="width: 59px; text-align: center;">时间</th>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                    <div class="table-responsive"style="max-height: 527px;">
-                                        <table class="table table-striped table-hover text-nowrap table-condensed" id="MissionTable" style="margin-bottom: 0px;">
-                                            <tbody id="MissionTable_tbody">
-                                            </tbody>
-                                        </table>
-                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="panel panel-default" style="max-width: 582px;">
+                            <div class="panel-heading" id="PlanDetailsTitle" style="cursor: default;"></div>
+                            <div class="panel-body" style="padding-left: 0px;padding-top: 0px;padding-right: 0px;padding-bottom: 0px;" id="PlanDetails">
+                                <div class="table-responsive">
+                                    <table class="table table-responsive text-nowrap table-condensed" style="margin-bottom: 0px; width: 580px; font-size: 13px; text-align: center; cursor: default;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 30%;" colspan=3 id="PlanDetails_ShownTab"></td>
+                                                <td style="width: 30%;" colspan=3 id="PlanDetails_TotalTime"></td>
+                                                <td style="width: 30%;" colspan=3 id="PlanDetails_GreatSuccessRate"></td>
+                                                <td style="width: 10%;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td id="PlanDetails_Mission"></td>
+                                                <td id="PlanDetails_Manp"></td>
+                                                <td id="PlanDetails_Ammu"></td>
+                                                <td id="PlanDetails_Rati"></td>
+                                                <td id="PlanDetails_Part"></td>
+                                                <td id="PlanDetails_TPro"></td>
+                                                <td id="PlanDetails_Equi"></td>
+                                                <td id="PlanDetails_QPro"></td>
+                                                <td id="PlanDetails_QRes"></td>
+                                                <td id="PlanDetails_Time"></td>
+                                            </tr>
+                                            <tr id="PlanDetails_Mission_1"></tr>
+                                            <tr id="PlanDetails_Mission_2"></tr>
+                                            <tr id="PlanDetails_Mission_3"></tr>
+                                            <tr id="PlanDetails_Mission_4"></tr>
+                                            <tr id="PlanDetails_PerHour"></tr>
+                                            <tr id="PlanDetails_Total"></tr>
+                                            <tr id="PlanDetails_Chart_row">
+                                                <td colspan=10 id="PlanDetails_Chart" style="width: 580px;height:120px;"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

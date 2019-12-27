@@ -2,10 +2,21 @@ window.onload = function () {
     checkDefaultLanguage();
     checkLocalStorage();
     loadHTML_Target();
-    ChangeTab_Anytime();
     loadHTML_language();
-    setQContract(getTotalGreatSuccessRate());
-    PrintMissionTable();
+    HTMLtab = "Anytime";
+    TABLE_CALCULATE_TOTAL_TIME = get_TABLE_CALCULATE_TOTAL_TIME();
+    setQContract(Input_getTotalGreatSuccessRate(true));
+    ChangeTab_Anytime();
+}
+
+function get_TABLE_CALCULATE_TOTAL_TIME() {
+    if (is_CalculateByHour())
+        return 60;
+    else {
+        var ShownTab = getShownTab();
+        ShownTab.setTime_NotCorrected();
+        return ShownTab.TotalTime;
+    }
 }
 
 function checkDefaultLanguage() {
@@ -59,17 +70,29 @@ function ChangeTab_Anytime() {
     HTMLtab = "Anytime";
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
     clear_sorting_html();
+    if (!is_CalculateByHour()) {
+        var ShownTab = getShownTab();
+        ShownTab.setTime();
+        TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
+    }
     PrintMissionTable();
+    PrintPlanDetails();
 }
 function ChangeTab_Timetable() {
     HTMLtab = "Timetable";
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
     clear_sorting_html();
+    if (!is_CalculateByHour()) {
+        var ShownTab = getShownTab();
+        ShownTab.setTime();
+        TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
+    }
     PrintMissionTable();
+    PrintPlanDetails();
 }
 
 function is_CalculateByHour() {
-    if (document.getElementById('hourOrTotal').checked) {
+    if (document.getElementById('Display_PerHour').checked) {
         return true;
     }
     else {
@@ -78,7 +101,7 @@ function is_CalculateByHour() {
 }
 
 $(function (){
-    $('[id=hourOrTotal]').on("click", function(){
+    $('input[id^=Display_]').on("click", function(){
         if (is_CalculateByHour()) {
             changeCalculateOutput_Hour();
         }
@@ -91,20 +114,32 @@ function changeCalculateOutput_Hour() {
     $("#Demand").html(language.HTMLJS.Demand_hour);
     var ShownTab = getShownTab();
     ShownTab.setTime();
+    TABLE_CALCULATE_TOTAL_TIME = 60;
     var time = ShownTab.TotalTime;
     var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
     for (var i = 0 ; i < 8; i++) {
         $(id[i]).val(Math.round($(id[i]).val() / time * 6000) / 100);
+    }
+    PrintMissionTable();
+    var Plan_Table_innerHTML = document.getElementById("Plan_Table").innerHTML;
+    if (Plan_Table_innerHTML !== language.HTMLJS.plantabletip && Plan_Table_innerHTML !== language.JS.NoPlan) {
+        print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
 }
 function changeCalculateOutput_Total() {
     $("#Demand").html(language.HTMLJS.Demand_total);
     var ShownTab = getShownTab();
     ShownTab.setTime();
+    TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
     var time = ShownTab.TotalTime;
     var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
     for (var i = 0 ; i < 8; i++) {
         $(id[i]).val(Math.round($(id[i]).val() * time * 100 / 60) / 100);
+    }
+    PrintMissionTable();
+    var Plan_Table_innerHTML = document.getElementById("Plan_Table").innerHTML;
+    if (Plan_Table_innerHTML !== language.HTMLJS.plantabletip && Plan_Table_innerHTML !== language.JS.NoPlan) {
+        print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
 }
 
@@ -118,31 +153,29 @@ $(function (){
 
 function Tab_Timetable_ChangeMaxTime() {
     var total_time = Tab_Timetable_getMaxTime();
-    var stringTime = Tab_Timetable_OutputStringTime(total_time);
+    var stringTime = TimeFormat(total_time);
     document.getElementById('Tab_Timetable_range_tooltip_0_value').innerHTML = stringTime;
+    if (!is_CalculateByHour()) {
+        TABLE_CALCULATE_TOTAL_TIME = total_time;
+    }
     PrintMissionTable();
+    PrintPlanDetails();
 }
 function Tab_Timetable_getMaxTime() {
     var hours, minutes;
-    if (is_Non_positive_number($("#Time_Timetable_hours").val())) {
+    if (is_NonPositiveNumberOrInfinity($("#Time_Timetable_hours").val())) {
         hours = 0;
     }
     else {
         hours = parseFloat($("#Time_Timetable_hours").val());
     }
-    if (is_Non_positive_number($("#Time_Timetable_minutes").val())) {
+    if (is_NonPositiveNumberOrInfinity($("#Time_Timetable_minutes").val())) {
         minutes = 0;
     }
     else {
         minutes = parseFloat($("#Time_Timetable_minutes").val());
     }
     return hours * 60 + minutes;
-}
-function Tab_Timetable_OutputStringTime(time) {
-    var hours = parseInt(time / 60);
-    var minutes = time % 60;
-    if ((minutes + "").length < 2) minutes = "0" + minutes;
-    return hours + ":" + minutes;
 }
 
 $(function() {
@@ -174,6 +207,7 @@ function Tab_Timetable_AddNewTimePoint() {
     }
     Tab_Timetable_emptyInputNewTime(total_time);
     PrintMissionTable();
+    PrintPlanDetails();
 }
 function Tab_Timetable_InputTotalTime_disable() {
     $("#Time_Timetable_hours").attr('disabled', "true");
@@ -198,7 +232,7 @@ function Tab_Timetable_AddNewThumb(time, position) {
     $("#Tab_Timetable_range").append(newThumb);
 }
 function Tab_Timetable_AddNewTooltip(time, position) {
-    var stringTime = Tab_Timetable_OutputStringTime(time);
+    var stringTime = TimeFormat(time);
     var newTooltip = '<div id="Tab_Timetable_range_tooltip_' + time + '"';
     if (Tab_Timetable_TimeList_html.indexOf(time) % 2 == 0) {
         newTooltip += 'class="tooltip top custom-tooltip"';
@@ -231,6 +265,7 @@ function Tab_Timetable_DeleteThisTimePoint(time) {
     if (Tab_Timetable_TimeList_html.length == 0)
         Tab_Timetable_InputTotalTime_enable();
     PrintMissionTable();
+    PrintPlanDetails();
 }
 Array.prototype.remove = function(val) {
     var index = this.indexOf(val);
@@ -322,9 +357,6 @@ function start_sorting_html() {
     document.getElementById("greatsuccessrateup").style.cursor='not-allowed';
     document.getElementById("GreatSuccessRateUp_label").style.cursor='not-allowed';
     $("#MapLimit").attr('disabled', "true");
-    $("#hourOrTotal").attr('disabled', "true");
-    document.getElementById("hourOrTotal_text").style.cursor='not-allowed';
-    document.getElementById("hourOrTotal_label").style.cursor='not-allowed';
     $("#ContractWeight").attr('disabled', "true");
     document.getElementById("ContractWeight_thumb").style.backgroundColor='#CCC';
     $("button[id^=setTarget_").attr('disabled', "true");
@@ -361,9 +393,6 @@ function clear_sorting_html() {
     document.getElementById("greatsuccessrateup").style.cursor='pointer';
     document.getElementById("GreatSuccessRateUp_label").style.cursor='pointer';
     $("#MapLimit").removeAttr("disabled");
-    $("#hourOrTotal").removeAttr("disabled");
-    document.getElementById("hourOrTotal_text").style.cursor='pointer';
-    document.getElementById("hourOrTotal_label").style.cursor='pointer';
     $("#ContractWeight").removeAttr("disabled");
     document.getElementById("ContractWeight_thumb").style.backgroundColor='rgb(112, 166, 236)';
     $("button[id^=setTarget_").removeAttr("disabled");
@@ -384,26 +413,50 @@ function clear_sorting_html() {
 
 //对排序结果某一项排序
 $(function() {
-    $("#Plan_Table").on('click', 'th[id^=resultPlan_Mission_]', function() {resultPlan_sortByRanking()});
-    $("#Plan_Table").on('click', '#resultPlan_Manp', function() {resultPlan_sortByColumn(5, "descending")});
-    $("#Plan_Table").on('click', '#resultPlan_Ammu', function() {resultPlan_sortByColumn(6, "descending")});
-    $("#Plan_Table").on('click', '#resultPlan_Rati', function() {resultPlan_sortByColumn(7, "descending")});
-    $("#Plan_Table").on('click', '#resultPlan_Part', function() {resultPlan_sortByColumn(8, "descending")});
-    $("#Plan_Table").on('click', '#resultPlan_TPro', function() {resultPlan_sortByColumn(9, "descending")});
-    $("#Plan_Table").on('click', '#resultPlan_Equi', function() {resultPlan_sortByColumn(10, "descending")});
-    $("#Plan_Table").on('click', '#resultPlan_QPro', function() {resultPlan_sortByColumn(11, "descending")});
-    $("#Plan_Table").on('click', '#resultPlan_QRes', function() {resultPlan_sortByColumn(12, "descending")});
+    $("#Plan_Table").on('click', 'th[id^=resultPlan_Mission_]', function() {
+        RESULT_PLAN_SORT_BY = "Ranking";
+        resultPlan_sortByColumn(0, "ascending");
+    });
+    $("#Plan_Table").on('click', '#resultPlan_Manp', function() {
+        RESULT_PLAN_SORT_BY = "Manp";
+        resultPlan_sortByColumn(5, "descending");
+    });
+    $("#Plan_Table").on('click', '#resultPlan_Ammu', function() {
+        RESULT_PLAN_SORT_BY = "Ammu";
+        resultPlan_sortByColumn(6, "descending");
+    });
+    $("#Plan_Table").on('click', '#resultPlan_Rati', function() {
+        RESULT_PLAN_SORT_BY = "Rati";
+        resultPlan_sortByColumn(7, "descending");
+    });
+    $("#Plan_Table").on('click', '#resultPlan_Part', function() {
+        RESULT_PLAN_SORT_BY = "Part";
+        resultPlan_sortByColumn(8, "descending");
+    });
+    $("#Plan_Table").on('click', '#resultPlan_TPro', function() {
+        RESULT_PLAN_SORT_BY = "TPro";
+        resultPlan_sortByColumn(9, "descending");
+    });
+    $("#Plan_Table").on('click', '#resultPlan_Equi', function() {
+        RESULT_PLAN_SORT_BY = "Equi";
+        resultPlan_sortByColumn(10, "descending");
+    });
+    $("#Plan_Table").on('click', '#resultPlan_QPro', function() {
+        RESULT_PLAN_SORT_BY = "QPro";
+        resultPlan_sortByColumn(11, "descending");
+    });
+    $("#Plan_Table").on('click', '#resultPlan_QRes', function() {
+        RESULT_PLAN_SORT_BY = "QRes";
+        resultPlan_sortByColumn(12, "descending");
+    });
 })
-function resultPlan_sortByRanking() {
-    resultPlan_sortByColumn(0, "ascending");
-}
 function resultPlan_sortByColumn(Column, method) {
     if (method === "ascending") {
         quick_sort_expand_ascending(RESULT_PLAN, Column);
-        print_result_plan(false, RESULT_PLAN, 60);
+        print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
     else {
         quick_sort_expand_descending(RESULT_PLAN, Column);
-        print_result_plan(false, RESULT_PLAN, 60);
+        print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
 }

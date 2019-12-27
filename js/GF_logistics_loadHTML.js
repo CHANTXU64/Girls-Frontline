@@ -50,6 +50,7 @@ function loadHTML_language() {
     var MissionTabHead_text = [lang.Mission, lang.Manp, lang.Ammu, lang.Rati, lang.Part, lang.TPro, lang.Equi, lang.QPro, lang.QRes, lang.Time];
     for (var i = 0; i < 10; i++) {
         MissionTabHead[i].innerHTML = MissionTabHead_text[i];
+        MissionTabHead[i].style.cursor = "pointer";
     }
     if (MissionTabHead.length > 10) {
         for (var i = 0; i < 10; i++) {

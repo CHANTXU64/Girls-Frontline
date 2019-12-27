@@ -3,37 +3,38 @@ var MISSION_TABLE_SELECT = [];
 
 function PrintMissionTable() {
     MISSION_TABLE = _getMissionTableByShownTab();
+    var time_calculate = TABLE_CALCULATE_TOTAL_TIME;
     var MissionTable = MISSION_TABLE;
     var tbody = document.getElementById("MissionTable_tbody");
     var tab = '';
     var MissionTable_length = MissionTable.length;
+    var selectMissions = MISSION_TABLE_SELECT.slice();
     for (var i = 0; i < MissionTable_length; i++) {
         var TotalMinutes = MissionTable[i][9];
-        tab += '<tr id="MissionTable_' + i + '">';
-        tab += '<td style="width: 10%; text-align: center;">' + MissionTable[i][0] + '</td>';
-        for (var ii = 1; ii < 5; ii++) {
-            if (MissionTable[i][ii] * 60 > 100)
-                tab += '<td style="width: 10%; text-align: center;">' + Math.round(MissionTable[i][ii] * 60) + '</td>';
-            else if (MissionTable[i][ii] * 60 > 10)
-                tab += '<td style="width: 10%; text-align: center;">' + Math.round(MissionTable[i][ii] * 60 * 10) / 10 + '</td>';
-            else
-                tab += '<td style="width: 10%; text-align: center;">' + Math.round(MissionTable[i][ii] * 60 * 100) / 100 + '</td>';
+        var tab_0 = '<tr id="MissionTable_' + i + '">';
+        for (var ii = 0; ii < selectMissions.length; ii++) {
+            if (selectMissions[ii] === MissionTable[i][0]) {
+                tab_0 = '<tr id="MissionTable_' + i + '" class="success">';
+                break;
+            }
         }
-        for (var ii = 5; ii < 9; ii++) {
-            if (MissionTable[i][ii] * 60 > 100)
-                tab += '<td style="width: 10%; text-align: center;">' + Math.round(MissionTable[i][ii] * 60) + '</td>';
-            else if (MissionTable[i][ii] * 60 > 10)
-                tab += '<td style="width: 10%; text-align: center;">' + Math.round(MissionTable[i][ii] * 60 * 10) / 10 + '</td>';
-            else
-                tab += '<td style="width: 10%; text-align: center;">' + Math.round(MissionTable[i][ii] * 60 * 100) / 100 + '</td>';
+        tab += tab_0;
+        tab += '<td style="width: 10%;">' + MissionTable[i][0] + '</td>';
+        for (var ii = 1; ii < 9; ii++) {
+            tab += '<td style="width: 10%;">' + NumberAutoExact(MissionTable[i][ii] * time_calculate) + '</td>';
         }
-        var hours = parseInt(TotalMinutes / 60);
-        var minutes = TotalMinutes % 60;
-        if ((minutes + "").length < 2)
-            minutes = "0" + minutes;
-        var time = hours + ':' + minutes;
-        tab += '<td style="width: 10%; text-align: center;">' + time + '</td>';
+        tab += '<td style="width: 10%;">' + TimeFormat(TotalMinutes) + '</td>';
         tab += '<tr>';
+    }
+    for (var i = 0; i < selectMissions.length; i++) {
+        for (var ii = 0; ii < MissionTable_length; ii++) {
+            if (selectMissions[i] === MissionTable[ii][0])
+                break;
+            if (ii === MissionTable_length - 1) {
+                var index = MISSION_TABLE_SELECT.indexOf(selectMissions[i]);
+                MISSION_TABLE_SELECT.splice(index, 1);
+            }
+        }
     }
     if (MissionTable_length === 0)
         tab = '<tr><td>' + language.JS.NoMission + '</td></tr>';
@@ -55,7 +56,7 @@ function _getMissionTableByShownTab() {
         MissionTable[i].push(MissionNumber);
     }
     quick_sort_expand_ascending(MissionTable, 12);
-    var TotalRate = getTotalGreatSuccessRate();
+    var TotalRate = Input_getTotalGreatSuccessRate();
     var ResourceIncreasingRate = 1 + (TotalRate) / 200;
     for (var i = 0; i < MissionTable_length; i++) {
         MissionTable[i][1] *= ResourceIncreasingRate;
@@ -67,10 +68,32 @@ function _getMissionTableByShownTab() {
 }
 
 $(function() {
-    $("#MapLimit").on('change', function() {PrintMissionTable()});
-    $("#Time_Anytime_hours").on('input propertychange', function() {PrintMissionTable()});
-    $("#Time_Anytime_minutes").on('input propertychange', function() {PrintMissionTable()});
-    $("#Tab_Anytime_MinimumIntervalTime_minutes").on('input propertychange', function() {PrintMissionTable()});
+    $("#MapLimit").on('change', function() {
+        PrintMissionTable();
+        PrintPlanDetails();
+    });
+    $("#Time_Anytime_hours").on('input propertychange', function() {
+        if (!is_CalculateByHour()) {
+            var ShownTab = getShownTab();
+            ShownTab.setTime();
+            TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
+        }
+        PrintMissionTable();
+        PrintPlanDetails();
+    });
+    $("#Time_Anytime_minutes").on('input propertychange', function() {
+        if (!is_CalculateByHour()) {
+            var ShownTab = getShownTab();
+            ShownTab.setTime();
+            TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
+        }
+        PrintMissionTable();
+        PrintPlanDetails();
+    });
+    $("#Tab_Anytime_MinimumIntervalTime_minutes").on('input propertychange', function() {
+        PrintMissionTable();
+        PrintPlanDetails();
+    });
 })
 
 //排序结果点击
@@ -102,6 +125,7 @@ function MissionTable_resultPlan_select(number) {
         Missions.push(RESULT_PLAN[number][i + 1]);
     }
     MISSION_TABLE_SELECT = Missions;
+    PrintPlanDetails();
     for (var i = 0; i < 4; i++) {
         for (var ii = 0; ii < missionTable_length; ii++) {
             if (missionTable[ii][0] === Missions[i]) {
@@ -138,6 +162,7 @@ function MissionTable_selectThisRow(number) {
     var selectedMission = MISSION_TABLE[number][0];
     MISSION_TABLE_SELECT.push(selectedMission);
     document.getElementById("MissionTable_" + number).className = "success";
+    PrintPlanDetails();
 }
 
 function MissionTable_cancelSelectThisRow(number) {
@@ -145,4 +170,5 @@ function MissionTable_cancelSelectThisRow(number) {
     var index = MISSION_TABLE_SELECT.indexOf(mission);
     MISSION_TABLE_SELECT.splice(index, 1);
     document.getElementById("MissionTable_" + number).className = "";
+    PrintPlanDetails();
 }

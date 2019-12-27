@@ -119,11 +119,11 @@ class Tab_Anytime extends Tab {
     }
     _checkDataLegality_TotalTime() {
         var Hours, Minutes;
-        if (is_Non_positive_number($("#Time_Anytime_hours").val()))
+        if (is_NonPositiveNumberOrInfinity($("#Time_Anytime_hours").val()))
             Hours = 0;
         else
             Hours = parseFloat($("#Time_Anytime_hours").val());
-        if (is_Non_positive_number($("#Time_Anytime_minutes").val()))
+        if (is_NonPositiveNumberOrInfinity($("#Time_Anytime_minutes").val()))
             Minutes = 0;
         else
             Minutes = parseFloat($("#Time_Anytime_minutes").val());
@@ -131,7 +131,7 @@ class Tab_Anytime extends Tab {
     }
     _checkDataLegality_MinimumIntervalTime() {
         var Minutes;
-        if (is_Non_positive_number($('#Tab_Anytime_MinimumIntervalTime_minutes').val()))
+        if (is_NonPositiveNumberOrInfinity($('#Tab_Anytime_MinimumIntervalTime_minutes').val()))
             Minutes = 0;
         else
             Minutes = parseFloat($('#Tab_Anytime_MinimumIntervalTime_minutes').val());

@@ -1,4 +1,6 @@
 var RESULT_PLAN = [];
+var RESULT_PLAN_SORT_BY = "";
+var TABLE_CALCULATE_TOTAL_TIME;
 
 $(function() {
 $('#start_sorting').on('click', function() {

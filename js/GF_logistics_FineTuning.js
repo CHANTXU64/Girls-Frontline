@@ -76,7 +76,7 @@ function FineTuning_main() {
             }
         }
     }
-    plan.print(true); 
+    plan.print(true, RESULT_PLAN_SORT_BY); 
 }
 
 $(function() {

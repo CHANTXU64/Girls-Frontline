@@ -1,10 +1,3 @@
-function is_Non_positive_number(x) {
-    if (x === "" || isNaN(x) || x < 0 || x === "Infinity")
-        return true;
-    else
-        return false;
-}
-
 function getPositiveValueFromHTML(HTMLValue) {
     if (Array.isArray(HTMLValue))
         return _getPositiveValueFromHTML_array(HTMLValue);
@@ -12,86 +5,88 @@ function getPositiveValueFromHTML(HTMLValue) {
         return _getPositiveValueFromHTML_one(HTMLValue);
 }
 function _getPositiveValueFromHTML_one(HTMLNumber) {
-    if (is_Non_positive_number(HTMLNumber.val()))
+    if (is_NonPositiveNumberOrInfinity(HTMLNumber.val()))
         HTMLNumber.val(0);
     return parseFloat(HTMLNumber.val());
 }
 function _getPositiveValueFromHTML_array(HTMLArr) {
     var Arr = new Array(HTMLArr.length);
     for (var i = 0; i < HTMLArr.length; i++) {
-        if (is_Non_positive_number(HTMLArr[i].val()))
+        if (is_NonPositiveNumberOrInfinity(HTMLArr[i].val()))
             HTMLArr[i].val(0);
         Arr[i] = parseFloat(HTMLArr[i].val());
     }
     return Arr;
 }
 
+function Input_getGreatSuccessRate(NeedCorrection = false) {
+    var Rate_elem = $("#GreatSuccessRate");
+    var Rate = Rate_elem.val();
+    if (is_NonPositiveNumberOrInfinity(Rate) || Rate < 15)
+        Rate = 15;
+    else if (Rate > 69)
+        Rate = 69;
+    else
+        Rate = Math.round(Rate);
+    if (NeedCorrection)
+        Rate_elem.val(Rate);
+    return Rate;
+}
+
 function IsGreatSuccessRateUp() {
     if (document.getElementById('GreatSuccessRateUp').checked)
-        return 1;
+        return true;
+    else
+        return false;
+}
+
+function Input_getGreatSuccessUpRate(GreatSuccessRate) {
+    if (IsGreatSuccessRateUp())
+        return parseInt(Array_GreatSuccessRate[GreatSuccessRate].substr(0, 2));
     else
         return 0;
 }
 
-function CheckDataLegalityAndCorrect_GreatSuccessRate() {
-    var Rate = $("#GreatSuccessRate");
-    if (is_Non_positive_number(Rate.val()) || Rate.val() < 15)
-        Rate.val(15);
-    if (Rate.val() > 69)
-        Rate.val(69);
-    Rate.val(Math.round(Rate.val()));
+function Input_getTotalGreatSuccessRate(NeedCorrection = false) {
+    var BaseRate = Input_getGreatSuccessRate(NeedCorrection);
+    var UpRate = Input_getGreatSuccessUpRate(BaseRate);
+    return BaseRate + UpRate;
 }
 
-function getTotalGreatSuccessRate() {
-    var GreatSuccessRate_UP = parseInt(Function_GreatSuccessRateUP().substr(0, 2));
-    var GreatSuccessRate = parseInt($("#GreatSuccessRate").val());
-    return GreatSuccessRate_UP + GreatSuccessRate;
-}
-
-function Function_GreatSuccessRateUP() {
-    CheckDataLegalityAndCorrect_GreatSuccessRate();
-    var UpRate = 0;
-    if (IsGreatSuccessRateUp()) {
-        UpRate = Array_GreatSuccessRate[Math.round($("#GreatSuccessRate").val())];
-        document.getElementById('Display_UPRate').innerHTML = ("+" + UpRate);
-        return "" + UpRate;
+function Input_setGreatSuccessUpRate(is_RateUP) {
+    var checkbox_elem = document.getElementById("GreatSuccessRateUp");
+    var UpRateText_elem = document.getElementById("Display_UPRate");
+    if (is_RateUP === false) {
+        checkbox_elem.checked = false;
+        UpRateText_elem.innerHTML = "";
     }
     else {
-        document.getElementById('Display_UPRate').innerHTML = "";
-        return "" + UpRate;
+        checkbox_elem.checked = true;
+        var BaseRate = Input_getGreatSuccessRate(true);
+        UpRateText_elem.innerHTML = "+" + Array_GreatSuccessRate[BaseRate];
     }
 }
 
 $(function (){
     $("#GreatSuccessRate").on('input propertychange',function() {
-        var UpRate;
-        var GreatSuccessRate = $("#GreatSuccessRate");
-        var Rate;
-        if (is_Non_positive_number(GreatSuccessRate.val()) || GreatSuccessRate.val() < 15) {
-            Rate = 15;
-            UpRate = "" + 15;
-        }
-        else if (GreatSuccessRate.val() > 69) {
-            Rate = 60;
-            UpRate = "" + 30;
-        }
-        else {
-            var Rate = Math.round(GreatSuccessRate.val());
-            UpRate = Array_GreatSuccessRate[Rate];
-        }
-        if (IsGreatSuccessRateUp()) {
-            document.getElementById('Display_UPRate').innerHTML = ("+" + UpRate);
-        }
-        UpRate = parseInt(UpRate.substr(0, 2));
-        setQContract(Rate + UpRate);
-        PrintMissionTable();
-    });
-    $('#GreatSuccessRateUp').on('click', function() {
-        var TotalRate = getTotalGreatSuccessRate();
+        var Rate = Input_getGreatSuccessRate();
+        var is_RateUP = IsGreatSuccessRateUp();
+        Input_setGreatSuccessUpRate(is_RateUP);
+        var TotalRate = Rate + Input_getGreatSuccessUpRate(Rate);
         setQContract(TotalRate);
         PrintMissionTable();
+        PrintPlanDetails();
+    });
+    $('#GreatSuccessRateUp').on('click', function() {
+        var is_RateUP = IsGreatSuccessRateUp();
+        Input_setGreatSuccessUpRate(is_RateUP);
+        var TotalRate = Input_getTotalGreatSuccessRate(true);
+        setQContract(TotalRate);
+        PrintMissionTable();
+        PrintPlanDetails();
     });
 })
+
 var Array_GreatSuccessRate = [
  "15",
  "15",

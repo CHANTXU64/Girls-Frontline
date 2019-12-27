@@ -11,6 +11,7 @@ Contract reference from https://bbs.nga.cn/read.php?tid=13814613 <br>
 Picture archive https://imgur.com/XY6kEqh
 
 "Multi Range Slider" By [GlitchWorker](https://codepen.io/glitchworker/pen/XVdKqj)
+"Sliding radio buttons" By [Oguzhan Cansever](https://codepen.io/oggyindahouse/pen/Bamui)
 
 
 ![image](https://github.com/CHANTXU64/Girls-Frontline/raw/master/GF_logistics_Tab_Timetable-1018x883.png)

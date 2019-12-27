@@ -72,7 +72,7 @@ function setQContract(TotalGreatSuccessRate) {
     Q[41][5] = 0.75;//10-2
     Q[44][5] = 8 / 16;//???//11-1
     Q[45][5] = 12 / 12;//???//11-2
-    Q[51][5] = 11 / 11;//???//12-4
+    Q[51][5] = 12 / 12;//???//12-4
     //装备契约 Equipment Development Contract
     Q[2][6] = CalculateContractValue(40, 80, TotalRate);//0-3
     Q[15][6] = CalculateContractValue(40, 80, TotalRate);//???//3-4

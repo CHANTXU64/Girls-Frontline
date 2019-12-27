@@ -14,7 +14,7 @@ class Plan {
         this._Norm_Target = this._getNorm(this.TargetValue);
     }
     _setResourceIncreasingRate() {
-        var TotalRate = getTotalGreatSuccessRate();
+        var TotalRate = Input_getTotalGreatSuccessRate(true);
         this.ResourceIncreasingRate = 1 + (TotalRate) / 200;
     }
     _setList(length) {
@@ -237,7 +237,7 @@ class Plan {
         return Value2(this.TargetValue, this._CurrentValue);
     }
 
-    print(fineTuningExpanded) {
+    print(fineTuningExpanded, SortBy = "Ranking") {
         if (!(0 in this.List[0])) {
             var Table = document.getElementById("Plan_Table");
             Table.innerHTML = language.JS.NoPlan;
@@ -275,6 +275,43 @@ class Plan {
         else
             Minutes = this.ShownTab.TotalTime;
 
+        switch(SortBy) {
+            case "Ranking":
+                RESULT_PLAN_SORT_BY = "Ranking";
+                break;
+            case "Manp":
+                quick_sort_expand_descending(result_plan, 5);
+                RESULT_PLAN_SORT_BY = "Manp";
+                break;
+            case "Ammu":
+                quick_sort_expand_descending(result_plan, 6);
+                RESULT_PLAN_SORT_BY = "Ammu";
+                break;
+            case "Rati":
+                quick_sort_expand_descending(result_plan, 7);
+                RESULT_PLAN_SORT_BY = "Rati";
+                break;
+            case "Part":
+                quick_sort_expand_descending(result_plan, 8);
+                RESULT_PLAN_SORT_BY = "Part";
+                break;
+            case "TPro":
+                quick_sort_expand_descending(result_plan, 9);
+                RESULT_PLAN_SORT_BY = "TPro";
+                break;
+            case "Equi":
+                quick_sort_expand_descending(result_plan, 10);
+                RESULT_PLAN_SORT_BY = "Equi";
+                break;
+            case "QPro":
+                quick_sort_expand_descending(result_plan, 11);
+                RESULT_PLAN_SORT_BY = "QPro";
+                break;
+            case "QRes":
+                quick_sort_expand_descending(result_plan, 12);
+                RESULT_PLAN_SORT_BY = "QRes";
+                break;
+        }
         RESULT_PLAN = result_plan;
         print_result_plan(fineTuningExpanded, result_plan, Minutes);
     }
@@ -291,11 +328,27 @@ function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
     var Table = document.getElementById("Plan_Table");
     var tab = getHTMLFineTuningTool(fineTuningExpanded);
     tab += '<div class="table-responsive">';
-    tab += '<table class="table table-striped table-hover table-responsive text-nowrap">';
+    tab += '<table class="table table-striped table-hover table-responsive text-nowrap" style="margin-bottom: 0px; cursor: default;">';
     var ShownTab = getShownTab();
     tab += (ShownTab.PrintPlanTableTitle() + '<tbody>');
+    var is_selected;
+    var selectedMissions;
+    if (MISSION_TABLE_SELECT.length === 4) {
+        is_selected = true;
+        selectedMissions = MISSION_TABLE_SELECT.slice();
+        selectedMissions.sort(sortStringNumber);
+    }
+    else
+        is_selected = false;
     for (var i = 0; i < result_plan.length; i++) {
-        tab += "<tr id='print_result_plan_tr_" + i + "'>";
+        if (is_selected) {
+            if (result_plan[i][1] === selectedMissions[0] && result_plan[i][2] === selectedMissions[1] && result_plan[i][3] === selectedMissions[2] && result_plan[i][4] === selectedMissions[3])
+                tab += "<tr id='print_result_plan_tr_" + i + "' class='success'>";
+            else
+                tab += "<tr id='print_result_plan_tr_" + i + "'>";
+        }
+        else
+            tab += "<tr id='print_result_plan_tr_" + i + "'>";
         for (var ii = 0; ii < 4; ii++) {
             tab += "<td style='text-align: center'>";
             tab += "" + result_plan[i][ii + 1];
