@@ -5,7 +5,7 @@ var TABLE_CALCULATE_TOTAL_TIME;
 $(function() {
 $('#start_sorting').on('click', function() {
     console.time('total');
-    start_sorting_html();
+    HTML_DisableInput();
     var ShownTab = getShownTab();
     ShownTab.setTime();
     var Q_Valid_length = ShownTab.setValidQAndReturnLengthAndSetCurrentMax();

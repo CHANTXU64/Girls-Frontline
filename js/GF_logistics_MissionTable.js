@@ -43,7 +43,7 @@ function PrintMissionTable() {
 
 function _getMissionTableByShownTab() {
     var ShownTab = getShownTab();
-    ShownTab.setTime_NotCorrected();
+    ShownTab.setTime(false);
     ShownTab.setValidQAndReturnLengthAndSetCurrentMax();
     var MissionTable = ShownTab.Qvalid;
     var MissionTable_length = MissionTable.length;
@@ -75,7 +75,7 @@ $(function() {
     $("#Time_Anytime_hours").on('input propertychange', function() {
         if (!is_CalculateByHour()) {
             var ShownTab = getShownTab();
-            ShownTab.setTime();
+            ShownTab.setTime(false);
             TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
         }
         PrintMissionTable();
@@ -84,7 +84,7 @@ $(function() {
     $("#Time_Anytime_minutes").on('input propertychange', function() {
         if (!is_CalculateByHour()) {
             var ShownTab = getShownTab();
-            ShownTab.setTime();
+            ShownTab.setTime(false);
             TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
         }
         PrintMissionTable();

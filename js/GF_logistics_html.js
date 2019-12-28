@@ -14,7 +14,7 @@ function get_TABLE_CALCULATE_TOTAL_TIME() {
         return 60;
     else {
         var ShownTab = getShownTab();
-        ShownTab.setTime_NotCorrected();
+        ShownTab.setTime(false);
         return ShownTab.TotalTime;
     }
 }
@@ -69,10 +69,10 @@ $(function (){
 function ChangeTab_Anytime() {
     HTMLtab = "Anytime";
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
-    clear_sorting_html();
+    HTML_AllowInput();
     if (!is_CalculateByHour()) {
         var ShownTab = getShownTab();
-        ShownTab.setTime();
+        ShownTab.setTime(false);
         TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
     }
     PrintMissionTable();
@@ -81,10 +81,10 @@ function ChangeTab_Anytime() {
 function ChangeTab_Timetable() {
     HTMLtab = "Timetable";
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
-    clear_sorting_html();
+    HTML_AllowInput();
     if (!is_CalculateByHour()) {
         var ShownTab = getShownTab();
-        ShownTab.setTime();
+        ShownTab.setTime(false);
         TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
     }
     PrintMissionTable();
@@ -145,14 +145,14 @@ function changeCalculateOutput_Total() {
 
 //Tab_Timetable\
 //-----------
-var Tab_Timetable_TimeList_html = new Array();
+var Tab_Timetable_TIMELIST = [];
 $(function (){
     $("#Time_Timetable_hours").on('input propertychange',function() {Tab_Timetable_ChangeMaxTime()});
     $("#Time_Timetable_minutes").on('input propertychange',function() {Tab_Timetable_ChangeMaxTime()});
 })
 
 function Tab_Timetable_ChangeMaxTime() {
-    var total_time = Tab_Timetable_getMaxTime();
+    var total_time = Input_getTimetableTotalTime();
     var stringTime = TimeFormat(total_time);
     document.getElementById('Tab_Timetable_range_tooltip_0_value').innerHTML = stringTime;
     if (!is_CalculateByHour()) {
@@ -161,51 +161,32 @@ function Tab_Timetable_ChangeMaxTime() {
     PrintMissionTable();
     PrintPlanDetails();
 }
-function Tab_Timetable_getMaxTime() {
-    var hours, minutes;
-    if (is_NonPositiveNumberOrInfinity($("#Time_Timetable_hours").val())) {
-        hours = 0;
-    }
-    else {
-        hours = parseFloat($("#Time_Timetable_hours").val());
-    }
-    if (is_NonPositiveNumberOrInfinity($("#Time_Timetable_minutes").val())) {
-        minutes = 0;
-    }
-    else {
-        minutes = parseFloat($("#Time_Timetable_minutes").val());
-    }
-    return hours * 60 + minutes;
-}
 
 $(function() {
     $('#Tab_Timetable_AddNewTimePoint').on('click', function() {Tab_Timetable_AddNewTimePoint()});
 })
 function Tab_Timetable_AddNewTimePoint() {
     Tab_Timetable_InputTotalTime_disable();
-    var hours = getPositiveValueFromHTML($("#Tab_Timetable_new_hours"));
-    var minutes = getPositiveValueFromHTML($("#Tab_Timetable_new_minutes"));
-    var total_time = hours * 60 + minutes;
+    var total_time = Input_getTimetableNewTotalTime_Correct();
     switch(true) {
         case total_time == 0:
-            if (Tab_Timetable_TimeList_html.length == 0) {
+            if (Tab_Timetable_TIMELIST.length == 0) {
                 Tab_Timetable_InputTotalTime_enable();
             }
             alert(language.JS.tab_Timetable_alert1);
             break;
-        case total_time >= Tab_Timetable_getMaxTime():
-            if (Tab_Timetable_TimeList_html.length == 0) {
+        case total_time >= Input_getTimetableTotalTime():
+            if (Tab_Timetable_TIMELIST.length == 0) {
                 Tab_Timetable_InputTotalTime_enable();
             }
             alert(language.JS.tab_Timetable_alert2);
             break;
-        case Tab_Timetable_TimeList_html.indexOf(total_time) != -1:
+        case Tab_Timetable_TIMELIST.indexOf(total_time) != -1:
             alert(language.JS.tab_Timetable_alert3);
             break;
         default:
             Tab_Timetable_AddNewTimePoint_main(total_time);
     }
-    Tab_Timetable_emptyInputNewTime(total_time);
     PrintMissionTable();
     PrintPlanDetails();
 }
@@ -213,14 +194,10 @@ function Tab_Timetable_InputTotalTime_disable() {
     $("#Time_Timetable_hours").attr('disabled', "true");
     $("#Time_Timetable_minutes").attr('disabled', "true");
 }
-function Tab_Timetable_emptyInputNewTime() {
-    $("#Tab_Timetable_new_hours").val("");
-    $("#Tab_Timetable_new_minutes").val("");
-}
 
 function Tab_Timetable_AddNewTimePoint_main(time) {
-    Tab_Timetable_TimeList_html.push(time);
-    var maxtime = Tab_Timetable_getMaxTime();
+    Tab_Timetable_TIMELIST.push(time);
+    var maxtime = Input_getTimetableTotalTime();
     var position = (time / maxtime) * 100 + '%';
     Tab_Timetable_AddNewThumb(time, position);
     Tab_Timetable_AddNewTooltip(time, position);
@@ -234,7 +211,7 @@ function Tab_Timetable_AddNewThumb(time, position) {
 function Tab_Timetable_AddNewTooltip(time, position) {
     var stringTime = TimeFormat(time);
     var newTooltip = '<div id="Tab_Timetable_range_tooltip_' + time + '"';
-    if (Tab_Timetable_TimeList_html.indexOf(time) % 2 == 0) {
+    if (Tab_Timetable_TIMELIST.indexOf(time) % 2 == 0) {
         newTooltip += 'class="tooltip top custom-tooltip"';
         newTooltip += 'style="left:' + position + '; top:-32px; margin-left: -15px;">';
     }
@@ -254,7 +231,7 @@ $(function() {
     })
 })
 function Tab_Timetable_DeleteThisTimePoint(time) {
-    Tab_Timetable_TimeList_html.remove(time);
+    Tab_Timetable_TIMELIST.remove(time);
     var thumb_id = "Tab_Timetable_range_thumb_" + time;
     var tooltip_id = "Tab_Timetable_range_tooltip_" + time;
     var thumb_obj = document.getElementById(thumb_id);
@@ -262,7 +239,7 @@ function Tab_Timetable_DeleteThisTimePoint(time) {
     var parent_obj = document.getElementById('Tab_Timetable_range');
     parent_obj.removeChild(thumb_obj);
     parent_obj.removeChild(tooltip_obj);
-    if (Tab_Timetable_TimeList_html.length == 0)
+    if (Tab_Timetable_TIMELIST.length == 0)
         Tab_Timetable_InputTotalTime_enable();
     PrintMissionTable();
     PrintPlanDetails();
@@ -280,9 +257,9 @@ function Tab_Timetable_InputTotalTime_enable() {
 
 $(function (){
     $('#tab_Timetable_deleteall').on('click', function() {
-        var times = Tab_Timetable_TimeList_html.length;
+        var times = Tab_Timetable_TIMELIST.length;
         for (var i = 0; i < times; i++) {
-            Tab_Timetable_DeleteThisTimePoint(Tab_Timetable_TimeList_html[0]);
+            Tab_Timetable_DeleteThisTimePoint(Tab_Timetable_TIMELIST[0]);
         }
         Tab_Timetable_InputTotalTime_enable();
     }
@@ -295,31 +272,23 @@ $(function() {
     })
 })
 function setTarget(TargetInfo) {
-    var MT = $("#MT");
-    var AT = $("#AT");
-    var RT = $("#RT");
-    var PT = $("#PT");
-    var TT = $("#TT");
-    var ET = $("#ET");
-    var QPT = $("#QPT");
-    var QRT = $("#QRT");
     switch (TargetInfo) {
         case 'HG':
-            MT.val(130); AT.val(130); RT.val(130); PT.val(130); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
+            Input_setTarget([130, 130, 130, 130, 0, 0, 0, 0]); break;
         case 'SMG':
-            MT.val(430); AT.val(430); RT.val(130); PT.val(230); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
+            Input_setTarget([430, 430, 130, 230, 0, 0, 0, 0]); break;
         case 'RF':
-            MT.val(430); AT.val(130); RT.val(430); PT.val(230); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
+            Input_setTarget([430, 130, 430, 230, 0, 0, 0, 0]); break;
         case 'AR':
-            MT.val(130); AT.val(430); RT.val(430); PT.val(130); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
+            Input_setTarget([130, 430, 430, 130, 0, 0, 0, 0]); break;
         case 'MG':
-            MT.val(730); AT.val(630); RT.val(130); PT.val(430); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
+            Input_setTarget([730, 630, 130, 430, 0, 0, 0, 0]); break;
         case 'SG':
-            MT.val(800); AT.val(200); RT.val(800); PT.val(400); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
+            Input_setTarget([800, 200, 800, 400, 0, 0, 0, 0]); break;
         case '2221':
-            MT.val(400); AT.val(400); RT.val(400); PT.val(200); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
+            Input_setTarget([400, 400, 400, 200, 0, 0, 0, 0]); break;
         case 'Clear':
-            MT.val(0); AT.val(0); RT.val(0); PT.val(0); TT.val(0); ET.val(0); QPT.val(0); QRT.val(0); break;
+            Input_setTarget(); break;
     }
 }
 
@@ -332,16 +301,13 @@ function ChangeTarget(FullID) {
     var IDstart = FullID.indexOf(ID);
     var FullID_2 = FullID.slice(0, IDstart - 1);
     var changevalue = parseFloat(stringSliceFromLast_(FullID_2));
-    var a = FullID_2.slice(7, 8);
     if (FullID_2.slice(7, 8) == "m")
         changevalue *= -1;
-    var OriginalValue = getPositiveValueFromHTML($('#' + ID));
-    var totalValue = Math.round((OriginalValue + changevalue) * 1000) / 1000;
-    $('#' + ID).val(totalValue);
-    if ($('#' + ID).val() < 0) $('#' + ID).val(0);
+    var OriginalValue = Input_getTarget_Correct($('#' + ID), false);
+    Input_setTarget(OriginalValue + changevalue, $('#' + ID));
 }
 
-function start_sorting_html() {
+function HTML_DisableInput() {
     $("#Time_Anytime_hours").attr('disabled', "true");
     $("#Time_Anytime_minutes").attr('disabled', "true");
     $("#Tab_Anytime_MinimumIntervalTime_minutes").attr('disabled', "true");
@@ -375,9 +341,9 @@ function start_sorting_html() {
 }
 
 $(function() {
-    $("#clear_sorting").on('click', function() {clear_sorting_html()});
+    $("#clear_sorting").on('click', function() {HTML_AllowInput()});
 })
-function clear_sorting_html() {
+function HTML_AllowInput() {
     $("#Time_Anytime_hours").removeAttr("disabled");
     $("#Time_Anytime_minutes").removeAttr("disabled");
     $("#Tab_Anytime_MinimumIntervalTime_minutes").removeAttr("disabled");
@@ -419,38 +385,38 @@ $(function() {
     });
     $("#Plan_Table").on('click', '#resultPlan_Manp', function() {
         RESULT_PLAN_SORT_BY = "Manp";
-        resultPlan_sortByColumn(5, "descending");
+        resultPlan_sortByColumn(5);
     });
     $("#Plan_Table").on('click', '#resultPlan_Ammu', function() {
         RESULT_PLAN_SORT_BY = "Ammu";
-        resultPlan_sortByColumn(6, "descending");
+        resultPlan_sortByColumn(6);
     });
     $("#Plan_Table").on('click', '#resultPlan_Rati', function() {
         RESULT_PLAN_SORT_BY = "Rati";
-        resultPlan_sortByColumn(7, "descending");
+        resultPlan_sortByColumn(7);
     });
     $("#Plan_Table").on('click', '#resultPlan_Part', function() {
         RESULT_PLAN_SORT_BY = "Part";
-        resultPlan_sortByColumn(8, "descending");
+        resultPlan_sortByColumn(8);
     });
     $("#Plan_Table").on('click', '#resultPlan_TPro', function() {
         RESULT_PLAN_SORT_BY = "TPro";
-        resultPlan_sortByColumn(9, "descending");
+        resultPlan_sortByColumn(9);
     });
     $("#Plan_Table").on('click', '#resultPlan_Equi', function() {
         RESULT_PLAN_SORT_BY = "Equi";
-        resultPlan_sortByColumn(10, "descending");
+        resultPlan_sortByColumn(10);
     });
     $("#Plan_Table").on('click', '#resultPlan_QPro', function() {
         RESULT_PLAN_SORT_BY = "QPro";
-        resultPlan_sortByColumn(11, "descending");
+        resultPlan_sortByColumn(11);
     });
     $("#Plan_Table").on('click', '#resultPlan_QRes', function() {
         RESULT_PLAN_SORT_BY = "QRes";
-        resultPlan_sortByColumn(12, "descending");
+        resultPlan_sortByColumn(12);
     });
 })
-function resultPlan_sortByColumn(Column, method) {
+function resultPlan_sortByColumn(Column, method = "descending") {
     if (method === "ascending") {
         quick_sort_expand_ascending(RESULT_PLAN, Column);
         print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);

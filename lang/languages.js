@@ -96,7 +96,7 @@ var languages =
             "Time": "时间",
             "PlanDetails_calculateMethod": "计算方式",
             "total_time": "总时长",
-            "total_greatSuccessRate": "总大成功概率",
+            "total_greatSuccessRate": "大成功总概率",
             "PerHour": "平均/h",
             "Total" : "总计",
         }
@@ -197,7 +197,7 @@ var languages =
             "Time": "時間",
             "PlanDetails_calculateMethod": "計算方式",
             "total_time": "總時長",
-            "total_greatSuccessRate": "總大成功概率",
+            "total_greatSuccessRate": "大成功總概率",
             "PerHour": "平均/h",
             "Total" : "總計"
         }

@@ -1,13 +1,13 @@
 function loadHTML_Target() {
     var HTML = '<h4 id="Demand"></h4>';
-    HTML += '<p><button type="button" class="btn btn-default"id="setTarget_HG"></button> ';
-    HTML += '<button type="button" class="btn btn-default"id="setTarget_SMG"></button> ';
-    HTML += '<button type="button" class="btn btn-default"id="setTarget_RF"></button></p>';
-    HTML += '<p><button type="button" class="btn btn-default"id="setTarget_AR"></button> ';
-    HTML += '<button type="button" class="btn btn-default"id="setTarget_MG"></button> ';
-    HTML += '<button type="button" class="btn btn-default"id="setTarget_SG"></button></p>';
-    HTML += '<p><button type="button" class="btn btn-default"id="setTarget_2221"></button> ';
-    HTML += '<button type="button" class="btn btn-danger"id="setTarget_Clear"></button></p>';
+    HTML += '<button type="button" class="btn btn-default"id="setTarget_HG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-default"id="setTarget_SMG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-default"id="setTarget_RF" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-default"id="setTarget_AR" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-default"id="setTarget_MG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-default"id="setTarget_SG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-default"id="setTarget_2221" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-danger"id="setTarget_Clear" style="margin-right: 5px; margin-bottom: 5px;"></button>';
     var TargetName = ["Manp", "Ammu", "Rati", "Part", "TPro", "Equi", "QPro", "QRes"];
     var Target = ['MT', 'AT', 'RT', 'PT', 'TT', 'ET', 'QPT', 'QRT'];
     for (var i = 0; i < 4; i++) {

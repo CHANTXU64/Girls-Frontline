@@ -29,3 +29,14 @@ function is_NonPositiveNumberOrInfinity(x) {
     else
         return false;
 }
+
+function getPositiveValueFromHTML(JQ_elem, NeedCorrection = false) {
+    var Value;
+    if (is_NonPositiveNumberOrInfinity(JQ_elem.val()))
+        Value = 0;
+    else
+        Value = parseFloat(JQ_elem.val());
+    if (NeedCorrection)
+        JQ_elem.val(Value);
+    return Value;
+}

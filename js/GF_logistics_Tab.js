@@ -5,8 +5,6 @@ class Tab {
 
     setTime() {}
 
-    setTime_NotCorrected() {}
-
     setValidQAndReturnLengthAndSetCurrentMax() {}
     _setCurrentMax() {
         var CurrentValueMax = new Array(8);
@@ -66,7 +64,7 @@ class Tab {
 };
 function _setUnableLogistic() {
     var UnableMap;
-    switch (parseFloat($("#MapLimit").val())) {
+    switch (Input_getSelectChapter()) {
         case 6:
             UnableMap = ["7-1","7-2","7-3","7-4","8-1","8-2","8-3","8-4","9-1","9-2","9-3","9-4","10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4","12-1","12-2","12-3","12-4"]; break;
         case 7:
@@ -92,50 +90,16 @@ function _setUnableLogistic() {
 }
 
 class Tab_Anytime extends Tab {
-    setTime() {
-        this.TotalTime = this._checkDataLegalityAndCorrect_TotalTime();
-        this.MinimumIntervalTime = this._checkDataLegalityAndCorrect_MinimumIntervalTime();
-    }
-    _checkDataLegalityAndCorrect_TotalTime() {
-        var Hours = getPositiveValueFromHTML($("#Time_Anytime_hours"));
-        var Minutes = getPositiveValueFromHTML($("#Time_Anytime_minutes"));
-        var total_time = Hours * 60 + Minutes;
-        if (total_time == 0) {
-            alert(language.JS.tab_Anytime_alert1);
-            clear_sorting_html();
-            throw"--";
+    setTime(NeedCorrection = true) {
+        this.TotalTime = Input_getAnytimeTotalTime(NeedCorrection);
+        if (NeedCorrection) {
+            if (this.TotalTime === 0) {
+                alert(language.JS.tab_Anytime_alert1);
+                HTML_AllowInput();
+                throw"--";
+            }
         }
-        return total_time;
-    }
-    _checkDataLegalityAndCorrect_MinimumIntervalTime() {
-        var Minutes = getPositiveValueFromHTML($('#Tab_Anytime_MinimumIntervalTime_minutes'));
-        var MinimumIntervalTime = Minutes;
-        return MinimumIntervalTime;
-    }
-
-    setTime_NotCorrected() {
-        this.TotalTime = this._checkDataLegality_TotalTime();
-        this.MinimumIntervalTime = this._checkDataLegality_MinimumIntervalTime();
-    }
-    _checkDataLegality_TotalTime() {
-        var Hours, Minutes;
-        if (is_NonPositiveNumberOrInfinity($("#Time_Anytime_hours").val()))
-            Hours = 0;
-        else
-            Hours = parseFloat($("#Time_Anytime_hours").val());
-        if (is_NonPositiveNumberOrInfinity($("#Time_Anytime_minutes").val()))
-            Minutes = 0;
-        else
-            Minutes = parseFloat($("#Time_Anytime_minutes").val());
-        return Hours * 60 + Minutes;
-    }
-    _checkDataLegality_MinimumIntervalTime() {
-        var Minutes;
-        if (is_NonPositiveNumberOrInfinity($('#Tab_Anytime_MinimumIntervalTime_minutes').val()))
-            Minutes = 0;
-        else
-            Minutes = parseFloat($('#Tab_Anytime_MinimumIntervalTime_minutes').val());
-        return Minutes;
+        this.MinimumIntervalTime = Input_getAnytimeMinimumIntervalTime(NeedCorrection);
     }
 
     setValidQAndReturnLengthAndSetCurrentMax() {
@@ -271,22 +235,17 @@ class Tab_Timetable extends Tab {
         this.TimeList = [];
     }
 
-    setTime() {
-        this.TimeList = Tab_Timetable_TimeList_html.slice().sort(sortNumber);
+    setTime(NeedCorrection = true) {
+        this.TimeList = Tab_Timetable_TIMELIST.slice().sort(sortNumber);
         this.TimeList.unshift(0);
-        this.TotalTime = Tab_Timetable_getMaxTime();
-        if (this.TotalTime == 0) {
-            alert(language.JS.tab_Timetable_alert4);
-            clear_sorting_html();
-            throw"--";
+        this.TotalTime = Input_getTimetableTotalTime(NeedCorrection);
+        if (NeedCorrection) {
+            if (this.TotalTime == 0) {
+                alert(language.JS.tab_Timetable_alert4);
+                HTML_AllowInput();
+                throw"--";
+            }
         }
-        this.TimeList.push(this.TotalTime);
-    }
-
-    setTime_NotCorrected() {
-        this.TimeList = Tab_Timetable_TimeList_html.slice().sort(sortNumber);
-        this.TimeList.unshift(0);
-        this.TotalTime = Tab_Timetable_getMaxTime();
         this.TimeList.push(this.TotalTime);
     }
 

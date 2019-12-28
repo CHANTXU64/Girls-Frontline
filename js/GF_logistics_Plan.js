@@ -5,7 +5,7 @@ class Plan {
         this.ShownTab = ShownTab;
         this.CurrentValue_MAX = ShownTab.CurrentValue_MAX;
         if (Target_Value === undefined) {
-            this.TargetValue_html = this._getLegalityTargetValue();
+            this.TargetValue_html = Input_getTarget_Correct(); 
             this.TargetValue = this._CorrectTargetValue();
         }
         else {
@@ -24,30 +24,20 @@ class Plan {
             this.List[i].Value = 0;//该方案价值
         }
     }
-    _getLegalityTargetValue() {
-        var HTMLTargetArr = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QPT"), $("#QRT")];
-        var TargetArr = getPositiveValueFromHTML(HTMLTargetArr);
-        if (TargetArr.toString() == "0,0,0,0,0,0,0,0") {
-            alert(language.JS.TargetValue0_alert);
-            clear_sorting_html();
-            throw"--";
-        }
-        return TargetArr;
-    }
     _CorrectTargetValue() {
         var ResourceValue = this._CorrectResourceValue();
         var ContractValue = this._CorrectContractValue();
         var TargetValue = ResourceValue.concat(ContractValue);
         if (TargetValue.toString() == "0,0,0,0,0,0,0,0") {
             alert(language.JS.TargetValue0_alert);
-            clear_sorting_html();
+            HTML_AllowInput();
             throw"--";
         }
         return TargetValue;
     }
     _CorrectResourceValue() {
         var ResourceValue = this.TargetValue_html.slice(0, 4);
-        var Resource_CalibrationValue = 100 - parseInt($('#ContractWeight').val());
+        var Resource_CalibrationValue = 100 - Input_getContractWeight();
         if (this._ValuesNotAll0(ResourceValue)) {
             this._CorrectValue(ResourceValue, Resource_CalibrationValue);
         }
@@ -55,7 +45,7 @@ class Plan {
     }
     _CorrectContractValue() {
         var ContractValue = this.TargetValue_html.slice(4, 8);
-        var Contract_CalibrationValue = parseInt($('#ContractWeight').val());
+        var Contract_CalibrationValue = Input_getContractWeight();
         if (this._ValuesNotAll0(ContractValue)) {
             this._CorrectValue(ContractValue, Contract_CalibrationValue);
         }

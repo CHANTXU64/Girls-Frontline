@@ -10,7 +10,7 @@ function PrintPlanDetails() {
     }
     document.getElementById("PlanDetails_ShownTab").innerHTML = language.JS.PlanDetails_calculateMethod + ': ' + ShownTab_Name;
     var ShownTab = getShownTab();
-    ShownTab.setTime_NotCorrected();
+    ShownTab.setTime(false);
     var TotalMinutes = ShownTab.TotalTime;
     document.getElementById("PlanDetails_TotalTime").innerHTML = language.JS.total_time + ": " + TimeFormat(TotalMinutes);
     var TotalGreatSuccessRate = Input_getTotalGreatSuccessRate();
