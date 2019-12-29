@@ -64,6 +64,10 @@ var languages =
             "PlanDetails_QPro": "快建",
             "PlanDetails_QRes": "快修",
             "PlanDetails_Time": "时间",
+            "savePlan": "保存方案",
+            "Capture": "捕获",
+            "Saved_Title": "已保存的",
+            "NoSaved": "空",
         },
         "HTMLJS": {
             "localstorageDoesNotWork": "因某些原因，Web存储无法工作，需要手动导出配置",
@@ -165,6 +169,10 @@ var languages =
             "PlanDetails_QPro": "快建",
             "PlanDetails_QRes": "快修",
             "PlanDetails_Time": "時間",
+            "savePlan": "保存方案",
+            "Capture": "捕獲",
+            "Saved_Title": "已保存的",
+            "NoSaved": "空",
         },
         "HTMLJS": {
             "localstorageDoesNotWork": "因某些原因，Web存儲無法工作，需要手動導出配置",

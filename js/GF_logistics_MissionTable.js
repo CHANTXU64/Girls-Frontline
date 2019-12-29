@@ -3,41 +3,33 @@ var MISSION_TABLE_SELECT = [];
 
 function PrintMissionTable() {
     MISSION_TABLE = _getMissionTableByShownTab();
-    var time_calculate = TABLE_CALCULATE_TOTAL_TIME;
     var MissionTable = MISSION_TABLE;
-    var tbody = document.getElementById("MissionTable_tbody");
+    var time_calculate = TABLE_CALCULATE_TOTAL_TIME;
     var tab = '';
     var MissionTable_length = MissionTable.length;
     var selectMissions = MISSION_TABLE_SELECT.slice();
     for (var i = 0; i < MissionTable_length; i++) {
-        var TotalMinutes = MissionTable[i][9];
-        var tab_0 = '<tr id="MissionTable_' + i + '">';
+        tab += '<tr id="MissionTable_' + i + '"';
         for (var ii = 0; ii < selectMissions.length; ii++) {
             if (selectMissions[ii] === MissionTable[i][0]) {
-                tab_0 = '<tr id="MissionTable_' + i + '" class="success">';
+                selectMissions.splice(ii, 1);
+                tab += 'class="success"';
                 break;
             }
         }
-        tab += tab_0;
-        tab += '<td style="width: 10%;">' + MissionTable[i][0] + '</td>';
+        tab += '><td style="width: 10%;">' + MissionTable[i][0] + '</td>';
         for (var ii = 1; ii < 9; ii++) {
             tab += '<td style="width: 10%;">' + NumberAutoExact(MissionTable[i][ii] * time_calculate) + '</td>';
         }
-        tab += '<td style="width: 10%;">' + TimeFormat(TotalMinutes) + '</td>';
+        tab += '<td style="width: 10%;">' + TimeFormat(MissionTable[i][9]) + '</td>';
         tab += '<tr>';
     }
     for (var i = 0; i < selectMissions.length; i++) {
-        for (var ii = 0; ii < MissionTable_length; ii++) {
-            if (selectMissions[i] === MissionTable[ii][0])
-                break;
-            if (ii === MissionTable_length - 1) {
-                var index = MISSION_TABLE_SELECT.indexOf(selectMissions[i]);
-                MISSION_TABLE_SELECT.splice(index, 1);
-            }
-        }
+        MISSION_TABLE_SELECT.remove_First(selectMissions[i]);
     }
     if (MissionTable_length === 0)
         tab = '<tr><td>' + language.JS.NoMission + '</td></tr>';
+    var tbody = document.getElementById("MissionTable_tbody");
     tbody.innerHTML = tab;
 }
 
@@ -67,53 +59,6 @@ function _getMissionTableByShownTab() {
     return MissionTable;
 }
 
-$(function() {
-    $("#MapLimit").on('change', function() {
-        PrintMissionTable();
-        PrintPlanDetails();
-    });
-    $("#Time_Anytime_hours").on('input propertychange', function() {
-        if (!is_CalculateByHour()) {
-            var ShownTab = getShownTab();
-            ShownTab.setTime(false);
-            TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
-        }
-        PrintMissionTable();
-        PrintPlanDetails();
-    });
-    $("#Time_Anytime_minutes").on('input propertychange', function() {
-        if (!is_CalculateByHour()) {
-            var ShownTab = getShownTab();
-            ShownTab.setTime(false);
-            TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
-        }
-        PrintMissionTable();
-        PrintPlanDetails();
-    });
-    $("#Tab_Anytime_MinimumIntervalTime_minutes").on('input propertychange', function() {
-        PrintMissionTable();
-        PrintPlanDetails();
-    });
-})
-
-//排序结果点击
-$(function() {
-    $("#Plan_Table").on('click', 'tr[id^=print_result_plan_tr_]', function() {
-        var number = stringSliceFromLast_(this.id);
-        if (this.className != "success") {
-            for (var i = 0; i < RESULT_PLAN.length; i++) {
-                if (i !== number) {
-                    document.getElementById("print_result_plan_tr_" + i).className = "";
-                }
-            }
-            this.className = "success";
-            MissionTable_resultPlan_select(number);
-        }
-        else
-            this.className = "";
-    })
-})
-
 function MissionTable_resultPlan_select(number) {
     var missionTable_length = MISSION_TABLE.length;
     var missionTable = MISSION_TABLE;
@@ -135,16 +80,6 @@ function MissionTable_resultPlan_select(number) {
         }
     }
 }
-
-$(function() {
-    $("#MissionTable_panel").on('click', 'tr[id^=MissionTable_]', function() {
-        var number = stringSliceFromLast_(this.id);
-        if (this.className === "success")
-            MissionTable_cancelSelectThisRow(number);
-        else
-            MissionTable_selectThisRow(number);
-    })
-})
 
 function MissionTable_selectThisRow(number) {
     if (MISSION_TABLE_SELECT.length === 4) {

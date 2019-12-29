@@ -17,7 +17,7 @@
     <link href="../vendor/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
     <script src="../vendor/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="../vendor/echarts/echarts.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/echarts@4.5.0/dist/echarts.min.js"></script> -->
+    <script src="../vendor/html2canvas/html2canvas.min.js"></script>
     <script src="../js/GF_logistics_function.js"></script>
     <script src="../js/GF_logistics_input.js"></script>
     <script src="../js/Quick_Sort.js"></script>
@@ -25,6 +25,7 @@
     <script src="../js/GF_logistics_localStorage.js"></script>
     <script src="../js/GF_logistics_loadHTML.js"></script>
     <script src="../js/GF_logistics_html.js"></script>
+    <script src="../js/GF_logistics_htmlEvent.js"></script>
     <script src="../js/GF_logistics_data.js"></script>
     <script src="../js/GF_logistics_Tab.js"></script>
     <script src="../js/GF_logistics_Plan.js"></script>
@@ -265,41 +266,57 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-5">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div data-toggle="collapse" href="#MissionTable_panel" class="" aria-expanded="true" style="cursor: pointer;">
-                                    <span class="glyphicon glyphicon-align-justify" style="font-size: 14px;" id="MissionTableTitle"></span>
+                    <div class="col-lg-5" float="top">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div data-toggle="collapse" data-parent="#accordion" href="#Saved" class="" aria-expanded="false" style="cursor: pointer;">
+                                        <span class="glyphicon glyphicon-align-justify" style="font-size: 14px;" id="Saved_Title"></span>
+                                    </div>
+                                </div>
+                                <div id="Saved" class="panel-collapse collapse" aria-expanded="false">
+                                    <div class="table-responsive">
+                                        <table class="table table-responsive text-nowrap table-condensed" style="margin-bottom: 0px; text-align: center; cursor: default;">
+                                            <tbody id="Saved_Body">
+                                                <tr><td id="NoSaved" style="display: none;"></td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                            <div id="MissionTable_panel" class="panel-collapse collapse in" aria-expanded="true">
-                                <div class="panel-body" style="padding-left: 0px;padding-top: 0px;padding-right: 0px;padding-bottom: 0px;">
-                                    <table data-toggle="table" id="MissionTable" data-classes="table table-hover table-sm text-nowrap table-condensed" data-height=527 style="text-align: center; cursor: default;">
-                                        <thead>
-                                            <th id="MissionTable_head_Mission" data-align="center" style="width: 10%;">Mission</th>
-                                            <th id="MissionTable_head_Manp" data-align="center" style="width: 10%;">M</th>
-                                            <th id="MissionTable_head_Ammu" data-align="center" style="width: 10%;">A</th>
-                                            <th id="MissionTable_head_Rati" data-align="center" style="width: 10%;">R</th>
-                                            <th id="MissionTable_head_Part" data-align="center" style="width: 10%;">P</th>
-                                            <th id="MissionTable_head_TPro" data-align="center" style="width: 10%;">T</th>
-                                            <th id="MissionTable_head_Equi" data-align="center" style="width: 10%;">E</th>
-                                            <th id="MissionTable_head_QPro" data-align="center" style="width: 10%;">Q</th>
-                                            <th id="MissionTable_head_QRes" data-align="center" style="width: 10%;">Q</th>
-                                            <th id="MissionTable_head_Time" data-align="center" style="width: 10%;">Time</th>
-                                        </thead>
-                                        <tbody id="MissionTable_tbody">
-                                        </tbody>
-                                    </table>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div data-toggle="collapse" data-parent="#accordion" href="#MissionTable_panel" class="" aria-expanded="true" style="cursor: pointer;">
+                                        <span class="glyphicon glyphicon-align-justify" style="font-size: 14px;" id="MissionTableTitle"></span>
+                                    </div>
+                                </div>
+                                <div id="MissionTable_panel" class="panel-collapse collapse in" aria-expanded="true">
+                                    <div class="panel-body" style="padding-left: 0px;padding-top: 0px;padding-right: 0px;padding-bottom: 0px;">
+                                        <table data-toggle="table" id="MissionTable" data-classes="table table-hover table-sm text-nowrap table-condensed" data-height=527 style="text-align: center; cursor: default;">
+                                            <thead>
+                                                <th id="MissionTable_head_Mission" data-align="center" style="width: 10%;">Mission</th>
+                                                <th id="MissionTable_head_Manp" data-align="center" style="width: 10%;">M</th>
+                                                <th id="MissionTable_head_Ammu" data-align="center" style="width: 10%;">A</th>
+                                                <th id="MissionTable_head_Rati" data-align="center" style="width: 10%;">R</th>
+                                                <th id="MissionTable_head_Part" data-align="center" style="width: 10%;">P</th>
+                                                <th id="MissionTable_head_TPro" data-align="center" style="width: 10%;">T</th>
+                                                <th id="MissionTable_head_Equi" data-align="center" style="width: 10%;">E</th>
+                                                <th id="MissionTable_head_QPro" data-align="center" style="width: 10%;">Q</th>
+                                                <th id="MissionTable_head_QRes" data-align="center" style="width: 10%;">Q</th>
+                                                <th id="MissionTable_head_Time" data-align="center" style="width: 10%;">Time</th>
+                                            </thead>
+                                            <tbody id="MissionTable_tbody">
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-5">
                         <div class="panel panel-default" style="max-width: 582px;">
                             <div class="panel-heading" id="PlanDetailsTitle" style="cursor: default;"></div>
-                            <div class="panel-body" style="padding-left: 0px;padding-top: 0px;padding-right: 0px;padding-bottom: 0px;" id="PlanDetails">
+                            <div class="panel-body" style="padding-left: 0px;padding-top: 0px;padding-right: 0px;padding-bottom: 0px;">
                                 <div class="table-responsive">
-                                    <table class="table table-responsive text-nowrap table-condensed" style="margin-bottom: 0px; width: 580px; font-size: 13px; text-align: center; cursor: default;">
+                                    <table class="table table-responsive text-nowrap table-condensed" style="margin-bottom: 0px; width: 580px; font-size: 13px; text-align: center; cursor: default;" id="PlanDetails">
                                         <tbody>
                                             <tr>
                                                 <td style="width: 30%;" colspan=3 id="PlanDetails_ShownTab"></td>
@@ -331,11 +348,13 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default"type="button"id="savePlan"style="width:100px;padding-top:3px;padding-bottom:3px;font-size:13px;"></button>
+                                    <button class="btn btn-default"type="button"id="Capture"style="width:100px;padding-top:3px;padding-bottom:3px;font-size:13px;"></button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-7">
                         <div class="panel panel-default">
                             <div class="panel-heading" id="result"></div>

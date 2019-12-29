@@ -37,11 +37,6 @@ function checkDefaultLanguage() {
     }
 }
 
-//change language
-$(function (){
-    $('[href=#lang-zh-CN]').on('click', function(){changelang('zh-CN')});
-    $('[href=#lang-zh-TW]').on('click', function(){changelang('zh-TW')});
-})
 function changelang(lang) {
     switch(lang) {
         case 'zh-CN':
@@ -61,11 +56,6 @@ $(function (){$("[data-toggle='tooltip']").tooltip();})
 
 //标签页
 var HTMLtab;
-$(function (){
-    $('[href=#Tab_Anytime]').on("shown.bs.tab", function(){ChangeTab_Anytime()});
-    $('[href=#Tab_Timetable]').on("shown.bs.tab", function(){ChangeTab_Timetable()});
-})
-
 function ChangeTab_Anytime() {
     HTMLtab = "Anytime";
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
@@ -92,24 +82,12 @@ function ChangeTab_Timetable() {
 }
 
 function is_CalculateByHour() {
-    if (document.getElementById('Display_PerHour').checked) {
+    if (document.getElementById('Display_PerHour').checked)
         return true;
-    }
-    else {
+    else
         return false;
-    }
 }
 
-$(function (){
-    $('input[id^=Display_]').on("click", function(){
-        if (is_CalculateByHour()) {
-            changeCalculateOutput_Hour();
-        }
-        else {
-            changeCalculateOutput_Total();
-        }
-    })
-})
 function changeCalculateOutput_Hour() {
     $("#Demand").html(language.HTMLJS.Demand_hour);
     var ShownTab = getShownTab();
@@ -146,72 +124,23 @@ function changeCalculateOutput_Total() {
 //Tab_Timetable\
 //-----------
 var Tab_Timetable_TIMELIST = [];
-$(function (){
-    $("#Time_Timetable_hours").on('input propertychange',function() {Tab_Timetable_ChangeMaxTime()});
-    $("#Time_Timetable_minutes").on('input propertychange',function() {Tab_Timetable_ChangeMaxTime()});
-})
 
-function Tab_Timetable_ChangeMaxTime() {
-    var total_time = Input_getTimetableTotalTime();
-    var stringTime = TimeFormat(total_time);
-    document.getElementById('Tab_Timetable_range_tooltip_0_value').innerHTML = stringTime;
-    if (!is_CalculateByHour()) {
-        TABLE_CALCULATE_TOTAL_TIME = total_time;
-    }
-    PrintMissionTable();
-    PrintPlanDetails();
-}
-
-$(function() {
-    $('#Tab_Timetable_AddNewTimePoint').on('click', function() {Tab_Timetable_AddNewTimePoint()});
-})
-function Tab_Timetable_AddNewTimePoint() {
-    Tab_Timetable_InputTotalTime_disable();
-    var total_time = Input_getTimetableNewTotalTime_Correct();
-    switch(true) {
-        case total_time == 0:
-            if (Tab_Timetable_TIMELIST.length == 0) {
-                Tab_Timetable_InputTotalTime_enable();
-            }
-            alert(language.JS.tab_Timetable_alert1);
-            break;
-        case total_time >= Input_getTimetableTotalTime():
-            if (Tab_Timetable_TIMELIST.length == 0) {
-                Tab_Timetable_InputTotalTime_enable();
-            }
-            alert(language.JS.tab_Timetable_alert2);
-            break;
-        case Tab_Timetable_TIMELIST.indexOf(total_time) != -1:
-            alert(language.JS.tab_Timetable_alert3);
-            break;
-        default:
-            Tab_Timetable_AddNewTimePoint_main(total_time);
-    }
-    PrintMissionTable();
-    PrintPlanDetails();
-}
-function Tab_Timetable_InputTotalTime_disable() {
-    $("#Time_Timetable_hours").attr('disabled', "true");
-    $("#Time_Timetable_minutes").attr('disabled', "true");
-}
-
-function Tab_Timetable_AddNewTimePoint_main(time) {
+function Tab_Timetable_AddNewTimePoint(time) {
     Tab_Timetable_TIMELIST.push(time);
     var maxtime = Input_getTimetableTotalTime();
     var position = (time / maxtime) * 100 + '%';
-    Tab_Timetable_AddNewThumb(time, position);
-    Tab_Timetable_AddNewTooltip(time, position);
+    _Tab_Timetable_AddNewThumb(time, position);
+    _Tab_Timetable_AddNewTooltip(time, position);
 }
-function Tab_Timetable_AddNewThumb(time, position) {
+function _Tab_Timetable_AddNewThumb(time, position) {
     var newThumb = '<button class="slider-button" id="Tab_Timetable_range_thumb_' + time + '"';
     newThumb += 'style="left:' + position + ';">';
     newThumb += '<span class="glyphicon glyphicon-remove-circle" style="font-size: 22px;"></span></button>';
     $("#Tab_Timetable_range").append(newThumb);
 }
-function Tab_Timetable_AddNewTooltip(time, position) {
-    var stringTime = TimeFormat(time);
+function _Tab_Timetable_AddNewTooltip(time, position) {
     var newTooltip = '<div id="Tab_Timetable_range_tooltip_' + time + '"';
-    if (Tab_Timetable_TIMELIST.indexOf(time) % 2 == 0) {
+    if (Tab_Timetable_TIMELIST.indexOf(time) % 2 === 0) {
         newTooltip += 'class="tooltip top custom-tooltip"';
         newTooltip += 'style="left:' + position + '; top:-32px; margin-left: -15px;">';
     }
@@ -220,18 +149,12 @@ function Tab_Timetable_AddNewTooltip(time, position) {
         newTooltip += 'style="left:' + position + '; top:12px; margin-left: -15px;">';
     }
     newTooltip += '<div class="tooltip-arrow"></div><div class="tooltip-inner">';
-    newTooltip += stringTime + '</div></div>';
+    newTooltip += TimeFormat(time) + '</div></div>';
     $("#Tab_Timetable_range").append(newTooltip);
 }
 
-$(function() {
-    $("#Tab_Timetable_range").on('click', 'button[id^=Tab_Timetable_range_thumb_]', function() {
-        var time = parseFloat(stringSliceFromLast_(this.id));
-        Tab_Timetable_DeleteThisTimePoint(time);
-    })
-})
 function Tab_Timetable_DeleteThisTimePoint(time) {
-    Tab_Timetable_TIMELIST.remove(time);
+    Tab_Timetable_TIMELIST.remove_First(time);
     var thumb_id = "Tab_Timetable_range_thumb_" + time;
     var tooltip_id = "Tab_Timetable_range_tooltip_" + time;
     var thumb_obj = document.getElementById(thumb_id);
@@ -239,38 +162,28 @@ function Tab_Timetable_DeleteThisTimePoint(time) {
     var parent_obj = document.getElementById('Tab_Timetable_range');
     parent_obj.removeChild(thumb_obj);
     parent_obj.removeChild(tooltip_obj);
-    if (Tab_Timetable_TIMELIST.length == 0)
+    if (Tab_Timetable_TIMELIST.length === 0)
         Tab_Timetable_InputTotalTime_enable();
-    PrintMissionTable();
-    PrintPlanDetails();
 }
-Array.prototype.remove = function(val) {
-    var index = this.indexOf(val);
-    if (index > -1) {
-        this.splice(index, 1);
+
+function Tab_Timetable_DeleteAllTimePoint() {
+    var times = Tab_Timetable_TIMELIST.length;
+    for (var i = 0; i < times; i++) {
+        Tab_Timetable_DeleteThisTimePoint(Tab_Timetable_TIMELIST[0]);
     }
 }
+
 function Tab_Timetable_InputTotalTime_enable() {
     $("#Time_Timetable_hours").removeAttr("disabled");
     $("#Time_Timetable_minutes").removeAttr("disabled");
 }
 
-$(function (){
-    $('#tab_Timetable_deleteall').on('click', function() {
-        var times = Tab_Timetable_TIMELIST.length;
-        for (var i = 0; i < times; i++) {
-            Tab_Timetable_DeleteThisTimePoint(Tab_Timetable_TIMELIST[0]);
-        }
-        Tab_Timetable_InputTotalTime_enable();
-    }
-)})
+function Tab_Timetable_InputTotalTime_disable() {
+    $("#Time_Timetable_hours").attr('disabled', "true");
+    $("#Time_Timetable_minutes").attr('disabled', "true");
+}
 //-----------
 
-$(function() {
-    $("#target").on('click', 'button[id^=setTarget_]', function() {
-        setTarget(stringSliceFromLast_(this.id));
-    })
-})
 function setTarget(TargetInfo) {
     switch (TargetInfo) {
         case 'HG':
@@ -292,10 +205,6 @@ function setTarget(TargetInfo) {
     }
 }
 
-$(function() {
-    $("#target").on('click', 'button[id^=Target_minus_]', function() {ChangeTarget(this.id)});
-    $("#target").on('click', 'button[id^=Target_plus_]', function() {ChangeTarget(this.id)});
-})
 function ChangeTarget(FullID) {
     var ID = stringSliceFromLast_(FullID);
     var IDstart = FullID.indexOf(ID);
@@ -340,9 +249,6 @@ function HTML_DisableInput() {
     $("#clear_sorting").removeAttr("disabled");
 }
 
-$(function() {
-    $("#clear_sorting").on('click', function() {HTML_AllowInput()});
-})
 function HTML_AllowInput() {
     $("#Time_Anytime_hours").removeAttr("disabled");
     $("#Time_Anytime_minutes").removeAttr("disabled");
@@ -377,45 +283,6 @@ function HTML_AllowInput() {
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
 }
 
-//对排序结果某一项排序
-$(function() {
-    $("#Plan_Table").on('click', 'th[id^=resultPlan_Mission_]', function() {
-        RESULT_PLAN_SORT_BY = "Ranking";
-        resultPlan_sortByColumn(0, "ascending");
-    });
-    $("#Plan_Table").on('click', '#resultPlan_Manp', function() {
-        RESULT_PLAN_SORT_BY = "Manp";
-        resultPlan_sortByColumn(5);
-    });
-    $("#Plan_Table").on('click', '#resultPlan_Ammu', function() {
-        RESULT_PLAN_SORT_BY = "Ammu";
-        resultPlan_sortByColumn(6);
-    });
-    $("#Plan_Table").on('click', '#resultPlan_Rati', function() {
-        RESULT_PLAN_SORT_BY = "Rati";
-        resultPlan_sortByColumn(7);
-    });
-    $("#Plan_Table").on('click', '#resultPlan_Part', function() {
-        RESULT_PLAN_SORT_BY = "Part";
-        resultPlan_sortByColumn(8);
-    });
-    $("#Plan_Table").on('click', '#resultPlan_TPro', function() {
-        RESULT_PLAN_SORT_BY = "TPro";
-        resultPlan_sortByColumn(9);
-    });
-    $("#Plan_Table").on('click', '#resultPlan_Equi', function() {
-        RESULT_PLAN_SORT_BY = "Equi";
-        resultPlan_sortByColumn(10);
-    });
-    $("#Plan_Table").on('click', '#resultPlan_QPro', function() {
-        RESULT_PLAN_SORT_BY = "QPro";
-        resultPlan_sortByColumn(11);
-    });
-    $("#Plan_Table").on('click', '#resultPlan_QRes', function() {
-        RESULT_PLAN_SORT_BY = "QRes";
-        resultPlan_sortByColumn(12);
-    });
-})
 function resultPlan_sortByColumn(Column, method = "descending") {
     if (method === "ascending") {
         quick_sort_expand_ascending(RESULT_PLAN, Column);
@@ -425,4 +292,14 @@ function resultPlan_sortByColumn(Column, method = "descending") {
         quick_sort_expand_descending(RESULT_PLAN, Column);
         print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
+}
+
+var SAVED = [];
+function saveThisPlan() {
+    // var newSaved = [];
+    // newSaved.push(HTMLtab);
+    // var ShownTab = getShownTab();
+    // ShownTab.setTime(true);
+    // newSaved.push(ShownTab.TotalTime);
+
 }

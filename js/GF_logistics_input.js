@@ -1,3 +1,5 @@
+var Array_GreatSuccessRate = [ "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15 / 16", "15 / 16", "16", "16", "16 / 17", "17", "17 / 18", "17 / 18", "17 / 18", "18 / 19", "18 / 19", "19", "19", "19 / 20", "20", "20 / 21", "20 / 21", "20 / 21", "21 / 22", "21 / 22", "22", "22", "22 / 23", "23", "23 / 24", "23 / 24", "23 / 24", "24 / 25", "24 / 25", "25", "25", "25 / 26", "26", "26 / 27", "26 / 27", "26 / 27", "27 / 28", "27 / 28", "28", "28", "28 / 29", "29", "29 / 30", "29 / 30", "29 / 30", "30 / 31", "30 / 31", "31", "31", "31 / 21", "32", "32 / 33", "32 / 33", "32", "31"];
+
 function Input_getGreatSuccessRate(NeedCorrection = false) {
     var Rate_elem = $("#GreatSuccessRate");
     var Rate = Rate_elem.val();
@@ -45,28 +47,6 @@ function Input_setGreatSuccessUpRate(is_RateUP) {
         UpRateText_elem.innerHTML = "+" + Array_GreatSuccessRate[BaseRate];
     }
 }
-
-$(function (){
-    $("#GreatSuccessRate").on('input propertychange',function() {
-        var Rate = Input_getGreatSuccessRate();
-        var is_RateUP = IsGreatSuccessRateUp();
-        Input_setGreatSuccessUpRate(is_RateUP);
-        var TotalRate = Rate + Input_getGreatSuccessUpRate(Rate);
-        setQContract(TotalRate);
-        PrintMissionTable();
-        PrintPlanDetails();
-    });
-    $('#GreatSuccessRateUp').on('click', function() {
-        var is_RateUP = IsGreatSuccessRateUp();
-        Input_setGreatSuccessUpRate(is_RateUP);
-        var TotalRate = Input_getTotalGreatSuccessRate(true);
-        setQContract(TotalRate);
-        PrintMissionTable();
-        PrintPlanDetails();
-    });
-})
-
-var Array_GreatSuccessRate = [ "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15 / 16", "15 / 16", "16", "16", "16 / 17", "17", "17 / 18", "17 / 18", "17 / 18", "18 / 19", "18 / 19", "19", "19", "19 / 20", "20", "20 / 21", "20 / 21", "20 / 21", "21 / 22", "21 / 22", "22", "22", "22 / 23", "23", "23 / 24", "23 / 24", "23 / 24", "24 / 25", "24 / 25", "25", "25", "25 / 26", "26", "26 / 27", "26 / 27", "26 / 27", "27 / 28", "27 / 28", "28", "28", "28 / 29", "29", "29 / 30", "29 / 30", "29 / 30", "30 / 31", "30 / 31", "31", "31", "31 / 21", "32", "32 / 33", "32 / 33", "32", "31"];
 
 function Input_getTarget_Correct(Target_JQ_elem = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QPT"), $("#QRT")], NeedCorrection = true) {
     if (Array.isArray(Target_JQ_elem))
@@ -179,7 +159,9 @@ function Input_setTimetableHours(hours = 5) {
 function Input_setTimetableMinutes(minutes = 0) {
     $("#Time_Timetable_minutes").val(minutes);
 }
-function Input_setTimetableTotalTime(TotalMinutes = 300) {
+function Input_setTimetableTotalTime(TotalMinutes = 300, NeedDrawing = true) {
+    if (NeedDrawing)
+        document.getElementById('Tab_Timetable_range_tooltip_0_value').innerHTML = TimeFormat(TotalMinutes);
     var hours = parseInt(TotalMinutes / 60);
     var minutes = TotalMinutes % 60;
     Input_setTimetableHours(hours);
@@ -202,5 +184,16 @@ function Input_getTimetableNewTotalTime_Correct(NeedCorrection = true) {
     var hours = Input_getTimetableNewHours_Correct(NeedCorrection);
     var minutes = Input_getTimetableNewMinutes_Correct(NeedCorrection);
     return hours * 60 + minutes;
+}
+
+function Input_setTimetableTimetable(TimeList) {
+    Tab_Timetable_DeleteAllTimePoint();
+    for (var i = 0; i < TimeList.length; i++) {
+        Tab_Timetable_AddNewTimePoint(TimeList[i]);
+    }
+    if (Tab_Timetable_TIMELIST.length === 0)
+        Tab_Timetable_InputTotalTime_enable();
+    else
+        Tab_Timetable_InputTotalTime_disable();
 }
 //----------------

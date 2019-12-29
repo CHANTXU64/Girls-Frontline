@@ -144,7 +144,7 @@ function print_chart(selectedMissions_table, TotalMinutes) {
         },
         grid: {
             left: 35,
-            right: 15,
+            right: 20,
             top: 5,
             bottom: 20,
             height: 'auto'
@@ -176,7 +176,8 @@ function print_chart(selectedMissions_table, TotalMinutes) {
             },
             data: data
         }],
-        animation:false
+        animation:false,
+        backgroundColor: "#FFFFFF"
     };
 
     Chart.setOption(option);

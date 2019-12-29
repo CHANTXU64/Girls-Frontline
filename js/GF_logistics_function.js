@@ -40,3 +40,25 @@ function getPositiveValueFromHTML(JQ_elem, NeedCorrection = false) {
         JQ_elem.val(Value);
     return Value;
 }
+
+Array.prototype.remove = function(val) {
+    var i = 0;
+    while (i < this.length) {
+        if (this[i] === val)
+            this.splice(i, 1);
+        else
+            i++;
+    }
+}
+
+Array.prototype.remove_First = function(val) {
+    var i = 0;
+    while (i < this.length) {
+        if (this[i] === val) {
+            this.splice(i, 1);
+            break;
+        }
+        else
+            i++;
+    }
+}

@@ -2,7 +2,7 @@ function getHTMLFineTuningTool(expanded) {
     var TargetName = ['MT', 'AT', 'RT', 'PT', 'TT', 'ET', 'QPT', 'QRT'];
     var lang = language.JS;
     var TargetHTMLText = [lang.Manp, lang.Ammu, lang.Rati, lang.Part, lang.TPro, lang.Equi, lang.QPro, lang.QRes];
-    HTML = '<div class="panel panel-default" style="max-width: 400px; margin-bottom:5px">';
+    var HTML = '<div class="panel panel-default" style="max-width: 400px; margin-bottom:5px">';
     HTML += '<div class="panel-heading">';
     HTML += '<h4 class="panel-title"><a data-toggle="collapse" href="#FineTuningTool" class="collapsed" aria-expanded="'+expanded+'">' + lang.FineTuningTool + '</a></h4></div>';
     HTML += '<div id="FineTuningTool" class="panel-collapse collapse';
@@ -78,8 +78,3 @@ function FineTuning_main() {
     }
     plan.print(true, RESULT_PLAN_SORT_BY); 
 }
-
-$(function() {
-    $("#Plan_Table").on('click', 'button[id^=FineTuning_minus_]', function() {FineTuning(-1, stringSliceFromLast_(this.id))});
-    $("#Plan_Table").on('click', 'button[id^=FineTuning_plus_]', function() {FineTuning(1, stringSliceFromLast_(this.id))});
-})
