@@ -38,7 +38,7 @@ function loadHTML_Target() {
 function loadHTML_language() {
     document.documentElement.lang = language.lang;
     document.title = language.title;
-    for (i in language.HTML) {
+    for (var i in language.HTML) {
         $('#'+i).html(language.HTML[i]);
     }
     delete_PlanTable();

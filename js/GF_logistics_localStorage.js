@@ -60,10 +60,14 @@ function LS_setHTMLtab(htmltab = storageGetItem("HTMLtab")) {
 }
 
 function LS_setPerHourOrTotal(PerHourOrTotal = storageGetItem("PerHourOrTotal")) {
-    if (PerHourOrTotal === "PerHour")
+    if (PerHourOrTotal === "PerHour") {
         changeCalculateOutput_Hour(false);
-    else
+        document.getElementById("Display_PerHour").checked = true;
+    }
+    else {
         changeCalculateOutput_Total(false);
+        document.getElementById("Display_Total").checked = true;
+    }
 }
 
 function LS_setTabAnytimeCustom(Custom = storageGetItem("TabAnytimeCustom")) {
@@ -128,18 +132,18 @@ function Config_export(){
     data.push(Input_getContractWeight());
     data.push(Input_getTarget_Correct());
     data.push(SAVED);
-    var MD5 = md5(data);
-    var config = {data: [], MD5: ""};
+    var SHA1 = sha1(data);
+    var config = {data: [], SHA1: ""};
     config.data = data;
-    config.MD5 = MD5;
+    config.SHA1 = SHA1;
     prompt("export", JSON.stringify(config));
 }
 
 function setPageByImport(input) {
     try {
         var config = JSON.parse(input);
-        var MD5 = md5(config.data);
-        var result = MD5 === config.MD5
+        var SHA1 = sha1(config.data);
+        var result = SHA1 === config.SHA1;
     } catch (ex) {}
     if (result) {
         setPageByImport_main(config.data);

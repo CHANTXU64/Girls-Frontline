@@ -1,5 +1,7 @@
 class Tab {
     constructor() {
+        this._title = '<thead><tr><th style="text-align: center;width:5%;" id="resultPlan_Mission_1">'+ language.JS.Mission +'1</th><th style="text-align: center;width:5%;" id="resultPlan_Mission_2">'+ language.JS.Mission +'2</th><th style="text-align: center;width:5%;" id="resultPlan_Mission_3">'+ language.JS.Mission +'3</th><th style="text-align: center;width:5%;" id="resultPlan_Mission_4">'+ language.JS.Mission +'4</th>';
+        this._titleEnd = '</tr></thead>';
         this.Qvalid = [];
     }
 
@@ -55,8 +57,6 @@ class Tab {
     }
 
     PrintPlanTableTitle() {}
-    _title = '<thead><tr><th style="text-align: center;width:5%;" id="resultPlan_Mission_1">'+ language.JS.Mission +'1</th><th style="text-align: center;width:5%;" id="resultPlan_Mission_2">'+ language.JS.Mission +'2</th><th style="text-align: center;width:5%;" id="resultPlan_Mission_3">'+ language.JS.Mission +'3</th><th style="text-align: center;width:5%;" id="resultPlan_Mission_4">'+ language.JS.Mission +'4</th>';
-    _titleEnd = '</tr></thead>';
 
     PrintTableCustomize(plan, row) {
         return "";
@@ -67,7 +67,7 @@ class Tab {
     }
 
     ApplySaved_Custom(Saved_Custom) {}
-};
+}
 function _setUnableLogistic() {
     var UnableMap;
     switch (Input_getSelectChapter()) {
@@ -249,7 +249,7 @@ class Tab_Anytime extends Tab {
         Input_setAnytimeMinimumIntervalTime(MinimumIntervalTime);
         storageSetItem("TabAnytimeCustom", Saved_Custom);
     }
-};
+}
 
 class Tab_Timetable extends Tab {
     constructor() {

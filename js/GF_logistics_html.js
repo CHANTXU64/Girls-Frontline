@@ -7,7 +7,7 @@ window.onload = function () {
     setQContract(Input_getTotalGreatSuccessRate(true));
     this.PrintMissionTable();
     this.PrintPlanDetails();
-}
+};
 
 function get_TABLE_CALCULATE_TOTAL_TIME() {
     if (is_CalculateByHour())
@@ -29,13 +29,16 @@ function setLanguage() {
             case 'zh-TW':
             case 'zh-MO':
                 language = languages["zh-hk"];
+                storageSetItem("lang", "zh-hk");
                 break;
             default:
                 language = languages["zh-cn"];
+                storageSetItem("lang", "zh-cn");
         }
     }
     else {
         language = languages["zh-cn"];
+        storageSetItem("lang", "zh-cn");
     }
 }
 
@@ -54,21 +57,25 @@ function changelang(lang) {
 }
 
 //注释
-$(function (){$("[data-toggle='tooltip']").tooltip();})
+$(function (){$("[data-toggle='tooltip']").tooltip();});
 
 //标签页
 var HTMLtab;
 function ChangeTab(htmltab) {
-    HTMLtab = htmltab;
-    storageSetItem("HTMLtab", HTMLtab);
     switch (htmltab) {
         case "Anytime":
+            if (HTMLtab === "Anytime" || HTMLtab === undefined)
+                IS_ChangeTabByJS = false;
             $('[href=#Tab_Anytime]').tab("show");
             break;
         case "Timetable":
+            if (HTMLtab === "Timetable" || HTMLtab === undefined)
+                IS_ChangeTabByJS = false;
             $('[href=#Tab_Timetable]').tab("show");
             break;
     }
+    HTMLtab = htmltab;
+    storageSetItem("HTMLtab", HTMLtab);
 }
 function ChangeTab_Anytime() {
     HTMLtab = "Anytime";

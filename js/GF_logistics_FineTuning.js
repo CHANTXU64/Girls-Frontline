@@ -1,14 +1,11 @@
-function getHTMLFineTuningTool(expanded) {
+function getHTMLFineTuningTool() {
     var TargetName = ['MT', 'AT', 'RT', 'PT', 'TT', 'ET', 'QPT', 'QRT'];
     var lang = language.JS;
     var TargetHTMLText = [lang.Manp, lang.Ammu, lang.Rati, lang.Part, lang.TPro, lang.Equi, lang.QPro, lang.QRes];
     var HTML = '<div class="panel panel-default" style="max-width: 400px; margin-bottom:5px">';
     HTML += '<div class="panel-heading">';
-    HTML += '<h4 class="panel-title"><a data-toggle="collapse" href="#FineTuningTool" class="collapsed" aria-expanded="'+expanded+'">' + lang.FineTuningTool + '</a></h4></div>';
-    HTML += '<div id="FineTuningTool" class="panel-collapse collapse';
-    if (expanded)
-        HTML += 'in';
-    HTML += '">';
+    HTML += '<h4 class="panel-title"><a data-toggle="collapse" href="#FineTuningTool" class="collapsed">' + lang.FineTuningTool + '</a></h4></div>';
+    HTML += '<div id="FineTuningTool" class="panel-collapse collapse">';
     HTML += '<div class="panel-body">';
     for (var i = 0; i < 8; i++) {
         HTML += '<div class="form-group input-group" style="margin-bottom: 10px;">';

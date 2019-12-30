@@ -49,7 +49,7 @@ Array.prototype.remove = function(val) {
         else
             i++;
     }
-}
+};
 
 Array.prototype.remove_First = function(val) {
     var i = 0;
@@ -61,4 +61,4 @@ Array.prototype.remove_First = function(val) {
         else
             i++;
     }
-}
+};

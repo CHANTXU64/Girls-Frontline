@@ -1,7 +1,7 @@
 $(function (){
-    $('[href=#lang-zh-CN]').on('click', function(){changelang('zh-CN')});
-    $('[href=#lang-zh-TW]').on('click', function(){changelang('zh-TW')});
-})
+    $('[href=#lang-zh-CN]').on('click', function(){changelang('zh-CN');});
+    $('[href=#lang-zh-TW]').on('click', function(){changelang('zh-TW');});
+});
 
 var IS_ChangeTabByJS = false;
 $(function (){
@@ -17,7 +17,7 @@ $(function (){
         else
             ChangeTab_Timetable();
     });
-})
+});
 
 $(function (){
     $('input[id^=Display_]').on("click", function(){
@@ -25,8 +25,8 @@ $(function (){
             changeCalculateOutput_Hour();
         else
             changeCalculateOutput_Total();
-    })
-})
+    });
+});
 
 $(function (){
     $("#GreatSuccessRate").on('input propertychange',function() {
@@ -41,7 +41,7 @@ $(function (){
     $("#GreatSuccessRate").blur(function() {
         var Rate = Input_getGreatSuccessRate();
         storageSetItem("GreatSuccessRate", Rate);
-    })
+    });
     $('#GreatSuccessRateUp').on('click', function() {
         var is_RateUP = IsGreatSuccessRateUp();
         Input_setGreatSuccessUpRate(is_RateUP);
@@ -51,7 +51,7 @@ $(function (){
         PrintPlanDetails();
         storageSetItem("is_GreatSuccessRateUP", is_RateUP);
     });
-})
+});
 
 $(function() {
     $("#MapLimit").on('change', function() {
@@ -59,7 +59,7 @@ $(function() {
         PrintPlanDetails();
         storageSetItem("SelectChapter", Input_getSelectChapter());
     });
-})
+});
 
 //Tab_Anytime
 $(function() {
@@ -72,7 +72,7 @@ $(function() {
         PrintMissionTable();
         PrintPlanDetails();
     });
-    $("#Time_Anytime_hours").blur(function () {Tab_Anytime_changeStorageCustom()});
+    $("#Time_Anytime_hours").blur(function () {Tab_Anytime_changeStorageCustom();});
     $("#Time_Anytime_minutes").on('input propertychange', function() {
         if (!is_CalculateByHour()) {
             var ShownTab = getShownTab();
@@ -82,13 +82,13 @@ $(function() {
         PrintMissionTable();
         PrintPlanDetails();
     });
-    $("#Time_Anytime_minutes").blur(function () {Tab_Anytime_changeStorageCustom()});
+    $("#Time_Anytime_minutes").blur(function () {Tab_Anytime_changeStorageCustom();});
     $("#Tab_Anytime_MinimumIntervalTime_minutes").on('input propertychange', function() {
         PrintMissionTable();
         PrintPlanDetails();
     });
-    $("#Tab_Anytime_MinimumIntervalTime_minutes").blur(function () {Tab_Anytime_changeStorageCustom()});
-})
+    $("#Tab_Anytime_MinimumIntervalTime_minutes").blur(function () {Tab_Anytime_changeStorageCustom();});
+});
 function Tab_Anytime_changeStorageCustom() {
     var Tab = new Tab_Anytime;
     storageSetItem("TabAnytimeCustom", Tab.Saved_Custom());
@@ -96,10 +96,10 @@ function Tab_Anytime_changeStorageCustom() {
 
 //Tab_Timetable
 $(function() {
-    $("#Time_Timetable_hours").on('input propertychange',function() {_Tab_Timetable_changeMaxTime()});
-    $("#Time_Timetable_hours").blur(function() {Tab_Timetable_changeStorageCustom()});
-    $("#Time_Timetable_minutes").on('input propertychange',function() {_Tab_Timetable_changeMaxTime()});
-    $("#Time_Timetable_minutes").blur(function() {Tab_Timetable_changeStorageCustom()});
+    $("#Time_Timetable_hours").on('input propertychange',function() {_Tab_Timetable_changeMaxTime();});
+    $("#Time_Timetable_hours").blur(function() {Tab_Timetable_changeStorageCustom();});
+    $("#Time_Timetable_minutes").on('input propertychange',function() {_Tab_Timetable_changeMaxTime();});
+    $("#Time_Timetable_minutes").blur(function() {Tab_Timetable_changeStorageCustom();});
     $('#Tab_Timetable_AddNewTimePoint').on('click', function() {
         var newTime = Input_getTimetableNewTotalTime_Correct();
         var TotalTime = Input_getTimetableTotalTime();
@@ -137,7 +137,7 @@ $(function() {
         PrintPlanDetails();
         Tab_Timetable_changeStorageCustom();
     });
-})
+});
 function _Tab_Timetable_changeMaxTime() {
     var TotalTime = Input_getTimetableTotalTime();
     Input_setTimetableTotalTime(TotalTime);
@@ -156,34 +156,34 @@ $(function() {
     $("#ContractWeight").change(function() {
         storageSetItem("ContractWeight", Input_getContractWeight());
     });
-})
+});
 
 $(function() {
     $("#target").on('click', 'button[id^=setTarget_]', function() {
         setTarget(stringSliceFromLast_(this.id));
-    })
-    $("#target").on('click', 'button[id^=Target_minus_]', function() {ChangeTarget(this.id)});
-    $("#target").on('click', 'button[id^=Target_plus_]', function() {ChangeTarget(this.id)});
-})
+    });
+    $("#target").on('click', 'button[id^=Target_minus_]', function() {ChangeTarget(this.id);});
+    $("#target").on('click', 'button[id^=Target_plus_]', function() {ChangeTarget(this.id);});
+});
 
 $(function() {
-    $("#target").on('blur', "#MT", function() {TargetChangeStorage()});
-    $("#target").on('blur', "#AT", function() {TargetChangeStorage()});
-    $("#target").on('blur', "#RT", function() {TargetChangeStorage()});
-    $("#target").on('blur', "#PT", function() {TargetChangeStorage()});
-    $("#target").on('blur', "#TT", function() {TargetChangeStorage()});
-    $("#target").on('blur', "#ET", function() {TargetChangeStorage()});
-    $("#target").on('blur', "#QPT", function() {TargetChangeStorage()});
-    $("#target").on('blur', "#QRT", function() {TargetChangeStorage()});
-})
+    $("#target").on('blur', "#MT", function() {TargetChangeStorage();});
+    $("#target").on('blur', "#AT", function() {TargetChangeStorage();});
+    $("#target").on('blur', "#RT", function() {TargetChangeStorage();});
+    $("#target").on('blur', "#PT", function() {TargetChangeStorage();});
+    $("#target").on('blur', "#TT", function() {TargetChangeStorage();});
+    $("#target").on('blur', "#ET", function() {TargetChangeStorage();});
+    $("#target").on('blur', "#QPT", function() {TargetChangeStorage();});
+    $("#target").on('blur', "#QRT", function() {TargetChangeStorage();});
+});
 function TargetChangeStorage() {
     storageSetItem("TargetValue", Input_getTarget_Correct());
 }
 
 $(function() {
-    $('#start_sorting').on('click', function() {start_sorting_main()});
-    $("#clear_sorting").on('click', function() {HTML_AllowInput()});
-})
+    $('#start_sorting').on('click', function() {start_sorting_main();});
+    $("#clear_sorting").on('click', function() {HTML_AllowInput();});
+});
 
 //排序结果点击
 $(function() {
@@ -198,8 +198,8 @@ $(function() {
         }
         else
             this.className = "";
-    })
-})
+    });
+});
 
 //对排序结果某一项排序
 $(function() {
@@ -239,12 +239,12 @@ $(function() {
         RESULT_PLAN_SORT_BY = "QRes";
         resultPlan_sortByColumn(12);
     });
-})
+});
 
 $(function () {
-    $("#Plan_Table").on('click', 'button[id^=FineTuning_minus_]', function() {FineTuning(-1, stringSliceFromLast_(this.id))});
-    $("#Plan_Table").on('click', 'button[id^=FineTuning_plus_]', function() {FineTuning(1, stringSliceFromLast_(this.id))});
-})
+    $("#Plan_Table").on('click', 'button[id^=FineTuning_minus_]', function() {FineTuning(-1, stringSliceFromLast_(this.id));});
+    $("#Plan_Table").on('click', 'button[id^=FineTuning_plus_]', function() {FineTuning(1, stringSliceFromLast_(this.id));});
+});
 
 $(function() {
     $("#importSaved_importButton").on('click', function() {
@@ -252,8 +252,8 @@ $(function() {
         Saved_import(input);
         $("#importSaved_input").val("");
     });
-    $("#Saved_Body").on('click', 'button[id^=SavedTable_apply_]', function() {Saved_apply(parseInt(stringSliceFromLast_(this.id)))});
-    $("#Saved_Body").on('input propertychange', 'input[id^=SavedTable_name_]', function() {Saved_rename(parseInt(stringSliceFromLast_(this.id)))});
+    $("#Saved_Body").on('click', 'button[id^=SavedTable_apply_]', function() {Saved_apply(parseInt(stringSliceFromLast_(this.id)));});
+    $("#Saved_Body").on('input propertychange', 'input[id^=SavedTable_name_]', function() {Saved_rename(parseInt(stringSliceFromLast_(this.id)));});
     $("#Saved_Body").on('keyup', 'input[id^=SavedTable_name_]', function(e) {
         var key = e.which;
         if (key == 13) {
@@ -272,11 +272,11 @@ $(function() {
         $(name_elem_id).focus();
         $(name_elem_id).select();
     });
-    $("#Saved_Body").on('click', 'button[id^=SavedTable_up_]', function() {Saved_upThisRow(parseInt(stringSliceFromLast_(this.id)))});
-    $("#Saved_Body").on('click', 'button[id^=SavedTable_down_]', function() {Saved_downThisRow(parseInt(stringSliceFromLast_(this.id)))});
-    $("#Saved_Body").on('click', 'button[id^=SavedTable_export_]', function() {Saved_export(parseInt(stringSliceFromLast_(this.id)))});
-    $("#Saved_Body").on('click', 'button[id^=SavedTable_delete_]', function() {Saved_deleteThisRow(parseInt(stringSliceFromLast_(this.id)))});
-})
+    $("#Saved_Body").on('click', 'button[id^=SavedTable_up_]', function() {Saved_upThisRow(parseInt(stringSliceFromLast_(this.id)));});
+    $("#Saved_Body").on('click', 'button[id^=SavedTable_down_]', function() {Saved_downThisRow(parseInt(stringSliceFromLast_(this.id)));});
+    $("#Saved_Body").on('click', 'button[id^=SavedTable_export_]', function() {Saved_export(parseInt(stringSliceFromLast_(this.id)));});
+    $("#Saved_Body").on('click', 'button[id^=SavedTable_delete_]', function() {Saved_deleteThisRow(parseInt(stringSliceFromLast_(this.id)));});
+});
 
 $(function() {
     $("#MissionTable_panel").on('click', 'tr[id^=MissionTable_]', function() {
@@ -285,12 +285,12 @@ $(function() {
             MissionTable_cancelSelectThisRow(number);
         else
             MissionTable_selectThisRow(number);
-    })
-})
+    });
+});
 
 $(function() {
-    $("#savePlan").on('click', function() {saveThisPlan()})
-})
+    $("#savePlan").on('click', function() {saveThisPlan();});
+});
 
 $(function() {
     $("#Capture").on('click', function() {
@@ -301,15 +301,15 @@ $(function() {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        })
-    })
-})
+        });
+    });
+});
 
 $(function() {
-    $("#Config_export").on('click', function() {Config_export()});
+    $("#Config_export").on('click', function() {Config_export();});
     $("#Config_importButton").on('click', function() {
         var input = $("#Config_input").val();
         setPageByImport(input);
         $("#Config_input").val("");
     });
-})
+});

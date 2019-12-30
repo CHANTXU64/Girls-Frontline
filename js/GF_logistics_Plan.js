@@ -308,7 +308,7 @@ function sortStringNumber(a, b) {
 
 function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
     var Table = document.getElementById("Plan_Table");
-    var tab = getHTMLFineTuningTool(fineTuningExpanded);
+    var tab = getHTMLFineTuningTool();
     tab += '<div class="table-responsive">';
     tab += '<table class="table table-striped table-hover table-responsive text-nowrap" style="margin-bottom: 0px; cursor: default;">';
     var ShownTab = getShownTab();
@@ -356,5 +356,7 @@ function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
     }
     tab += '</tbody>';
     Table.innerHTML = tab;
+    if (fineTuningExpanded)
+        $("#FineTuningTool").collapse("show");
     document.getElementById("start_sorting_html").style.display = "none";
 }
