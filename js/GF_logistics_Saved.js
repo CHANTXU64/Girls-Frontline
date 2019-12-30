@@ -23,7 +23,7 @@ function saveThisPlan() {
     newData.push(SelectMissions);
     var newSave = {data:[], MD5:""};
     newSave.data = newData;
-    newSave.MD5 = md5(newData);
+    newSave.MD5 = md5(JSON.stringify(newData));
     SAVED.push(newSave);
     storageSetItem("SAVED", SAVED);
     PrintSavedThisRow(SAVED.length - 1);
@@ -82,7 +82,7 @@ function Saved_rename(Row) {
     var elem = $(elem_id);
     var newName = elem.val();
     SAVED[Row].data[0] = newName;
-    SAVED[Row].MD5 = md5(SAVED[Row].data);
+    SAVED[Row].MD5 = md5(JSON.stringify(SAVED[Row].data));
     storageSetItem("SAVED", SAVED);
 }
 
@@ -129,7 +129,7 @@ function Saved_deleteThisRow(Row) {
 function Saved_import(input) {
     try {
         var newSaved = JSON.parse(input);
-        var MD5 = md5(newSaved.data);
+        var MD5 = md5(JSON.stringify(newSaved.data));
         var result = MD5 === newSaved.MD5
     } catch (ex) {}
     if (result) {
@@ -146,7 +146,7 @@ function Saved_importAndCover_SAVED(Saved_Arr) {
         Saved_deleteThisRow(i);
     }
     for (var i = 0; i < Saved_Arr.length; i++) {
-        if (md5(Saved_Arr[i].data) !== Saved_Arr[i].MD5)
+        if (md5(JSON.stringify(Saved_Arr[i].data)) !== Saved_Arr[i].MD5)
             return false;
         SAVED.push(Saved_Arr[i]);
         storageSetItem("SAVED", SAVED);

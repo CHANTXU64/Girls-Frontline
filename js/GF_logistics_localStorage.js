@@ -132,7 +132,7 @@ function Config_export(){
     data.push(Input_getContractWeight());
     data.push(Input_getTarget_Correct());
     data.push(SAVED);
-    var SHA1 = sha1(data);
+    var SHA1 = sha1(JSON.stringify(data));
     var config = {data: [], SHA1: ""};
     config.data = data;
     config.SHA1 = SHA1;
@@ -142,7 +142,7 @@ function Config_export(){
 function setPageByImport(input) {
     try {
         var config = JSON.parse(input);
-        var SHA1 = sha1(config.data);
+        var SHA1 = sha1(JSON.stringify(config.data));
         var result = SHA1 === config.SHA1;
     } catch (ex) {}
     if (result) {
