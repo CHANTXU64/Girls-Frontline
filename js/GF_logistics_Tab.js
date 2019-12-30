@@ -61,6 +61,12 @@ class Tab {
     PrintTableCustomize(plan, row) {
         return "";
     }
+
+    Saved_Custom() {
+        return [];
+    }
+
+    ApplySaved_Custom(Saved_Custom) {}
 };
 function _setUnableLogistic() {
     var UnableMap;
@@ -226,6 +232,22 @@ class Tab_Anytime extends Tab {
         tab.push((Math.round(Math.max(this.Qvalid[Number[0]][9],this.Qvalid[Number[1]][9],this.Qvalid[Number[2]][9],this.Qvalid[Number[3]][9]) * 100 / 60) / 100) + "h");
         return tab;
     }
+
+    Saved_Custom() {
+        var Saved_Custom = [];
+        var TotalTime = Input_getAnytimeTotalTime();
+        Saved_Custom.push(TotalTime);
+        var MinimumIntervalTime = Input_getAnytimeMinimumIntervalTime();
+        Saved_Custom.push(MinimumIntervalTime);
+        return Saved_Custom;
+    }
+
+    ApplySaved_Custom(Saved_Custom) {
+        var TotalTime = Saved_Custom[0];
+        var MinimumIntervalTime = Saved_Custom[1];
+        Input_setAnytimeTotalTime(TotalTime);
+        Input_setAnytimeMinimumIntervalTime(MinimumIntervalTime);
+    }
 };
 
 class Tab_Timetable extends Tab {
@@ -288,6 +310,22 @@ class Tab_Timetable extends Tab {
             title = this._title + '<th style="text-align: center;width:10%;" id="resultPlan_Manp">'+language.JS.Manp+'</th><th style="text-align: center;width:10%;" id="resultPlan_Ammu">'+language.JS.Ammu+'</th><th style="text-align: center;width:10%;" id="resultPlan_Rati">'+language.JS.Rati+'</th><th style="text-align: center;width:10%;" id="resultPlan_Part">'+language.JS.Part+'</th><th style="text-align: center;width:10%;" id="resultPlan_TPro">'+language.JS.TPro+'</th><th style="text-align: center;width:10%;" id="resultPlan_Equi">'+language.JS.Equi+'</th><th style="text-align: center;width:10%;" id="resultPlan_QPro">'+language.JS.QPro+'</th><th style="text-align: center;width:10%;" id="resultPlan_QRes">'+language.JS.QRes+'</th>' + this._titleEnd;
         }
         return title;
+    }
+
+    Saved_Custom() {
+        var Saved_Custom = [];
+        var TotalTime = Input_getTimetableTotalTime();
+        Saved_Custom.push(TotalTime);
+        var Timetable = Tab_Timetable_TIMELIST.slice();
+        Saved_Custom.push(Timetable);
+        return Saved_Custom;
+    }
+
+    ApplySaved_Custom(Saved_Custom) {
+        var TotalTime = Saved_Custom[0];
+        Input_setTimetableTotalTime(TotalTime);
+        var Timetable = Saved_Custom[1];
+        Input_setTimetableTimetable(Timetable);
     }
 }
 function sortNumber(a, b) {

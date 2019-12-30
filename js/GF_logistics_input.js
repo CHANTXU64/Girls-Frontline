@@ -14,6 +14,10 @@ function Input_getGreatSuccessRate(NeedCorrection = false) {
     return Rate;
 }
 
+function Input_setGreatSuccessRate(Rate) {
+    $("#GreatSuccessRate").val(Rate);
+}
+
 function IsGreatSuccessRateUp() {
     if (document.getElementById('GreatSuccessRateUp').checked)
         return true;
@@ -34,7 +38,7 @@ function Input_getTotalGreatSuccessRate(NeedCorrection = false) {
     return BaseRate + UpRate;
 }
 
-function Input_setGreatSuccessUpRate(is_RateUP) {
+function Input_setGreatSuccessUpRate(is_RateUP, NeedCorrectBaseRate = true) {
     var checkbox_elem = document.getElementById("GreatSuccessRateUp");
     var UpRateText_elem = document.getElementById("Display_UPRate");
     if (is_RateUP === false) {
@@ -43,7 +47,7 @@ function Input_setGreatSuccessUpRate(is_RateUP) {
     }
     else {
         checkbox_elem.checked = true;
-        var BaseRate = Input_getGreatSuccessRate(true);
+        var BaseRate = Input_getGreatSuccessRate(NeedCorrectBaseRate);
         UpRateText_elem.innerHTML = "+" + Array_GreatSuccessRate[BaseRate];
     }
 }

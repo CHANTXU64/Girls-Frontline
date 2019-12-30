@@ -5,8 +5,9 @@ var languages =
         "lang": "zh-Hans",
         "title": "少女前线-后勤组合排序器",
         "HTML": {
-            "header": "后勤组合排序器",
+            "header": "后勤组合排序器（开发中）",
             "description": "计算结果只和资源契约之间的比例有关。计算结果为<a href=\"https://baike.baidu.com/item/%E6%95%B0%E5%AD%A6%E6%9C%9F%E6%9C%9B/5362790?fr=aladdin\" class=\"alert-link\" style=\"color:#000000\">均值</a>。",
+            "localstorageDoesNotWork": "因某些原因，Web存储无法工作，需要手动导出配置",
             "setting": "设置",
             "tab_Anytime": "随时能收后勤",
             "tab_Timetable": "时间计划表",
@@ -70,7 +71,6 @@ var languages =
             "NoSaved": "空",
         },
         "HTMLJS": {
-            "localstorageDoesNotWork": "因某些原因，Web存储无法工作，需要手动导出配置",
             "tab_Timetable_deleteall": "删除全部时间点",
             "plantabletip": "点击 <span style=\"color:#165399\">开始排序</span> 按钮，排序前十六的结果将在这里显示",
             "Demand_hour": "平均每小时需求量",
@@ -103,14 +103,20 @@ var languages =
             "total_greatSuccessRate": "大成功总概率",
             "PerHour": "平均/h",
             "Total" : "总计",
+            "plzInputPlanName": "请输入方案名称",
+            "planDefaultName": "自定义",
+            "deleteSavedWarning_1": "是否要删除这个名为",
+            "deleteSavedWarning_2": "的配置？",
+            "Saved_alert": "导入的数据有问题！",
         }
     },
     "zh-hk": {
         "lang": "zh-Hant",
         "title": "少女前線-後勤組合排序器",
         "HTML": {
-            "header": "後勤組合排序器",
+            "header": "後勤組合排序器（開發中）",
             "description": "計算結果只和資源契約之間的比例有關。計算結果為<a href=\"https://zh.wikipedia.org/zh-hk/%E6%9C%9F%E6%9C%9B%E5%80%BC\" class=\"alert-link\" style=\"color:#000000\">期望值</a>。",
+            "localstorageDoesNotWork": "因某些原因，Web存儲無法工作，需要手動導出配置",
             "setting": "設置",
             "tab_Anytime": "隨時能收後勤",
             "tab_Timetable": "時間計劃表",
@@ -175,7 +181,6 @@ var languages =
             "NoSaved": "空",
         },
         "HTMLJS": {
-            "localstorageDoesNotWork": "因某些原因，Web存儲無法工作，需要手動導出配置",
             "tab_Timetable_deleteall": "刪除全部時間點",
             "plantabletip": "點擊 <span style=\"color:#165399\">開始排序</span> 按鈕，排序前十六的結果將在這裡顯示",
             "Demand_hour": "平均每小時需求量",
@@ -207,7 +212,12 @@ var languages =
             "total_time": "總時長",
             "total_greatSuccessRate": "大成功總概率",
             "PerHour": "平均/h",
-            "Total" : "總計"
+            "Total" : "總計",
+            "plzInputPlanName": "請輸入方案名稱",
+            "planDefaultName": "自定義",
+            "deleteSavedWarning_1": "是否要刪除這個名為",
+            "deleteSavedWarning_2": "的配置？",
+            "Saved_alert": "導入的數據有問題！",
         }
     }
 }

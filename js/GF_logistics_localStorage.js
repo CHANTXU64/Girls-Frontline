@@ -1,19 +1,13 @@
-function storageSetItem(Key, Value) {
-    if (localStorageWorks()) {
-        window.localStorage.setItem(Key, Value);
-    }
-}
+var CAN_LOCALSTORAGE_WORK;
 
-function storageGetItem(Key) {
-    if (localStorageWorks()) {
-        return window.localStorage.getItem(Key);
-    }
-    else {
-        return "noStorage";
-    }
+function checkLocalStorageWork() {
+    CAN_LOCALSTORAGE_WORK = _localStorageWorks();
+    if (CAN_LOCALSTORAGE_WORK !== true)
+        CAN_LOCALSTORAGE_WORK = false;
+    else
+        document.getElementById("localstorageDoesNotWork").style.display = "none";
 }
-
-function localStorageWorks() {
+function _localStorageWorks() {
     try {
         localStorage.setItem("test_Dlz3bH", "KwNYPCpyH7yl2S1K");
         var result = localStorage.getItem("test_Dlz3bH") == "KwNYPCpyH7yl2S1K";
@@ -22,34 +16,44 @@ function localStorageWorks() {
     } catch (ex) {}
 }
 
+function storageSetItem(Key, Value) {
+    if (CAN_LOCALSTORAGE_WORK) {
+        localStorage.setItem(Key, Value);
+    }
+}
+
+function storageGetItem(Key) {
+    if (CAN_LOCALSTORAGE_WORK) {
+        var returnValue = localStorage.getItem(Key);
+        if (returnValue === null)
+            return "noStorage";
+        else
+            return returnValue;
+    }
+    else
+        return "noStorage";
+}
+
 function checkLocalStorage() {
-    if (alertLocalstorageDoesNotWork()) {
-        return;
-    }
-    checkLSLanguage();
+    LS_setHTMLtab();
+    LS_setPerHourOrTotal();
 }
 
-function alertLocalstorageDoesNotWork() {
-    if (!localStorageWorks()) {
-        var tab = '<div class="alert alert-danger" style="color:#000000">' + language.HTMLJS.localstorageDoesNotWork + '</div>';
-        document.getElementById("localstorageDoesNotWork").innerHTML = tab;
-        return true;
+function LS_setHTMLtab() {
+    var htmltab = storageGetItem("HTMLtab")
+    if (htmltab === "Timetable") {
+        IS_ChangeTabByJS = true;
+        ChangeTab(htmltab);
     }
-    return false;
+    else {
+        IS_ChangeTabByJS = true;
+        ChangeTab("Anytime");
+    }
 }
 
-function checkLSLanguage() {
-    if (storageGetItem("lang")) {
-        switch(storageGetItem("lang")) {
-            case 'zh-cn':
-                language = languages["zh-cn"];
-                break;
-            case 'zh-hk':
-                language = languages["zh-hk"];
-                break;
-            case 'noStorage':
-                language = languages["zh-cn"];
-                break;
-        }
+function LS_setPerHourOrTotal() {
+    var PerHourOrTotal = storageGetItem("PerHourOrTotal");
+    if (PerHourOrTotal === "Total") {
+        changeCalculateOutput_Total();
     }
 }

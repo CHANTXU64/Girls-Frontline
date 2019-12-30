@@ -1,12 +1,13 @@
 window.onload = function () {
-    checkDefaultLanguage();
+    checkLocalStorageWork();
+    setLanguage();
     checkLocalStorage();
     loadHTML_Target();
     loadHTML_language();
-    HTMLtab = "Anytime";
     TABLE_CALCULATE_TOTAL_TIME = get_TABLE_CALCULATE_TOTAL_TIME();
     setQContract(Input_getTotalGreatSuccessRate(true));
-    ChangeTab_Anytime();
+    this.PrintMissionTable();
+    this.PrintPlanDetails();
 }
 
 function get_TABLE_CALCULATE_TOTAL_TIME() {
@@ -19,8 +20,10 @@ function get_TABLE_CALCULATE_TOTAL_TIME() {
     }
 }
 
-function checkDefaultLanguage() {
-    var lang = navigator.language||navigator.userLanguage;
+function setLanguage() {
+    var lang = storageGetItem("lang");
+    if (lang === "noStorage")
+        lang = navigator.language||navigator.userLanguage;
     if (lang.substr(0, 2) == 'zh') {
         switch(lang) {
             case 'zh-HK':
@@ -56,8 +59,21 @@ $(function (){$("[data-toggle='tooltip']").tooltip();})
 
 //标签页
 var HTMLtab;
+function ChangeTab(htmltab) {
+    HTMLtab = htmltab;
+    storageSetItem("HTMLtab", HTMLtab);
+    switch (htmltab) {
+        case "Anytime":
+            $('[href=#Tab_Anytime]').tab("show");
+            break;
+        case "Timetable":
+            $('[href=#Tab_Timetable]').tab("show");
+            break;
+    }
+}
 function ChangeTab_Anytime() {
     HTMLtab = "Anytime";
+    storageSetItem("HTMLtab", HTMLtab);
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
     HTML_AllowInput();
     if (!is_CalculateByHour()) {
@@ -70,6 +86,7 @@ function ChangeTab_Anytime() {
 }
 function ChangeTab_Timetable() {
     HTMLtab = "Timetable";
+    storageSetItem("HTMLtab", HTMLtab);
     document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
     HTML_AllowInput();
     if (!is_CalculateByHour()) {
@@ -89,6 +106,7 @@ function is_CalculateByHour() {
 }
 
 function changeCalculateOutput_Hour() {
+    storageSetItem("PerHousOrTotal", "PerHour");
     $("#Demand").html(language.HTMLJS.Demand_hour);
     var ShownTab = getShownTab();
     ShownTab.setTime();
@@ -105,6 +123,7 @@ function changeCalculateOutput_Hour() {
     }
 }
 function changeCalculateOutput_Total() {
+    storageSetItem("PerHousOrTotal", "Total");
     $("#Demand").html(language.HTMLJS.Demand_total);
     var ShownTab = getShownTab();
     ShownTab.setTime();
@@ -253,8 +272,10 @@ function HTML_AllowInput() {
     $("#Time_Anytime_hours").removeAttr("disabled");
     $("#Time_Anytime_minutes").removeAttr("disabled");
     $("#Tab_Anytime_MinimumIntervalTime_minutes").removeAttr("disabled");
-    $("#Time_Timetable_hours").removeAttr("disabled");
-    $("#Time_Timetable_minutes").removeAttr("disabled");
+    if (Tab_Timetable_TIMELIST.length === 0) {
+        $("#Time_Timetable_hours").removeAttr("disabled");
+        $("#Time_Timetable_minutes").removeAttr("disabled");
+    }
     $("#tab_Timetable_deleteall").removeAttr("disabled");
     $("button[id^=Tab_Timetable_range_thumb_").removeAttr("disabled");
     $("#Tab_Timetable_new_hours").removeAttr("disabled");
@@ -292,14 +313,4 @@ function resultPlan_sortByColumn(Column, method = "descending") {
         quick_sort_expand_descending(RESULT_PLAN, Column);
         print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
-}
-
-var SAVED = [];
-function saveThisPlan() {
-    // var newSaved = [];
-    // newSaved.push(HTMLtab);
-    // var ShownTab = getShownTab();
-    // ShownTab.setTime(true);
-    // newSaved.push(ShownTab.TotalTime);
-
 }

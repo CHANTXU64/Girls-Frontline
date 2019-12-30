@@ -195,14 +195,6 @@ class Plan {
             CurrentValue[6] = _CurrentValue[6] * 500;
         if (TargetValue[7] !== 0)
             CurrentValue[7] = _CurrentValue[7] * 500;
-        // var CurrentValue = this._CurrentValue.slice();
-        // CurrentValue[4] *= 500;
-        // CurrentValue[5] *= 500;
-        // CurrentValue[6] *= 500;
-        // CurrentValue[7] *= 500;
-        // for (var i = 0; i < 8; i++) {
-        //     if (this.TargetValue[i] == 0) CurrentValue[i] = 0;
-        // }
         var Norm_Current = this._getNorm(CurrentValue);
         if (Norm_Current === 0)
             return 0;

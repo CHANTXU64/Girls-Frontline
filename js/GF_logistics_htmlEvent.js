@@ -3,9 +3,20 @@ $(function (){
     $('[href=#lang-zh-TW]').on('click', function(){changelang('zh-TW')});
 })
 
+var IS_ChangeTabByJS = false;
 $(function (){
-    $('[href=#Tab_Anytime]').on("shown.bs.tab", function(){ChangeTab_Anytime()});
-    $('[href=#Tab_Timetable]').on("shown.bs.tab", function(){ChangeTab_Timetable()});
+    $('[href=#Tab_Anytime]').on("shown.bs.tab", function(){
+        if (IS_ChangeTabByJS)
+            IS_ChangeTabByJS = false;
+        else
+            ChangeTab_Anytime();
+    });
+    $('[href=#Tab_Timetable]').on("shown.bs.tab", function(){
+        if (IS_ChangeTabByJS)
+            IS_ChangeTabByJS = false;
+        else
+            ChangeTab_Timetable();
+    });
 })
 
 $(function (){
@@ -21,7 +32,7 @@ $(function (){
     $("#GreatSuccessRate").on('input propertychange',function() {
         var Rate = Input_getGreatSuccessRate();
         var is_RateUP = IsGreatSuccessRateUp();
-        Input_setGreatSuccessUpRate(is_RateUP);
+        Input_setGreatSuccessUpRate(is_RateUP, false);
         var TotalRate = Rate + Input_getGreatSuccessUpRate(Rate);
         setQContract(TotalRate);
         PrintMissionTable();
@@ -135,12 +146,10 @@ $(function() {
 //排序结果点击
 $(function() {
     $("#Plan_Table").on('click', 'tr[id^=print_result_plan_tr_]', function() {
-        var number = stringSliceFromLast_(this.id);
+        var number = parseInt(stringSliceFromLast_(this.id));
         if (this.className != "success") {
             for (var i = 0; i < RESULT_PLAN.length; i++) {
-                if (i !== number) {
-                    document.getElementById("print_result_plan_tr_" + i).className = "";
-                }
+                document.getElementById("print_result_plan_tr_" + i).className = "";
             }
             this.className = "success";
             MissionTable_resultPlan_select(number);
@@ -196,8 +205,40 @@ $(function () {
 })
 
 $(function() {
+    $("#importSaved_importButton").on('click', function() {
+        var input = $("#importSaved_input").val();
+        Saved_import(input);
+        $("#importSaved_input").val("");
+    });
+    $("#Saved_Body").on('click', 'button[id^=SavedTable_apply_]', function() {Saved_apply(parseInt(stringSliceFromLast_(this.id)))});
+    $("#Saved_Body").on('input propertychange', 'input[id^=SavedTable_name_]', function() {Saved_rename(parseInt(stringSliceFromLast_(this.id)))});
+    $("#Saved_Body").on('keyup', 'input[id^=SavedTable_name_]', function(e) {
+        var key = e.which;
+        if (key == 13) {
+            var id = "#" + this.id;
+            $(id).attr('readOnly', true);
+        }
+    });
+    $("#Saved_Body").on('blur', 'input[id^=SavedTable_name_]', function() {
+        var id = "#" + this.id;
+        $(id).attr('readOnly', true);
+    });
+    $("#Saved_Body").on('click', 'button[id^=SavedTable_rename_]', function() {
+        var Row = parseInt(stringSliceFromLast_(this.id));
+        var name_elem_id = "#SavedTable_name_" + Row;
+        $(name_elem_id).attr('readOnly', false);
+        $(name_elem_id).focus();
+        $(name_elem_id).select();
+    });
+    $("#Saved_Body").on('click', 'button[id^=SavedTable_up_]', function() {Saved_upThisRow(parseInt(stringSliceFromLast_(this.id)))});
+    $("#Saved_Body").on('click', 'button[id^=SavedTable_down_]', function() {Saved_downThisRow(parseInt(stringSliceFromLast_(this.id)))});
+    $("#Saved_Body").on('click', 'button[id^=SavedTable_export_]', function() {Saved_export(parseInt(stringSliceFromLast_(this.id)))});
+    $("#Saved_Body").on('click', 'button[id^=SavedTable_delete_]', function() {Saved_deleteThisRow(parseInt(stringSliceFromLast_(this.id)))});
+})
+
+$(function() {
     $("#MissionTable_panel").on('click', 'tr[id^=MissionTable_]', function() {
-        var number = stringSliceFromLast_(this.id);
+        var number = parseInt(stringSliceFromLast_(this.id));
         if (this.className === "success")
             MissionTable_cancelSelectThisRow(number);
         else
@@ -211,10 +252,10 @@ $(function() {
 
 $(function() {
     $("#Capture").on('click', function() {
-        html2canvas(document.getElementById("PlanDetails"), {logging:false}).then(function(canvas) {
+        html2canvas(document.getElementById("PlanDetails"), {logging:false,scale:1}).then(function(canvas) {
             var link = document.createElement('a');
             link.href = canvas.toDataURL();
-            link.download = 'test.png';
+            link.download = 'Capture.png';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);

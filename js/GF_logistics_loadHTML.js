@@ -73,5 +73,4 @@ function loadHTML_language() {
             ChangeTab_Timetable();
             break;
     }
-    alertLocalstorageDoesNotWork();
 }
