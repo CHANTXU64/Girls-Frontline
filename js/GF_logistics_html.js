@@ -1,10 +1,9 @@
 window.onload = function () {
     checkLocalStorageWork();
     setLanguage();
-    checkLocalStorage();
     loadHTML_Target();
+    setPageByLocalStorage();
     loadHTML_language();
-    TABLE_CALCULATE_TOTAL_TIME = get_TABLE_CALCULATE_TOTAL_TIME();
     setQContract(Input_getTotalGreatSuccessRate(true));
     this.PrintMissionTable();
     this.PrintPlanDetails();
@@ -74,7 +73,7 @@ function ChangeTab(htmltab) {
 function ChangeTab_Anytime() {
     HTMLtab = "Anytime";
     storageSetItem("HTMLtab", HTMLtab);
-    document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
+    delete_PlanTable();
     HTML_AllowInput();
     if (!is_CalculateByHour()) {
         var ShownTab = getShownTab();
@@ -87,7 +86,7 @@ function ChangeTab_Anytime() {
 function ChangeTab_Timetable() {
     HTMLtab = "Timetable";
     storageSetItem("HTMLtab", HTMLtab);
-    document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
+    delete_PlanTable();
     HTML_AllowInput();
     if (!is_CalculateByHour()) {
         var ShownTab = getShownTab();
@@ -105,37 +104,43 @@ function is_CalculateByHour() {
         return false;
 }
 
-function changeCalculateOutput_Hour() {
-    storageSetItem("PerHousOrTotal", "PerHour");
+function changeCalculateOutput_Hour(NeedCorrectTargetValue = true) {
+    storageSetItem("PerHourOrTotal", "PerHour");
     $("#Demand").html(language.HTMLJS.Demand_hour);
     var ShownTab = getShownTab();
     ShownTab.setTime();
     TABLE_CALCULATE_TOTAL_TIME = 60;
-    var time = ShownTab.TotalTime;
-    var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
-    for (var i = 0 ; i < 8; i++) {
-        $(id[i]).val(Math.round($(id[i]).val() / time * 6000) / 100);
+    if (NeedCorrectTargetValue) {
+        var time = ShownTab.TotalTime;
+        var TargetValue = Input_getTarget_Correct();
+        for (var i = 0; i < 8; i++) {
+            TargetValue[i] = Math.round(TargetValue[i] / time * 6000) / 100;
+        }
+        Input_setTarget(TargetValue);
     }
     PrintMissionTable();
     var Plan_Table_innerHTML = document.getElementById("Plan_Table").innerHTML;
-    if (Plan_Table_innerHTML !== language.HTMLJS.plantabletip && Plan_Table_innerHTML !== language.JS.NoPlan) {
+    if (Plan_Table_innerHTML !== "" && Plan_Table_innerHTML !== language.JS.NoPlan) {
         print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
 }
-function changeCalculateOutput_Total() {
-    storageSetItem("PerHousOrTotal", "Total");
+function changeCalculateOutput_Total(NeedCorrectTargetValue = true) {
+    storageSetItem("PerHourOrTotal", "Total");
     $("#Demand").html(language.HTMLJS.Demand_total);
     var ShownTab = getShownTab();
     ShownTab.setTime();
     TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
-    var time = ShownTab.TotalTime;
-    var id = ["#MT","#AT","#RT","#PT","#TT","#ET","#QPT","#QRT"];
-    for (var i = 0 ; i < 8; i++) {
-        $(id[i]).val(Math.round($(id[i]).val() * time * 100 / 60) / 100);
+    if (NeedCorrectTargetValue) {
+        var time = ShownTab.TotalTime;
+        var TargetValue = Input_getTarget_Correct();
+        for (var i = 0; i < 8; i++) {
+            TargetValue[i] = Math.round(TargetValue[i] * time * 100 / 60) / 100;
+        }
+        Input_setTarget(TargetValue);
     }
     PrintMissionTable();
     var Plan_Table_innerHTML = document.getElementById("Plan_Table").innerHTML;
-    if (Plan_Table_innerHTML !== language.HTMLJS.plantabletip && Plan_Table_innerHTML !== language.JS.NoPlan) {
+    if (Plan_Table_innerHTML !== "" && Plan_Table_innerHTML !== language.JS.NoPlan) {
         print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
 }
@@ -301,7 +306,6 @@ function HTML_AllowInput() {
     $("button[id^=Target_plus_").removeAttr("disabled");
     $("#start_sorting").removeAttr("disabled");
     $("#clear_sorting").attr('disabled', "true");
-    document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
 }
 
 function resultPlan_sortByColumn(Column, method = "descending") {
@@ -313,4 +317,9 @@ function resultPlan_sortByColumn(Column, method = "descending") {
         quick_sort_expand_descending(RESULT_PLAN, Column);
         print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
+}
+
+function delete_PlanTable() {
+    document.getElementById("start_sorting_html").style.display = "";
+    document.getElementById("Plan_Table").innerHTML = "";
 }

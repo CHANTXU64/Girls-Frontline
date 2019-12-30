@@ -25,6 +25,7 @@ function saveThisPlan() {
     newSave.data = newData;
     newSave.MD5 = md5(newData);
     SAVED.push(newSave);
+    storageSetItem("SAVED", SAVED);
     PrintSavedThisRow(SAVED.length - 1);
 }
 
@@ -66,7 +67,7 @@ function Saved_apply(Row) {
     var ShownTab = getShownTab();
     ShownTab.ApplySaved_Custom(savedData[5]);
     MISSION_TABLE_SELECT = savedData[6].slice();
-    document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
+    delete_PlanTable();
     HTML_AllowInput();
     if (!is_CalculateByHour()) {
         ShownTab.setTime(false);
@@ -82,18 +83,21 @@ function Saved_rename(Row) {
     var newName = elem.val();
     SAVED[Row].data[0] = newName;
     SAVED[Row].MD5 = md5(SAVED[Row].data);
+    storageSetItem("SAVED", SAVED);
 }
 
 function Saved_upThisRow(Row) {
     $("#SavedTable_name_" + Row).val(SAVED[Row - 1].data[0]);
     $("#SavedTable_name_" + (Row - 1)).val(SAVED[Row].data[0]);
     [SAVED[Row], SAVED[Row - 1]] = [SAVED[Row - 1], SAVED[Row]];
+    storageSetItem("SAVED", SAVED);
 }
 
 function Saved_downThisRow(Row) {
     $("#SavedTable_name_" + Row).val(SAVED[Row + 1].data[0]);
     $("#SavedTable_name_" + (Row + 1)).val(SAVED[Row].data[0]);
     [SAVED[Row], SAVED[Row + 1]] = [SAVED[Row + 1], SAVED[Row]];
+    storageSetItem("SAVED", SAVED);
 }
 
 function Saved_export(Row) {
@@ -112,6 +116,7 @@ function Saved_deleteThisRow(Row) {
         var removeElem = document.getElementById("SavedTable_row_" + (SAVED.length - 1));
         document.getElementById("Saved_Body").removeChild(removeElem);
         SAVED.splice(Row, 1);
+        storageSetItem("SAVED", SAVED);
         if (SAVED.length !== 0) {
             $("#SavedTable_up_0").attr("disabled", "true");
             $("#SavedTable_down_" + (SAVED.length - 1)).attr("disabled", "true");
@@ -129,6 +134,7 @@ function Saved_import(input) {
     } catch (ex) {}
     if (result) {
         SAVED.push(newSaved);
+        storageSetItem("SAVED", SAVED);
         PrintSavedThisRow(SAVED.length - 1);
     }
     else
@@ -143,6 +149,7 @@ function Saved_importAndCover_SAVED(Saved_Arr) {
         if (md5(Saved_Arr[i].data) !== Saved_Arr[i].MD5)
             return false;
         SAVED.push(Saved_Arr[i]);
+        storageSetItem("SAVED", SAVED);
         PrintSavedThisRow(SAVED.length - 1);
     }
     return true;

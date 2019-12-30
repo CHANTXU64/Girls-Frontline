@@ -234,7 +234,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="checkbox">
-                                                <label id="GreatSuccessRateUp_label"> <input type="checkbox" id="GreatSuccessRateUp">
+                                                <label id="GreatSuccessRateUp_label"> <input type="checkbox" id="GreatSuccessRateUp" autocomplete="off">
                                                     <div id="greatsuccessrateup"></div>
                                                 </label>
                                             </div>
@@ -311,44 +311,6 @@
                                                     </td>
                                                 </tr>
                                                 <tr><td id="NoSaved" colspan=5></td></tr>
-                                                <!-- <tr>
-                                                    <td><button type="button" class="btn btn-default"
-                                                        id="test2" title="" style="background-color: #88E063;">
-                                                        <span class="glyphicon glyphicon-ok"
-                                                            style="top: 2px;" /></button></td>
-                                                    <td>
-                                                        <div class="form-group input-group" style="margin-bottom: 0px;">
-                                                            <input type="text" class="form-control" style="min-width: 140px;cursor: default;"
-                                                            id="test" value="123" onclick="this.select()" disabled="disabled">
-                                                            <div class="input-group-btn">
-                                                                <button type="button" class="btn btn-default"
-                                                                id="test2" title="">
-                                                                <span class="glyphicon glyphicon-pencil"
-                                                                    style="top: 2px;" /></button>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group" style="min-width: 80px;">
-                                                            <button type="button" class="btn btn-default"
-                                                                id="test2" title="">
-                                                                <span class="glyphicon glyphicon-arrow-up"
-                                                                    style="top: 2px;" /></button>
-                                                            <button type="button" class="btn btn-default"
-                                                                id="test2" title="">
-                                                                <span class="glyphicon glyphicon-arrow-down"
-                                                                    style="top: 2px;" /></button>
-                                                        </div>
-                                                    </td>
-                                                    <td><button type="button" class="btn btn-default"
-                                                        id="test2" title="">
-                                                        <span class="glyphicon glyphicon-export"
-                                                            style="top: 2px;" /></button></td>
-                                                    <td><button type="button" class="btn btn-default"
-                                                        id="test3" title="" style="background-color: #F48380;">
-                                                        <span class="glyphicon glyphicon-trash"
-                                                            style="top: 2px;" /></button></td>
-                                                </tr> -->
                                             </tbody>
                                         </table>
                                     </div>
@@ -428,7 +390,10 @@
                     <div class="col-lg-7">
                         <div class="panel panel-default">
                             <div class="panel-heading" id="result"></div>
-                            <div class="panel-body" id="Plan_Table"></div>
+                            <div class="panel-body">
+                                <div id="start_sorting_html"></div>
+                                <div id="Plan_Table"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

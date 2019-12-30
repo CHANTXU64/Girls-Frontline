@@ -69,10 +69,10 @@ var languages =
             "Capture": "捕获",
             "Saved_Title": "已保存的",
             "NoSaved": "空",
+            "start_sorting_html": "点击 <span style=\"color:#165399\">开始排序</span> 按钮，排序前十六的结果将在这里显示",
         },
         "HTMLJS": {
             "tab_Timetable_deleteall": "删除全部时间点",
-            "plantabletip": "点击 <span style=\"color:#165399\">开始排序</span> 按钮，排序前十六的结果将在这里显示",
             "Demand_hour": "平均每小时需求量",
             "Demand_total": "总需求量",
         },
@@ -179,10 +179,10 @@ var languages =
             "Capture": "捕獲",
             "Saved_Title": "已保存的",
             "NoSaved": "空",
+            "start_sorting_html": "點擊 <span style=\"color:#165399\">開始排序</span> 按鈕，排序前十六的結果將在這裡顯示",
         },
         "HTMLJS": {
             "tab_Timetable_deleteall": "刪除全部時間點",
-            "plantabletip": "點擊 <span style=\"color:#165399\">開始排序</span> 按鈕，排序前十六的結果將在這裡顯示",
             "Demand_hour": "平均每小時需求量",
             "Demand_total": "總需求量",
         },

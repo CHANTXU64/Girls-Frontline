@@ -247,6 +247,7 @@ class Tab_Anytime extends Tab {
         var MinimumIntervalTime = Saved_Custom[1];
         Input_setAnytimeTotalTime(TotalTime);
         Input_setAnytimeMinimumIntervalTime(MinimumIntervalTime);
+        storageSetItem("TabAnytimeCustom", Saved_Custom);
     }
 };
 
@@ -326,6 +327,7 @@ class Tab_Timetable extends Tab {
         Input_setTimetableTotalTime(TotalTime);
         var Timetable = Saved_Custom[1];
         Input_setTimetableTimetable(Timetable);
+        storageSetItem("TabTimetableCustom", Saved_Custom);
     }
 }
 function sortNumber(a, b) {

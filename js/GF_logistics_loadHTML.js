@@ -41,7 +41,8 @@ function loadHTML_language() {
     for (i in language.HTML) {
         $('#'+i).html(language.HTML[i]);
     }
-    document.getElementById("Plan_Table").innerHTML = language.HTMLJS.plantabletip;
+    delete_PlanTable();
+    HTML_AllowInput();
     document.getElementById("tab_Timetable_deleteall").title = language.HTMLJS.tab_Timetable_deleteall;
 
     //------
@@ -65,12 +66,5 @@ function loadHTML_language() {
     else {
         $("#Demand").html(language.HTMLJS.Demand_total);
     }
-    switch(HTMLtab) {
-        case "Anytime":
-            ChangeTab_Anytime();
-            break;
-        case "Timetable":
-            ChangeTab_Timetable();
-            break;
-    }
+    PrintPlanDetails();
 }

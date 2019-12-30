@@ -16,6 +16,8 @@ function Input_getGreatSuccessRate(NeedCorrection = false) {
 
 function Input_setGreatSuccessRate(Rate) {
     $("#GreatSuccessRate").val(Rate);
+    setQContract(Input_getTotalGreatSuccessRate());
+    storageSetItem("GreatSuccessRate", Rate);
 }
 
 function IsGreatSuccessRateUp() {
@@ -50,6 +52,8 @@ function Input_setGreatSuccessUpRate(is_RateUP, NeedCorrectBaseRate = true) {
         var BaseRate = Input_getGreatSuccessRate(NeedCorrectBaseRate);
         UpRateText_elem.innerHTML = "+" + Array_GreatSuccessRate[BaseRate];
     }
+    setQContract(Input_getTotalGreatSuccessRate());
+    storageSetItem("is_GreatSuccessRateUP", is_RateUP);
 }
 
 function Input_getTarget_Correct(Target_JQ_elem = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QPT"), $("#QRT")], NeedCorrection = true) {
@@ -74,6 +78,7 @@ function Input_setTarget(TargetValue = [0,0,0,0,0,0,0,0], Target_JQ_elem = [$("#
         _setTarget_arr(TargetValue, Target_JQ_elem);
     else
         _setTarget_one(TargetValue, Target_JQ_elem);
+    storageSetItem("TargetValue", Input_getTarget_Correct());
 }
 function _setTarget_arr(TargetValue_Arr, Target_JQ_elem_Arr) {
     for (var i = 0; i < TargetValue_Arr.length; i++) {
@@ -96,6 +101,7 @@ function Input_setContractWeight(ContractWeight = 50) {
     var ContractWeight_Corrected = Input_getContractWeight();
     document.getElementById("ContractWeight_range").style.right = 100 - ContractWeight_Corrected + "%";
     document.getElementById("ContractWeight_thumb").style.left = ContractWeight_Corrected + "%";
+    storageSetItem("ContractWeight", ContractWeight_Corrected);
 }
 
 function Input_getSelectChapter() {
@@ -107,6 +113,7 @@ function Input_setSelectChapter(ChapterValue = 12) {
     var Chapter = $("#MapLimit").val();
     if (Chapter === null)
         $("#MapLimit").val(12);
+    storageSetItem("SelectChapter", Input_getSelectChapter());
 }
 
 //Anytime---------

@@ -356,4 +356,5 @@ function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
     }
     tab += '</tbody>';
     Table.innerHTML = tab;
+    document.getElementById("start_sorting_html").style.display = "none";
 }

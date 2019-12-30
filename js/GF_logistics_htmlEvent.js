@@ -38,6 +38,10 @@ $(function (){
         PrintMissionTable();
         PrintPlanDetails();
     });
+    $("#GreatSuccessRate").blur(function() {
+        var Rate = Input_getGreatSuccessRate();
+        storageSetItem("GreatSuccessRate", Rate);
+    })
     $('#GreatSuccessRateUp').on('click', function() {
         var is_RateUP = IsGreatSuccessRateUp();
         Input_setGreatSuccessUpRate(is_RateUP);
@@ -45,6 +49,7 @@ $(function (){
         setQContract(TotalRate);
         PrintMissionTable();
         PrintPlanDetails();
+        storageSetItem("is_GreatSuccessRateUP", is_RateUP);
     });
 })
 
@@ -52,6 +57,7 @@ $(function() {
     $("#MapLimit").on('change', function() {
         PrintMissionTable();
         PrintPlanDetails();
+        storageSetItem("SelectChapter", Input_getSelectChapter());
     });
 })
 
@@ -66,6 +72,7 @@ $(function() {
         PrintMissionTable();
         PrintPlanDetails();
     });
+    $("#Time_Anytime_hours").blur(function () {Tab_Anytime_changeStorageCustom()});
     $("#Time_Anytime_minutes").on('input propertychange', function() {
         if (!is_CalculateByHour()) {
             var ShownTab = getShownTab();
@@ -75,16 +82,24 @@ $(function() {
         PrintMissionTable();
         PrintPlanDetails();
     });
+    $("#Time_Anytime_minutes").blur(function () {Tab_Anytime_changeStorageCustom()});
     $("#Tab_Anytime_MinimumIntervalTime_minutes").on('input propertychange', function() {
         PrintMissionTable();
         PrintPlanDetails();
     });
+    $("#Tab_Anytime_MinimumIntervalTime_minutes").blur(function () {Tab_Anytime_changeStorageCustom()});
 })
+function Tab_Anytime_changeStorageCustom() {
+    var Tab = new Tab_Anytime;
+    storageSetItem("TabAnytimeCustom", Tab.Saved_Custom());
+}
 
 //Tab_Timetable
 $(function() {
     $("#Time_Timetable_hours").on('input propertychange',function() {_Tab_Timetable_changeMaxTime()});
+    $("#Time_Timetable_hours").blur(function() {Tab_Timetable_changeStorageCustom()});
     $("#Time_Timetable_minutes").on('input propertychange',function() {_Tab_Timetable_changeMaxTime()});
+    $("#Time_Timetable_minutes").blur(function() {Tab_Timetable_changeStorageCustom()});
     $('#Tab_Timetable_AddNewTimePoint').on('click', function() {
         var newTime = Input_getTimetableNewTotalTime_Correct();
         var TotalTime = Input_getTimetableTotalTime();
@@ -107,17 +122,20 @@ $(function() {
             Tab_Timetable_InputTotalTime_disable();
         PrintMissionTable();
         PrintPlanDetails();
+        Tab_Timetable_changeStorageCustom();
     });
     $("#Tab_Timetable_range").on('click', 'button[id^=Tab_Timetable_range_thumb_]', function() {
         var time = parseFloat(stringSliceFromLast_(this.id));
         Tab_Timetable_DeleteThisTimePoint(time);
         PrintMissionTable();
         PrintPlanDetails();
+        Tab_Timetable_changeStorageCustom();
     });
     $('#tab_Timetable_deleteall').on('click', function() {
         Tab_Timetable_DeleteAllTimePoint();
         PrintMissionTable();
         PrintPlanDetails();
+        Tab_Timetable_changeStorageCustom();
     });
 })
 function _Tab_Timetable_changeMaxTime() {
@@ -129,6 +147,16 @@ function _Tab_Timetable_changeMaxTime() {
     PrintMissionTable();
     PrintPlanDetails();
 }
+function Tab_Timetable_changeStorageCustom() {
+    var Tab = new Tab_Timetable;
+    storageSetItem("TabTimetableCustom", Tab.Saved_Custom());
+}
+
+$(function() {
+    $("#ContractWeight").change(function() {
+        storageSetItem("ContractWeight", Input_getContractWeight());
+    });
+})
 
 $(function() {
     $("#target").on('click', 'button[id^=setTarget_]', function() {
@@ -137,6 +165,20 @@ $(function() {
     $("#target").on('click', 'button[id^=Target_minus_]', function() {ChangeTarget(this.id)});
     $("#target").on('click', 'button[id^=Target_plus_]', function() {ChangeTarget(this.id)});
 })
+
+$(function() {
+    $("#target").on('blur', "#MT", function() {TargetChangeStorage()});
+    $("#target").on('blur', "#AT", function() {TargetChangeStorage()});
+    $("#target").on('blur', "#RT", function() {TargetChangeStorage()});
+    $("#target").on('blur', "#PT", function() {TargetChangeStorage()});
+    $("#target").on('blur', "#TT", function() {TargetChangeStorage()});
+    $("#target").on('blur', "#ET", function() {TargetChangeStorage()});
+    $("#target").on('blur', "#QPT", function() {TargetChangeStorage()});
+    $("#target").on('blur', "#QRT", function() {TargetChangeStorage()});
+})
+function TargetChangeStorage() {
+    storageSetItem("TargetValue", Input_getTarget_Correct());
+}
 
 $(function() {
     $('#start_sorting').on('click', function() {start_sorting_main()});
@@ -261,4 +303,13 @@ $(function() {
             document.body.removeChild(link);
         })
     })
+})
+
+$(function() {
+    $("#Config_export").on('click', function() {Config_export()});
+    $("#Config_importButton").on('click', function() {
+        var input = $("#Config_input").val();
+        setPageByImport(input);
+        $("#Config_input").val("");
+    });
 })
