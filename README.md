@@ -1,8 +1,8 @@
 # Girls-Frontline logistics calculators
 后勤组合计算
 
-预览版:https://chantxu64.github.io (暂时的, 不完善)<br>
-Preview version:https://chantxu64.github.io (Temporary)
+预览版:https://chantxu64.github.io/pages/GF_logistics.html (暂时的, 不完善)<br>
+Preview version:https://chantxu64.github.io/pages/GF_logistics.html (Temporary)
 
 参考 [命运の乐章](https://github.com/hycdes/GFTool)<br>
 Reference from [FatalChapter](https://github.com/hycdes/GFTool)
