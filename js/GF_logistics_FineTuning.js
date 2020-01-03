@@ -34,7 +34,7 @@ function getHTMLFineTuningTool() {
             HTML += 'disabled="disabled"';
         else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 50 <= 0)
             HTML += 'disabled="disabled"';
-        else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 50 < FineTuning_TargetValue_Original[i] * 0.8)
+        else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 50 < FineTuning_TargetValue_Original[i] * 0.9)
             HTML += 'disabled="disabled"';
         HTML += '><b>-</b></button>';
         HTML += '<button class="btn btn-default col-lg-6 col-md-6 col-sm-6 col-xs-6" type="button" id="FineTuning_plus_' + TargetName[i] + '"';
@@ -42,7 +42,7 @@ function getHTMLFineTuningTool() {
             HTML += 'disabled="disabled"';
         else if (FineTuning_TargetValue[i] + FineTuning_TargetValue_Original[i] / 50 >= 1)
             HTML += 'disabled="disabled"';
-        else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 50 > FineTuning_TargetValue_Original[i] * 1.2)
+        else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 50 > FineTuning_TargetValue_Original[i] * 1.14)
             HTML += 'disabled="disabled"';
         HTML += '><b>+</b></button>';
         HTML += '</div></div>';
