@@ -423,6 +423,106 @@ $(function() {
             $("#Saved").collapse('hide');
         }
     });
+    $("#MissionTable_head_Mission").on('click', function() {
+        quick_sort_expand_ascending(MISSION_TABLE, 12);
+        PrintMissionTable(false);
+    });
+    $("#MissionTable_head_Mission").on('keyup', function(e) {
+        if (e.which == 13) {
+            quick_sort_expand_ascending(MISSION_TABLE, 12);
+            PrintMissionTable(false);
+        }
+    });
+    $("#MissionTable_head_Manp").on('click', function() {
+        quick_sort_expand_descending(MISSION_TABLE, 1);
+        PrintMissionTable(false);
+    });
+    $("#MissionTable_head_Manp").on('keyup', function(e) {
+        if (e.which == 13) {
+            quick_sort_expand_descending(MISSION_TABLE, 1);
+            PrintMissionTable(false);
+        }
+    });
+    $("#MissionTable_head_Ammu").on('click', function() {
+        quick_sort_expand_descending(MISSION_TABLE, 2);
+        PrintMissionTable(false);
+    });
+    $("#MissionTable_head_Ammu").on('keyup', function(e) {
+        if (e.which == 13) {
+            quick_sort_expand_descending(MISSION_TABLE, 2);
+            PrintMissionTable(false);
+        }
+    });
+    $("#MissionTable_head_Rati").on('click', function() {
+        quick_sort_expand_descending(MISSION_TABLE, 3);
+        PrintMissionTable(false);
+    });
+    $("#MissionTable_head_Rati").on('keyup', function(e) {
+        if (e.which == 13) {
+            quick_sort_expand_descending(MISSION_TABLE, 3);
+            PrintMissionTable(false);
+        }
+    });
+    $("#MissionTable_head_Part").on('click', function() {
+        quick_sort_expand_descending(MISSION_TABLE, 4);
+        PrintMissionTable(false);
+    });
+    $("#MissionTable_head_Part").on('keyup', function(e) {
+        if (e.which == 13) {
+            quick_sort_expand_descending(MISSION_TABLE, 4);
+            PrintMissionTable(false);
+        }
+    });
+    $("#MissionTable_head_TPro").on('click', function() {
+        quick_sort_expand_descending(MISSION_TABLE, 5);
+        PrintMissionTable(false);
+    });
+    $("#MissionTable_head_TPro").on('keyup', function(e) {
+        if (e.which == 13) {
+            quick_sort_expand_descending(MISSION_TABLE, 5);
+            PrintMissionTable(false);
+        }
+    });
+    $("#MissionTable_head_Equi").on('click', function() {
+        quick_sort_expand_descending(MISSION_TABLE, 6);
+        PrintMissionTable(false);
+    });
+    $("#MissionTable_head_Equi").on('keyup', function(e) {
+        if (e.which == 13) {
+            quick_sort_expand_descending(MISSION_TABLE, 6);
+            PrintMissionTable(false);
+        }
+    });
+    $("#MissionTable_head_QPro").on('click', function() {
+        quick_sort_expand_descending(MISSION_TABLE, 7);
+        PrintMissionTable(false);
+    });
+    $("#MissionTable_head_QPro").on('keyup', function(e) {
+        if (e.which == 13) {
+            quick_sort_expand_descending(MISSION_TABLE, 7);
+            PrintMissionTable(false);
+        }
+    });
+    $("#MissionTable_head_QRes").on('click', function() {
+        quick_sort_expand_descending(MISSION_TABLE, 8);
+        PrintMissionTable(false);
+    });
+    $("#MissionTable_head_QRes").on('keyup', function(e) {
+        if (e.which == 13) {
+            quick_sort_expand_descending(MISSION_TABLE, 8);
+            PrintMissionTable(false);
+        }
+    });
+    $("#MissionTable_head_Time").on('click', function() {
+        quick_sort_expand_ascending(MISSION_TABLE, 9);
+        PrintMissionTable(false);
+    });
+    $("#MissionTable_head_Time").on('keyup', function(e) {
+        if (e.which == 13) {
+            quick_sort_expand_ascending(MISSION_TABLE, 9);
+            PrintMissionTable(false);
+        }
+    });
     $("#MissionTable_panel").on('click', 'tr[id^=MissionTable_]', function() {MissionTable_clickThisRow(this);});
     $("#MissionTable_panel").on('keyup', 'tr[id^=MissionTable_]', function(e) {
         if (e.which == 13)

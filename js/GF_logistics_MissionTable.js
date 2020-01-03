@@ -1,8 +1,9 @@
 var MISSION_TABLE = [];
 var MISSION_TABLE_SELECT = [];
 
-function PrintMissionTable() {
-    MISSION_TABLE = _getMissionTableByShownTab();
+function PrintMissionTable(NeedCalculate_MISSION_TABLE = true) {
+    if (NeedCalculate_MISSION_TABLE)
+        MISSION_TABLE = _getMissionTableByShownTab();
     var MissionTable = MISSION_TABLE;
     var time_calculate = TABLE_CALCULATE_TOTAL_TIME;
     var tab = '';
