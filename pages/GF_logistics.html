@@ -91,29 +91,33 @@
                                         <li><a href="#lang-zh-TW">繁體中文</a></li>
                                     </ul>
                                 </div>
+                                <div class="form-group input-group" style="float: right; margin-bottom: 0px; max-width: 360px;">
+                                    <span class="input-group-addon" id="Config_text"></span>
+                                    <input type="text" class="form-control" style="min-width: 140px;"
+                                        id="Config_input" value="" onclick="this.select()">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default"
+                                            id="Config_importButton" title="">
+                                        <span class="glyphicon glyphicon-import"
+                                            style="top: 2px;" /></button>
+                                        <button type="button" class="btn btn-default" id="Config_export" title=""><span class="glyphicon glyphicon-export"
+                                            style="top: 2px;"></span></button>
+                                    </div>
+                                </div>
                             </h1>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-7">
-                        <div class="alert alert-warning" role="alert" id="description" style="color:#000000"></div>
+                        <div class="alert alert-warning" id="description" role="alert" style="color:#000000">
+                            <span id="description_text"></span>
+                            <span id="neverShowAgain_description" style="float: right; cursor:pointer;"></span>
+                        </div>
                         <div class="alert alert-danger" id="localstorageDoesNotWork" style="color:#000000"></div>
-                    </div>
-                    <div class="col-lg-5">
-                        <div class="alert" style="background-color: #F5F5F5;">
-                            <div class="form-group input-group" style="margin-bottom: 0px; width:100%; max-width: 320px;">
-                                <input type="text" class="form-control" style="min-width: 140px;"
-                                    id="Config_input" value="" onclick="this.select()">
-                                <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default"
-                                        id="Config_importButton" title="">
-                                    <span class="glyphicon glyphicon-import"
-                                        style="top: 2px;" /></button>
-                                    <button type="button" class="btn btn-default" id="Config_export" title=""><span class="glyphicon glyphicon-export"
-                                        style="top: 2px;"></span></button>
-                                </div>
-                            </div>
+                        <div class="alert alert-warning" id="localstorageWarning" role="alert" style="color: #000000;">
+                            <span id="localstorageWarning_text"></span>
+                            <span id="neverShowAgain_localstorageWarning" style="float: right; cursor:pointer;"></span>
                         </div>
                     </div>
                 </div>
@@ -124,9 +128,9 @@
                                 <span id="setting" style="width: auto; float: left; padding-top: 2px; padding-bottom: 2px;"></span>
                                 <div class="switch" style="margin-left: auto;">
                                     <input type="radio" class="switch-input" name="Display_PerHourOrTotal" value="" id="Display_PerHour">
-                                    <label for="Display_PerHour" class="switch-label switch-label-off" id="Display_PerHour_text">以每小时显示</label>
+                                    <label tabindex="0" for="Display_PerHour" class="switch-label switch-label-off" id="Display_PerHour_text"></label>
                                     <input type="radio" class="switch-input" name="Display_PerHourOrTotal" value="" id="Display_Total" checked>
-                                    <label for="Display_Total" class="switch-label switch-label-on" id="Display_Total_text">以总计显示</label>
+                                    <label tabindex="0" for="Display_Total" class="switch-label switch-label-on" id="Display_Total_text"></label>
                                     <span class="switch-selection"></span>
                                 </div>
                             </div>
@@ -253,24 +257,27 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-5">
-                                    <div class="row">
-                                        <div class="col-lg-11">
-                                            <div slider>
-                                                <div>
-                                                    <div inverse-left style="width:100%;"></div>
-                                                    <div range id="ContractWeight_range" style="left:0%;right:50%;"></div>
-                                                    <span thumb id="ContractWeight_thumb"
-                                                        style="left:50%; background-color:rgb(112, 166, 236);"></span>
-                                                </div>
-                                                <input id="ContractWeight" type="range" tabindex="0" value="50"
-                                                    max="100" min="0" step="2" oninput="
-                                                var value=(100/(parseFloat(this.max)-parseInt(this.min)))*parseFloat(this.value)-(100/(parseInt(this.max)-parseFloat(this.min)))*parseFloat(this.min);
-                                                var children = this.parentNode.childNodes[1].childNodes;
-                                                children[3].style.right=(100-value)+'%';
-                                                children[5].style.left=value+'%';" />
+                                    <div id="target">
+                                        <h4 id="Demand"></h4>
+                                        <div id="setTargetButton"></div>
+                                        <div slider style="margin-top: 5px; margin-bottom: 35px;">
+                                            <label id="ContractWeight_label" style="width:100%;">
+                                                <span id="ContractWeight_notImportant" style="font-weight: normal;">契约不重要</span>
+                                                <span id="ContractWeight_Important" style="float: right; font-weight: normal;">契约重要</span>
+                                            </label>
+                                            <div>
+                                                <div inverse-left style="width:100%;"></div>
+                                                <div range id="ContractWeight_range" style="left:0%;right:50%;"></div>
+                                                <span thumb id="ContractWeight_thumb"
+                                                    style="left:50%; background-color:rgb(112, 166, 236);"></span>
                                             </div>
+                                            <input id="ContractWeight" type="range" tabindex="0" style="margin-top: 26px;" value="50"
+                                                max="100" min="0" step="2" oninput="
+                                            var value=(100/(parseFloat(this.max)-parseInt(this.min)))*parseFloat(this.value)-(100/(parseInt(this.max)-parseFloat(this.min)))*parseFloat(this.min);
+                                            document.getElementById('ContractWeight_range').style.right=(100-value)+'%';
+                                            document.getElementById('ContractWeight_thumb').style.left=value+'%';" />
                                         </div>
-                                        <div class="col-lg-11" style="padding-right: 5px;" id="target"></div>
+                                        <div id="setTargetInput"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -289,7 +296,7 @@
                         <div class="panel-group" id="accordion">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <div data-toggle="collapse" data-parent="#accordion" href="#Saved" class="" aria-expanded="false" style="cursor: pointer;">
+                                    <div data-toggle="collapse" data-parent="#accordion" href="#Saved" class="" id="Saved_heading" tabindex="0" aria-expanded="false" style="cursor: pointer;">
                                         <span class="glyphicon glyphicon-align-justify" style="font-size: 14px;" id="Saved_Title"></span>
                                     </div>
                                 </div>
@@ -319,7 +326,7 @@
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <div data-toggle="collapse" data-parent="#accordion" href="#MissionTable_panel" class="" aria-expanded="true" style="cursor: pointer;">
+                                    <div data-toggle="collapse" data-parent="#accordion" href="#MissionTable_panel" class="" id="MissionTable_heading" tabindex="0" aria-expanded="true" style="cursor: pointer;">
                                         <span class="glyphicon glyphicon-align-justify" style="font-size: 14px;" id="MissionTableTitle"></span>
                                     </div>
                                 </div>

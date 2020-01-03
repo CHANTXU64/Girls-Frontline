@@ -1,6 +1,6 @@
 class Tab {
     constructor() {
-        this._title = '<thead><tr><th style="text-align: center;width:5%;" id="resultPlan_Mission_1">'+ language.JS.Mission +'1</th><th style="text-align: center;width:5%;" id="resultPlan_Mission_2">'+ language.JS.Mission +'2</th><th style="text-align: center;width:5%;" id="resultPlan_Mission_3">'+ language.JS.Mission +'3</th><th style="text-align: center;width:5%;" id="resultPlan_Mission_4">'+ language.JS.Mission +'4</th>';
+        this._title = '<thead><tr><th style="text-align: center;width:20%;" colspan="4" tabindex="0" id="resultPlan_Mission">'+ language.JS.Mission +'</th>';
         this._titleEnd = '</tr></thead>';
         this.Qvalid = [];
     }
@@ -217,10 +217,10 @@ class Tab_Anytime extends Tab {
     PrintPlanTableTitle() {
         var title;
         if (is_CalculateByHour()) {
-            title = this._title + '<th style="text-align: center;width:8%;" id="resultPlan_Manp">'+language.JS.Manp+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_Ammu">'+language.JS.Ammu+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_Rati">'+language.JS.Rati+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_Part">'+language.JS.Part+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_TPro">'+language.JS.TPro+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_Equi">'+language.JS.Equi+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_QPro">'+language.JS.QPro+'/h</th><th style="text-align: center;width:8%;" id="resultPlan_QRes">'+language.JS.QRes+'/h</th><th style="text-align: center;width:8%;">'+language.JS.MinIntervalTime+'</th><th style="text-align: center;width:8%;">'+language.JS.MaxTime+'</th>' + this._titleEnd;
+            title = this._title + '<th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Manp">'+language.JS.Manp+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Ammu">'+language.JS.Ammu+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Rati">'+language.JS.Rati+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Part">'+language.JS.Part+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_TPro">'+language.JS.TPro+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Equi">'+language.JS.Equi+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_QPro">'+language.JS.QPro+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_QRes">'+language.JS.QRes+'/h</th><th style="text-align: center;width:8.88%;">'+language.JS.MinIntervalTime+'</th>' + this._titleEnd;
         }
         else {
-            title = this._title + '<th style="text-align: center;width:8%;" id="resultPlan_Manp">'+language.JS.Manp+'</th><th style="text-align: center;width:8%;" id="resultPlan_Ammu">'+language.JS.Ammu+'</th><th style="text-align: center;width:8%;" id="resultPlan_Rati">'+language.JS.Rati+'</th><th style="text-align: center;width:8%;" id="resultPlan_Part">'+language.JS.Part+'</th><th style="text-align: center;width:8%;" id="resultPlan_TPro">'+language.JS.TPro+'</th><th style="text-align: center;width:8%;" id="resultPlan_Equi">'+language.JS.Equi+'</th><th style="text-align: center;width:8%;" id="resultPlan_QPro">'+language.JS.QPro+'</th><th style="text-align: center;width:8%;" id="resultPlan_QRes">'+language.JS.QRes+'</th><th style="text-align: center;width:8%;">'+language.JS.MinIntervalTime+'</th><th style="text-align: center;width:8%;">'+language.JS.MaxTime+'</th>' + this._titleEnd;
+            title = this._title + '<th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Manp">'+language.JS.Manp+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Ammu">'+language.JS.Ammu+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Rati">'+language.JS.Rati+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Part">'+language.JS.Part+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_TPro">'+language.JS.TPro+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Equi">'+language.JS.Equi+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_QPro">'+language.JS.QPro+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_QRes">'+language.JS.QRes+'</th><th style="text-align: center;width:8.88%;">'+language.JS.MinIntervalTime+'</th>' + this._titleEnd;
         }
         return title;
     }
@@ -229,7 +229,6 @@ class Tab_Anytime extends Tab {
         var tab = [];
         var Number = [plan.List[row][0], plan.List[row][1], plan.List[row][2], plan.List[row][3]];
         tab.push(this._calculateIntervalTimeMin(Number) + "m");
-        tab.push((Math.round(Math.max(this.Qvalid[Number[0]][9],this.Qvalid[Number[1]][9],this.Qvalid[Number[2]][9],this.Qvalid[Number[3]][9]) * 100 / 60) / 100) + "h");
         return tab;
     }
 
@@ -263,7 +262,7 @@ class Tab_Timetable extends Tab {
         this.TimeList.unshift(0);
         this.TotalTime = Input_getTimetableTotalTime(NeedCorrection);
         if (NeedCorrection) {
-            if (this.TotalTime == 0) {
+            if (this.TotalTime === 0) {
                 alert(language.JS.tab_Timetable_alert4);
                 HTML_AllowInput();
                 throw"--";
@@ -275,7 +274,7 @@ class Tab_Timetable extends Tab {
     setValidQAndReturnLengthAndSetCurrentMax() {
         var UnableLogistic = this._getUnableLogistic();
         for (var i = 0; i < Q.length; i++) {
-            if (UnableLogistic.indexOf(i) == -1) {
+            if (UnableLogistic.indexOf(i) === -1) {
                 var newrow = [];
                 newrow.push(Q[i][0]);
                 var times = 0;
@@ -305,10 +304,10 @@ class Tab_Timetable extends Tab {
     PrintPlanTableTitle() {
         var title;
         if (is_CalculateByHour()) {
-            title = this._title + '<th style="text-align: center;width:10%;" id="resultPlan_Manp">'+language.JS.Manp+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_Ammu">'+language.JS.Ammu+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_Rati">'+language.JS.Rati+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_Part">'+language.JS.Part+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_TPro">'+language.JS.TPro+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_Equi">'+language.JS.Equi+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_QPro">'+language.JS.QPro+'/h</th><th style="text-align: center;width:10%;" id="resultPlan_QRes">'+language.JS.QRes+'/h</th>' + this._titleEnd;
+            title = this._title + '<th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_Manp">'+language.JS.Manp+'/h</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_Ammu">'+language.JS.Ammu+'/h</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_Rati">'+language.JS.Rati+'/h</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_Part">'+language.JS.Part+'/h</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_TPro">'+language.JS.TPro+'/h</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_Equi">'+language.JS.Equi+'/h</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_QPro">'+language.JS.QPro+'/h</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_QRes">'+language.JS.QRes+'/h</th>' + this._titleEnd;
         }
         else {
-            title = this._title + '<th style="text-align: center;width:10%;" id="resultPlan_Manp">'+language.JS.Manp+'</th><th style="text-align: center;width:10%;" id="resultPlan_Ammu">'+language.JS.Ammu+'</th><th style="text-align: center;width:10%;" id="resultPlan_Rati">'+language.JS.Rati+'</th><th style="text-align: center;width:10%;" id="resultPlan_Part">'+language.JS.Part+'</th><th style="text-align: center;width:10%;" id="resultPlan_TPro">'+language.JS.TPro+'</th><th style="text-align: center;width:10%;" id="resultPlan_Equi">'+language.JS.Equi+'</th><th style="text-align: center;width:10%;" id="resultPlan_QPro">'+language.JS.QPro+'</th><th style="text-align: center;width:10%;" id="resultPlan_QRes">'+language.JS.QRes+'</th>' + this._titleEnd;
+            title = this._title + '<th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_Manp">'+language.JS.Manp+'</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_Ammu">'+language.JS.Ammu+'</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_Rati">'+language.JS.Rati+'</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_Part">'+language.JS.Part+'</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_TPro">'+language.JS.TPro+'</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_Equi">'+language.JS.Equi+'</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_QPro">'+language.JS.QPro+'</th><th style="text-align: center;width:10%;"tabindex="0" id="resultPlan_QRes">'+language.JS.QRes+'</th>' + this._titleEnd;
         }
         return title;
     }

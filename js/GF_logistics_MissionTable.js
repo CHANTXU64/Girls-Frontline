@@ -9,7 +9,7 @@ function PrintMissionTable() {
     var MissionTable_length = MissionTable.length;
     var selectMissions = MISSION_TABLE_SELECT.slice();
     for (var i = 0; i < MissionTable_length; i++) {
-        tab += '<tr id="MissionTable_' + i + '"';
+        tab += '<tr id="MissionTable_' + i + '" tabindex="0"';
         for (var ii = 0; ii < selectMissions.length; ii++) {
             if (selectMissions[ii] === MissionTable[i][0]) {
                 selectMissions.splice(ii, 1);

@@ -10,6 +10,10 @@ class Plan {
         }
         else {
             this.TargetValue = Target_Value;
+            this.TargetValue_half = this.TargetValue.slice();
+            for (var i = 0; i < 8; i++) {
+                this.TargetValue_half[i] = this.TargetValue_half[i] * 0.5;
+            }
         }
         this._Norm_Target = this._getNorm(this.TargetValue);
     }
@@ -85,7 +89,6 @@ class Plan {
         this.ShownTab.Qvalid[MissionsNumber[1]][11] += this._PlanValue;
         this.ShownTab.Qvalid[MissionsNumber[2]][11] += this._PlanValue;
         this.ShownTab.Qvalid[MissionsNumber[3]][11] += this._PlanValue;
-        //if (this.List[this.List.length - 1][0] === undefined) {
         if (!(0 in this.List[this.List.length - 1])) {
             this._push_FirstEmptyRow();
         }
@@ -109,10 +112,9 @@ class Plan {
         if (this._CurrentValue[0] === -1) {
             return;
         }
-        for (var i = 0; i < 7; i++) {
-            if (this._CurrentValue[i] < (this.TargetValue[i] * 0.5)) {
+        for (var i = 0; i < 8; i++) {
+            if (this._CurrentValue[i] < this.TargetValue_half[i])
                 return;
-            }
         }
         this._MissionsNumber = MissionsNumber;
         this._PlanValue = this._calculateValue_2();
@@ -154,25 +156,10 @@ class Plan {
         this._PushIntoThisRow(RowNumber);
     }
     _thisPlanIsBetterThan(number) {
-        // if (this._eachCurrentValueIsBigger(number)) {
-        //     return true;
-        // }
-        // else {
-        //     if (this._PlanValue > this.List[number].Value) return true;
-        //     else return false;
-        // }
-        if (this._PlanValue > this.List[number].Value) {
+        if (this._PlanValue > this.List[number].Value)
             return true;
-        }
-        else {
+        else
             return false;
-        }
-    }
-    _eachCurrentValueIsBigger(number) {
-        for (var i = 0; i < 8; i++) {
-            if (this._CurrentValue[i] < this.List[number][i + 4]) return false;
-        }
-        return true;
     }
 
     _calculateValue() {
@@ -207,7 +194,7 @@ class Plan {
         return CurrentScalarProjection * CosineSimilarity;
     }
     _getDotProduct(vector1, vector2) {
-        if (vector1.length != vector2.length) throw"getDotProduct error";
+        if (vector1.length !== vector2.length) throw"getDotProduct error";
         var Dot_product = 0;
         for (var i = 0; i < vector1.length; i++) {
             Dot_product += (vector1[i] * vector2[i]);
@@ -307,6 +294,7 @@ function sortStringNumber(a, b) {
 }
 
 function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
+    var focusedElementID = document.activeElement.id;
     var Table = document.getElementById("Plan_Table");
     var tab = getHTMLFineTuningTool();
     tab += '<div class="table-responsive">';
@@ -325,12 +313,12 @@ function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
     for (var i = 0; i < result_plan.length; i++) {
         if (is_selected) {
             if (result_plan[i][1] === selectedMissions[0] && result_plan[i][2] === selectedMissions[1] && result_plan[i][3] === selectedMissions[2] && result_plan[i][4] === selectedMissions[3])
-                tab += "<tr id='print_result_plan_tr_" + i + "' class='success'>";
+                tab += "<tr tabindex='0' id='print_result_plan_tr_" + i + "' class='success'>";
             else
-                tab += "<tr id='print_result_plan_tr_" + i + "'>";
+                tab += "<tr tabindex='0' id='print_result_plan_tr_" + i + "'>";
         }
         else
-            tab += "<tr id='print_result_plan_tr_" + i + "'>";
+            tab += "<tr tabindex='0' id='print_result_plan_tr_" + i + "'>";
         for (var ii = 0; ii < 4; ii++) {
             tab += "<td style='text-align: center'>";
             tab += "" + result_plan[i][ii + 1];
@@ -356,7 +344,13 @@ function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
     }
     tab += '</tbody>';
     Table.innerHTML = tab;
-    if (fineTuningExpanded)
+    if (fineTuningExpanded) {
+        document.getElementById("FineTuningTool").style.transition = "none";
         $("#FineTuningTool").collapse("show");
+    }
+    if (IsMobile())
+        document.getElementById("FineTuningTool").style.transition = "none";
     document.getElementById("start_sorting_html").style.display = "none";
+    if (focusedElementID !== "")
+        document.getElementById(focusedElementID).focus();
 }

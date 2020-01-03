@@ -15,7 +15,7 @@ function saveThisPlan() {
     var Saved_Custom = ShownTab.Saved_Custom();
     var SelectMissions = MISSION_TABLE_SELECT.slice();
     newData.push(name);
-    newData.push(HTMLtab);
+    newData.push(HTML_TAB);
     newData.push(GreatSuccessRate);
     newData.push(is_UP);
     newData.push(SelectChapter);

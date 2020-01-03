@@ -3,27 +3,28 @@ window.onload = function () {
     setLanguage();
     loadHTML_Target();
     setPageByLocalStorage();
-    loadHTML_language();
     setQContract(Input_getTotalGreatSuccessRate(true));
-    this.PrintMissionTable();
-    this.PrintPlanDetails();
+    PrintMissionTable();
+    PrintPlanDetails();
+    loadHTML_language();
+    MobileOptimization();
 };
 
 function get_TABLE_CALCULATE_TOTAL_TIME() {
     if (is_CalculateByHour())
         return 60;
     else {
-        var ShownTab = getShownTab();
+        let ShownTab = getShownTab();
         ShownTab.setTime(false);
         return ShownTab.TotalTime;
     }
 }
 
 function setLanguage() {
-    var lang = storageGetItem("lang");
+    let lang = storageGetItem("lang");
     if (lang === "noStorage")
         lang = navigator.language||navigator.userLanguage;
-    if (lang.substr(0, 2) == 'zh') {
+    if (lang.substr(0, 2) === 'zh') {
         switch(lang) {
             case 'zh-HK':
             case 'zh-TW':
@@ -42,7 +43,7 @@ function setLanguage() {
     }
 }
 
-function changelang(lang) {
+function changeLanguage(lang) {
     switch(lang) {
         case 'zh-CN':
             storageSetItem("lang", 'zh-cn');
@@ -56,34 +57,54 @@ function changelang(lang) {
     loadHTML_language();
 }
 
+function IsMobile(){
+    var userAgentInfo = navigator.userAgent;
+    var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+    var flag = false;
+    for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flag = true;
+            break;
+        }
+    }
+    return flag;
+}
+
+function MobileOptimization() {
+    if (IsMobile()) {
+        document.getElementById("Saved").style.transition = "none";
+        document.getElementById("MissionTable_panel").style.transition = "none";
+    }
+}
+
 //注释
 $(function (){$("[data-toggle='tooltip']").tooltip();});
 
 //标签页
-var HTMLtab;
+let HTML_TAB;
 function ChangeTab(htmltab) {
     switch (htmltab) {
         case "Anytime":
-            if (HTMLtab === "Anytime" || HTMLtab === undefined)
+            if (HTML_TAB === "Anytime" || HTML_TAB === undefined)
                 IS_ChangeTabByJS = false;
             $('[href=#Tab_Anytime]').tab("show");
             break;
         case "Timetable":
-            if (HTMLtab === "Timetable" || HTMLtab === undefined)
+            if (HTML_TAB === "Timetable" || HTML_TAB === undefined)
                 IS_ChangeTabByJS = false;
             $('[href=#Tab_Timetable]').tab("show");
             break;
     }
-    HTMLtab = htmltab;
-    storageSetItem("HTMLtab", HTMLtab);
+    HTML_TAB = htmltab;
+    storageSetItem("HTML_TAB", HTML_TAB);
 }
 function ChangeTab_Anytime() {
-    HTMLtab = "Anytime";
-    storageSetItem("HTMLtab", HTMLtab);
+    HTML_TAB = "Anytime";
+    storageSetItem("HTML_TAB", HTML_TAB);
     delete_PlanTable();
     HTML_AllowInput();
     if (!is_CalculateByHour()) {
-        var ShownTab = getShownTab();
+        let ShownTab = getShownTab();
         ShownTab.setTime(false);
         TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
     }
@@ -91,8 +112,8 @@ function ChangeTab_Anytime() {
     PrintPlanDetails();
 }
 function ChangeTab_Timetable() {
-    HTMLtab = "Timetable";
-    storageSetItem("HTMLtab", HTMLtab);
+    HTML_TAB = "Timetable";
+    storageSetItem("HTML_TAB", HTML_TAB);
     delete_PlanTable();
     HTML_AllowInput();
     if (!is_CalculateByHour()) {
@@ -111,42 +132,38 @@ function is_CalculateByHour() {
         return false;
 }
 
-function changeCalculateOutput_Hour(NeedCorrectTargetValue = true) {
+function changeCalculateOutput_Hour() {
     storageSetItem("PerHourOrTotal", "PerHour");
     $("#Demand").html(language.HTMLJS.Demand_hour);
-    var ShownTab = getShownTab();
+    let ShownTab = getShownTab();
     ShownTab.setTime();
     TABLE_CALCULATE_TOTAL_TIME = 60;
-    if (NeedCorrectTargetValue) {
-        var time = ShownTab.TotalTime;
-        var TargetValue = Input_getTarget_Correct();
-        for (var i = 0; i < 8; i++) {
-            TargetValue[i] = Math.round(TargetValue[i] / time * 6000) / 100;
-        }
-        Input_setTarget(TargetValue);
+    const time = ShownTab.TotalTime;
+    let TargetValue = Input_getTarget_Correct();
+    for (let i = 0; i < 8; i++) {
+        TargetValue[i] = Math.round(TargetValue[i] / time * 6000) / 100;
     }
+    Input_setTarget(TargetValue);
     PrintMissionTable();
-    var Plan_Table_innerHTML = document.getElementById("Plan_Table").innerHTML;
+    const Plan_Table_innerHTML = document.getElementById("Plan_Table").innerHTML;
     if (Plan_Table_innerHTML !== "" && Plan_Table_innerHTML !== language.JS.NoPlan) {
         print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
 }
-function changeCalculateOutput_Total(NeedCorrectTargetValue = true) {
+function changeCalculateOutput_Total() {
     storageSetItem("PerHourOrTotal", "Total");
     $("#Demand").html(language.HTMLJS.Demand_total);
-    var ShownTab = getShownTab();
+    let ShownTab = getShownTab();
     ShownTab.setTime();
     TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
-    if (NeedCorrectTargetValue) {
-        var time = ShownTab.TotalTime;
-        var TargetValue = Input_getTarget_Correct();
-        for (var i = 0; i < 8; i++) {
-            TargetValue[i] = Math.round(TargetValue[i] * time * 100 / 60) / 100;
-        }
-        Input_setTarget(TargetValue);
+    const time = ShownTab.TotalTime;
+    let TargetValue = Input_getTarget_Correct();
+    for (let i = 0; i < 8; i++) {
+        TargetValue[i] = Math.round(TargetValue[i] * time * 100 / 60) / 100;
     }
+    Input_setTarget(TargetValue);
     PrintMissionTable();
-    var Plan_Table_innerHTML = document.getElementById("Plan_Table").innerHTML;
+    const Plan_Table_innerHTML = document.getElementById("Plan_Table").innerHTML;
     if (Plan_Table_innerHTML !== "" && Plan_Table_innerHTML !== language.JS.NoPlan) {
         print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
@@ -154,23 +171,23 @@ function changeCalculateOutput_Total(NeedCorrectTargetValue = true) {
 
 //Tab_Timetable\
 //-----------
-var Tab_Timetable_TIMELIST = [];
+let Tab_Timetable_TIMELIST = [];
 
 function Tab_Timetable_AddNewTimePoint(time) {
     Tab_Timetable_TIMELIST.push(time);
-    var maxtime = Input_getTimetableTotalTime();
-    var position = (time / maxtime) * 100 + '%';
+    const maxTime = Input_getTimetableTotalTime();
+    const position = (time / maxTime) * 100 + '%';
     _Tab_Timetable_AddNewThumb(time, position);
     _Tab_Timetable_AddNewTooltip(time, position);
 }
 function _Tab_Timetable_AddNewThumb(time, position) {
-    var newThumb = '<button class="slider-button" id="Tab_Timetable_range_thumb_' + time + '"';
+    let newThumb = '<button class="slider-button" id="Tab_Timetable_range_thumb_' + time + '"';
     newThumb += 'style="left:' + position + ';">';
     newThumb += '<span class="glyphicon glyphicon-remove-circle" style="font-size: 22px;"></span></button>';
     $("#Tab_Timetable_range").append(newThumb);
 }
 function _Tab_Timetable_AddNewTooltip(time, position) {
-    var newTooltip = '<div id="Tab_Timetable_range_tooltip_' + time + '"';
+    let newTooltip = '<div id="Tab_Timetable_range_tooltip_' + time + '"';
     if (Tab_Timetable_TIMELIST.indexOf(time) % 2 === 0) {
         newTooltip += 'class="tooltip top custom-tooltip"';
         newTooltip += 'style="left:' + position + '; top:-32px; margin-left: -15px;">';
@@ -186,11 +203,11 @@ function _Tab_Timetable_AddNewTooltip(time, position) {
 
 function Tab_Timetable_DeleteThisTimePoint(time) {
     Tab_Timetable_TIMELIST.remove_First(time);
-    var thumb_id = "Tab_Timetable_range_thumb_" + time;
-    var tooltip_id = "Tab_Timetable_range_tooltip_" + time;
-    var thumb_obj = document.getElementById(thumb_id);
-    var tooltip_obj = document.getElementById(tooltip_id);
-    var parent_obj = document.getElementById('Tab_Timetable_range');
+    const thumb_id = "Tab_Timetable_range_thumb_" + time;
+    const tooltip_id = "Tab_Timetable_range_tooltip_" + time;
+    const thumb_obj = document.getElementById(thumb_id);
+    const tooltip_obj = document.getElementById(tooltip_id);
+    let parent_obj = document.getElementById('Tab_Timetable_range');
     parent_obj.removeChild(thumb_obj);
     parent_obj.removeChild(tooltip_obj);
     if (Tab_Timetable_TIMELIST.length === 0)
@@ -198,8 +215,8 @@ function Tab_Timetable_DeleteThisTimePoint(time) {
 }
 
 function Tab_Timetable_DeleteAllTimePoint() {
-    var times = Tab_Timetable_TIMELIST.length;
-    for (var i = 0; i < times; i++) {
+    const times = Tab_Timetable_TIMELIST.length;
+    for (let i = 0; i < times; i++) {
         Tab_Timetable_DeleteThisTimePoint(Tab_Timetable_TIMELIST[0]);
     }
 }
@@ -237,14 +254,14 @@ function setTarget(TargetInfo) {
 }
 
 function ChangeTarget(FullID) {
-    var ID = stringSliceFromLast_(FullID);
-    var IDstart = FullID.indexOf(ID);
-    var FullID_2 = FullID.slice(0, IDstart - 1);
-    var changevalue = parseFloat(stringSliceFromLast_(FullID_2));
-    if (FullID_2.slice(7, 8) == "m")
-        changevalue *= -1;
-    var OriginalValue = Input_getTarget_Correct($('#' + ID), false);
-    Input_setTarget(OriginalValue + changevalue, $('#' + ID));
+    const ID = stringSliceFromLast_(FullID);
+    const IDStart = FullID.indexOf(ID);
+    const FullID_2 = FullID.slice(0, IDStart - 1);
+    let changeValue = parseFloat(stringSliceFromLast_(FullID_2));
+    if (FullID_2.slice(7, 8) === "m")
+        changeValue *= -1;
+    const OriginalValue = Input_getTarget_Correct($('#' + ID), false);
+    Input_setTarget(OriginalValue + changeValue, $('#' + ID));
 }
 
 function HTML_DisableInput() {
@@ -254,7 +271,7 @@ function HTML_DisableInput() {
     $("#Time_Timetable_hours").attr('disabled', "true");
     $("#Time_Timetable_minutes").attr('disabled', "true");
     $("#tab_Timetable_deleteall").attr('disabled', "true");
-    $("button[id^=Tab_Timetable_range_thumb_").attr('disabled', "true");
+    $("button[id^=Tab_Timetable_range_thumb_]").attr('disabled', "true");
     $("#Tab_Timetable_new_hours").attr('disabled', "true");
     $("#Tab_Timetable_new_minutes").attr('disabled', "true");
     $("#Tab_Timetable_AddNewTimePoint").attr('disabled', "true");
@@ -265,7 +282,7 @@ function HTML_DisableInput() {
     $("#MapLimit").attr('disabled', "true");
     $("#ContractWeight").attr('disabled', "true");
     document.getElementById("ContractWeight_thumb").style.backgroundColor='#CCC';
-    $("button[id^=setTarget_").attr('disabled', "true");
+    $("button[id^=setTarget_]").attr('disabled', "true");
     $("#MT").attr('disabled', "true");
     $("#AT").attr('disabled', "true");
     $("#RT").attr('disabled', "true");
@@ -274,8 +291,8 @@ function HTML_DisableInput() {
     $("#ET").attr('disabled', "true");
     $("#QPT").attr('disabled', "true");
     $("#QRT").attr('disabled', "true");
-    $("button[id^=Target_minus_").attr('disabled', "true");
-    $("button[id^=Target_plus_").attr('disabled', "true");
+    $("button[id^=Target_minus_]").attr('disabled', "true");
+    $("button[id^=Target_plus_]").attr('disabled', "true");
     $("#start_sorting").attr('disabled', "true");
     $("#clear_sorting").removeAttr("disabled");
 }
@@ -289,7 +306,7 @@ function HTML_AllowInput() {
         $("#Time_Timetable_minutes").removeAttr("disabled");
     }
     $("#tab_Timetable_deleteall").removeAttr("disabled");
-    $("button[id^=Tab_Timetable_range_thumb_").removeAttr("disabled");
+    $("button[id^=Tab_Timetable_range_thumb_]").removeAttr("disabled");
     $("#Tab_Timetable_new_hours").removeAttr("disabled");
     $("#Tab_Timetable_new_minutes").removeAttr("disabled");
     $("#Tab_Timetable_AddNewTimePoint").removeAttr("disabled");
@@ -300,7 +317,7 @@ function HTML_AllowInput() {
     $("#MapLimit").removeAttr("disabled");
     $("#ContractWeight").removeAttr("disabled");
     document.getElementById("ContractWeight_thumb").style.backgroundColor='rgb(112, 166, 236)';
-    $("button[id^=setTarget_").removeAttr("disabled");
+    $("button[id^=setTarget_]").removeAttr("disabled");
     $("#MT").removeAttr("disabled");
     $("#AT").removeAttr("disabled");
     $("#RT").removeAttr("disabled");
@@ -309,8 +326,8 @@ function HTML_AllowInput() {
     $("#ET").removeAttr("disabled");
     $("#QPT").removeAttr("disabled");
     $("#QRT").removeAttr("disabled");
-    $("button[id^=Target_minus_").removeAttr("disabled");
-    $("button[id^=Target_plus_").removeAttr("disabled");
+    $("button[id^=Target_minus_]").removeAttr("disabled");
+    $("button[id^=Target_plus_]").removeAttr("disabled");
     $("#start_sorting").removeAttr("disabled");
     $("#clear_sorting").attr('disabled', "true");
 }

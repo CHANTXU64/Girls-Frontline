@@ -1,6 +1,6 @@
-var RESULT_PLAN = [];
-var RESULT_PLAN_SORT_BY = "";
-var TABLE_CALCULATE_TOTAL_TIME;
+let RESULT_PLAN = [];
+let RESULT_PLAN_SORT_BY = "";
+let TABLE_CALCULATE_TOTAL_TIME;
 
 function start_sorting_main() {
     console.time('total');
@@ -84,7 +84,7 @@ function start_sorting_main() {
 
 function getShownTab() {
     var ShownTab;
-    switch (HTMLtab) {
+    switch (HTML_TAB) {
         case "Anytime":
             ShownTab = new Tab_Anytime;
             break;
@@ -142,27 +142,27 @@ function getCalibration(Target_0, plan) {
     var Current_0_MAX = getCurrent0MAX(Target_0.class, plan);
     var Calibration = 0;
     var validlength = Target_0.length;
-    for (var i = 0; i < Target_0.length; i++) {
-        if (Target_0[i] != 0) {
+    for (let i = 0; i < Target_0.length; i++) {
+        if (Target_0[i] !== 0) {
             Calibration += (Target_0_html[i] / Target_0[i]);
-            if (Target_0_html[i] == 0)
+            if (Target_0_html[i] === 0)
                 validlength--;
         }
         else
             validlength--;
     }
-    if (Calibration != 0)
+    if (Calibration !== 0)
         Calibration /= validlength;
     else {
         var Current_0_AMAX = 0;
         var validlength = Target_0.length;
         for (var i = 0; i < Target_0.length; i++) {
-            if (Current_0_MAX[i] != 0)
+            if (Current_0_MAX[i] !== 0)
                 Current_0_AMAX += Current_0_MAX[i];
             else
                 validlength--;
         }
-        if (validlength == 0)
+        if (validlength === 0)
             Current_0_AMAX = 0;
         else
             Current_0_AMAX /= validlength;
@@ -173,7 +173,7 @@ function getCalibration(Target_0, plan) {
 }
 function getTarget0html(Target0class, plan) {
     var Target_0_html = new Array(4);
-    if (Target0class == "Resource")
+    if (Target0class === "Resource")
         Target_0_html = plan.TargetValue_html.slice(0, 4);
     else
         Target_0_html = plan.TargetValue_html.slice(4, 8);
@@ -181,7 +181,7 @@ function getTarget0html(Target0class, plan) {
 }
 function getCurrent0MAX(Target0class, plan) {
     var Current_0_MAX = new Array(4);
-    if (Target0class == "Resource")
+    if (Target0class === "Resource")
         Current_0_MAX = plan.CurrentValue_MAX.slice(0, 4);
     else
         Current_0_MAX = plan.CurrentValue_MAX.slice(4, 8);
@@ -189,8 +189,8 @@ function getCurrent0MAX(Target0class, plan) {
 }
 
 function ArrayMax(Arr) {
-    var max = 0;
-    for (var i = 0; i < Arr.length; i++)
+    let max = 0;
+    for (let i = 0; i < Arr.length; i++)
         max = Math.max(max, Arr[i]);
     return max;
 }
@@ -209,7 +209,7 @@ function Value2(TargetValue, CurrentValue) {
     return Value;
 }
 function Value_2(Target, Current, minval) {
-    if (Target == 0)
+    if (Target === 0)
         return 0;
     return Math.min(Current, 1.5 * Target * minval) + 0.5 * (Math.min(Current, Target) - Math.min(Current, 1.5 * Target * minval));
 }

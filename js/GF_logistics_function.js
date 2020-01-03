@@ -31,7 +31,7 @@ function is_NonPositiveNumberOrInfinity(x) {
 }
 
 function getPositiveValueFromHTML(JQ_elem, NeedCorrection = false) {
-    var Value;
+    let Value;
     if (is_NonPositiveNumberOrInfinity(JQ_elem.val()))
         Value = 0;
     else
@@ -42,7 +42,7 @@ function getPositiveValueFromHTML(JQ_elem, NeedCorrection = false) {
 }
 
 Array.prototype.remove = function(val) {
-    var i = 0;
+    let i = 0;
     while (i < this.length) {
         if (this[i] === val)
             this.splice(i, 1);
@@ -52,7 +52,7 @@ Array.prototype.remove = function(val) {
 };
 
 Array.prototype.remove_First = function(val) {
-    var i = 0;
+    let i = 0;
     while (i < this.length) {
         if (this[i] === val) {
             this.splice(i, 1);

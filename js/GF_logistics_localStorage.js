@@ -2,8 +2,11 @@ var CAN_LOCALSTORAGE_WORK;
 
 function checkLocalStorageWork() {
     CAN_LOCALSTORAGE_WORK = _localStorageWorks();
-    if (CAN_LOCALSTORAGE_WORK !== true)
+    if (CAN_LOCALSTORAGE_WORK !== true) {
         CAN_LOCALSTORAGE_WORK = false;
+        document.getElementById("localstorageWarning").style.display = "none";
+        document.getElementById("neverShowAgain_description").style.display = "none";
+    }
     else
         document.getElementById("localstorageDoesNotWork").style.display = "none";
 }
@@ -36,6 +39,8 @@ function storageGetItem(Key) {
 }
 
 function setPageByLocalStorage() {
+    LS_setDescription();
+    LS_setLocalstorageWarning();
     LS_setHTMLtab();
     LS_setPerHourOrTotal();
     LS_setTabAnytimeCustom();
@@ -46,9 +51,20 @@ function setPageByLocalStorage() {
     LS_setContractWeight();
     LS_setTarget();
     LS_setSaved();
+    LS_setSavedOrMissionsShow();
 }
 
-function LS_setHTMLtab(htmltab = storageGetItem("HTMLtab")) {
+function LS_setDescription(display = storageGetItem("Description_Display")) {
+    if (display === false)
+        document.getElementById("description").style.display = "none";
+}
+
+function LS_setLocalstorageWarning(display = storageGetItem("LocalstorageWarning_Display")) {
+    if (display === false)
+        document.getElementById("localstorageWarning").style.display = "none";
+}
+
+function LS_setHTMLtab(htmltab = storageGetItem("HTML_TAB")) {
     if (htmltab === "Timetable") {
         IS_ChangeTabByJS = true;
         ChangeTab(htmltab);
@@ -61,11 +77,15 @@ function LS_setHTMLtab(htmltab = storageGetItem("HTMLtab")) {
 
 function LS_setPerHourOrTotal(PerHourOrTotal = storageGetItem("PerHourOrTotal")) {
     if (PerHourOrTotal === "PerHour") {
-        changeCalculateOutput_Hour(false);
+        storageSetItem("PerHourOrTotal", "PerHour");
+        TABLE_CALCULATE_TOTAL_TIME = 60;
         document.getElementById("Display_PerHour").checked = true;
     }
     else {
-        changeCalculateOutput_Total(false);
+        storageSetItem("PerHourOrTotal", "Total");
+        var ShownTab = getShownTab();
+        ShownTab.setTime();
+        TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
         document.getElementById("Display_Total").checked = true;
     }
 }
@@ -114,10 +134,23 @@ function LS_setSaved(Saved = storageGetItem("SAVED")) {
         Saved_importAndCover_SAVED(Saved);
 }
 
+function LS_setSavedOrMissionsShow(IsSavedShow = storageGetItem("IsSavedShow")) {
+    if (IsSavedShow === true) {
+        if (SAVED.length === 0)
+            storageSetItem("IsSavedShow", false);
+        else {
+            document.getElementById("MissionTable_panel").style.transition = "none";
+            document.getElementById("Saved").style.transition = "none";
+            $("#Saved").collapse('show');
+            $("#MissionTable_panel").collapse('hide');
+        }
+    }
+}
+
 //ShownTab-PerHourOrTotal-TabAnytimeCustom-TabTimetableCustom-GreatSuccessRate-GreatSuccessRateUP-SelectChapter-ContractWeight-Target-Saved
 function Config_export(){
     var data = [];
-    data.push(HTMLtab);
+    data.push(HTML_TAB);
     if (is_CalculateByHour())
         data.push("PerHour");
     else
@@ -163,4 +196,8 @@ function setPageByImport_main(data) {
     LS_setContractWeight(data[7]);
     LS_setTarget(data[8]);
     LS_setSaved(data[9]);
+    setQContract(Input_getTotalGreatSuccessRate());
+    MISSION_TABLE_SELECT = [];
+    PrintMissionTable();
+    PrintPlanDetails();
 }

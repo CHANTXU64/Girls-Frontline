@@ -1,5 +1,5 @@
 function loadHTML_Target() {
-    var HTML = '<h4 id="Demand"></h4>';
+    var HTML = '';
     HTML += '<button type="button" class="btn btn-default"id="setTarget_HG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
     HTML += '<button type="button" class="btn btn-default"id="setTarget_SMG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
     HTML += '<button type="button" class="btn btn-default"id="setTarget_RF" style="margin-right: 5px; margin-bottom: 5px;"></button>';
@@ -8,6 +8,8 @@ function loadHTML_Target() {
     HTML += '<button type="button" class="btn btn-default"id="setTarget_SG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
     HTML += '<button type="button" class="btn btn-default"id="setTarget_2221" style="margin-right: 5px; margin-bottom: 5px;"></button>';
     HTML += '<button type="button" class="btn btn-danger"id="setTarget_Clear" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    document.getElementById("setTargetButton").innerHTML = HTML;
+    HTML = '';
     var TargetName = ["Manp", "Ammu", "Rati", "Part", "TPro", "Equi", "QPro", "QRes"];
     var Target = ['MT', 'AT', 'RT', 'PT', 'TT', 'ET', 'QPT', 'QRT'];
     for (var i = 0; i < 4; i++) {
@@ -32,7 +34,7 @@ function loadHTML_Target() {
         HTML += '+</button><button class="btn btn-default"type="button"id="Target_plus_1_'+Target[i]+'"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
         HTML += '<b>&plus;</b></button></div></div>';
     }
-    document.getElementById("target").innerHTML = HTML;
+    document.getElementById("setTargetInput").innerHTML = HTML;
 }
 
 function loadHTML_language() {
@@ -41,11 +43,14 @@ function loadHTML_language() {
     for (var i in language.HTML) {
         $('#'+i).html(language.HTML[i]);
     }
+
+    //ResultPlan--------
     delete_PlanTable();
     HTML_AllowInput();
+    //------------------
     document.getElementById("tab_Timetable_deleteall").title = language.HTMLJS.tab_Timetable_deleteall;
 
-    //------
+    //MissionTable------
     var MissionTabHead = document.getElementsByClassName("th-inner");
     var lang = language.JS;
     var MissionTabHead_text = [lang.Mission, lang.Manp, lang.Ammu, lang.Rati, lang.Part, lang.TPro, lang.Equi, lang.QPro, lang.QRes, lang.Time];
@@ -58,7 +63,15 @@ function loadHTML_language() {
             MissionTabHead[10 + i].innerHTML = MissionTabHead_text[i];
         }
     }
-    //-------
+    //-----------------
+
+    //PlanDetails------
+    _PrintPlanDetails_ShownTab();
+    _PrintPlanDetails_TotalTime();
+    _PrintPlanDetails_GreatSuccessRate();
+    $("#PlanDetails_PerHour_title").html(language.JS.PerHour);
+    $("#PlanDetails_Total_title").html(language.JS.Total);
+    //-----------------
 
     if (is_CalculateByHour()) {
         $("#Demand").html(language.HTMLJS.Demand_hour);
@@ -66,5 +79,4 @@ function loadHTML_language() {
     else {
         $("#Demand").html(language.HTMLJS.Demand_total);
     }
-    PrintPlanDetails();
 }

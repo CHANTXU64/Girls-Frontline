@@ -6,8 +6,12 @@ var languages =
         "title": "少女前线-后勤组合排序器",
         "HTML": {
             "header": "后勤组合排序器（开发中）",
-            "description": "计算结果只和资源契约之间的比例有关。计算结果为<a href=\"https://baike.baidu.com/item/%E6%95%B0%E5%AD%A6%E6%9C%9F%E6%9C%9B/5362790?fr=aladdin\" class=\"alert-link\" style=\"color:#000000\">均值</a>。",
+            "Config_text": "全局数据",
+            "description_text": "计算结果只和资源契约之间的比例有关。计算结果为均值。",
+            "neverShowAgain_description": "[&times;]<u>不再显示</u>",
             "localstorageDoesNotWork": "因某些原因，Web存储无法工作，需要手动导出配置",
+            "localstorageWarning_text": "网页使用Web存储，清除浏览器缓存会导致数据清除，请定期手动导出并保存你的数据。",
+            "neverShowAgain_localstorageWarning": "[&times;]<u>不再显示</u>",
             "setting": "设置",
             "tab_Anytime": "随时能收后勤",
             "tab_Timetable": "时间计划表",
@@ -93,7 +97,6 @@ var languages =
             "tab_Timetable_alert3": "已经添加过这个收取时间点",
             "tab_Timetable_alert4": "总时长不能为0！",
             "Mission": "关卡",
-            "MaxTime": "最长时间",
             "MinIntervalTime": "最短间隔",
             "NoPlan": "没有合适的方案",
             "NoMission": "没有可用的关卡",
@@ -115,8 +118,12 @@ var languages =
         "title": "少女前線-後勤組合排序器",
         "HTML": {
             "header": "後勤組合排序器（開發中）",
-            "description": "計算結果只和資源契約之間的比例有關。計算結果為<a href=\"https://zh.wikipedia.org/zh-hk/%E6%9C%9F%E6%9C%9B%E5%80%BC\" class=\"alert-link\" style=\"color:#000000\">期望值</a>。",
+            "Config_text": "全局數據",
+            "description_text": "計算結果只和資源契約之間的比例有關。計算結果為期望值。",
+            "neverShowAgain_description": "[&times;]<u>不再顯示</u>",
             "localstorageDoesNotWork": "因某些原因，Web存儲無法工作，需要手動導出配置",
+            "localstorageWarning_text": "網頁使用Web存儲，清除瀏覽器緩存會導致數據清除，請定期手動導出並保存你的數據。",
+            "neverShowAgain_localstorageWarning": "[&times;]<u>不再顯示</u>",
             "setting": "設置",
             "tab_Anytime": "隨時能收後勤",
             "tab_Timetable": "時間計劃表",
@@ -203,7 +210,6 @@ var languages =
             "tab_Timetable_alert3": "已經添加過這個收取時間點",
             "tab_Timetable_alert4": "總時長不能為0！",
             "Mission": "關卡",
-            "MaxTime": "最長時間",
             "MinIntervalTime": "最短間隔",
             "NoPlan": "沒有合適的方案",
             "NoMission": "沒有可用的關卡",
@@ -220,4 +226,4 @@ var languages =
             "Saved_alert": "導入的數據有問題！",
         }
     }
-}
+};

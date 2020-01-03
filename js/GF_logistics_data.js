@@ -2,7 +2,7 @@
 //The Logistics Support Number-Manpower-Ammunition-Rations-Parts-
 //T_Doll Production Contract-Equipment Development Contract-
 //Quick Production Contract-Quick Restoration Contract-Time(minute)
-var Q = [
+let Q = [
     ["0-1",  0,    145,   145,   0,     0, 0, 0, 0, 50],
     ["0-2",  550,  0,     0,     350,   0, 0, 0, 0, 180],
     ["0-3",  900,  900,   900,   250,   0, 0, 0, 0, 720],
@@ -58,63 +58,63 @@ var Q = [
 ];
 
 function setQContract(TotalGreatSuccessRate) {
-    var TotalRate = TotalGreatSuccessRate / 100;
+    const TotalRate = TotalGreatSuccessRate / 100;
     //人形契约 T-Doll Production Contract
-    Q[1][5] = CalculateContractValue(50, 50, TotalRate);//0-2
-    Q[7][5] = CalculateContractValue(20, 20, TotalRate);//1-4
-    Q[11][5] = CalculateContractValue(80, 80, TotalRate);//2-4
-    Q[15][5] = CalculateContractValue(40, 80, TotalRate);//???//3-4
+    Q[1][5] = calculateContractValue(50, 50, TotalRate);//0-2
+    Q[7][5] = calculateContractValue(20, 20, TotalRate);//1-4
+    Q[11][5] = calculateContractValue(80, 80, TotalRate);//2-4
+    Q[15][5] = calculateContractValue(40, 80, TotalRate);//???//3-4
     Q[18][5] = 0.7;//4-3
-    Q[23][5] = CalculateContractValue(40, 40, TotalRate);//5-4
+    Q[23][5] = calculateContractValue(40, 40, TotalRate);//5-4
     Q[29][5] = 0.6;//7-2
-    Q[35][5] = CalculateContractValue(90, 90, TotalRate);//???//8-4
-    Q[38][5] = CalculateContractValue(70, 70, TotalRate);//???//9-3
+    Q[35][5] = calculateContractValue(90, 90, TotalRate);//???//8-4
+    Q[38][5] = calculateContractValue(70, 70, TotalRate);//???//9-3
     Q[41][5] = 0.75;//10-2
     Q[44][5] = 8 / 16;//???//11-1
     Q[45][5] = 12 / 12;//???//11-2
     Q[51][5] = 12 / 12;//???//12-4
     //装备契约 Equipment Development Contract
-    Q[2][6] = CalculateContractValue(40, 80, TotalRate);//0-3
-    Q[15][6] = CalculateContractValue(40, 80, TotalRate);//???//3-4
-    Q[16][6] = CalculateContractValue(20, 20, TotalRate);//4-1
-    Q[22][6] = CalculateContractValue(50, 50, TotalRate);//5-3
-    Q[26][6] = CalculateContractValue(60, 60, TotalRate);//6-3
-    Q[30][6] = CalculateContractValue(70, 70, TotalRate);//7-3
-    Q[32][6] = CalculateContractValue(40, 40, TotalRate);//8-1
+    Q[2][6] = calculateContractValue(40, 80, TotalRate);//0-3
+    Q[15][6] = calculateContractValue(40, 80, TotalRate);//???//3-4
+    Q[16][6] = calculateContractValue(20, 20, TotalRate);//4-1
+    Q[22][6] = calculateContractValue(50, 50, TotalRate);//5-3
+    Q[26][6] = calculateContractValue(60, 60, TotalRate);//6-3
+    Q[30][6] = calculateContractValue(70, 70, TotalRate);//7-3
+    Q[32][6] = calculateContractValue(40, 40, TotalRate);//8-1
     Q[39][6] = 1;//9-4
-    Q[43][6] = 10 / 12;//???//10-4
+    Q[43][6] = calculateContractValue(50, 50, TotalRate);//???//10-4 (12 / 10) 60%
     Q[44][6] = 8 / 16;//???//11-1
-    Q[48][6] = CalculateContractValue(60, 60, TotalRate);//12-1 (42 / 7) 60%GreatSuccessRate
+    Q[48][6] = calculateContractValue(60, 60, TotalRate);//12-1 (42 / 7) 60%GreatSuccessRate
     //快建 Quick Production Contract
-    Q[0][7] = CalculateContractValue(20, 70, TotalRate);//0-1
+    Q[0][7] = calculateContractValue(20, 70, TotalRate);//0-1
     Q[10][7] = 0.5;//2-3
-    Q[14][7] = CalculateContractValue(40, 85, TotalRate);//3-3
-    Q[17][7] = CalculateContractValue(50, 50, TotalRate);//4-2
+    Q[14][7] = calculateContractValue(40, 85, TotalRate);//3-3
+    Q[17][7] = calculateContractValue(50, 50, TotalRate);//4-2
     Q[19][7] = 1;//4-4
-    Q[25][7] = CalculateContractValue(20, 70, TotalRate);//???//6-2
-    Q[31][7] = CalculateContractValue(80, 80, TotalRate);//???//7-4
-    Q[34][7] = CalculateContractValue(60, 90, TotalRate);//???//8-3
-    Q[37][7] = CalculateContractValue(25, 25, TotalRate);//9-2
+    Q[25][7] = calculateContractValue(20, 70, TotalRate);//???//6-2
+    Q[31][7] = calculateContractValue(80, 80, TotalRate);//???//7-4
+    Q[34][7] = calculateContractValue(60, 90, TotalRate);//???//8-3
+    Q[37][7] = calculateContractValue(25, 25, TotalRate);//9-2
     Q[41][7] = 0.25;//10-2
-    Q[42][7] = CalculateContractValue(30, 80, TotalRate);//???//10-3
+    Q[42][7] = calculateContractValue(30, 80, TotalRate);//???//10-3
     Q[47][7] = 1;//???//11-4
     Q[50][7] = 12 / 12;//???//12-3
     //快修 Quick Restoration Contract
-    Q[0][8] = CalculateContractValue(50, 70, TotalRate);//0-1
-    Q[2][8] = CalculateContractValue(40, 80, TotalRate);//0-3
-    Q[6][8] = CalculateContractValue(60, 60, TotalRate);//1-3
-    Q[9][8] = CalculateContractValue(30, 30, TotalRate);//2-2
+    Q[0][8] = calculateContractValue(50, 70, TotalRate);//0-1
+    Q[2][8] = calculateContractValue(40, 80, TotalRate);//0-3
+    Q[6][8] = calculateContractValue(60, 60, TotalRate);//1-3
+    Q[9][8] = calculateContractValue(30, 30, TotalRate);//2-2
     Q[10][8] = 0.5;//2-3
-    Q[14][8] = CalculateContractValue(45, 85, TotalRate);//3-3
+    Q[14][8] = calculateContractValue(45, 85, TotalRate);//3-3
     Q[18][8] = 0.3;//4-3
-    Q[21][8] = CalculateContractValue(80, 80, TotalRate);//5-2
-    Q[25][8] = CalculateContractValue(50, 70, TotalRate);//6-2
+    Q[21][8] = calculateContractValue(80, 80, TotalRate);//5-2
+    Q[25][8] = calculateContractValue(50, 70, TotalRate);//6-2
     Q[29][8] = 0.4;//7-2
-    Q[33][8] = CalculateContractValue(80, 80, TotalRate);//8-2
-    Q[34][8] = CalculateContractValue(30, 90, TotalRate);//???//8-3 
-    Q[42][8] = CalculateContractValue(50, 80, TotalRate);//???//10-3 
-    Q[46][8] = 7 / 10;//???//11-3
+    Q[33][8] = calculateContractValue(80, 80, TotalRate);//8-2
+    Q[34][8] = calculateContractValue(30, 90, TotalRate);//???//8-3
+    Q[42][8] = calculateContractValue(50, 80, TotalRate);//???//10-3
+    Q[46][8] = calculateContractValue(50, 50, TotalRate);//???//11-3 (10 / 7) 60%
 }
-function CalculateContractValue(BaseValue, SumValue, TotalRate) {
+function calculateContractValue(BaseValue, SumValue, TotalRate) {
     return BaseValue / 100 + (BaseValue / SumValue - BaseValue / 100) * TotalRate;
 }

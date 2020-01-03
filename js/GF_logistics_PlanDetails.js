@@ -1,20 +1,7 @@
 function PrintPlanDetails() {
-    var ShownTab_Name;
-    switch (HTMLtab) {
-        case "Anytime":
-            ShownTab_Name = language.HTML.tab_Anytime;
-            break;
-        case "Timetable":
-            ShownTab_Name = language.HTML.tab_Timetable;
-            break;
-    }
-    document.getElementById("PlanDetails_ShownTab").innerHTML = language.JS.PlanDetails_calculateMethod + ': ' + ShownTab_Name;
-    var ShownTab = getShownTab();
-    ShownTab.setTime(false);
-    var TotalMinutes = ShownTab.TotalTime;
-    document.getElementById("PlanDetails_TotalTime").innerHTML = language.JS.total_time + ": " + TimeFormat(TotalMinutes);
-    var TotalGreatSuccessRate = Input_getTotalGreatSuccessRate();
-    document.getElementById("PlanDetails_GreatSuccessRate").innerHTML = language.JS.total_greatSuccessRate + ": " + TotalGreatSuccessRate + "%";
+    _PrintPlanDetails_ShownTab();
+    _PrintPlanDetails_TotalTime();
+    _PrintPlanDetails_GreatSuccessRate();
 
     document.getElementById("PlanDetails_Mission_1").innerHTML = "";
     document.getElementById("PlanDetails_Mission_2").innerHTML = "";
@@ -58,7 +45,7 @@ function PrintPlanDetails() {
         }
 
         var tab = "";
-        tab += tab_td_start + language.JS.PerHour + tab_td_end;
+        tab += "<td style='text-align:center;'id='PlanDetails_PerHour_title'>" + language.JS.PerHour + tab_td_end;
         for (var i = 0; i < 8; i++) {
             tab += tab_td_start;
             tab += NumberAutoExact(ResourceContractValue[i] * 60);
@@ -67,7 +54,10 @@ function PrintPlanDetails() {
         tab += "<td></td>";
         document.getElementById("PlanDetails_PerHour").innerHTML = tab;
 
-        tab = tab_td_start + language.JS.Total + tab_td_end;
+        var ShownTab = getShownTab();
+        ShownTab.setTime(false);
+        var TotalMinutes = ShownTab.TotalTime;
+        tab = "<td style='text-align:center;'id='PlanDetails_Total_title'>" + language.JS.Total + tab_td_end;
         for (var i = 0; i < 8; i++) {
             tab += tab_td_start;
             tab += NumberAutoExact(ResourceContractValue[i] * TotalMinutes);
@@ -78,6 +68,28 @@ function PrintPlanDetails() {
 
         print_chart(selectedMissions_table, TotalMinutes);
     }
+}
+function _PrintPlanDetails_ShownTab() {
+    var ShownTab_Name;
+    switch (HTML_TAB) {
+        case "Anytime":
+            ShownTab_Name = language.HTML.tab_Anytime;
+            break;
+        case "Timetable":
+            ShownTab_Name = language.HTML.tab_Timetable;
+            break;
+    }
+    document.getElementById("PlanDetails_ShownTab").innerHTML = language.JS.PlanDetails_calculateMethod + ': ' + ShownTab_Name;
+}
+function _PrintPlanDetails_TotalTime() {
+    var ShownTab = getShownTab();
+    ShownTab.setTime(false);
+    var TotalMinutes = ShownTab.TotalTime;
+    document.getElementById("PlanDetails_TotalTime").innerHTML = language.JS.total_time + ": " + TimeFormat(TotalMinutes);
+}
+function _PrintPlanDetails_GreatSuccessRate() {
+    var TotalGreatSuccessRate = Input_getTotalGreatSuccessRate();
+    document.getElementById("PlanDetails_GreatSuccessRate").innerHTML = language.JS.total_greatSuccessRate + ": " + TotalGreatSuccessRate + "%";
 }
 
 var Chart;
@@ -155,9 +167,10 @@ function print_chart(selectedMissions_table, TotalMinutes) {
             axisLabel: {
                 formatter: function (val) {
                     return TimeFormat(val);
-                }
+                },
             },
             max: TotalMinutes,
+            interval: 60,
         },
         yAxis: {
             data: missions_name

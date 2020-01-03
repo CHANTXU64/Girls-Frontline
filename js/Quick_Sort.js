@@ -4,7 +4,7 @@ class Range {
         this.start = s;
         this.end = e;
     }
-};
+}
 
 function quick_sort_descending(arr) {
     // r[]模擬堆疊,p為數量,r[p++]為push,r[--p]為pop且取得元素
