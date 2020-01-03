@@ -14,8 +14,6 @@
     <link href="../css/GF_logistics.css" rel="stylesheet">
     <script src="../vendor/jquery-v2.1.1/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-    <link href="../vendor/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-    <script src="../vendor/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="../vendor/echarts/echarts.min.js"></script>
     <script src="../vendor/html2canvas/html2canvas.min.js"></script>
     <script src="../vendor/js-sha1/sha1.min.js"></script>
@@ -332,22 +330,23 @@
                                 </div>
                                 <div id="MissionTable_panel" class="panel-collapse collapse in" aria-expanded="true">
                                     <div class="panel-body" style="padding-left: 0px;padding-top: 0px;padding-right: 0px;padding-bottom: 0px;">
-                                        <table data-toggle="table" id="MissionTable" data-classes="table table-hover table-sm text-nowrap table-condensed" data-height=527 style="text-align: center; cursor: default;">
-                                            <thead>
-                                                <th id="MissionTable_head_Mission" data-align="center" style="width: 10%;">Mission</th>
-                                                <th id="MissionTable_head_Manp" data-align="center" style="width: 10%;">M</th>
-                                                <th id="MissionTable_head_Ammu" data-align="center" style="width: 10%;">A</th>
-                                                <th id="MissionTable_head_Rati" data-align="center" style="width: 10%;">R</th>
-                                                <th id="MissionTable_head_Part" data-align="center" style="width: 10%;">P</th>
-                                                <th id="MissionTable_head_TPro" data-align="center" style="width: 10%;">T</th>
-                                                <th id="MissionTable_head_Equi" data-align="center" style="width: 10%;">E</th>
-                                                <th id="MissionTable_head_QPro" data-align="center" style="width: 10%;">Q</th>
-                                                <th id="MissionTable_head_QRes" data-align="center" style="width: 10%;">Q</th>
-                                                <th id="MissionTable_head_Time" data-align="center" style="width: 10%;">Time</th>
-                                            </thead>
-                                            <tbody id="MissionTable_tbody">
-                                            </tbody>
-                                        </table>
+                                        <div class="table-responsive" style="max-height: 400px;">
+                                            <table class="table table-responsive text-nowrap table-condensed" style="text-align: center; margin-bottom: 0;">
+                                                <thead>
+                                                    <th id="MissionTable_head_Mission" tabindex="0" style="text-align: center; width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2); cursor:pointer;"></th>
+                                                    <th id="MissionTable_head_Manp"    tabindex="0" style="text-align: center; width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2); cursor:pointer;"></th>
+                                                    <th id="MissionTable_head_Ammu"    tabindex="0" style="text-align: center; width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2); cursor:pointer;"></th>
+                                                    <th id="MissionTable_head_Rati"    tabindex="0" style="text-align: center; width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2); cursor:pointer;"></th>
+                                                    <th id="MissionTable_head_Part"    tabindex="0" style="text-align: center; width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2); cursor:pointer;"></th>
+                                                    <th id="MissionTable_head_TPro"    tabindex="0" style="text-align: center; width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2); cursor:pointer;"></th>
+                                                    <th id="MissionTable_head_Equi"    tabindex="0" style="text-align: center; width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2); cursor:pointer;"></th>
+                                                    <th id="MissionTable_head_QPro"    tabindex="0" style="text-align: center; width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2); cursor:pointer;"></th>
+                                                    <th id="MissionTable_head_QRes"    tabindex="0" style="text-align: center; width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2); cursor:pointer;"></th>
+                                                    <th id="MissionTable_head_Time"    tabindex="0" style="text-align: center; width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2); cursor:pointer;"></th>
+                                                </thead>
+                                                <tbody id="MissionTable_tbody"></tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

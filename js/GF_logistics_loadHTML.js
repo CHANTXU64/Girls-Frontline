@@ -50,21 +50,6 @@ function loadHTML_language() {
     //------------------
     document.getElementById("tab_Timetable_deleteall").title = language.HTMLJS.tab_Timetable_deleteall;
 
-    //MissionTable------
-    var MissionTabHead = document.getElementsByClassName("th-inner");
-    var lang = language.JS;
-    var MissionTabHead_text = [lang.Mission, lang.Manp, lang.Ammu, lang.Rati, lang.Part, lang.TPro, lang.Equi, lang.QPro, lang.QRes, lang.Time];
-    for (var i = 0; i < 10; i++) {
-        MissionTabHead[i].innerHTML = MissionTabHead_text[i];
-        MissionTabHead[i].style.cursor = "pointer";
-    }
-    if (MissionTabHead.length > 10) {
-        for (var i = 0; i < 10; i++) {
-            MissionTabHead[10 + i].innerHTML = MissionTabHead_text[i];
-        }
-    }
-    //-----------------
-
     //PlanDetails------
     _PrintPlanDetails_ShownTab();
     _PrintPlanDetails_TotalTime();

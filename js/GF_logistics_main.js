@@ -3,7 +3,6 @@ let RESULT_PLAN_SORT_BY = "";
 let TABLE_CALCULATE_TOTAL_TIME;
 
 function start_sorting_main() {
-    console.time('total');
     HTML_DisableInput();
     var ShownTab = getShownTab();
     ShownTab.setTime();
@@ -11,8 +10,6 @@ function start_sorting_main() {
     //调整目标值, 标准化归一化
     //----------
     var plan = new Plan(ShownTab, 8);
-    console.log(plan.TargetValue);
-    console.time();
     if (Q_Valid_length > 38) {
         for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
             for (var n2 = n1 + 1; n2 < (Q_Valid_length - 2); n2++) {
@@ -31,8 +28,6 @@ function start_sorting_main() {
         Q_valid_backup.splice(0, 38);
         quick_sort_expand_descending(Q_valid_backup, 0);
         for (var i = 0; i < Q_valid_backup.length; i++) {
-            console.log(ShownTab.Qvalid[Q_valid_backup[i][0]][0]);
-            console.log(ShownTab.Qvalid[Q_valid_backup[i][0]][11]);
             ShownTab.Qvalid.splice(Q_valid_backup[i][0], 1);
             Q_Valid_length--;
         }
@@ -48,21 +43,10 @@ function start_sorting_main() {
             }
         }
     }
-    console.timeEnd();
-    console.time();
     var TargetValue = CorrectTargetValueByPlanList(plan);
-    ///////////////////////////////////////
-    var log1 = new Array(8);
-    for (var i = 0; i < 8; i++) {
-        log1[i] = TargetValue[i] * 60;
-    }
-    console.log(log1);
-    console.log(plan.List);
-    ///////////////////////////////////////
     for (var i = 0; i < 8; i++) {
         TargetValue[i] /= ShownTab.CurrentValue_MAX[i];
     }
-    console.log(TargetValue);
     //----------
     setFineTuning_TargetValue(TargetValue);
     setFineTuning_ShownTab(ShownTab);
@@ -78,8 +62,6 @@ function start_sorting_main() {
         }
     }
     plan.print(false);
-    console.timeEnd();
-    console.timeEnd('total');
 }
 
 function getShownTab() {

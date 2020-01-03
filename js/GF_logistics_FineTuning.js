@@ -16,34 +16,38 @@ function getHTMLFineTuningTool() {
     const TargetName = ['MT', 'AT', 'RT', 'PT', 'TT', 'ET', 'QPT', 'QRT'];
     const lang = language.JS;
     const TargetHTMLText = [lang.Manp, lang.Ammu, lang.Rati, lang.Part, lang.TPro, lang.Equi, lang.QPro, lang.QRes];
-    let HTML = '<div class="panel panel-default" style="max-width: 400px; margin-bottom:5px">';
+    let HTML = '<div class="panel panel-default" style="margin-bottom:5px">';
     HTML += '<div class="panel-heading">';
     HTML += '<h4 class="panel-title"><a data-toggle="collapse" href="#FineTuningTool" class="collapsed">' + lang.FineTuningTool + '</a></h4></div>';
     HTML += '<div id="FineTuningTool" class="panel-collapse collapse">';
     HTML += '<div class="panel-body">';
     for (let i = 0; i < 8; i++) {
+        if (i === 0)
+            HTML += '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">';
+        if (i === 4)
+            HTML += '</div> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">';
         HTML += '<div class="form-group input-group" style="margin-bottom: 10px;">';
         HTML += '<span class="input-group-addon" id="FineTuningTool_' + TargetName[i] + '">' + TargetHTMLText[i] + '</span>';
         HTML += '<div class="input-group-btn">';
-        HTML += '<button class="btn btn-default col-lg-6" type="button" id="FineTuning_minus_' + TargetName[i] + '"';
+        HTML += '<button class="btn btn-default col-lg-6 col-md-6 col-sm-6 col-xs-6" type="button" id="FineTuning_minus_' + TargetName[i] + '"';
         if (FineTuning_TargetValue_Original[i] === 0)
             HTML += 'disabled="disabled"';
-        else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 100 <= 0)
+        else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 50 <= 0)
             HTML += 'disabled="disabled"';
-        else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 100 < FineTuning_TargetValue_Original[i] * 0.9)
+        else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 50 < FineTuning_TargetValue_Original[i] * 0.8)
             HTML += 'disabled="disabled"';
         HTML += '><b>-</b></button>';
-        HTML += '<button class="btn btn-default col-lg-6" type="button" id="FineTuning_plus_' + TargetName[i] + '"';
+        HTML += '<button class="btn btn-default col-lg-6 col-md-6 col-sm-6 col-xs-6" type="button" id="FineTuning_plus_' + TargetName[i] + '"';
         if (FineTuning_TargetValue_Original[i] === 0)
             HTML += 'disabled="disabled"';
-        else if (FineTuning_TargetValue[i] + FineTuning_TargetValue_Original[i] / 100 >= 1)
+        else if (FineTuning_TargetValue[i] + FineTuning_TargetValue_Original[i] / 50 >= 1)
             HTML += 'disabled="disabled"';
-        else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 100 > FineTuning_TargetValue_Original[i] * 1.1)
+        else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 50 > FineTuning_TargetValue_Original[i] * 1.2)
             HTML += 'disabled="disabled"';
         HTML += '><b>+</b></button>';
         HTML += '</div></div>';
     }
-    HTML += '</div></div></div>';
+    HTML += '</div></div></div></div>';
     return HTML;
 }
 
@@ -51,12 +55,10 @@ function FineTuning(Operator, ID) {
     const TargetName = ['MT', 'AT', 'RT', 'PT', 'TT', 'ET', 'QPT', 'QRT'];
     const IDNumber = TargetName.indexOf(ID);
     if (Operator === -1) {
-        FineTuning_TargetValue[IDNumber] -= FineTuning_TargetValue_Original[IDNumber] / 100;
-        // FineTuning_TargetValue[IDNumber] -= 0.01;
+        FineTuning_TargetValue[IDNumber] -= FineTuning_TargetValue_Original[IDNumber] / 50;
     }
     else {
-        FineTuning_TargetValue[IDNumber] += FineTuning_TargetValue_Original[IDNumber] / 100;
-        // FineTuning_TargetValue[IDNumber] += 0.01;
+        FineTuning_TargetValue[IDNumber] += FineTuning_TargetValue_Original[IDNumber] / 50;
     }
     FineTuning_main();
 }
