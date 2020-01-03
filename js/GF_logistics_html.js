@@ -29,29 +29,29 @@ function setLanguage() {
             case 'zh-HK':
             case 'zh-TW':
             case 'zh-MO':
-                language = languages["zh-hk"];
-                storageSetItem("lang", "zh-hk");
+                language = languages["zh-TW"];
+                storageSetItem("lang", "zh-TW");
                 break;
             default:
-                language = languages["zh-cn"];
-                storageSetItem("lang", "zh-cn");
+                language = languages["zh-CN"];
+                storageSetItem("lang", "zh-CN");
         }
     }
     else {
-        language = languages["zh-cn"];
-        storageSetItem("lang", "zh-cn");
+        language = languages["zh-CN"];
+        storageSetItem("lang", "zh-CN");
     }
 }
 
 function changeLanguage(lang) {
     switch(lang) {
         case 'zh-CN':
-            storageSetItem("lang", 'zh-cn');
-            language = languages["zh-cn"];
+            storageSetItem("lang", 'zh-CN');
+            language = languages["zh-CN"];
             break;
         case 'zh-TW':
-            storageSetItem("lang", 'zh-hk');
-            language = languages["zh-hk"];
+            storageSetItem("lang", 'zh-TW');
+            language = languages["zh-TW"];
             break;
     }
     loadHTML_language();

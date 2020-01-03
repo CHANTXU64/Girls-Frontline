@@ -1,7 +1,7 @@
 var language;
 var languages = 
 {
-    "zh-cn": {
+    "zh-CN": {
         "lang": "zh-Hans",
         "title": "少女前线-后勤组合排序器",
         "HTML": {
@@ -38,6 +38,8 @@ var languages =
             "chapter12": "第十二战役",
             "Display_PerHour_text": "以每小时显示",
             "Display_Total_text": "以总计显示",
+            "ContractWeight_notImportant": "契约不重要",
+            "ContractWeight_Important": "契约重要",
             "start_sorting": "开始排序",
             "clear_sorting": "清除排序结果",
             "result": "排序结果",
@@ -123,7 +125,7 @@ var languages =
             "Saved_alert": "导入的数据有问题！",
         }
     },
-    "zh-hk": {
+    "zh-TW": {
         "lang": "zh-Hant",
         "title": "少女前線-後勤組合排序器",
         "HTML": {
@@ -160,6 +162,8 @@ var languages =
             "chapter12": "第十二戰役",
             "Display_PerHour_text": "以每小時顯示",
             "Display_Total_text": "以總計顯示",
+            "ContractWeight_notImportant": "契約不重要",
+            "ContractWeight_Important": "契約重要",
             "start_sorting": "開始排序",
             "clear_sorting": "清除排序結果",
             "result": "排序結果",
