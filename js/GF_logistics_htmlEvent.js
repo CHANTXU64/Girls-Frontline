@@ -381,9 +381,21 @@ $(function () {
 $(function() {
     $("#Saved_heading").on('keyup', function(e) {
         if (e.which == 13) {
+            if ($("#Saved_heading").attr("aria-expanded") === "false") {
+                $("#MissionTable_panel").collapse('hide');
+                $("#Saved").collapse('show');
+            }
+            else
+            $("#Saved").collapse('hide');
+        }
+    });
+    $("#Saved_heading").on('click', function() {
+        if ($("#Saved_heading").attr("aria-expanded") === "false") {
             $("#MissionTable_panel").collapse('hide');
             $("#Saved").collapse('show');
         }
+        else
+        $("#Saved").collapse('hide');
     });
     $("#importSaved_importButton").on('click', function() {
         const input = $("#importSaved_input").val();
@@ -419,9 +431,21 @@ $(function() {
 $(function() {
     $("#MissionTable_heading").on('keyup', function(e) {
         if (e.which == 13) {
+            if ($("#MissionTable_panel").attr("aria-expanded") === "false") {
+                $("#MissionTable_panel").collapse('show');
+                $("#Saved").collapse('hide');
+            }
+            else
+                $("#MissionTable_panel").collapse('hide');
+        }
+    });
+    $("#MissionTable_heading").on('click', function() {
+        if ($("#MissionTable_panel").attr("aria-expanded") === "false") {
             $("#MissionTable_panel").collapse('show');
             $("#Saved").collapse('hide');
         }
+        else
+            $("#MissionTable_panel").collapse('hide');
     });
     $("#MissionTable_head_Mission").on('click', function() {
         quick_sort_expand_ascending(MISSION_TABLE, 12);
