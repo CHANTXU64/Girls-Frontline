@@ -173,7 +173,7 @@ function Config_export(){
 }
 
 function setPageByImport(input) {
-    var flag;
+    var flag = true;
     if (SAVED.length !== 0)
         flag = confirm(language.JS.config_alert);
     if (flag !== true)
