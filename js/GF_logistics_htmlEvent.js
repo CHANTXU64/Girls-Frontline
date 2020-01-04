@@ -1,6 +1,6 @@
 $(function (){
-    $('[href=#lang-zh-CN]').on('click', function(){changeLanguage('zh-CN');});
-    $('[href=#lang-zh-TW]').on('click', function(){changeLanguage('zh-TW');});
+    $('#lang-zh-CN').on('click', function(){changeLanguage('zh-CN');});
+    $('#lang-zh-TW').on('click', function(){changeLanguage('zh-TW');});
 });
 
 $(function (){

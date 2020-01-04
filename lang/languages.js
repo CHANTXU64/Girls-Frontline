@@ -86,6 +86,7 @@ var languages =
             "Saved_Title": "已保存的",
             "NoSaved": "空",
             "start_sorting_html": "点击 <span style=\"color:#165399\">开始排序</span> 按钮，排序前十六的结果将在这里显示",
+            "permanentAddress": "永久地址",
         },
         "HTMLJS": {
             "placeholder": {
@@ -148,7 +149,6 @@ var languages =
                 "Target_plus_0.1_QRT": "快修需求量增加0.1",
                 "Target_plus_1_QRT": "快修需求量增加1",
                 "importSaved_importButton": "导入数据",
-
             },
             "Demand_hour": "平均每小时需求量",
             "Demand_total": "总需求量",
@@ -281,6 +281,7 @@ var languages =
             "Saved_Title": "已保存的",
             "NoSaved": "空",
             "start_sorting_html": "點擊 <span style=\"color:#165399\">開始排序</span> 按鈕，排序前十六的結果將在這裡顯示",
+            "permanentAddress": "永久地址",
         },
         "HTMLJS": {
             "placeholder": {
@@ -343,7 +344,6 @@ var languages =
                 "Target_plus_0.1_QRT": "快修需求量增加0.1",
                 "Target_plus_1_QRT": "快修需求量增加1",
                 "importSaved_importButton": "導入數據",
-
             },
             "Demand_hour": "平均每小時需求量",
             "Demand_total": "總需求量",

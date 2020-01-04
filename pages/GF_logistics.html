@@ -86,11 +86,11 @@
                                 <div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle"
                                         data-toggle="dropdown">中文 <span class="caret"></span></button>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#lang-zh-CN">简体中文</a></li>
-                                        <li><a href="#lang-zh-TW">繁體中文</a></li>
+                                        <li><a href="#" id="lang-zh-CN">简体中文</a></li>
+                                        <li><a href="#" id="lang-zh-TW">繁體中文</a></li>
                                     </ul>
                                 </div>
-                                <div class="form-group input-group" style="float: right; margin-bottom: 0px; max-width: 360px;">
+                                <div class="form-group input-group" style="float: right; margin-bottom: 0; max-width: 360px;">
                                     <span class="input-group-addon" id="Config_text"></span>
                                     <input type="text" class="form-control" style="min-width: 40px;" id="Config_importInput" value=""
                                         onclick="this.select()" autocomplete="off">
@@ -162,8 +162,8 @@
                                         </div>
                                         <div class="tab-pane fade" id="Tab_Timetable">
                                             <h4 id="tab_Timetable_time"></h4>
-                                            <div class="row" style="margin-left: 0px; margin-right: 0px;">
-                                                <div class="col-lg-10" style="padding-left: 0px; padding-right: 0px;">
+                                            <div class="row" style="margin-left: 0; margin-right: 0;">
+                                                <div class="col-lg-10" style="padding-left: 0; padding-right: 0;">
                                                     <div class="form-group input-group">
                                                         <input type="number" pattern="\d*" min="0" max="168" class="form-control"
                                                             id="Time_Timetable_hours" value=5 onclick="this.select()" autocomplete="off">
@@ -176,7 +176,7 @@
                                                             id="tab_Timetable_minute"></label>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2" align="right" style="padding-left: 0px; padding-right: 0px;">
+                                                <div class="col-lg-2" align="right" style="padding-left: 0; padding-right: 0;">
                                                     <button type="button" class="btn btn-default"
                                                         id="tab_Timetable_deleteall" title="">
                                                         <span class="glyphicon glyphicon-remove-sign"
@@ -200,33 +200,29 @@
                                                 </div>
                                             </div>
                                             <label id="tab_Timetable_addtimeh5" for="Tab_Timetable_AddNew"></label>
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="form-group input-group" id="Tab_Timetable_AddNew">
-                                                        <input type="number" pattern="\d*" min="0" max="168" class="form-control"
-                                                            id="Tab_Timetable_new_hours" onclick="this.select()" autocomplete="off">
-                                                        <label for="Tab_Timetable_new_hours" class="input-group-addon" style="border-left-width: 0"
-                                                            id="tab_Timetable_new_hour"></label>
-                                                        <input type="number" pattern="\d*" min="0" max="60" class="form-control"
-                                                            style="border-left-width: 0" id="Tab_Timetable_new_minutes"
-                                                            onclick="this.select()" autocomplete="off">
-                                                        <label for="Tab_Timetable_new_minutes" class="input-group-addon" style="border-left-width: 0"
-                                                            id="tab_Timetable_new_minute"></label>
-                                                        <div class="input-group-btn">
-                                                            <button type="button" class="btn btn-info"
-                                                                id="Tab_Timetable_AddNewTimePoint">
-                                                                <span class="glyphicon glyphicon-plus"></span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
+                                            <div class="form-group input-group" id="Tab_Timetable_AddNew">
+                                                <input type="number" pattern="\d*" min="0" max="168" class="form-control"
+                                                    id="Tab_Timetable_new_hours" onclick="this.select()" autocomplete="off">
+                                                <label for="Tab_Timetable_new_hours" class="input-group-addon" style="border-left-width: 0"
+                                                    id="tab_Timetable_new_hour"></label>
+                                                <input type="number" pattern="\d*" min="0" max="60" class="form-control"
+                                                    style="border-left-width: 0" id="Tab_Timetable_new_minutes"
+                                                    onclick="this.select()" autocomplete="off">
+                                                <label for="Tab_Timetable_new_minutes" class="input-group-addon" style="border-left-width: 0"
+                                                    id="tab_Timetable_new_minute"></label>
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-info"
+                                                        id="Tab_Timetable_AddNewTimePoint">
+                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <h4 id="h4GreatSuccessRate"></h4>
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group input-group" style="margin-bottom: 0px;">
+                                        <div class="col-lg-6 col-md-6 col-sm-6" style="min-width: 180px;">
+                                            <div class="form-group input-group" style="margin-bottom: 0; min-width: 180px;">
                                                 <input type="number" pattern="\d*" min="15" max="69" class="form-control" id="GreatSuccessRate" value=60
                                                     onclick="this.select()" style="min-width: 60px;" autocomplete="off">
                                                 <label for="GreatSuccessRate" class="input-group-addon" id="Display_UPRate"
@@ -234,9 +230,9 @@
                                                 <label for="GreatSuccessRate" class="input-group-addon">%</label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
                                             <div class="checkbox">
-                                                <label id="GreatSuccessRateUp_label"> <input type="checkbox" id="GreatSuccessRateUp" autocomplete="off">
+                                                <label id="GreatSuccessRateUp_label" style="min-width: 110px;"> <input type="checkbox" id="GreatSuccessRateUp" autocomplete="off">
                                                     <span id="GreatSuccessRateUp_text"></span>
                                                 </label>
                                             </div>
@@ -253,38 +249,34 @@
                                         <option value=12 id="chapter12" selected></option>
                                     </select>
                                 </div>
-                                <div class="col-lg-5">
-                                    <div id="target">
-                                        <h4 id="Demand"></h4>
-                                        <div id="setTargetButton"></div>
-                                        <div slider style="margin-top: 5px; margin-bottom: 35px;">
-                                            <label id="ContractWeight_label" style="width:100%;">
-                                                <span id="ContractWeight_notImportant" style="font-weight: normal;"></span>
-                                                <span id="ContractWeight_Important" style="float: right; font-weight: normal;"></span>
-                                            </label>
-                                            <div>
-                                                <div inverse-left style="width:100%;"></div>
-                                                <div range id="ContractWeight_range" style="left:0%;right:50%;"></div>
-                                                <span thumb id="ContractWeight_thumb"
-                                                    style="left:50%; background-color:rgb(112, 166, 236);"></span>
-                                            </div>
-                                            <input id="ContractWeight" type="range" tabindex="0" style="margin-top: 26px;" value="50"
-                                                max="100" min="0" step="2" oninput="
-                                            var value=(100/(parseFloat(this.max)-parseInt(this.min)))*parseFloat(this.value)-(100/(parseInt(this.max)-parseFloat(this.min)))*parseFloat(this.min);
-                                            document.getElementById('ContractWeight_range').style.right=(100-value)+'%';
-                                            document.getElementById('ContractWeight_thumb').style.left=value+'%';" />
+                                <div class="col-lg-5" id="target">
+                                    <h4 id="Demand"></h4>
+                                    <div id="setTargetButton"></div>
+                                    <div slider style="margin-top: 5px; margin-bottom: 35px;">
+                                        <label id="ContractWeight_label" style="width:100%;">
+                                            <span id="ContractWeight_notImportant" style="font-weight: normal;"></span>
+                                            <span id="ContractWeight_Important" style="float: right; font-weight: normal;"></span>
+                                        </label>
+                                        <div>
+                                            <div inverse-left style="width:100%;"></div>
+                                            <div range id="ContractWeight_range" style="left:0;right:50%;"></div>
+                                            <span thumb id="ContractWeight_thumb"
+                                                style="left:50%; background-color:rgb(112, 166, 236);"></span>
                                         </div>
-                                        <div id="setTargetInput"></div>
+                                        <input id="ContractWeight" type="range" tabindex="0" style="margin-top: 26px;" value="50"
+                                            max="100" min="0" step="2" oninput="
+                                        var value=(100/(parseFloat(this.max)-parseInt(this.min)))*parseFloat(this.value)-(100/(parseInt(this.max)-parseFloat(this.min)))*parseFloat(this.min);
+                                        document.getElementById('ContractWeight_range').style.right=(100-value)+'%';
+                                        document.getElementById('ContractWeight_thumb').style.left=value+'%';" />
                                     </div>
+                                    <div id="setTargetInput"></div>
                                 </div>
                                 <div class="col-lg-12">
                                     <br>
-                                    <p>
-                                        <button type="button" class="btn btn-primary" style="outline:none;"
-                                            id="start_sorting"></button>
-                                        <button type="button" class="btn btn-danger" style="outline: none;"
-                                            id="clear_sorting" disabled="disabled"></button>
-                                    </p>
+                                    <button type="button" class="btn btn-primary" style="outline:none;"
+                                        id="start_sorting"></button>
+                                    <button type="button" class="btn btn-danger" style="outline: none;"
+                                        id="clear_sorting" disabled="disabled"></button>
                                 </div>
                             </div>
                         </div>
@@ -299,18 +291,18 @@
                                 </div>
                                 <div id="Saved" class="panel-collapse collapse" aria-expanded="false">
                                     <div class="table-responsive" style="max-height: 330px; overflow-y: auto; margin-bottom: 0;">
-                                        <table class="table table-responsive text-nowrap table-condensed" style="margin-bottom: 0px; text-align: center; cursor: default;">
+                                        <table class="table table-responsive text-nowrap table-condensed" style="margin-bottom: 0; text-align: center; cursor: default;">
                                             <tbody id="Saved_Body">
                                                 <tr id="importSaved">
                                                     <td colspan=5>
-                                                        <div class="form-group input-group" style="margin-bottom: 0px; width:100%; max-width: 320px;">
+                                                        <div class="form-group input-group" style="margin-bottom: 0; width:100%; max-width: 320px;">
                                                             <input type="text" class="form-control" style="min-width: 140px;"
                                                                 id="importSaved_input" value="" onclick="this.select()" autocomplete="off">
                                                             <div class="input-group-btn">
                                                                 <button type="button" class="btn btn-default"
                                                                     id="importSaved_importButton" title="">
                                                                 <span class="glyphicon glyphicon-import"
-                                                                    style="top: 2px;" /></button>
+                                                                    style="top: 2px;"></span></button>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -328,9 +320,9 @@
                                     </div>
                                 </div>
                                 <div id="MissionTable_panel" class="panel-collapse collapse in" aria-expanded="true">
-                                    <div class="panel-body" style="padding-left: 0px;padding-top: 0px;padding-right: 0px;padding-bottom: 0px;">
-                                        <div class="table-responsive" style="max-height: 400px; overflow-y: auto; margin-bottom: 0;">
-                                            <table class="table table-responsive text-nowrap table-condensed" style="text-align: center; margin-bottom: 0;">
+                                    <div class="panel-body" style="padding: 0;">
+                                        <div class="table-responsive" style="max-height: 400px; overflow-y: auto; margin-bottom: 0; border: 0;">
+                                            <table class="table table-responsive text-nowrap table-condensed" style="border: 0;text-align: center; margin-bottom: 0;">
                                                 <thead>
                                                     <tr>
                                                     <th id="MissionTable_head_Mission" tabindex="0" style="text-align: center; width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2); cursor:pointer;"></th>
@@ -354,9 +346,9 @@
                         </div>
                         <div class="panel panel-default" style="max-width: 582px;">
                             <div class="panel-heading" id="PlanDetailsTitle" style="cursor: default;"></div>
-                            <div class="panel-body" style="padding-left: 0px;padding-top: 0px;padding-right: 0px;padding-bottom: 0px;">
-                                <div class="table-responsive" style="margin-bottom: 0;">
-                                    <table class="table table-responsive text-nowrap table-condensed" style="margin-bottom: 0px; width: 580px; font-size: 13px; text-align: center; cursor: default;" id="PlanDetails">
+                            <div class="panel-body" style="padding: 0;">
+                                <div class="table-responsive" style="margin-bottom: 0; border: 0;">
+                                    <table class="table table-responsive text-nowrap table-condensed" style="border: 0;margin-bottom: 0; width: 580px; font-size: 13px; text-align: center; cursor: default;" id="PlanDetails">
                                         <tbody>
                                             <tr>
                                                 <td style="width: 30%;" colspan=3 id="PlanDetails_ShownTab"></td>
@@ -389,8 +381,8 @@
                                     </table>
                                 </div>
                                 <div class="input-group-btn">
-                                    <button class="btn btn-default"type="button"id="savePlan"style="width:100px;padding-top:3px;padding-bottom:3px;font-size:13px;"></button>
-                                    <button class="btn btn-default"type="button"id="Capture"style="width:100px;padding-top:3px;padding-bottom:3px;font-size:13px;"></button>
+                                    <button class="btn btn-default" type="button" id="savePlan" style="width:100px;padding-top:3px;padding-bottom:3px;font-size:13px;"></button>
+                                    <button class="btn btn-default" type="button" id="Capture" style="width:100px;padding-top:3px;padding-bottom:3px;font-size:13px;"></button>
                                 </div>
                             </div>
                         </div>
@@ -403,6 +395,15 @@
                                 <div id="Plan_Table"></div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <hr style="margin-top: 0; margin-bottom: 0;">
+                <div class="row" style="padding-top: 5px; padding-bottom: 10px;">
+                    <div class="col-lg-3" style="margin-right: 15px;">
+                        GitHub: <a href="https://github.com/CHANTXU64/Girls-Frontline">https://github.com/CHANTXU64/Girls-Frontline</a>
+                    </div>
+                    <div class="col-lg-3">
+                        <span id="permanentAddress"></span>: <a href="https://chantxu64.github.io/GF_logistics.html">https://chantxu64.github.io/GF_logistics.html</a>
                     </div>
                 </div>
             </div>

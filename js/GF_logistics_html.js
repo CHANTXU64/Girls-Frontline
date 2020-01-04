@@ -8,7 +8,29 @@ window.onload = function () {
     PrintPlanDetails();
     loadHTML_language();
     MobileOptimization();
+    if (document.getElementById("setTargetInput").clientWidth <= 260)
+        disableTargetButton();
 };
+
+$(window).resize(function () {
+    if (document.getElementById("setTargetInput").clientWidth <= 260)
+        disableTargetButton();
+    else
+        enableTargetButton();
+})
+
+function disableTargetButton() {
+    $("button[id^=Target_plus_10_]").attr("style", "display:none;");
+    $("button[id^=Target_plus_0]").attr("style", "display:none;");
+    $("button[id^=Target_minus_10_]").attr("style", "display:none;");
+    $("button[id^=Target_minus_0]").attr("style", "display:none;");
+}
+function enableTargetButton() {
+    $("button[id^=Target_plus_10_]").attr("style", "padding-right:10px;padding-left:10px;border-radius:0;");
+    $("button[id^=Target_plus_0]").attr("style", "padding-right:10px;padding-left:10px;border-radius:0;");
+    $("button[id^=Target_minus_10_]").attr("style", "padding-right:10px;padding-left:10px;border-radius:0;");
+    $("button[id^=Target_minus_0]").attr("style", "padding-right:10px;padding-left:10px;border-radius:0;");
+}
 
 function get_TABLE_CALCULATE_TOTAL_TIME() {
     if (is_CalculateByHour())
