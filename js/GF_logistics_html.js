@@ -182,7 +182,7 @@ function Tab_Timetable_AddNewTimePoint(time) {
 }
 function _Tab_Timetable_AddNewThumb(time, position) {
     let newThumb = '<button class="slider-button" id="Tab_Timetable_range_thumb_' + time + '"';
-    newThumb += 'style="left:' + position + ';">';
+    newThumb += 'style="left:' + position + ';" title="' + language.HTMLJS.Timetable_deletePoint + '">';
     newThumb += '<span class="glyphicon glyphicon-remove-circle" style="font-size: 22px;"></span></button>';
     $("#Tab_Timetable_range").append(newThumb);
 }
@@ -277,9 +277,9 @@ function HTML_DisableInput() {
     $("#Tab_Timetable_AddNewTimePoint").attr('disabled', "true");
     $("#GreatSuccessRate").attr('disabled', "true");
     $("#GreatSuccessRateUp").attr('disabled', "true");
-    document.getElementById("greatsuccessrateup").style.cursor='not-allowed';
+    document.getElementById("GreatSuccessRateUp_text").style.cursor='not-allowed';
     document.getElementById("GreatSuccessRateUp_label").style.cursor='not-allowed';
-    $("#MapLimit").attr('disabled', "true");
+    $("#ChapterLimit").attr('disabled', "true");
     $("#ContractWeight").attr('disabled', "true");
     document.getElementById("ContractWeight_thumb").style.backgroundColor='#CCC';
     $("button[id^=setTarget_]").attr('disabled', "true");
@@ -312,9 +312,9 @@ function HTML_AllowInput() {
     $("#Tab_Timetable_AddNewTimePoint").removeAttr("disabled");
     $("#GreatSuccessRate").removeAttr("disabled");
     $("#GreatSuccessRateUp").removeAttr("disabled");
-    document.getElementById("greatsuccessrateup").style.cursor='pointer';
+    document.getElementById("GreatSuccessRateUp_text").style.cursor='pointer';
     document.getElementById("GreatSuccessRateUp_label").style.cursor='pointer';
-    $("#MapLimit").removeAttr("disabled");
+    $("#ChapterLimit").removeAttr("disabled");
     $("#ContractWeight").removeAttr("disabled");
     document.getElementById("ContractWeight_thumb").style.backgroundColor='rgb(112, 166, 236)';
     $("button[id^=setTarget_]").removeAttr("disabled");

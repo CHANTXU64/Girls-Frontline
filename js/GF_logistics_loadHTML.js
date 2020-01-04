@@ -40,7 +40,7 @@ function loadHTML_Target() {
 function loadHTML_language() {
     document.documentElement.lang = language.lang;
     document.title = language.title;
-    for (var i in language.HTML) {
+    for (let i in language.HTML) {
         $('#'+i).html(language.HTML[i]);
     }
 
@@ -48,7 +48,26 @@ function loadHTML_language() {
     delete_PlanTable();
     HTML_AllowInput();
     //------------------
-    document.getElementById("tab_Timetable_deleteall").title = language.HTMLJS.tab_Timetable_deleteall;
+
+    for (let i in language.HTMLJS.placeholder) {
+        document.getElementById(i).placeholder = language.HTMLJS.placeholder[i];
+    }
+    for (let i in language.HTMLJS.title) {
+        document.getElementById(i).title = language.HTMLJS.title[i];
+    }
+
+    //Timetable
+    $("button[id^=Tab_Timetable_range_thumb_]").attr("title", language.HTMLJS.Timetable_deletePoint);
+
+    //Saved------------
+    $("button[id^=SavedTable_apply_]").attr("title", language.HTMLJS.SavedTable_apply);
+    $("input[id^=SavedTable_name_]").attr("placeholder", language.HTMLJS.SavedTable_name);
+    $("button[id^=SavedTable_rename_]").attr("title", language.HTMLJS.SavedTable_rename);
+    $("button[id^=SavedTable_up_]").attr("title", language.HTMLJS.SavedTable_up);
+    $("button[id^=SavedTable_down_]").attr("title", language.HTMLJS.SavedTable_down);
+    $("button[id^=SavedTable_export_]").attr("title", language.HTMLJS.SavedTable_export);
+    $("button[id^=SavedTable_delete_]").attr("title", language.HTMLJS.SavedTable_delete);
+    //-----------------
 
     //PlanDetails------
     _PrintPlanDetails_ShownTab();

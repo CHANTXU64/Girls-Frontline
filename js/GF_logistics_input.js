@@ -105,14 +105,14 @@ function Input_setContractWeight(ContractWeight = 50) {
 }
 
 function Input_getSelectChapter() {
-    return parseInt($("#MapLimit").val());
+    return parseInt($("#ChapterLimit").val());
 }
 
 function Input_setSelectChapter(ChapterValue = 12) {
-    $("#MapLimit").val(ChapterValue);
-    var Chapter = $("#MapLimit").val();
+    $("#ChapterLimit").val(ChapterValue);
+    var Chapter = $("#ChapterLimit").val();
     if (Chapter === null)
-        $("#MapLimit").val(12);
+        $("#ChapterLimit").val(12);
     storageSetItem("SelectChapter", Input_getSelectChapter());
 }
 

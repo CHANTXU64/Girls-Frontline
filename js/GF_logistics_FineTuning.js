@@ -23,9 +23,9 @@ function getHTMLFineTuningTool() {
     HTML += '<div class="panel-body">';
     for (let i = 0; i < 8; i++) {
         if (i === 0)
-            HTML += '<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">';
+            HTML += '<div class="col-lg-6 col-md-6 col-sm-6">';
         if (i === 4)
-            HTML += '</div> <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">';
+            HTML += '</div> <div class="col-lg-6 col-md-6 col-sm-6">';
         HTML += '<div class="form-group input-group" style="margin-bottom: 10px;">';
         HTML += '<span class="input-group-addon" id="FineTuningTool_' + TargetName[i] + '">' + TargetHTMLText[i] + '</span>';
         HTML += '<div class="input-group-btn">';
@@ -36,7 +36,7 @@ function getHTMLFineTuningTool() {
             HTML += 'disabled="disabled"';
         else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 50 < FineTuning_TargetValue_Original[i] * 0.9)
             HTML += 'disabled="disabled"';
-        HTML += '><b>-</b></button>';
+        HTML += 'title="' + language.HTMLJS.FineTuning_minus + '"><b>-</b></button>';
         HTML += '<button class="btn btn-default col-lg-6 col-md-6 col-sm-6 col-xs-6" type="button" id="FineTuning_plus_' + TargetName[i] + '"';
         if (FineTuning_TargetValue_Original[i] === 0)
             HTML += 'disabled="disabled"';
@@ -44,7 +44,7 @@ function getHTMLFineTuningTool() {
             HTML += 'disabled="disabled"';
         else if (FineTuning_TargetValue[i] - FineTuning_TargetValue_Original[i] / 50 > FineTuning_TargetValue_Original[i] * 1.14)
             HTML += 'disabled="disabled"';
-        HTML += '><b>+</b></button>';
+        HTML += 'title="' + language.HTMLJS.FineTuning_plus + '"><b>+</b></button>';
         HTML += '</div></div>';
     }
     HTML += '</div></div></div></div>';

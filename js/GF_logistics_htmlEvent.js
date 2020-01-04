@@ -77,7 +77,7 @@ $(function (){
 });
 
 $(function() {
-    $("#MapLimit").on('change', function() {
+    $("#ChapterLimit").on('change', function() {
         PrintMissionTable();
         PrintPlanDetails();
         storageSetItem("SelectChapter", Input_getSelectChapter());
@@ -572,8 +572,8 @@ $(function() {
 $(function() {
     $("#Config_export").on('click', function() {Config_export();});
     $("#Config_importButton").on('click', function() {
-        const input = $("#Config_input").val();
+        const input = $("#Config_importInput").val();
         setPageByImport(input);
-        $("#Config_input").val("");
+        $("#Config_importInput").val("");
     });
 });

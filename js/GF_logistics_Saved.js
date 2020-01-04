@@ -34,23 +34,23 @@ function PrintSavedThisRow(Row) {
         document.getElementById("NoSaved").style.display = "none";
     var HTML = "";
     HTML += '<tr id="SavedTable_row_' + Row + '"';
-    HTML += '><td><button type="button" class="btn btn-default"id="SavedTable_apply_' + Row + '" title="" style="background-color: #88E063;">';
+    HTML += '><td><button type="button" class="btn btn-default"id="SavedTable_apply_' + Row + '" title="' + language.HTMLJS.SavedTable_apply + '" style="background-color: #88E063;">';
     HTML += '<span class="glyphicon glyphicon-ok"style="top: 2px;" /></button></td><td><div class="form-group input-group" style="margin-bottom: 0px;">';
-    HTML += '<input type="text" class="form-control" style="min-width: 140px;"id="SavedTable_name_' + Row + '" title=""';
+    HTML += '<input type="text" class="form-control" style="min-width: 140px;"id="SavedTable_name_' + Row + '" placeholder="' + language.HTMLJS.SavedTable_name + '"';
     HTML += 'value="' + SAVED[Row].data[0] + '"readonly="readonly">';
-    HTML += '<div class="input-group-btn"><button type="button" class="btn btn-default"id="SavedTable_rename_' + Row + '" title=""><span class="glyphicon glyphicon-pencil"style="top: 2px;" /></button></div>';
+    HTML += '<div class="input-group-btn"><button type="button" class="btn btn-default"id="SavedTable_rename_' + Row + '" title="' + language.HTMLJS.SavedTable_rename + '"><span class="glyphicon glyphicon-pencil"style="top: 2px;" /></button></div>';
     HTML += '</div></td>';
-    HTML += '<td><div class="btn-group" style="min-width: 80px;"><button type="button" class="btn btn-default"id="SavedTable_up_' + Row + '"" title=""';
+    HTML += '<td><div class="btn-group" style="min-width: 80px;"><button type="button" class="btn btn-default"id="SavedTable_up_' + Row + '"" title="' + language.HTMLJS.SavedTable_up + '"';
     if (Row === 0)
         HTML += 'disabled="disabled"';
     HTML += '>';
     HTML += '<span class="glyphicon glyphicon-arrow-up"style="top: 2px;" /></button>';
-    HTML += '<button type="button" class="btn btn-default"id="SavedTable_down_' + Row + '" title=""';
+    HTML += '<button type="button" class="btn btn-default"id="SavedTable_down_' + Row + '" title="' + language.HTMLJS.SavedTable_down + '"';
     if (Row === SAVED.length - 1)
         HTML += 'disabled="disabled"';
     HTML +='><span class="glyphicon glyphicon-arrow-down"style="top: 2px;" /></button></div></td>';
-    HTML += '<td><button type="button" class="btn btn-default"id="SavedTable_export_' + Row + '" title=""><span class="glyphicon glyphicon-export"style="top: 2px;" /></button></td>';
-    HTML += '<td><button type="button" class="btn btn-default"id="SavedTable_delete_' + Row + '" title="" style="background-color: #F48380;"><span class="glyphicon glyphicon-trash"style="top: 2px;" /></button></td></tr>';
+    HTML += '<td><button type="button" class="btn btn-default"id="SavedTable_export_' + Row + '" title="' + language.HTMLJS.SavedTable_export + '"><span class="glyphicon glyphicon-export"style="top: 2px;" /></button></td>';
+    HTML += '<td><button type="button" class="btn btn-default"id="SavedTable_delete_' + Row + '" title="' + language.HTMLJS.SavedTable_delete + '" style="background-color: #F48380;"><span class="glyphicon glyphicon-trash"style="top: 2px;" /></button></td></tr>';
     $("#Saved_Body").append(HTML);
     if (Row !== 0)
         $("#SavedTable_down_" + (Row - 1)).removeAttr("disabled");

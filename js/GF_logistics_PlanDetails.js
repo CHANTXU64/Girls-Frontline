@@ -73,10 +73,10 @@ function _PrintPlanDetails_ShownTab() {
     var ShownTab_Name;
     switch (HTML_TAB) {
         case "Anytime":
-            ShownTab_Name = language.HTML.tab_Anytime;
+            ShownTab_Name = language.HTML.Tab_Anytime_name;
             break;
         case "Timetable":
-            ShownTab_Name = language.HTML.tab_Timetable;
+            ShownTab_Name = language.HTML.Tab_Timetable_name;
             break;
     }
     document.getElementById("PlanDetails_ShownTab").innerHTML = language.JS.PlanDetails_calculateMethod + ': ' + ShownTab_Name;
