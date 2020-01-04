@@ -51,7 +51,10 @@ function PrintPlanDetails() {
             tab += NumberAutoExact(ResourceContractValue[i] * 60);
             tab += tab_td_end;
         }
-        tab += "<td></td>";
+        if (HTML_TAB !== "Anytime")
+            tab += "<td></td>";
+        else
+            tab += "<td>" + language.JS.MinIntervalTime + "</td>";
         document.getElementById("PlanDetails_PerHour").innerHTML = tab;
 
         var ShownTab = getShownTab();
@@ -63,7 +66,26 @@ function PrintPlanDetails() {
             tab += NumberAutoExact(ResourceContractValue[i] * TotalMinutes);
             tab += tab_td_end;
         }
-        tab += "<td></td>";
+        if (HTML_TAB !== "Anytime")
+            tab += "<td></td>";
+        else {
+            var MissionTime = [];
+            for (var i = 0; i < MISSION_TABLE_SELECT.length; i++) {
+                for (var ii = 0; ii < MISSION_TABLE.length; ii++) {
+                    if (MISSION_TABLE_SELECT[i] === MISSION_TABLE[ii][0]) {
+                        MissionTime.push(MISSION_TABLE[ii][10])
+                        break;
+                    }
+                }
+            }
+            quick_sort_expand_ascending(MissionTime, 0);
+            for (var i = MissionTime.length; i < 4; i++) {
+                MissionTime.push([MissionTime[0][MissionTime[0].length - 1]]);
+            }
+            var TAB = new Tab_Anytime;
+            var MinIntervalTime =  TAB._calculateIntervalTimeMin(MissionTime);
+            tab += "<td>" + TimeFormat(MinIntervalTime) + "</td>";
+        }
         document.getElementById("PlanDetails_Total").innerHTML = tab;
 
         print_chart(selectedMissions_table, TotalMinutes);

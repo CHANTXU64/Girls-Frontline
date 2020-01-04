@@ -154,7 +154,8 @@ class Tab_Anytime extends Tab {
             if (IntervalTime_1 < this.MinimumIntervalTime) {
                 return [-1, -1, -1, -1, -1, -1, -1, -1];
             }
-            var IntervalTime = this._calculateIntervalTimeMin(Number);
+            var NumberTime = [this.Qvalid[Number[0]][10], this.Qvalid[Number[1]][10], this.Qvalid[Number[2]][10], this.Qvalid[Number[3]][10]];
+            var IntervalTime = this._calculateIntervalTimeMin(NumberTime);
             if (IntervalTime < this.MinimumIntervalTime) {
                 return [-1, -1, -1, -1, -1, -1, -1, -1];
             }
@@ -165,8 +166,8 @@ class Tab_Anytime extends Tab {
         }
         return CurrentValue;
     }
-    _calculateIntervalTimeMin(Number) {
-        var CollectTimetable_0 = [this.Qvalid[Number[0]][10], this.Qvalid[Number[1]][10], this.Qvalid[Number[2]][10], this.Qvalid[Number[3]][10]];
+    _calculateIntervalTimeMin(NumberTime_Arr) {
+        var CollectTimetable_0 = NumberTime_Arr;
         var A = [CollectTimetable_0[0].length - 1, CollectTimetable_0[1].length - 1, CollectTimetable_0[2].length - 1, CollectTimetable_0[3].length - 1];
         for (var i = 0; i < 3; i++) {
             if (CollectTimetable_0[i][0] == CollectTimetable_0[i + 1][0]) {
@@ -228,7 +229,8 @@ class Tab_Anytime extends Tab {
     PrintTableCustomize(plan, row) {
         var tab = [];
         var Number = [plan.List[row][0], plan.List[row][1], plan.List[row][2], plan.List[row][3]];
-        tab.push(this._calculateIntervalTimeMin(Number) + "m");
+        var NumberTime = [this.Qvalid[Number[0]][10], this.Qvalid[Number[1]][10], this.Qvalid[Number[2]][10], this.Qvalid[Number[3]][10]];
+        tab.push(this._calculateIntervalTimeMin(NumberTime) + "m");
         return tab;
     }
 

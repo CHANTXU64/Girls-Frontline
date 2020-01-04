@@ -194,6 +194,7 @@ var languages =
             "deleteSavedWarning_1": "是否要删除这个名为",
             "deleteSavedWarning_2": "的配置？",
             "Saved_alert": "导入的数据有问题！",
+            "config_alert": "这将会覆盖现有所有的数据，是否要继续？",
         }
     },
     "zh-TW": {
@@ -389,6 +390,7 @@ var languages =
             "deleteSavedWarning_1": "是否要刪除這個名為",
             "deleteSavedWarning_2": "的配置？",
             "Saved_alert": "導入的數據有問題！",
+            "config_alert": "這將會覆蓋現有所有的數據，是否要繼續？",
         }
     }
 };

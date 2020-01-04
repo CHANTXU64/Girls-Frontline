@@ -105,11 +105,14 @@ function Saved_export(Row) {
     prompt("export", text);
 }
 
-function Saved_deleteThisRow(Row) {
-    var name = SAVED[Row].data[0];
-    var warning = language.JS.deleteSavedWarning_1 + '"' + name + '"' + language.JS.deleteSavedWarning_2;
-    var c = confirm(warning);
-    if (c) {
+function Saved_deleteThisRow(Row, NeedWarning = true) {
+    var flag = true;
+    if (NeedWarning) {
+        var name = SAVED[Row].data[0];
+        var warning = language.JS.deleteSavedWarning_1 + '"' + name + '"' + language.JS.deleteSavedWarning_2;
+        var flag = confirm(warning);
+    }
+    if (flag) {
         for (var i = Row; i < SAVED.length - 1; i++) {
             $("#SavedTable_name_" + i).val(SAVED[i + 1].data[0]);
         }
@@ -142,9 +145,8 @@ function Saved_import(input) {
 }
 
 function Saved_importAndCover_SAVED(Saved_Arr) {
-    for (var i = 0; i < SAVED.length; i++) {
-        Saved_deleteThisRow(i);
-    }
+    while(SAVED.length !== 0)
+        Saved_deleteThisRow(0, false);
     for (var i = 0; i < Saved_Arr.length; i++) {
         if (md5(JSON.stringify(Saved_Arr[i].data)) !== Saved_Arr[i].MD5)
             return false;

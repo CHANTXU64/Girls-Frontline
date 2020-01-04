@@ -173,6 +173,11 @@ function Config_export(){
 }
 
 function setPageByImport(input) {
+    var flag;
+    if (SAVED.length !== 0)
+        flag = confirm(language.JS.config_alert);
+    if (flag !== true)
+        return;
     try {
         var config = JSON.parse(input);
         var SHA1 = sha1(JSON.stringify(config.data));
