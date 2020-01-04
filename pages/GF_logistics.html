@@ -93,7 +93,7 @@
                                 <div class="form-group input-group" style="float: right; margin-bottom: 0px; max-width: 360px;">
                                     <span class="input-group-addon" id="Config_text"></span>
                                     <input type="text" class="form-control" style="min-width: 40px;" id="Config_importInput" value=""
-                                        onclick="this.select()">
+                                        onclick="this.select()" autocomplete="off">
                                     <div class="input-group-btn">
                                         <button type="button" class="btn btn-default" id="Config_importButton">
                                             <span class="glyphicon glyphicon-import" style="top: 2px;"></span></button>
@@ -146,18 +146,18 @@
                                             <h4 id="tab_Anytime_time"></h4>
                                             <div class="form-group input-group">
                                                 <input type="number" pattern="\d*" min="0" max="168" class="form-control" id="Time_Anytime_hours" value=16
-                                                    onclick="this.select()">
-                                                <span class="input-group-addon" style="border-left-width: 0"
-                                                    id="tab_Anytime_hour"></span>
+                                                    onclick="this.select()" autocomplete="off">
+                                                <label for="Time_Anytime_hours" class="input-group-addon" style="border-left-width: 0"
+                                                    id="tab_Anytime_hour"></label>
                                                 <input type="number" pattern="\d*" min="0" max="60" class="form-control" style="border-left-width: 0"
-                                                    id="Time_Anytime_minutes" value=0 onclick="this.select()">
-                                                <span class="input-group-addon" id="tab_Anytime_minute"></span>
+                                                    id="Time_Anytime_minutes" value=0 onclick="this.select()" autocomplete="off">
+                                                <label for="Time_Anytime_minutes" class="input-group-addon" id="tab_Anytime_minute"></label>
                                             </div>
                                             <h4 id="tab_Anytime_MinimumIntervalTime"></h4>
                                             <div class="form-group input-group">
                                                 <input type="number" pattern="\d*" min="0" max="60" class="form-control"
-                                                    id="Tab_Anytime_MinimumIntervalTime_minutes" value=0 onclick="this.select()">
-                                                <span class="input-group-addon" id="tab_Anytime_MinimumIntervalTime_minute"></span>
+                                                    id="Tab_Anytime_MinimumIntervalTime_minutes" value=0 onclick="this.select()" autocomplete="off">
+                                                <label for="Tab_Anytime_MinimumIntervalTime_minutes" class="input-group-addon" id="tab_Anytime_MinimumIntervalTime_minute"></label>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="Tab_Timetable">
@@ -166,21 +166,21 @@
                                                 <div class="col-lg-10" style="padding-left: 0px; padding-right: 0px;">
                                                     <div class="form-group input-group">
                                                         <input type="number" pattern="\d*" min="0" max="168" class="form-control"
-                                                            id="Time_Timetable_hours" value=5 onclick="this.select()">
-                                                        <span class="input-group-addon" style="border-left-width: 0"
-                                                            id="tab_Timetable_hour"></span>
+                                                            id="Time_Timetable_hours" value=5 onclick="this.select()" autocomplete="off">
+                                                        <label for="Time_Timetable_hours" class="input-group-addon" style="border-left-width: 0"
+                                                            id="tab_Timetable_hour"></label>
                                                         <input type="number" pattern="\d*" min="0" max="60" class="form-control"
                                                             style="border-left-width: 0" id="Time_Timetable_minutes"
-                                                            value=0 onclick="this.select()">
-                                                        <span class="input-group-addon"
-                                                            id="tab_Timetable_minute"></span>
+                                                            value=0 onclick="this.select()" autocomplete="off">
+                                                        <label for="Time_Timetable_minutes" class="input-group-addon"
+                                                            id="tab_Timetable_minute"></label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2" align="right" style="padding-left: 0px; padding-right: 0px;">
                                                     <button type="button" class="btn btn-default"
                                                         id="tab_Timetable_deleteall" title="">
                                                         <span class="glyphicon glyphicon-remove-sign"
-                                                            style="font-size: 17px; top: 3px;" /></button>
+                                                            style="font-size: 17px; top: 3px;"></span></button>
                                                 </div>
                                             </div>
                                             <div slider style="margin: 20px 0 32px 0;">
@@ -199,19 +199,19 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h5 id="tab_Timetable_addtimeh5"></h5>
+                                            <label id="tab_Timetable_addtimeh5" for="Tab_Timetable_AddNew"></label>
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <div class="form-group input-group">
+                                                    <div class="form-group input-group" id="Tab_Timetable_AddNew">
                                                         <input type="number" pattern="\d*" min="0" max="168" class="form-control"
-                                                            id="Tab_Timetable_new_hours" onclick="this.select()">
-                                                        <span class="input-group-addon" style="border-left-width: 0"
-                                                            id="tab_Timetable_new_hour"></span>
+                                                            id="Tab_Timetable_new_hours" onclick="this.select()" autocomplete="off">
+                                                        <label for="Tab_Timetable_new_hours" class="input-group-addon" style="border-left-width: 0"
+                                                            id="tab_Timetable_new_hour"></label>
                                                         <input type="number" pattern="\d*" min="0" max="60" class="form-control"
                                                             style="border-left-width: 0" id="Tab_Timetable_new_minutes"
-                                                            onclick="this.select()">
-                                                        <span class="input-group-addon" style="border-left-width: 0"
-                                                            id="tab_Timetable_new_minute"></span>
+                                                            onclick="this.select()" autocomplete="off">
+                                                        <label for="Tab_Timetable_new_minutes" class="input-group-addon" style="border-left-width: 0"
+                                                            id="tab_Timetable_new_minute"></label>
                                                         <div class="input-group-btn">
                                                             <button type="button" class="btn btn-info"
                                                                 id="Tab_Timetable_AddNewTimePoint">
@@ -228,10 +228,10 @@
                                         <div class="col-lg-6">
                                             <div class="form-group input-group" style="margin-bottom: 0px;">
                                                 <input type="number" pattern="\d*" min="15" max="69" class="form-control" id="GreatSuccessRate" value=60
-                                                    onclick="this.select()">
-                                                <span class="input-group-addon" id="Display_UPRate"
-                                                    style="border-left-width: 0"></span>
-                                                <span class="input-group-addon">%</span>
+                                                    onclick="this.select()" style="min-width: 60px;" autocomplete="off">
+                                                <label for="GreatSuccessRate" class="input-group-addon" id="Display_UPRate"
+                                                    style="border-left-width: 0"></label>
+                                                <label for="GreatSuccessRate" class="input-group-addon">%</label>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -243,7 +243,7 @@
                                         </div>
                                     </div>
                                     <h4 id="h4ChapterLimit"></h4>
-                                    <select class="form-control" id="ChapterLimit">
+                                    <select class="form-control" id="ChapterLimit" autocomplete="off">
                                         <option value=6 id="chapter6"></option>
                                         <option value=7 id="chapter7"></option>
                                         <option value=8 id="chapter8"></option>
@@ -305,7 +305,7 @@
                                                     <td colspan=5>
                                                         <div class="form-group input-group" style="margin-bottom: 0px; width:100%; max-width: 320px;">
                                                             <input type="text" class="form-control" style="min-width: 140px;"
-                                                                id="importSaved_input" value="" onclick="this.select()">
+                                                                id="importSaved_input" value="" onclick="this.select()" autocomplete="off">
                                                             <div class="input-group-btn">
                                                                 <button type="button" class="btn btn-default"
                                                                     id="importSaved_importButton" title="">
