@@ -5,7 +5,7 @@ var languages =
         "lang": "zh-Hans",
         "title": "少女前线-后勤组合排序器",
         "HTML": {
-            "header": "后勤组合排序器（开发中）",
+            "header": "后勤组合排序器",
             "Config_text": "全局数据",
             "description_text": "计算结果只和资源（或契约）之间的比例有关。计算结果为均值。",
             "neverShowAgain_description": "[&times;]<u>不再显示</u>",
@@ -201,7 +201,7 @@ var languages =
         "lang": "zh-Hant",
         "title": "少女前線-後勤組合排序器",
         "HTML": {
-            "header": "後勤組合排序器（開發中）",
+            "header": "後勤組合排序器",
             "Config_text": "全局數據",
             "description_text": "計算結果只和資源（或契約）之間的比例有關。計算結果為期望值。",
             "neverShowAgain_description": "[&times;]<u>不再顯示</u>",
