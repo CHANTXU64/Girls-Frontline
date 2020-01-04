@@ -78,30 +78,30 @@
         <div id="page-wrapper" style="min-width: 300px;">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="tooltip-demo">
-                            <h1 class="page-header">
-                                <span id="header"></span> <button type="button" data-toggle="tooltip"
-                                    data-placement="bottom" title="" class="btn btn-outline btn-default">?</button>
-                                <div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle"
-                                        data-toggle="dropdown">中文 <span class="caret"></span></button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#" id="lang-zh-CN">简体中文</a></li>
-                                        <li><a href="#" id="lang-zh-TW">繁體中文</a></li>
-                                    </ul>
-                                </div>
-                                <div class="form-group input-group" style="float: right; margin-bottom: 0; max-width: 360px;">
-                                    <span class="input-group-addon" id="Config_text"></span>
-                                    <input type="text" class="form-control" style="min-width: 40px;" id="Config_importInput" value=""
-                                        onclick="this.select()" autocomplete="off">
-                                    <div class="input-group-btn">
-                                        <button type="button" class="btn btn-default" id="Config_importButton">
-                                            <span class="glyphicon glyphicon-import" style="top: 2px;"></span></button>
-                                        <button type="button" class="btn btn-default" id="Config_export"><span class="glyphicon glyphicon-export"
-                                                style="top: 2px;"></span></button>
-                                    </div>
-                                </div>
-                            </h1>
+                    <div class="col-lg-7">
+                        <h1 class="page-header">
+                            <span id="header"></span> <button type="button" data-toggle="tooltip"
+                                data-placement="bottom" title="" class="btn btn-outline btn-default">?</button>
+                            <div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown">中文 <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#" id="lang-zh-CN">简体中文</a></li>
+                                    <li><a href="#" id="lang-zh-TW">繁體中文</a></li>
+                                </ul>
+                            </div>
+                        </h1>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="form-group input-group" style="max-width: 360px; margin-top: 20px; margin-right: 0; margin-left: auto;">
+                            <span class="input-group-addon" id="Config_text"></span>
+                            <input type="text" class="form-control" style="min-width: 40px;" id="Config_importInput" value=""
+                                onclick="this.select()" autocomplete="off">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default" id="Config_importButton">
+                                    <span class="glyphicon glyphicon-import" style="top: 2px;"></span></button>
+                                <button type="button" class="btn btn-default" id="Config_export"><span class="glyphicon glyphicon-export"
+                                        style="top: 2px;"></span></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -109,12 +109,12 @@
                     <div class="col-lg-7">
                         <div class="alert alert-warning" id="description" role="alert" style="color:#000000">
                             <span id="description_text"></span>
-                            <span id="neverShowAgain_description" style="float: right; cursor:pointer;"></span>
+                            <span id="neverShowAgain_description" style="cursor:pointer;"></span>
                         </div>
                         <div class="alert alert-danger" id="localstorageDoesNotWork" style="color:#000000"></div>
                         <div class="alert alert-warning" id="localstorageWarning" role="alert" style="color: #000000;">
                             <span id="localstorageWarning_text"></span>
-                            <span id="neverShowAgain_localstorageWarning" style="float: right; cursor:pointer;"></span>
+                            <span id="neverShowAgain_localstorageWarning" style="cursor:pointer;"></span>
                         </div>
                     </div>
                 </div>
@@ -272,7 +272,6 @@
                                     <div id="setTargetInput"></div>
                                 </div>
                                 <div class="col-lg-12">
-                                    <br>
                                     <button type="button" class="btn btn-primary" style="outline:none;"
                                         id="start_sorting"></button>
                                     <button type="button" class="btn btn-danger" style="outline: none;"
