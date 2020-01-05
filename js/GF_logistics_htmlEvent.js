@@ -87,6 +87,9 @@ $(function() {
 //Tab_Anytime
 $(function() {
     $("#Time_Anytime_hours").on('input propertychange', function() {
+        var TotalTime = Input_getAnytimeTotalTime();
+        if (TotalTime > 4320)
+            Input_setAnytimeTotalTime(4320);
         if (!is_CalculateByHour()) {
             const TotalTime = Input_getAnytimeTotalTime();
             TABLE_CALCULATE_TOTAL_TIME = TotalTime;
@@ -96,6 +99,9 @@ $(function() {
     });
     $("#Time_Anytime_hours").blur(function () {Tab_Anytime_changeStorageCustom();});
     $("#Time_Anytime_minutes").on('input propertychange', function() {
+        var TotalTime = Input_getAnytimeTotalTime();
+        if (TotalTime > 4320)
+            Input_setAnytimeTotalTime(4320);
         if (!is_CalculateByHour()) {
             const TotalTime = Input_getAnytimeTotalTime();
             TABLE_CALCULATE_TOTAL_TIME = TotalTime;
@@ -148,7 +154,11 @@ $(function() {
     });
 });
 function _Tab_Timetable_changeMaxTime() {
-    const TotalTime = Input_getTimetableTotalTime();
+    let TotalTime = Input_getTimetableTotalTime();
+    if (TotalTime > 4320) {
+        TotalTime = 4320;
+        Input_setTimetableTotalTime(4320);
+    }
     Input_setTimetableTotalTime(TotalTime);
     if (!is_CalculateByHour()) {
         TABLE_CALCULATE_TOTAL_TIME = TotalTime;

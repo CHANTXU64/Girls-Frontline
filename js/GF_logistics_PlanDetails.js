@@ -88,7 +88,8 @@ function PrintPlanDetails() {
         }
         document.getElementById("PlanDetails_Total").innerHTML = tab;
 
-        print_chart(selectedMissions_table, TotalMinutes);
+        if (TotalMinutes <= 4320)
+            print_chart(selectedMissions_table, TotalMinutes);
     }
 }
 function _PrintPlanDetails_ShownTab() {
