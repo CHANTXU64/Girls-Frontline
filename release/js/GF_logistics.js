@@ -774,18 +774,29 @@ function _localStorageWorks() {
 
 function storageSetItem(Key, Value) {
     if (CAN_LOCALSTORAGE_WORK) {
-        var storageValue = JSON.stringify(Value);
-        localStorage.setItem(Key, storageValue);
+        var storageValue = localStorage.getItem("GF_Logistics");
+        storageValue = JSON.parse(storageValue);
+        if (storageValue === null)
+            storageValue = {};
+        storageValue[Key] = Value;
+        storageValue = JSON.stringify(storageValue);
+        localStorage.setItem("GF_Logistics", storageValue);
     }
 }
 
 function storageGetItem(Key) {
     if (CAN_LOCALSTORAGE_WORK) {
-        var storageValue = localStorage.getItem(Key);
-        if (storageValue === null)
+        var storageValue0 = localStorage.getItem("GF_Logistics");
+        if (storageValue0 === null)
             return "noStorage";
-        else
-            return JSON.parse(storageValue);
+        else {
+            storageValue0 = JSON.parse(storageValue0);
+            var Value = storageValue0[Key];
+            if (Value === undefined)
+                return "noStorage";
+            else
+                return Value;
+        }
     }
     else
         return "noStorage";
