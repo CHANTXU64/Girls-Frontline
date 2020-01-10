@@ -1,6 +1,6 @@
 class Tab {
     constructor() {
-        this._title = '<thead><tr><th style="text-align: center;width:20%;" colspan="4" tabindex="0" id="resultPlan_Mission">'+ language.JS.Mission +'</th>';
+        this._title = '<thead><tr style="cursor: pointer;"><th style="text-align: center;width:20%;" colspan="4" tabindex="0" id="resultPlan_Mission">'+ language.JS.Mission +'</th>';
         this._titleEnd = '</tr></thead>';
         this.Qvalid = [];
     }

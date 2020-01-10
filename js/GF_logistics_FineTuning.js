@@ -27,7 +27,7 @@ function getHTMLFineTuningTool() {
         if (i === 4)
             HTML += '</div> <div class="col-lg-6 col-md-6 col-sm-6">';
         HTML += '<div class="form-group input-group" style="margin-bottom: 10px;">';
-        HTML += '<span class="input-group-addon" id="FineTuningTool_' + TargetName[i] + '">' + TargetHTMLText[i] + '</span>';
+        HTML += '<span class="input-group-addon" style="cursor:default;" id="FineTuningTool_' + TargetName[i] + '">' + TargetHTMLText[i] + '</span>';
         HTML += '<div class="input-group-btn">';
         HTML += '<button class="btn btn-default col-lg-6 col-md-6 col-sm-6 col-xs-6" type="button" id="FineTuning_minus_' + TargetName[i] + '"';
         if (FineTuning_TargetValue_Original[i] === 0)

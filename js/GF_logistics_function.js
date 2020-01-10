@@ -16,11 +16,16 @@ function NumberAutoExact(number) {
 }
 
 function TimeFormat(Minutes) {
-    var hours = parseInt(Minutes / 60);
-    var minutes = Minutes % 60;
+    let hours = parseInt(Minutes / 60);
+    let minutes = Minutes % 60;
     if ((minutes + "").length < 2)
         minutes = "0" + minutes;
     return hours + ':' + minutes;
+}
+
+function TimeFormat_Day(Minutes) {
+    let TotalMinutes = Minutes % 1440;
+    return TimeFormat(TotalMinutes);
 }
 
 function is_NonPositiveNumberOrInfinity(x) {

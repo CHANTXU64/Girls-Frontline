@@ -212,11 +212,11 @@ function _Tab_Timetable_AddNewTooltip(time, position) {
     let newTooltip = '<div id="Tab_Timetable_range_tooltip_' + time + '"';
     if (Tab_Timetable_TIMELIST.indexOf(time) % 2 === 0) {
         newTooltip += 'class="tooltip top custom-tooltip"';
-        newTooltip += 'style="left:' + position + '; top:-32px; margin-left: -15px;">';
+        newTooltip += 'style="left:' + position + '; top:-32px; margin-left: -15px; cursor: default;">';
     }
     else {
         newTooltip += 'class="tooltip bottom custom-tooltip"';
-        newTooltip += 'style="left:' + position + '; top:12px; margin-left: -15px;">';
+        newTooltip += 'style="left:' + position + '; top:12px; margin-left: -15px; cursor: default;">';
     }
     newTooltip += '<div class="tooltip-arrow"></div><div class="tooltip-inner">';
     newTooltip += TimeFormat(time) + '</div></div>';

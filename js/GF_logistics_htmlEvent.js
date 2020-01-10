@@ -588,9 +588,6 @@ $(function() {
 
 $(function() {
     $("#savePlan").on('click', function() {saveThisPlan();});
-});
-
-$(function() {
     $("#Capture").on('click', function() {
         html2canvas(document.getElementById("PlanDetails"), {logging:false,scale:1}).then(function(canvas) {
             let link = document.createElement('a');
@@ -600,6 +597,22 @@ $(function() {
             link.click();
             document.body.removeChild(link);
         });
+    });
+    $("#PlanDetails_InputStartTime").on('input propertychange', function() {
+        let selectedMissions = _PlanDetails_getMissionTableSelect();
+        let ShownTab = getShownTab();
+        ShownTab.setTime(false);
+        let TotalMinutes = ShownTab.TotalTime;
+        print_chart(selectedMissions, TotalMinutes);
+    });
+    $("#PlanDetails_InputExecutionTimes").on('input propertychange', function() {
+        _PrintPlanDetails_ExecutionTimes();
+        let selectedMissions = _PlanDetails_getMissionTableSelect();
+        let ShownTab = getShownTab();
+        ShownTab.setTime(false);
+        let TotalMinutes = ShownTab.TotalTime;
+        let ExecutionTimes = Input_getExecutionTimes();
+        _PrintPlanDetails_Total(selectedMissions, TotalMinutes, ExecutionTimes);
     });
 });
 

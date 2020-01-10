@@ -1,6 +1,6 @@
 var SAVED = [];
 
-//[名称-计算方式-大成功概率-是否UP-关卡解锁-计算方式的详情-选择的关卡]-md5
+//[名称-计算方式-大成功概率-是否UP-关卡解锁-计算方式的详情-选择的关卡-开始时间]-md5
 function saveThisPlan() {
     var name = prompt(language.JS.plzInputPlanName, language.JS.planDefaultName);
     if (name == null)
@@ -14,6 +14,7 @@ function saveThisPlan() {
     var ShownTab = getShownTab();
     var Saved_Custom = ShownTab.Saved_Custom();
     var SelectMissions = MISSION_TABLE_SELECT.slice();
+    let StartTime = Input_getStartTime();
     newData.push(name);
     newData.push(HTML_TAB);
     newData.push(GreatSuccessRate);
@@ -21,6 +22,7 @@ function saveThisPlan() {
     newData.push(SelectChapter);
     newData.push(Saved_Custom);
     newData.push(SelectMissions);
+    newData.push(StartTime);
     var newSave = {data:[], MD5:""};
     newSave.data = newData;
     newSave.MD5 = md5(JSON.stringify(newData));
@@ -67,6 +69,10 @@ function Saved_apply(Row) {
     var ShownTab = getShownTab();
     ShownTab.ApplySaved_Custom(savedData[5]);
     MISSION_TABLE_SELECT = savedData[6].slice();
+    if (savedData[7] !== undefined)//兼容以前的版本
+        Input_setStartTime(savedData[7]);
+    else
+        Input_setStartTime(0);
     delete_PlanTable();
     HTML_AllowInput();
     if (!is_CalculateByHour()) {

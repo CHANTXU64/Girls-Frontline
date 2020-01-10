@@ -80,9 +80,8 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <h1 class="page-header">
-                            <span id="header"></span> <button type="button" data-toggle="tooltip"
-                                data-placement="bottom" title="" class="btn btn-outline btn-default">?</button>
-                            <div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle"
+                            <span id="header" style="cursor: default;"></span><div 
+                            class="btn-group"><button type="button" class="btn btn-default dropdown-toggle"
                                     data-toggle="dropdown">中文 <span class="caret"></span></button>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="#" id="lang-zh-CN">简体中文</a></li>
@@ -94,7 +93,7 @@
                     <div class="col-lg-5">
                         <div class="form-group input-group"
                             style="max-width: 360px; margin-top: 20px; margin-right: 0; margin-left: auto;">
-                            <span class="input-group-addon" id="Config_text"></span>
+                            <span class="input-group-addon" id="Config_text" style="cursor: default;"></span>
                             <input type="text" class="form-control" style="min-width: 40px;" id="Config_importInput"
                                 value="" onclick="this.select()" autocomplete="off">
                             <div class="input-group-btn">
@@ -109,12 +108,12 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <div class="alert alert-warning" id="description" role="alert" style="color:#000000">
-                            <span id="description_text"></span>
+                            <span id="description_text" style="cursor: default;"></span>
                             <span id="neverShowAgain_description" style="cursor:pointer;"></span>
                         </div>
-                        <div class="alert alert-danger" id="localstorageDoesNotWork" style="color:#000000"></div>
+                        <div class="alert alert-danger" id="localstorageDoesNotWork" style="color:#000000; cursor: default;"></div>
                         <div class="alert alert-warning" id="localstorageWarning" role="alert" style="color: #000000;">
-                            <span id="localstorageWarning_text"></span>
+                            <span id="localstorageWarning_text" style="cursor: default;"></span>
                             <span id="neverShowAgain_localstorageWarning" style="cursor:pointer;"></span>
                         </div>
                     </div>
@@ -124,7 +123,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" style="padding-top: 8px; padding-bottom: 8px;">
                                 <span id="setting"
-                                    style="width: auto; float: left; padding-top: 2px; padding-bottom: 2px;"></span>
+                                    style="width: auto; float: left; padding-top: 2px; padding-bottom: 2px; cursor: default;"></span>
                                 <div class="switch" style="margin-left: auto;">
                                     <input type="radio" class="switch-input" name="Display_PerHourOrTotal" value=""
                                         id="Display_PerHour">
@@ -149,7 +148,7 @@
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane fade in active" id="Tab_Anytime">
-                                            <h4 id="tab_Anytime_time"></h4>
+                                            <h4 id="tab_Anytime_time" style="cursor: default;"></h4>
                                             <div class="form-group input-group">
                                                 <input type="number" pattern="\d*" min="0" max="72"
                                                     class="form-control" id="Time_Anytime_hours" value=16
@@ -162,7 +161,7 @@
                                                 <label for="Time_Anytime_minutes" class="input-group-addon"
                                                     id="tab_Anytime_minute"></label>
                                             </div>
-                                            <h4 id="tab_Anytime_MinimumIntervalTime"></h4>
+                                            <h4 id="tab_Anytime_MinimumIntervalTime" style="cursor: default;"></h4>
                                             <div class="form-group input-group">
                                                 <input type="number" pattern="\d*" min="0" max="60" class="form-control"
                                                     id="Tab_Anytime_MinimumIntervalTime_minutes" value=0
@@ -173,7 +172,7 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="Tab_Timetable">
-                                            <h4 id="tab_Timetable_time"></h4>
+                                            <h4 id="tab_Timetable_time" style="cursor: default;"></h4>
                                             <div class="row" style="margin-left: 0; margin-right: 0;">
                                                 <div class="col-lg-10" style="padding-left: 0; padding-right: 0;">
                                                     <div class="form-group input-group">
@@ -208,7 +207,7 @@
                                                         style="left:100%; background-color:rgb(221, 155, 155); cursor:default;"></span>
                                                     <div id="Tab_Timetable_range_tooltip"
                                                         class="tooltip right custom-tooltip"
-                                                        style="right: -72px; top:-15px;">
+                                                        style="right: -72px; top:-15px; cursor: default;">
                                                         <div class="tooltip-arrow"></div>
                                                         <div id="Tab_Timetable_range_tooltip_0_value"
                                                             class="tooltip-inner">5:00</div>
@@ -236,7 +235,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h4 id="h4GreatSuccessRate"></h4>
+                                    <h4 id="h4GreatSuccessRate" style="cursor: default;"></h4>
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-6" style="min-width: 180px;">
                                             <div class="form-group input-group"
@@ -258,7 +257,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h4 id="h4ChapterLimit"></h4>
+                                    <h4 id="h4ChapterLimit" style="cursor: default;"></h4>
                                     <select class="form-control" id="ChapterLimit" autocomplete="off">
                                         <option value=6 id="chapter6"></option>
                                         <option value=7 id="chapter7"></option>
@@ -270,7 +269,7 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-5" id="target">
-                                    <h4 id="Demand"></h4>
+                                    <h4 id="Demand" style="cursor: default;"></h4>
                                     <div id="setTargetButton"></div>
                                     <div slider style="margin-top: 5px; margin-bottom: 35px;">
                                         <label id="ContractWeight_label" style="width:100%;">
@@ -402,23 +401,21 @@
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12" style="float: right;">
-                                <div class="panel panel-default" style="max-width: 582px;">
-
+                                <div class="panel panel-default" style="max-width: 584px;">
                                     <div class="panel-heading" id="PlanDetailsTitle" style="cursor: default;"></div>
                                     <div class="panel-body" style="padding: 0;">
                                         <div class="table-responsive" style="margin-bottom: 0; border: 0;">
                                             <table class="table table-responsive text-nowrap table-condensed"
-                                                style="border: 0;margin-bottom: 0; width: 580px; font-size: 13px; text-align: center; cursor: default;"
-                                                id="PlanDetails">
-                                                <tbody>
+                                                style="border: 0;margin-bottom: 0; width: 582px; font-size: 13px; text-align: center; cursor: default;">
+                                                <tbody id="PlanDetails">
                                                     <tr>
-                                                        <td style="width: 30%;" colspan=3 id="PlanDetails_ShownTab">
+                                                        <td style="width: 174px;" colspan=3 id="PlanDetails_ShownTab">
                                                         </td>
-                                                        <td style="width: 30%;" colspan=3 id="PlanDetails_TotalTime">
+                                                        <td style="width: 116px;" colspan=2 id="PlanDetails_TotalTime">
                                                         </td>
-                                                        <td style="width: 30%;" colspan=3
+                                                        <td style="width: 174px;" colspan=3
                                                             id="PlanDetails_GreatSuccessRate"></td>
-                                                        <td style="width: 10%;"></td>
+                                                        <td style="width: 116px;" colspan=2 id="PlanDetails_ExecutionTimes"></td>
                                                     </tr>
                                                     <tr>
                                                         <td id="PlanDetails_Mission"></td>
@@ -439,26 +436,48 @@
                                                     <tr id="PlanDetails_PerHour"></tr>
                                                     <tr id="PlanDetails_Total"></tr>
                                                     <tr id="PlanDetails_Chart_row">
-                                                        <td colspan=10 id="PlanDetails_Chart"
-                                                            style="width: 580px;height:120px;"></td>
+                                                        <td colspan=10 id="PlanDetails_Chart"></td>
+                                                    </tr>
+                                                </tbody>
+                                                <tbody style="border-top-width: 1px;">
+                                                    <tr>
+                                                        <td colspan=3 style="width: 174px; padding: 0; border: 0;">
+                                                            <div class="input-group-btn">
+                                                                <button class="btn btn-default" type="button" id="savePlan"
+                                                                    style="width:90px; height: 28px;padding:3px 6px 3px 6px;font-size:13px;"></button>
+                                                                <button class="btn btn-default" type="button" id="Capture"
+                                                                    style="width:90px; height: 28px;padding:3px 6px 3px 6px;font-size:13px;"></button>
+                                                            </div>
+                                                        </td>
+                                                        <td colspan=4 style="width: 232px; padding: 0; border: 0;">
+                                                            <div class="form-group input-group" style="margin-bottom: 0;">
+                                                                <label for="PlanDetails_InputStartTime" id="PlanDetails_InputStartTime_label"
+                                                                    class="input-group-addon"></label>
+                                                                <input type="time" step="60" id="PlanDetails_InputStartTime" class="form-control" value="00:00"
+                                                                    onclick="this.select()" style="height: 28px;padding:3px 6px 3px 6px;" autocomplete="off">
+                                                            </div>
+                                                        </td>
+                                                        <td colspan=3 style="width: 174px; padding: 0; border: 0;">
+                                                            <div class="form-group input-group" style="margin-bottom: 0;">
+                                                                <label for="PlanDetails_InputExecutionTimes" id="PlanDetails_InputExecutionTimes_label"
+                                                                    class="input-group-addon"></label>
+                                                                <input type="number" pattern="\d*" min="1" max="999" step="1" id="PlanDetails_InputExecutionTimes"
+                                                                    class="form-control" onclick="this.select()" value="1" style="height: 28px;padding:3px 6px 3px 6px;"
+                                                                    autocomplete="off">
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </div>
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-default" type="button" id="savePlan"
-                                                style="width:100px;padding-top:3px;padding-bottom:3px;font-size:13px;"></button>
-                                            <button class="btn btn-default" type="button" id="Capture"
-                                                style="width:100px;padding-top:3px;padding-bottom:3px;font-size:13px;"></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12" style="float: left;">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading" id="result"></div>
+                                    <div class="panel-heading" id="result" style="cursor: default;"></div>
                                     <div class="panel-body">
-                                        <div id="start_sorting_html"></div>
+                                        <div id="start_sorting_html" style="cursor: default;"></div>
                                         <div id="Plan_Table"></div>
                                     </div>
                                 </div>
@@ -469,11 +488,11 @@
                 <hr style="margin-top: 0; margin-bottom: 0;">
                 <div class="row" style="padding-top: 5px; padding-bottom: 10px;">
                     <div class="col-lg-3" style="margin-right: 15px;">
-                        GitHub: <a
-                            href="https://github.com/CHANTXU64/Girls-Frontline">https://github.com/CHANTXU64/Girls-Frontline</a>
+                        <span style="cursor: default;">GitHub: </span><a 
+                        href="https://github.com/CHANTXU64/Girls-Frontline">https://github.com/CHANTXU64/Girls-Frontline</a>
                     </div>
                     <div class="col-lg-3">
-                        <span id="permanentAddress"></span>: <a
+                        <span id="permanentAddress" style="cursor: default;"></span><a
                             href="https://chantxu64.github.io/GF_logistics.html">https://chantxu64.github.io/GF_logistics.html</a>
                     </div>
                 </div>

@@ -208,3 +208,35 @@ function Input_setTimetableTimetable(TimeList) {
         Tab_Timetable_InputTotalTime_disable();
 }
 //----------------
+
+function Input_getStartTime() {
+    let startTime = $("#PlanDetails_InputStartTime").val();
+    let hours = parseFloat(startTime.substr(0, 2));
+    if (isNaN(hours))
+        return 0;
+    let minutes = parseFloat(startTime.substr(3, 2));
+    if (isNaN(minutes))
+        minutes = 0;
+    return hours * 60 + minutes;
+}
+
+function Input_setStartTime(StartTime) {
+    let startTimeString = TimeFormat_Day(StartTime);
+    if (startTimeString.indexOf(":") !== 2)
+        startTimeString = "0" + startTimeString;
+    $("#PlanDetails_InputStartTime").val(startTimeString);
+}
+
+function Input_getExecutionTimes(NeedCorrection = false) {
+    var Times_elem = $("#PlanDetails_InputExecutionTimes");
+    var Times = Times_elem.val();
+    if (is_NonPositiveNumberOrInfinity(Times) || Times < 1)
+        Times = 1;
+    else if (Times > 999)
+        Times = 999;
+    else
+        Times = Math.round(Times);
+    if (NeedCorrection)
+        Times_elem.val(Times);
+    return Times;
+}

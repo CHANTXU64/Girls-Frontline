@@ -5,7 +5,7 @@ var languages =
         "lang": "zh-Hans",
         "title": "少女前线-后勤组合排序器",
         "HTML": {
-            "header": "后勤组合排序器",
+            "header": "后勤组合排序器 ",
             "Config_text": "全局数据",
             "description_text": "计算结果只和资源（或契约）之间的比例有关。计算结果为均值。",
             "neverShowAgain_description": "[&times;]<u>不再显示</u>",
@@ -83,10 +83,12 @@ var languages =
             "PlanDetails_Time": "时间",
             "savePlan": "保存方案",
             "Capture": "捕获",
+            "PlanDetails_InputStartTime_label": "后勤开始时间",
+            "PlanDetails_InputExecutionTimes_label": "后勤执行次数",
             "Saved_Title": "已保存的",
             "NoSaved": "空",
             "start_sorting_html": "点击 <span style=\"color:#165399\">开始排序</span> 按钮，排序前十六的结果将在这里显示",
-            "permanentAddress": "永久地址",
+            "permanentAddress": "永久地址: ",
         },
         "HTMLJS": {
             "placeholder": {
@@ -108,6 +110,7 @@ var languages =
                 "QPT": "快建需求量",
                 "QRT": "快修需求量",
                 "importSaved_input": "要导入的数据",
+                "PlanDetails_InputExecutionTimes": "执行次数",
             },
             "title": {
                 "Config_importButton": "导入全局数据",
@@ -189,6 +192,7 @@ var languages =
             "total_greatSuccessRate": "大成功总概率",
             "PerHour": "平均/h",
             "Total" : "总计",
+            "ExecutionTimes": "执行次数",
             "plzInputPlanName": "请输入方案名称",
             "planDefaultName": "自定义",
             "deleteSavedWarning_1": "是否要删除这个名为",
@@ -201,7 +205,7 @@ var languages =
         "lang": "zh-Hant",
         "title": "少女前線-後勤組合排序器",
         "HTML": {
-            "header": "後勤組合排序器",
+            "header": "後勤組合排序器 ",
             "Config_text": "全局數據",
             "description_text": "計算結果只和資源（或契約）之間的比例有關。計算結果為期望值。",
             "neverShowAgain_description": "[&times;]<u>不再顯示</u>",
@@ -279,10 +283,12 @@ var languages =
             "PlanDetails_Time": "時間",
             "savePlan": "保存方案",
             "Capture": "捕獲",
+            "PlanDetails_InputStartTime_label": "後勤開始時間",
+            "PlanDetails_InputExecutionTimes_label": "執行次數",
             "Saved_Title": "已保存的",
             "NoSaved": "空",
             "start_sorting_html": "點擊 <span style=\"color:#165399\">開始排序</span> 按鈕，排序前十六的結果將在這裡顯示",
-            "permanentAddress": "永久地址",
+            "permanentAddress": "永久地址: ",
         },
         "HTMLJS": {
             "placeholder": {
@@ -304,6 +310,7 @@ var languages =
                 "QPT": "快建需求量",
                 "QRT": "快修需求量",
                 "importSaved_input": "要導入的數據",
+                "PlanDetails_InputExecutionTimes": "後勤執行次數",
             },
             "title": {
                 "Config_importButton": "導入全局數據",
@@ -385,6 +392,7 @@ var languages =
             "total_greatSuccessRate": "大成功總概率",
             "PerHour": "平均/h",
             "Total" : "總計",
+            "ExecutionTimes": "執行次數",
             "plzInputPlanName": "請輸入方案名稱",
             "planDefaultName": "自定義",
             "deleteSavedWarning_1": "是否要刪除這個名為",

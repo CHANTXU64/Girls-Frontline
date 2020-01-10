@@ -2,6 +2,7 @@ function PrintPlanDetails() {
     _PrintPlanDetails_ShownTab();
     _PrintPlanDetails_TotalTime();
     _PrintPlanDetails_GreatSuccessRate();
+    _PrintPlanDetails_ExecutionTimes();
 
     document.getElementById("PlanDetails_Mission_1").innerHTML = "";
     document.getElementById("PlanDetails_Mission_2").innerHTML = "";
@@ -9,87 +10,21 @@ function PrintPlanDetails() {
     document.getElementById("PlanDetails_Mission_4").innerHTML = "";
     document.getElementById("PlanDetails_PerHour").innerHTML = "";
     document.getElementById("PlanDetails_Total").innerHTML = "";
-    Chart = echarts.init(document.getElementById('PlanDetails_Chart'));
+    let Chart = echarts.init(document.getElementById("PlanDetails_Chart"));
     Chart.dispose();
+    document.getElementById("PlanDetails_Chart").style.width = 0;
+    document.getElementById("PlanDetails_Chart").style.height = 0;
 
     if (MISSION_TABLE_SELECT.length !== 0) {
-        var missionTableSelect = MISSION_TABLE_SELECT.slice();
-        var mission_table = MISSION_TABLE;
-        missionTableSelect = missionTableSelect.sort(sortStringNumber);
-        var ResourceContractValue = new Array(8);
-        ResourceContractValue.fill(0);
-        var tab_td_start = "<td style='text-align:center;'>";
-        var tab_td_end = "</td>";
-        var selectedMissions_table = [];
-        var color = ['#C5D8FF', '#FFBFBE', '#B6F4B5', '#FFEBC7'];
-        for (var i = 0; i < missionTableSelect.length; i++) {
-            var number;
-            for (var ii = 0; ii < mission_table.length; ii++) {
-                if (missionTableSelect[i] === mission_table[ii][0]) {
-                    number = ii;
-                    break;
-                }
-            }
-            selectedMissions_table.push(mission_table[number]);
-            var tab = "";
-            tab += tab_td_start + mission_table[number][0] + tab_td_end;
-            for (var ii = 1; ii < 9; ii++) {
-                tab += tab_td_start;
-                tab += NumberAutoExact(mission_table[number][ii] * 60);
-                ResourceContractValue[ii - 1] += mission_table[number][ii];
-                tab += tab_td_end;
-            }
-            tab += tab_td_start + TimeFormat(mission_table[number][9]) + tab_td_end;
-            document.getElementById("PlanDetails_Mission_" + (i + 1)).innerHTML = tab;
-            document.getElementById("PlanDetails_Mission_" + (i + 1)).style.backgroundColor = color[i];
-        }
-
-        var tab = "";
-        tab += "<td style='text-align:center;'id='PlanDetails_PerHour_title'>" + language.JS.PerHour + tab_td_end;
-        for (var i = 0; i < 8; i++) {
-            tab += tab_td_start;
-            tab += NumberAutoExact(ResourceContractValue[i] * 60);
-            tab += tab_td_end;
-        }
-        if (HTML_TAB !== "Anytime")
-            tab += "<td></td>";
-        else
-            tab += "<td>" + language.JS.MinIntervalTime + "</td>";
-        document.getElementById("PlanDetails_PerHour").innerHTML = tab;
-
-        var ShownTab = getShownTab();
+        let selectedMissions = _PlanDetails_getMissionTableSelect();
+        _PrintPlanDetails_Mission(selectedMissions);
+        _PrintPlanDetails_PerHour(selectedMissions);
+        let ShownTab = getShownTab();
         ShownTab.setTime(false);
-        var TotalMinutes = ShownTab.TotalTime;
-        tab = "<td style='text-align:center;'id='PlanDetails_Total_title'>" + language.JS.Total + tab_td_end;
-        for (var i = 0; i < 8; i++) {
-            tab += tab_td_start;
-            tab += NumberAutoExact(ResourceContractValue[i] * TotalMinutes);
-            tab += tab_td_end;
-        }
-        if (HTML_TAB !== "Anytime")
-            tab += "<td></td>";
-        else {
-            var MissionTime = [];
-            for (var i = 0; i < MISSION_TABLE_SELECT.length; i++) {
-                for (var ii = 0; ii < MISSION_TABLE.length; ii++) {
-                    if (MISSION_TABLE_SELECT[i] === MISSION_TABLE[ii][0]) {
-                        MissionTime.push(MISSION_TABLE[ii][10])
-                        break;
-                    }
-                }
-            }
-            quick_sort_expand_ascending(MissionTime, 0);
-            for (var i = MissionTime.length; i < 4; i++) {
-                MissionTime.push([MissionTime[0][MissionTime[0].length - 1]]);
-            }
-            var TAB = new Tab_Anytime;
-            var MinIntervalTime =  TAB._calculateIntervalTimeMin(MissionTime);
-            tab += "<td>" + TimeFormat(MinIntervalTime) + "</td>";
-        }
-        document.getElementById("PlanDetails_Total").innerHTML = tab;
-
-        if (TotalMinutes <= 4320)
-            print_chart(selectedMissions_table, TotalMinutes);
+        let TotalMinutes = ShownTab.TotalTime;
+        let ExecutionTimes = Input_getExecutionTimes();
+        _PrintPlanDetails_Total(selectedMissions, TotalMinutes, ExecutionTimes);
+        print_chart(selectedMissions, TotalMinutes);
     }
 }
 function _PrintPlanDetails_ShownTab() {
@@ -114,10 +49,98 @@ function _PrintPlanDetails_GreatSuccessRate() {
     var TotalGreatSuccessRate = Input_getTotalGreatSuccessRate();
     document.getElementById("PlanDetails_GreatSuccessRate").innerHTML = language.JS.total_greatSuccessRate + ": " + TotalGreatSuccessRate + "%";
 }
+function _PrintPlanDetails_ExecutionTimes() {
+    let ExecutionTimes = Input_getExecutionTimes();
+    document.getElementById("PlanDetails_ExecutionTimes").innerHTML = language.JS.ExecutionTimes + ": " + ExecutionTimes;
+}
 
-var Chart;
+function _PlanDetails_getMissionTableSelect() {
+    let selectedMissions = [];
+    let missionTableSelect = MISSION_TABLE_SELECT.slice().sort(sortStringNumber);
+    let mission_table = MISSION_TABLE;
+    for (let i = 0; i < missionTableSelect.length; i++) {
+        var number;
+        for (let ii = 0; ii < mission_table.length; ii++) {
+            if (missionTableSelect[i] === mission_table[ii][0]) {
+                number = ii;
+                break;
+            }
+        }
+        selectedMissions.push(mission_table[number]);
+    }
+    return selectedMissions;
+}
+
+function _PrintPlanDetails_Mission(selectedMissions) {
+    let color = ['#C5D8FF', '#FFBFBE', '#B6F4B5', '#FFEBC7'];
+    for (let i = 0; i < selectedMissions.length; i++) {
+        let tab = "";
+        tab += "<td style='text-align:center; width: 58px;'>" + selectedMissions[i][0] + "</td>";
+        for (let ii = 1; ii < 9; ii++) {
+            tab += "<td style='text-align:center; width: 58px;'>";
+            tab += NumberAutoExact(selectedMissions[i][ii] * 60);
+            tab += "</td>";
+        }
+        tab += "<td style='text-align:center;'>" + TimeFormat(selectedMissions[i][9]) + "</td>";
+        document.getElementById("PlanDetails_Mission_" + (i + 1)).innerHTML = tab;
+        document.getElementById("PlanDetails_Mission_" + (i + 1)).style.backgroundColor = color[i];
+    }
+}
+
+function _PrintPlanDetails_PerHour(selectedMissions) {
+    let tab = "";
+    tab += "<td style='text-align:center; width: 58px;'id='PlanDetails_PerHour_title'>" + language.JS.PerHour + "</td>";
+    for (let i = 1; i < 9; i++) {
+        tab += "<td style='text-align:center; width: 58px;'>";
+        let ResourceContractValue = 0;
+        for (let ii = 0; ii < selectedMissions.length; ii++) {
+            ResourceContractValue += selectedMissions[ii][i];
+        }
+        tab += NumberAutoExact(ResourceContractValue * 60);
+        tab += "</td>";
+    }
+    if (HTML_TAB !== "Anytime")
+        tab += "<td></td>";
+    else
+        tab += "<td>" + language.JS.MinIntervalTime + "</td>";
+    document.getElementById("PlanDetails_PerHour").innerHTML = tab;
+}
+
+function _PrintPlanDetails_Total(selectedMissions, TotalMinutes, ExecutionTimes) {
+    let tab = "<td style='text-align:center; width: 58px;'id='PlanDetails_Total_title'>" + language.JS.Total + "</td>";
+    for (let i = 1; i < 9; i++) {
+        tab += "<td style='text-align:center; width: 58px;'>";
+        let ResourceContractValue = 0;
+        for (let ii = 0; ii < selectedMissions.length; ii++) {
+            ResourceContractValue += selectedMissions[ii][i];
+        }
+        tab += NumberAutoExact(ResourceContractValue * TotalMinutes * ExecutionTimes);
+        tab += "</td>";
+    }
+    if (HTML_TAB !== "Anytime")
+        tab += "<td></td>";
+    else {
+        var MissionTime = [];
+        for (var i = 0; i < selectedMissions.length; i++) {
+            MissionTime.push(selectedMissions[i][10]);
+        }
+        quick_sort_expand_ascending(MissionTime, 0);
+        for (var i = MissionTime.length; i < 4; i++) {
+            MissionTime.push([MissionTime[0][MissionTime[0].length - 1]]);
+        }
+        var TAB = new Tab_Anytime;
+        var MinIntervalTime =  TAB._calculateIntervalTimeMin(MissionTime);
+        tab += "<td>" + TimeFormat(MinIntervalTime) + "</td>";
+    }
+    document.getElementById("PlanDetails_Total").innerHTML = tab;
+}
+
 function print_chart(selectedMissions_table, TotalMinutes) {
-    Chart = echarts.init(document.getElementById('PlanDetails_Chart'));
+    if (TotalMinutes > 4320)
+        return;
+    document.getElementById('PlanDetails_Chart').style.width = "580px";
+    document.getElementById('PlanDetails_Chart').style.height = "120px";
+    let Chart = echarts.init(document.getElementById('PlanDetails_Chart'));
 
     var missions_name = [];
     var missions_time = [];
@@ -135,6 +158,18 @@ function print_chart(selectedMissions_table, TotalMinutes) {
 
     var data = [];
     var categories = ['0', '1', '2', '3'];
+    let xAxis_interval;
+    if (TotalMinutes <= 960)
+        xAxis_interval = 60;
+    else if (TotalMinutes <= 1920)
+        xAxis_interval = 120;
+    else if (TotalMinutes <= 2880)
+        xAxis_interval = 180;
+    else if (TotalMinutes <= 3840)
+        xAxis_interval = 240;
+    else
+        xAxis_interval = 300;
+    let startTime = Input_getStartTime();
     
     // Generate mock data
     echarts.util.each(categories, function (category, index) {
@@ -189,11 +224,11 @@ function print_chart(selectedMissions_table, TotalMinutes) {
             scale: true,
             axisLabel: {
                 formatter: function (val) {
-                    return TimeFormat(val);
+                    return TimeFormat_Day(val + startTime);
                 },
             },
             max: TotalMinutes,
-            interval: 60,
+            interval: xAxis_interval,
         },
         yAxis: {
             data: missions_name
