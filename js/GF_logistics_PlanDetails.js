@@ -102,7 +102,7 @@ function _PrintPlanDetails_PerHour(selectedMissions) {
     if (HTML_TAB !== "Anytime")
         tab += "<td></td>";
     else
-        tab += "<td>" + language.JS.MinIntervalTime + "</td>";
+        tab += "<td id='PlanDetails_AnytimeMinIntervalTime'>" + language.JS.MinIntervalTime + "</td>";
     document.getElementById("PlanDetails_PerHour").innerHTML = tab;
 }
 

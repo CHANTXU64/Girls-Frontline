@@ -75,6 +75,7 @@ function loadHTML_language() {
     _PrintPlanDetails_GreatSuccessRate();
     $("#PlanDetails_PerHour_title").html(language.JS.PerHour);
     $("#PlanDetails_Total_title").html(language.JS.Total);
+    $("#PlanDetails_AnytimeMinIntervalTime").html(language.JS.MinIntervalTime);
     //-----------------
 
     if (is_CalculateByHour()) {
