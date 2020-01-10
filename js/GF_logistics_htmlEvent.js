@@ -599,6 +599,8 @@ $(function() {
         });
     });
     $("#PlanDetails_InputStartTime").on('input propertychange', function() {
+        if (MISSION_TABLE_SELECT.length === 0)
+            return;
         let selectedMissions = _PlanDetails_getMissionTableSelect();
         let ShownTab = getShownTab();
         ShownTab.setTime(false);
