@@ -5,7 +5,10 @@ window.onload = function () {
     setPageByLocalStorage();
     setQContract(Input_getTotalGreatSuccessRate(true));
     PrintMissionTable();
-    PrintPlanDetails();
+    _PrintPlanDetails_ShownTab();
+    _PrintPlanDetails_TotalTime();
+    _PrintPlanDetails_GreatSuccessRate();
+    _PrintPlanDetails_ExecutionTimes();
     loadHTML_language();
     MobileOptimization();
     if (document.getElementById("setTargetInput").clientWidth <= 260)
