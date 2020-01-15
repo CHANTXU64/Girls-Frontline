@@ -9,7 +9,7 @@ class Tab {
 
     setValidQAndReturnLengthAndSetCurrentMax() {}
     _setCurrentMax() {
-        var CurrentValueMax = new Array(8);
+        var CurrentValueMax = [0, 0, 0, 0, 0, 0, 0, 0];
         for (var i = 0; i < 8; i++) {
             var CurrentValueMax_0 = new Array(this.Qvalid.length);
             for (var ii = 0; ii < this.Qvalid.length; ii++) {
@@ -48,7 +48,7 @@ class Tab {
     }
 
     Calculate_Current(Number) {
-        var CurrentValue = new Array(8);
+        var CurrentValue = [0, 0, 0, 0, 0, 0, 0, 0];
         var Qvalid = this.Qvalid;
         for (var i = 0; i < 8; i++) {
             CurrentValue[i] = Qvalid[Number[0]][i + 1] + Qvalid[Number[1]][i + 1] + Qvalid[Number[2]][i + 1] + Qvalid[Number[3]][i + 1];
@@ -160,7 +160,7 @@ class Tab_Anytime extends Tab {
                 return [-1, -1, -1, -1, -1, -1, -1, -1];
             }
         }
-        var CurrentValue = new Array(8);
+        var CurrentValue = [0, 0, 0, 0, 0, 0, 0, 0];
         for (var i = 0; i < 8; i++) {
             CurrentValue[i] = Qvalid[Number[0]][i + 1] + Qvalid[Number[1]][i + 1] + Qvalid[Number[2]][i + 1] + Qvalid[Number[3]][i + 1];
         }
