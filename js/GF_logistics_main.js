@@ -11,10 +11,11 @@ function start_sorting_main() {
     //----------
     var plan = new Plan(ShownTab, 8);
     if (Q_Valid_length > 38) {
-        for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
-            for (var n2 = n1 + 1; n2 < (Q_Valid_length - 2); n2++) {
-                for (var n3 = n2 + 1; n3 < (Q_Valid_length - 1); n3++) {
-                    for (var n4 = n3 + 1; n4 < Q_Valid_length; n4++) {
+        var n1, n2, n3, n4, n1_max = Q_Valid_length - 3, n2_max = Q_Valid_length - 2, n3_max = Q_Valid_length - 1, n4_max = Q_Valid_length;
+        for (n1 = 0; n1 < n1_max; n1++) {
+            for (n2 = n1 + 1; n2 < n2_max; n2++) {
+                for (n3 = n2 + 1; n3 < n3_max; n3++) {
+                    for (n4 = n3 + 1; n4 < n4_max; n4++) {
                         plan.CalculateAndPush_Standardization_And_CalculateMissionsValue([n1, n2, n3, n4]);
                     }
                 }
@@ -33,10 +34,11 @@ function start_sorting_main() {
         }
     }
     else {
-        for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
-            for (var n2 = n1 + 1; n2 < (Q_Valid_length - 2); n2++) {
-                for (var n3 = n2 + 1; n3 < (Q_Valid_length - 1); n3++) {
-                    for (var n4 = n3 + 1; n4 < Q_Valid_length; n4++) {
+        var n1, n2, n3, n4, n1_max = Q_Valid_length - 3, n2_max = Q_Valid_length - 2, n3_max = Q_Valid_length - 1, n4_max = Q_Valid_length;
+        for (n1 = 0; n1 < n1_max; n1++) {
+            for (n2 = n1 + 1; n2 < n2_max; n2++) {
+                for (n3 = n2 + 1; n3 < n3_max; n3++) {
+                    for (n4 = n3 + 1; n4 < n4_max; n4++) {
                         plan.CalculateAndPush_Standardization([n1, n2, n3, n4]);
                     }
                 }
@@ -52,10 +54,11 @@ function start_sorting_main() {
     setFineTuning_ShownTab(ShownTab);
     ShownTab.normalizedQValid();
     plan = new Plan(ShownTab, 16, TargetValue);
-    for (var n1 = 0; n1 < (Q_Valid_length - 3); n1++) {
-        for (var n2 = n1 + 1; n2 < (Q_Valid_length - 2); n2++) {
-            for (var n3 = n2 + 1; n3 < (Q_Valid_length - 1); n3++) {
-                for (var n4 = n3 + 1; n4 < Q_Valid_length; n4++) {
+    var n1, n2, n3, n4, n1_max = Q_Valid_length - 3, n2_max = Q_Valid_length - 2, n3_max = Q_Valid_length - 1, n4_max = Q_Valid_length;
+    for (n1 = 0; n1 < n1_max; n1++) {
+        for (n2 = n1 + 1; n2 < n2_max; n2++) {
+            for (n3 = n2 + 1; n3 < n3_max; n3++) {
+                for (n4 = n3 + 1; n4 < n4_max; n4++) {
                     plan.CalculateAndPush([n1, n2, n3, n4]);
                 }
             }
