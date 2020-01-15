@@ -360,11 +360,21 @@ function HTML_AllowInput() {
 function resultPlan_sortByColumn(Column, method = "descending") {
     if (method === "ascending") {
         quick_sort_expand_ascending(RESULT_PLAN, Column);
-        print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
+        var FineTuningExpanded;
+        if ($('[href=#FineTuningTool]').attr("aria-expanded") === "false")
+            FineTuningExpanded = false;
+        else
+            FineTuningExpanded = true;
+        print_result_plan(FineTuningExpanded, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
     else {
         quick_sort_expand_descending(RESULT_PLAN, Column);
-        print_result_plan(false, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
+        var FineTuningExpanded;
+        if ($('[href=#FineTuningTool]').attr("aria-expanded") === "false")
+            FineTuningExpanded = false;
+        else
+            FineTuningExpanded = true;
+        print_result_plan(FineTuningExpanded, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
 }
 

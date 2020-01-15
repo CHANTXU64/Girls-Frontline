@@ -410,7 +410,7 @@ $(function() {
                 $("#Saved").collapse("show");
             }
             else
-            $("#Saved").collapse("hide");
+                $("#Saved").collapse("hide");
         }
     });
     $("#Saved_heading").on("click", function() {
@@ -419,7 +419,7 @@ $(function() {
             $("#Saved").collapse("show");
         }
         else
-        $("#Saved").collapse("hide");
+            $("#Saved").collapse("hide");
     });
     $("#importSaved_importButton").on("click", function() {
         const input = $("#importSaved_input").val();

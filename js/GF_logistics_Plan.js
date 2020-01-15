@@ -297,7 +297,7 @@ function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
     var focusedElementID = document.activeElement.id;
     var Table = document.getElementById("Plan_Table");
     var tab = getHTMLFineTuningTool();
-    tab += '<div class="table-responsive">';
+    tab += '<div class="table-responsive" id="result_plan_table">';
     tab += '<table class="table table-striped table-hover table-responsive text-nowrap" style="margin-bottom: 0px; cursor: default;">';
     var ShownTab = getShownTab();
     tab += (ShownTab.PrintPlanTableTitle() + '<tbody>');
@@ -320,17 +320,17 @@ function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
         else
             tab += "<tr tabindex='0' id='print_result_plan_tr_" + i + "'>";
         for (var ii = 0; ii < 4; ii++) {
-            tab += "<td style='text-align: center'>";
+            tab += "<td style='text-align: center; width: 5%'>";
             tab += "" + result_plan[i][ii + 1];
             tab += "</td>";
         }
         for (var ii = 4; ii < 8; ii++) {
-            tab += "<td style='text-align: center'>";
+            tab += "<td style='text-align: center; width:" + ShownTab.PlanTableResourceAndContractWidth + "'>";
             tab += "" + Math.round(result_plan[i][ii + 1] * Minutes * 10) / 10;
             tab += "</td>";
         }
         for (var ii = 8; ii < 12; ii++) {
-            tab += "<td style='text-align: center'>";
+            tab += "<td style='text-align: center; width:" + ShownTab.PlanTableResourceAndContractWidth + "'>";
             tab += "" + Math.round(result_plan[i][ii + 1] * Minutes * 100) / 100;
             tab += "</td>";
         }

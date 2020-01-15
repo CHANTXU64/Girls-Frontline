@@ -96,6 +96,11 @@ function _setUnableLogistic() {
 }
 
 class Tab_Anytime extends Tab {
+    constructor() {
+        super();
+        this.PlanTableResourceAndContractWidth = "8.88%";
+    }
+
     setTime(NeedCorrection = true) {
         this.TotalTime = Input_getAnytimeTotalTime(NeedCorrection);
         if (NeedCorrection) {
@@ -257,6 +262,7 @@ class Tab_Timetable extends Tab {
         super();
         this.Qvalid = [];
         this.TimeList = [];
+        this.PlanTableResourceAndContractWidth = "10%";
     }
 
     setTime(NeedCorrection = true) {
