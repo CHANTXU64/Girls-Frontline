@@ -273,7 +273,7 @@
                                 <div class="col-lg-12">
                                     <button type="button" class="btn btn-primary" style="outline:none;"
                                         id="start_sorting"></button>
-                                    <button type="button" class="btn btn-danger" style="outline: none;"
+                                    <button type="button" class="btn btn-danger" style="outline: none; display: none;"
                                         id="clear_sorting" disabled="disabled"></button>
                                 </div>
                             </div>
@@ -375,12 +375,11 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12" style="float: right;">
-                                <div class="panel panel-default" style="max-width: 585px;">
+                                <div class="panel panel-default" style="max-width: 584px;">
                                     <div class="panel-heading" id="PlanDetailsTitle" style="cursor: default;"></div>
                                     <div class="panel-body" style="padding: 0;">
                                         <div class="table-responsive" style="margin-bottom: 0; border: 0;">
@@ -397,16 +396,16 @@
                                                         <td style="width: 116px;" colspan=2 id="PlanDetails_ExecutionTimes"></td>
                                                     </tr>
                                                     <tr>
-                                                        <td id="PlanDetails_Mission"></td>
-                                                        <td id="PlanDetails_Manp"></td>
-                                                        <td id="PlanDetails_Ammu"></td>
-                                                        <td id="PlanDetails_Rati"></td>
-                                                        <td id="PlanDetails_Part"></td>
-                                                        <td id="PlanDetails_TPro"></td>
-                                                        <td id="PlanDetails_Equi"></td>
-                                                        <td id="PlanDetails_QPro"></td>
-                                                        <td id="PlanDetails_QRes"></td>
-                                                        <td id="PlanDetails_Time"></td>
+                                                        <td id="PlanDetails_Mission" style="width: 10%;"></td>
+                                                        <td id="PlanDetails_Manp" style="width: 10%;"></td>
+                                                        <td id="PlanDetails_Ammu" style="width: 10%;"></td>
+                                                        <td id="PlanDetails_Rati" style="width: 10%;"></td>
+                                                        <td id="PlanDetails_Part" style="width: 10%;"></td>
+                                                        <td id="PlanDetails_TPro" style="width: 10%;"></td>
+                                                        <td id="PlanDetails_Equi" style="width: 10%;"></td>
+                                                        <td id="PlanDetails_QPro" style="width: 10%;"></td>
+                                                        <td id="PlanDetails_QRes" style="width: 10%;"></td>
+                                                        <td id="PlanDetails_Time" style="width: 10%;"></td>
                                                     </tr>
                                                     <tr id="PlanDetails_Mission_1"></tr>
                                                     <tr id="PlanDetails_Mission_2"></tr>
@@ -432,7 +431,7 @@
                                                             <div class="form-group input-group" style="margin-bottom: 0;">
                                                                 <label for="PlanDetails_InputStartTime" id="PlanDetails_InputStartTime_label"
                                                                     class="input-group-addon"></label>
-                                                                <input type="time" step="60" id="PlanDetails_InputStartTime" class="form-control" value="00:00"
+                                                                <input name=hh%3Amm type="time" step="60" id="PlanDetails_InputStartTime" class="form-control" value="00:00"
                                                                     onclick="this.select()" style="height: 28px;padding:3px 6px 3px 6px;" autocomplete="off">
                                                             </div>
                                                         </td>

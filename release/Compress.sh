@@ -46,5 +46,40 @@ echo "/**
  * @license MIT
  */
  " > ./js/GF_logistics.min.js
- cat ./js/GF_logistics0.min.js >> ./js/GF_logistics.min.js
- rm ./js/GF_logistics0.min.js
+cat ./js/GF_logistics0.min.js >> ./js/GF_logistics.min.js
+rm ./js/GF_logistics0.min.js
+
+rm ./GF_logistics.html
+cp ../pages/GF_logistics.html ./
+sed -i '12c\    <link href="./dependent/css/GF_logistics_dependent.css" rel="stylesheet">' GF_logistics.html
+sed -i '13c\    <link href="./css/GF_logistics.min.css" rel="stylesheet">' GF_logistics.html
+sed -i '14c\    <script src="./dependent/js/GF_logistics_dependent.min.js"></script>' GF_logistics.html
+sed -i '15c\    <script src="./js/GF_logistics.min.js"></script>' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
+sed -i '16c\' GF_logistics.html
