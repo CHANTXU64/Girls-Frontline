@@ -11,12 +11,12 @@ window.onload = function () {
     _PrintPlanDetails_ExecutionTimes();
     loadHTML_language();
     MobileOptimization();
-    if (document.getElementById("setTargetInput").clientWidth <= 260)
+    if (document.getElementById("setTargetInput").getBoundingClientRect().width <= 260)
         disableTargetButton();
 };
 
 $(window).resize(function () {
-    if (document.getElementById("setTargetInput").clientWidth <= 260)
+    if (document.getElementById("setTargetInput").getBoundingClientRect().width <= 260)
         disableTargetButton();
     else
         enableTargetButton();
@@ -99,6 +99,9 @@ function MobileOptimization() {
     if (IsMobile()) {
         document.getElementById("Saved").style.transition = "none";
         document.getElementById("MissionTable_panel").style.transition = "none";
+        if (storageGetItem("IsSavedShow") === "noStorage") {
+            $("#MissionTable_panel").collapse("hide");
+        }
     }
 }
 
@@ -274,7 +277,9 @@ function setTarget(TargetInfo) {
         case '2221':
             Input_setTarget([400, 400, 400, 200, 0, 0, 0, 0]); break;
         case 'Clear':
-            Input_setTarget(); break;
+            Input_setTarget();
+            Input_setContractWeight();
+            break;
     }
 }
 
@@ -319,7 +324,9 @@ function HTML_DisableInput() {
     $("button[id^=Target_minus_]").attr('disabled', "true");
     $("button[id^=Target_plus_]").attr('disabled', "true");
     $("#start_sorting").attr('disabled', "true");
+    document.getElementById("start_sorting").style.display = "none";
     $("#clear_sorting").removeAttr("disabled");
+    document.getElementById("clear_sorting").style.display = "";
 }
 
 function HTML_AllowInput() {
@@ -354,7 +361,9 @@ function HTML_AllowInput() {
     $("button[id^=Target_minus_]").removeAttr("disabled");
     $("button[id^=Target_plus_]").removeAttr("disabled");
     $("#start_sorting").removeAttr("disabled");
+    document.getElementById("start_sorting").style.display = "";
     $("#clear_sorting").attr('disabled', "true");
+    document.getElementById("clear_sorting").style.display = "none";
 }
 
 function resultPlan_sortByColumn(Column, method = "descending") {

@@ -320,7 +320,7 @@ function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
         else
             tab += "<tr tabindex='0' id='print_result_plan_tr_" + i + "'>";
         for (var ii = 0; ii < 4; ii++) {
-            tab += "<td style='text-align: center; width: 5%'>";
+            tab += "<td style='text-align: center; width: 5%;'>";
             tab += "" + result_plan[i][ii + 1];
             tab += "</td>";
         }
@@ -330,13 +330,13 @@ function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
             tab += "</td>";
         }
         for (var ii = 8; ii < 12; ii++) {
-            tab += "<td style='text-align: center; width:" + ShownTab.PlanTableResourceAndContractWidth + "'>";
+            tab += "<td style='text-align: center; width:" + ShownTab.PlanTableResourceAndContractWidth + ";'>";
             tab += "" + Math.round(result_plan[i][ii + 1] * Minutes * 100) / 100;
             tab += "</td>";
         }
         var one_plan_length = result_plan[0].length;
         for (var ii = 13; ii < one_plan_length; ii++) {
-            tab += "<td style='text-align: center'>";
+            tab += "<td style='text-align: center; width:" + ShownTab.PlanTableResourceAndContractWidth + ";'>";
             tab += result_plan[i][ii];
             tab += "</td>";
         }

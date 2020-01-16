@@ -2,6 +2,10 @@ var SAVED = [];
 
 //[名称-计算方式-大成功概率-是否UP-关卡解锁-计算方式的详情-选择的关卡-开始时间]-md5
 function saveThisPlan() {
+    if (SAVED.length >= 999) {
+        alert(language.JS.Saved_alert2);
+        return;
+    }
     var name = prompt(language.JS.plzInputPlanName, language.JS.planDefaultName);
     if (name == null)
         return;
