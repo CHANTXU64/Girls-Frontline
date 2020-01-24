@@ -370,19 +370,19 @@ function resultPlan_sortByColumn(Column, method = "descending") {
     if (method === "ascending") {
         quick_sort_expand_ascending(RESULT_PLAN, Column);
         var FineTuningExpanded;
-        if ($('[href=#FineTuningTool]').attr("aria-expanded") === "false")
-            FineTuningExpanded = false;
-        else
+        if ($('[href=#FineTuningTool]').attr("aria-expanded") === "true")
             FineTuningExpanded = true;
+        else
+            FineTuningExpanded = false;
         print_result_plan(FineTuningExpanded, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
     else {
         quick_sort_expand_descending(RESULT_PLAN, Column);
         var FineTuningExpanded;
-        if ($('[href=#FineTuningTool]').attr("aria-expanded") === "false")
-            FineTuningExpanded = false;
-        else
+        if ($('[href=#FineTuningTool]').attr("aria-expanded") === "true")
             FineTuningExpanded = true;
+        else
+            FineTuningExpanded = false;
         print_result_plan(FineTuningExpanded, RESULT_PLAN, TABLE_CALCULATE_TOTAL_TIME);
     }
 }

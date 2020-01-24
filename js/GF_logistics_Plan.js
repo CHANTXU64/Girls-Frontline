@@ -24,8 +24,7 @@ class Plan {
     _setList(length) {
         this.List = new Array(length);
         for (var i = 0; i < length; i++) {
-            this.List[i] = new Array(12);
-            this.List[i].Value = 0;//该方案价值
+            this.List[i] = new Array(13);//13为该方案价值
         }
     }
     _CorrectTargetValue() {
@@ -34,7 +33,6 @@ class Plan {
         var TargetValue = ResourceValue.concat(ContractValue);
         if (TargetValue.toString() == "0,0,0,0,0,0,0,0") {
             alert(language.JS.TargetValue0_alert);
-            HTML_AllowInput();
             throw"--";
         }
         return TargetValue;
@@ -42,22 +40,21 @@ class Plan {
     _CorrectResourceValue() {
         var ResourceValue = this.TargetValue_html.slice(0, 4);
         var Resource_CalibrationValue = 100 - Input_getContractWeight();
-        if (this._ValuesNotAll0(ResourceValue)) {
+        if (this._ValuesNotAll0(ResourceValue))
             this._CorrectValue(ResourceValue, Resource_CalibrationValue);
-        }
         return ResourceValue;
     }
     _CorrectContractValue() {
         var ContractValue = this.TargetValue_html.slice(4, 8);
         var Contract_CalibrationValue = Input_getContractWeight();
-        if (this._ValuesNotAll0(ContractValue)) {
+        if (this._ValuesNotAll0(ContractValue))
             this._CorrectValue(ContractValue, Contract_CalibrationValue);
-        }
         return ContractValue;
     }
     _ValuesNotAll0(Values) {
         for (var i = 0; i < Values.length; i++) {
-            if (Values[i] != 0) return true;
+            if (Values[i] != 0)
+                return true;
         }
         return false;
     }
@@ -72,43 +69,43 @@ class Plan {
 		var norm;
 		var SumOfSquares = 0;
 		for (var i = 0; i < vector.length; i++) {
-			SumOfSquares += Math.pow(vector[i], 2);
+			SumOfSquares += vector[i] * vector[i];
 		}
         norm = Math.pow(SumOfSquares, 0.5);
         return norm;
     }
     
-    CalculateAndPush_Standardization_And_CalculateMissionsValue(MissionsNumber) {
-        this._CurrentValue = this.ShownTab.Calculate_Current(MissionsNumber);
+    CalculateAndPush_Standardization_And_CalculateMissionsValue(Mission_n1, Mission_n2, Mission_n3, Mission_n4) {
+        this._CurrentValue = this.ShownTab.Calculate_Current(Mission_n1, Mission_n2, Mission_n3, Mission_n4);
         if (this._CurrentValue[0] === -1) {
             return;
         }
-        this._MissionsNumber = MissionsNumber;
-        this._PlanValue = this._calculateValue();
-        this.ShownTab.Qvalid[MissionsNumber[0]][11] += this._PlanValue;
-        this.ShownTab.Qvalid[MissionsNumber[1]][11] += this._PlanValue;
-        this.ShownTab.Qvalid[MissionsNumber[2]][11] += this._PlanValue;
-        this.ShownTab.Qvalid[MissionsNumber[3]][11] += this._PlanValue;
-        if (!(0 in this.List[this.List.length - 1])) {
-            this._push_FirstEmptyRow();
-        }
-        else this._push();
+
+        var PlanValue = this._PlanValue = this._calculateValue();
+        var Qvalid = this.ShownTab.Qvalid;
+        Qvalid[Mission_n1][11] += PlanValue;
+        Qvalid[Mission_n2][11] += PlanValue;
+        Qvalid[Mission_n3][11] += PlanValue;
+        Qvalid[Mission_n4][11] += PlanValue;
+        if (!(0 in this.List[this.List.length - 1]))
+            this._push_FirstEmptyRow(Mission_n1, Mission_n2, Mission_n3, Mission_n4);
+        else
+            this._push(Mission_n1, Mission_n2, Mission_n3, Mission_n4);
     }
 
-    CalculateAndPush_Standardization(MissionsNumber) {
-        this._CurrentValue = this.ShownTab.Calculate_Current(MissionsNumber);
+    CalculateAndPush_Standardization(Mission_n1, Mission_n2, Mission_n3, Mission_n4) {
+        this._CurrentValue = this.ShownTab.Calculate_Current(Mission_n1, Mission_n2, Mission_n3, Mission_n4);
         if (this._CurrentValue[0] === -1) {
             return;
         }
-        this._MissionsNumber = MissionsNumber;
         this._PlanValue = this._calculateValue();
-        if (!(0 in this.List[this.List.length - 1])) {
-            this._push_FirstEmptyRow();
-        }
-        else this._push();
+        if (!(0 in this.List[this.List.length - 1]))
+            this._push_FirstEmptyRow(Mission_n1, Mission_n2, Mission_n3, Mission_n4);
+        else
+            this._push(Mission_n1, Mission_n2, Mission_n3, Mission_n4);
     }
-    CalculateAndPush(MissionsNumber) {
-        this._CurrentValue = this.ShownTab.Calculate_Current(MissionsNumber);
+    CalculateAndPush(Mission_n1, Mission_n2, Mission_n3, Mission_n4) {
+        this._CurrentValue = this.ShownTab.Calculate_Current(Mission_n1, Mission_n2, Mission_n3, Mission_n4);
         if (this._CurrentValue[0] === -1) {
             return;
         }
@@ -116,50 +113,37 @@ class Plan {
             if (this._CurrentValue[i] < this.TargetValue_half[i])
                 return;
         }
-        this._MissionsNumber = MissionsNumber;
         this._PlanValue = this._calculateValue_2();
-        if (!(0 in this.List[this.List.length - 1])) {
-            this._push_FirstEmptyRow();
-        }
-        else this._push();
+        if (!(0 in this.List[this.List.length - 1]))
+            this._push_FirstEmptyRow(Mission_n1, Mission_n2, Mission_n3, Mission_n4);
+        else
+            this._push(Mission_n1, Mission_n2, Mission_n3, Mission_n4);
     }
-    _push_FirstEmptyRow() {
+    _push_FirstEmptyRow(Mission_n1, Mission_n2, Mission_n3, Mission_n4) {
         var row = this.List.length - 1;
-        while (row != 0 && !(0 in this.List[row - 1])) row--;
-        this._PushIntoThisRow(row);
+        while (row != 0 && !(0 in this.List[row - 1]))
+            row--;
+        this._PushIntoThisRow(row, Mission_n1, Mission_n2, Mission_n3, Mission_n4);
         this._SortListByValue(row);
     }
-    _push() {
-        if (!this._thisPlanIsBetterThan(this.List.length - 1)) {
+    _push(Mission_n1, Mission_n2, Mission_n3, Mission_n4) {
+        var ListLastRow = this.List.length - 1;
+        if (this._PlanValue <= this.List[ListLastRow][12])
             return;
-        }
-        this._PushIntoThisRow(this.List.length - 1);
-        this._SortListByValue(this.List.length - 1);
+        this._PushIntoThisRow(ListLastRow, Mission_n1, Mission_n2, Mission_n3, Mission_n4);
+        this._SortListByValue(ListLastRow);
     }
-    _PushIntoThisRow(RowNumber) {
-        this.List[RowNumber] = this._MissionsNumber.concat(this._CurrentValue);
-        this.List[RowNumber].Value = this._PlanValue;
+    _PushIntoThisRow(RowNumber, Mission_n1, Mission_n2, Mission_n3, Mission_n4) {
+        var _CurrentValue = this._CurrentValue;
+        this.List[RowNumber] = [Mission_n1, Mission_n2, Mission_n3, Mission_n4, _CurrentValue[0], _CurrentValue[1], _CurrentValue[2], _CurrentValue[3], _CurrentValue[4], _CurrentValue[5], _CurrentValue[6], _CurrentValue[7], this._PlanValue];
     }
     _SortListByValue(thisrow) {
         for (var i = thisrow - 1; i >= 0; i--) {
-            if (this._thisPlanIsBetterThan(i)) {
-                this._ExchangeTheseTwoRows(i);
-            }
-            else {
+            if (this._PlanValue > this.List[i][12])
+                [this.List[i + 1], this.List[i]] = [this.List[i], this.List[i + 1]];
+            else
                 break;
-            }
         }
-    }
-    _ExchangeTheseTwoRows(RowNumber) {
-        this.List[RowNumber + 1] = this.List[RowNumber].slice();
-        this.List[RowNumber + 1].Value = this.List[RowNumber].Value;
-        this._PushIntoThisRow(RowNumber);
-    }
-    _thisPlanIsBetterThan(number) {
-        if (this._PlanValue > this.List[number].Value)
-            return true;
-        else
-            return false;
     }
 
     _calculateValue() {
@@ -185,22 +169,28 @@ class Plan {
         var Norm_Current = this._getNorm(CurrentValue);
         if (Norm_Current === 0)
             return 0;
-        var Dot_product = this._getDotProduct(CurrentValue, this.TargetValue);
+        // var Dot_product = this._getDotProduct(CurrentValue, this.TargetValue);
+        var Dot_product = 0;
+        for (var i = 0; i < 8; i++) {
+            Dot_product += CurrentValue[i] * TargetValue[i];
+        }
         var CurrentScalarProjection = Dot_product / this._Norm_Target;
-        var COStheta = Math.min(1, CurrentScalarProjection / Norm_Current);
-        var theta = Math.acos(COStheta);
-        var CosineSimilarity_0 = 1 - 2 * theta / Math.PI;
-        var CosineSimilarity = Math.pow(CosineSimilarity_0, 2);
+        var COStheta = CurrentScalarProjection / Norm_Current;
+        var theta_ = (-0.698131700797732 * COStheta * COStheta - 0.872664625997164) * COStheta + 1.57079632679489;
+        var theta = 0 < theta_ ? theta_ : 0;
+        var CosineSimilarity_ = 1 - 0.5 * theta;
+        // var CosineSimilarity = Math.pow(CosineSimilarity_0, 2);
+        var CosineSimilarity = CosineSimilarity_ * CosineSimilarity_;
         return CurrentScalarProjection * CosineSimilarity;
     }
-    _getDotProduct(vector1, vector2) {
-        if (vector1.length !== vector2.length) throw"getDotProduct error";
-        var Dot_product = 0;
-        for (var i = 0; i < vector1.length; i++) {
-            Dot_product += (vector1[i] * vector2[i]);
-        }
-        return Dot_product;
-    }
+    //仅适用于此
+    // _getDotProduct(vector1, vector2) {
+    //     var Dot_product = 0;
+    //     for (var i = 0; i < 8; i++) {//vector1 == vector2 == 8
+    //         Dot_product += (vector1[i] * vector2[i]);
+    //     }
+    //     return Dot_product;
+    // }
 
     _calculateValue_2() {
         return Value2(this.TargetValue, this._CurrentValue);

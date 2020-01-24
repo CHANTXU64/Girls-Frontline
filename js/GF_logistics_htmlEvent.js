@@ -623,12 +623,14 @@ $(function() {
     });
     $("#PlanDetails_InputExecutionTimes").on("input propertychange", function() {
         _PrintPlanDetails_ExecutionTimes();
-        let selectedMissions = _PlanDetails_getMissionTableSelect();
-        let ShownTab = getShownTab();
-        ShownTab.setTime(false);
-        let TotalMinutes = ShownTab.TotalTime;
-        let ExecutionTimes = Input_getExecutionTimes();
-        _PrintPlanDetails_Total(selectedMissions, TotalMinutes, ExecutionTimes);
+        if (MISSION_TABLE_SELECT.length !== 0) {
+            let selectedMissions = _PlanDetails_getMissionTableSelect();
+            let ShownTab = getShownTab();
+            ShownTab.setTime(false);
+            let TotalMinutes = ShownTab.TotalTime;
+            let ExecutionTimes = Input_getExecutionTimes();
+            _PrintPlanDetails_Total(selectedMissions, TotalMinutes, ExecutionTimes);
+        }
     });
 });
 

@@ -16,6 +16,7 @@ function NumberAutoExact(number) {
 }
 
 function TimeFormat(Minutes) {
+    Minutes = Math.round(Minutes);
     let hours = parseInt(Minutes / 60);
     let minutes = Minutes % 60;
     if ((minutes + "").length < 2)
@@ -24,6 +25,7 @@ function TimeFormat(Minutes) {
 }
 
 function TimeFormat_Day(Minutes) {
+    Minutes = Math.round(Minutes);
     let TotalMinutes = Minutes % 1440;
     return TimeFormat(TotalMinutes);
 }

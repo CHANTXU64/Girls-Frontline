@@ -32,6 +32,31 @@ function quick_sort_descending(arr) {
     }
 }
 
+function quick_sort_ascending(arr) {
+    var r = new Array(arr.length);
+    var p = 0;
+    r[p++] = new Range(0, arr.length - 1);
+    while (p) {
+        var range = r[--p];
+        if (range.start >= range.end) 
+            continue;
+        var mid = arr[range.end];
+        var left = range.start;
+        var right = range.end - 1;
+        while (left < right) {
+            while (arr[left] < mid && left < right) left++;
+            while (arr[right] >= mid && left < right) right--;
+            [arr[left], arr[right]] = [arr[right], arr[left]];
+        }
+        if (arr[left] >= arr[range.end])
+            [arr[left], arr[range.end]] = [arr[range.end], arr[left]];
+        else 
+            left++;
+        r[p++] = new Range(range.start, left - 1);
+        r[p++] = new Range(left + 1, range.end);
+    }
+}
+
 function quick_sort_expand_descending(arr, compare_Column) {
     var r = new Array(arr.length);
     var p = 0;

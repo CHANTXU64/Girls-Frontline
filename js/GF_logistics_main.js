@@ -1,9 +1,15 @@
 let RESULT_PLAN = [];
 let RESULT_PLAN_SORT_BY = "";
 let TABLE_CALCULATE_TOTAL_TIME;
+var test = 0;
+var test_2 = 0;
+var test_3 = 0;
 
 function start_sorting_main() {
-    HTML_DisableInput();
+    console.time();
+    test = 0;
+    test_2 = 0;
+    test_3 = 0;
     var ShownTab = getShownTab();
     ShownTab.setTime();
     var Q_Valid_length = ShownTab.setValidQAndReturnLengthAndSetCurrentMax();
@@ -16,7 +22,7 @@ function start_sorting_main() {
             for (n2 = n1 + 1; n2 < n2_max; n2++) {
                 for (n3 = n2 + 1; n3 < n3_max; n3++) {
                     for (n4 = n3 + 1; n4 < n4_max; n4++) {
-                        plan.CalculateAndPush_Standardization_And_CalculateMissionsValue([n1, n2, n3, n4]);
+                        plan.CalculateAndPush_Standardization_And_CalculateMissionsValue(n1, n2, n3, n4);
                     }
                 }
             }
@@ -32,6 +38,13 @@ function start_sorting_main() {
             ShownTab.Qvalid.splice(Q_valid_backup[i][0], 1);
             Q_Valid_length--;
         }
+        if (HTML_TAB === "Anytime") {
+            var Qvalid_Time = [];
+            for (var i = 0; i < ShownTab.Qvalid.length; i++) {
+                Qvalid_Time.push(ShownTab.Qvalid[i][9]);
+            }
+            ShownTab.Qvalid_Time = Qvalid_Time;
+        }
     }
     else {
         var n1, n2, n3, n4, n1_max = Q_Valid_length - 3, n2_max = Q_Valid_length - 2, n3_max = Q_Valid_length - 1, n4_max = Q_Valid_length;
@@ -39,7 +52,7 @@ function start_sorting_main() {
             for (n2 = n1 + 1; n2 < n2_max; n2++) {
                 for (n3 = n2 + 1; n3 < n3_max; n3++) {
                     for (n4 = n3 + 1; n4 < n4_max; n4++) {
-                        plan.CalculateAndPush_Standardization([n1, n2, n3, n4]);
+                        plan.CalculateAndPush_Standardization(n1, n2, n3, n4);
                     }
                 }
             }
@@ -59,12 +72,14 @@ function start_sorting_main() {
         for (n2 = n1 + 1; n2 < n2_max; n2++) {
             for (n3 = n2 + 1; n3 < n3_max; n3++) {
                 for (n4 = n3 + 1; n4 < n4_max; n4++) {
-                    plan.CalculateAndPush([n1, n2, n3, n4]);
+                    plan.CalculateAndPush(n1, n2, n3, n4);
                 }
             }
         }
     }
+    HTML_DisableInput();
     plan.print(false);
+    console.timeEnd();
 }
 
 function getShownTab() {
@@ -180,7 +195,6 @@ function ArrayMax(Arr) {
     return max;
 }
 
-//有问题
 function Value2(TargetValue, CurrentValue) {
     var Value = 0;
     var minval = 99999999999;

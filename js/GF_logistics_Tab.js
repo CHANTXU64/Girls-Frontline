@@ -47,11 +47,15 @@ class Tab {
         return UnableLogistic;
     }
 
-    Calculate_Current(Number) {
+    Calculate_Current(Mission_n1, Mission_n2, Mission_n3, Mission_n4) {
         var CurrentValue = [0, 0, 0, 0, 0, 0, 0, 0];
         var Qvalid = this.Qvalid;
+        var n1 = Qvalid[Mission_n1];
+        var n2 = Qvalid[Mission_n2];
+        var n3 = Qvalid[Mission_n3];
+        var n4 = Qvalid[Mission_n4];
         for (var i = 0; i < 8; i++) {
-            CurrentValue[i] = Qvalid[Number[0]][i + 1] + Qvalid[Number[1]][i + 1] + Qvalid[Number[2]][i + 1] + Qvalid[Number[3]][i + 1];
+            CurrentValue[i] = n1[i + 1] + n2[i + 1] + n3[i + 1] + n4[i + 1];
         }
         return CurrentValue;
     }
@@ -99,6 +103,7 @@ class Tab_Anytime extends Tab {
     constructor() {
         super();
         this.PlanTableResourceAndContractWidth = "8.88%";
+        this.Qvalid_Time = [];
     }
 
     setTime(NeedCorrection = true) {
@@ -133,10 +138,12 @@ class Tab_Anytime extends Tab {
                 //用于储存该方案的价值， 以减少下一次计算的总方案个数
                 newrow.push(0);
                 this.Qvalid.push(newrow);
+                this.Qvalid_Time.push(Q[i][9]);
             }
         }
         //为优化后面计算最小间隔时间做准备
         quick_sort_expand_ascending(this.Qvalid, 9);
+        quick_sort_ascending(this.Qvalid_Time);
         this._setCurrentMax();
         return this.Qvalid.length;
     }
@@ -147,86 +154,50 @@ class Tab_Anytime extends Tab {
                     UnableLogistic.push(i);
                 }
             }
+            var IntervalTime_lastTimeToTotalTime = this.TotalTime % Q[i][9];
+            if (IntervalTime_lastTimeToTotalTime < this.MinimumIntervalTime && IntervalTime_lastTimeToTotalTime !== 0) {
+                if (UnableLogistic.indexOf(i) == -1) {
+                    UnableLogistic.push(i);
+                }
+            }
         }
         return UnableLogistic;
     }
 
-    Calculate_Current(Number) {
+    Calculate_Current(Mission_n1, Mission_n2, Mission_n3, Mission_n4) {
         var Qvalid = this.Qvalid;
-        if (this.MinimumIntervalTime) {
-            var Time = [Qvalid[Number[0]][9], Qvalid[Number[1]][9], Qvalid[Number[2]][9], Qvalid[Number[3]][9]];
-            var IntervalTime_1 = Math.min((Time[1] - Time[0])===0?this.MinimumIntervalTime:Time[1] - Time[0], (Time[2] - Time[1])===0?this.MinimumIntervalTime:Time[2] - Time[1], (Time[3] - Time[2])===0?this.MinimumIntervalTime:Time[3] - Time[2]);
-            if (IntervalTime_1 < this.MinimumIntervalTime) {
+        var Qvalid_Time = this.Qvalid_Time;
+        var MinimumIntervalTime = this.MinimumIntervalTime;
+        if (MinimumIntervalTime) {
+            var Time = [Qvalid_Time[Mission_n1], Qvalid_Time[Mission_n2], Qvalid_Time[Mission_n3], Qvalid_Time[Mission_n4]];
+            var IntervalTime = Math.min((Time[1] - Time[0])===0?MinimumIntervalTime:Time[1] - Time[0], (Time[2] - Time[1])===0?MinimumIntervalTime:Time[2] - Time[1], (Time[3] - Time[2])===0?MinimumIntervalTime:Time[3] - Time[2]);
+            if (IntervalTime < MinimumIntervalTime) {
+                test_3++;
                 return [-1, -1, -1, -1, -1, -1, -1, -1];
             }
-            var NumberTime = [this.Qvalid[Number[0]][10], this.Qvalid[Number[1]][10], this.Qvalid[Number[2]][10], this.Qvalid[Number[3]][10]];
-            var IntervalTime = this._calculateIntervalTimeMin(NumberTime);
-            if (IntervalTime < this.MinimumIntervalTime) {
+            IntervalTime = calculateIntervalTimeMin(Time, this.TotalTime);
+            if (IntervalTime < MinimumIntervalTime) {
                 return [-1, -1, -1, -1, -1, -1, -1, -1];
             }
         }
         var CurrentValue = [0, 0, 0, 0, 0, 0, 0, 0];
+        var n1 = Qvalid[Mission_n1];
+        var n2 = Qvalid[Mission_n2];
+        var n3 = Qvalid[Mission_n3];
+        var n4 = Qvalid[Mission_n4];
         for (var i = 0; i < 8; i++) {
-            CurrentValue[i] = Qvalid[Number[0]][i + 1] + Qvalid[Number[1]][i + 1] + Qvalid[Number[2]][i + 1] + Qvalid[Number[3]][i + 1];
+            CurrentValue[i] = n1[i + 1] + n2[i + 1] + n3[i + 1] + n4[i + 1];
         }
         return CurrentValue;
-    }
-    _calculateIntervalTimeMin(NumberTime_Arr) {
-        var CollectTimetable_0 = NumberTime_Arr;
-        var A = [CollectTimetable_0[0].length - 1, CollectTimetable_0[1].length - 1, CollectTimetable_0[2].length - 1, CollectTimetable_0[3].length - 1];
-        for (var i = 0; i < 3; i++) {
-            if (CollectTimetable_0[i][0] == CollectTimetable_0[i + 1][0]) {
-                A[i + 1] = -1;
-            }
-        }
-        if (CollectTimetable_0[3][0] % CollectTimetable_0[2][0] === 0) {
-            A[3] = -1;
-        }
-        else if (CollectTimetable_0[3][0] % CollectTimetable_0[1][0] === 0) {
-            A[3] = -1;
-        }
-        else if (CollectTimetable_0[3][0] % CollectTimetable_0[0][0] === 0) {
-            A[3] = -1;
-        }
-        if (CollectTimetable_0[2][0] % CollectTimetable_0[1][0] === 0) {
-            A[2] = -1;
-        }
-        else if (CollectTimetable_0[2][0] % CollectTimetable_0[0][0] === 0) {
-            A[2] = -1;
-        }
-        if (CollectTimetable_0[1][0] % CollectTimetable_0[0][0] === 0) {
-            A[1] = -1;
-        }
-        var IntervalTime = CollectTimetable_0[0][0];
-        var maxTime = 999999999;
-        while(A[0] !== -1) {
-            var a = 0;
-            var b = 0;
-            while(++b < 4) {
-                if (A[b] !== -1) {
-                    if (CollectTimetable_0[a][A[a]] < CollectTimetable_0[b][A[b]]) {
-                        a = b;
-                    }
-                    else if (CollectTimetable_0[a][A[a]] === CollectTimetable_0[b][A[b]]) {
-                        A[b]--;
-                    }
-                }
-            }
-            var maxValue = CollectTimetable_0[a][A[a]];
-            A[a]--;
-            IntervalTime = Math.min(IntervalTime, maxTime - maxValue);
-            maxTime = maxValue;
-        }
-        return IntervalTime;
     }
 
     PrintPlanTableTitle() {
         var title;
         if (is_CalculateByHour()) {
-            title = this._title + '<th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Manp">'+language.JS.Manp+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Ammu">'+language.JS.Ammu+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Rati">'+language.JS.Rati+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Part">'+language.JS.Part+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_TPro">'+language.JS.TPro+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Equi">'+language.JS.Equi+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_QPro">'+language.JS.QPro+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_QRes">'+language.JS.QRes+'/h</th><th style="text-align: center;width:8.88%;">'+language.JS.MinIntervalTime+'</th>' + this._titleEnd;
+            title = this._title + '<th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Manp">'+language.JS.Manp+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Ammu">'+language.JS.Ammu+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Rati">'+language.JS.Rati+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Part">'+language.JS.Part+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_TPro">'+language.JS.TPro+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Equi">'+language.JS.Equi+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_QPro">'+language.JS.QPro+'/h</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_QRes">'+language.JS.QRes+'/h</th><th style="text-align: center;width:8.88%;cursor:default;">'+language.JS.MinIntervalTime+'</th>' + this._titleEnd;
         }
         else {
-            title = this._title + '<th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Manp">'+language.JS.Manp+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Ammu">'+language.JS.Ammu+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Rati">'+language.JS.Rati+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Part">'+language.JS.Part+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_TPro">'+language.JS.TPro+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Equi">'+language.JS.Equi+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_QPro">'+language.JS.QPro+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_QRes">'+language.JS.QRes+'</th><th style="text-align: center;width:8.88%;">'+language.JS.MinIntervalTime+'</th>' + this._titleEnd;
+            title = this._title + '<th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Manp">'+language.JS.Manp+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Ammu">'+language.JS.Ammu+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Rati">'+language.JS.Rati+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Part">'+language.JS.Part+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_TPro">'+language.JS.TPro+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_Equi">'+language.JS.Equi+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_QPro">'+language.JS.QPro+'</th><th style="text-align: center;width:8.88%;"tabindex="0" id="resultPlan_QRes">'+language.JS.QRes+'</th><th style="text-align: center;width:8.88%;cursor:default;">'+language.JS.MinIntervalTime+'</th>' + this._titleEnd;
         }
         return title;
     }
@@ -234,8 +205,8 @@ class Tab_Anytime extends Tab {
     PrintTableCustomize(plan, row) {
         var tab = [];
         var Number = [plan.List[row][0], plan.List[row][1], plan.List[row][2], plan.List[row][3]];
-        var NumberTime = [this.Qvalid[Number[0]][10], this.Qvalid[Number[1]][10], this.Qvalid[Number[2]][10], this.Qvalid[Number[3]][10]];
-        tab.push(this._calculateIntervalTimeMin(NumberTime) + "m");
+        var NumberTime = [this.Qvalid_Time[Number[0]], this.Qvalid_Time[Number[1]], this.Qvalid_Time[Number[2]], this.Qvalid_Time[Number[3]]];
+        tab.push(calculateIntervalTimeMin(NumberTime, this.TotalTime) + "m");
         return tab;
     }
 
@@ -255,6 +226,101 @@ class Tab_Anytime extends Tab {
         Input_setAnytimeMinimumIntervalTime(MinimumIntervalTime);
         storageSetItem("TabAnytimeCustom", Saved_Custom);
     }
+}
+//calculateIntervalTimeMin会改变Time_Arr!!!
+function calculateIntervalTimeMin(Time_Arr, Total_Time) {
+    test_2++;
+    var minIntervalTime = Time_Arr[0];
+    for (var i = 0; i < 4; i++) {
+        var IntervalTime_lastTimeToTotalTime = Total_Time % Time_Arr[i];
+        if (IntervalTime_lastTimeToTotalTime !== 0)
+            minIntervalTime = minIntervalTime < IntervalTime_lastTimeToTotalTime ? minIntervalTime : IntervalTime_lastTimeToTotalTime;
+    }
+    var n0 = Time_Arr[0];
+    var n1 = Time_Arr[1];
+    var n2 = Time_Arr[2];
+    var n3 = Time_Arr[3];
+    var Timetable_Arr_length = 4;
+    var TotalTime = Total_Time;
+    if (n3 % n2 === 0 || n3 % n1 === 0 || n3 % n0 === 0) {
+        Timetable_Arr_length--;
+    }
+    if (n2 % n1 === 0 || n2 % n0 === 0) {
+        if (Timetable_Arr_length === 3)
+            Timetable_Arr_length--;
+        else
+            Time_Arr[2] = TotalTime;
+    }
+    if (n1 % n0 === 0) {
+        if (Timetable_Arr_length === 2)
+            Timetable_Arr_length--;
+        else
+            Time_Arr[1] = TotalTime;
+    }
+    if (Timetable_Arr_length === 1) {
+        test++;
+        return minIntervalTime;
+    }
+    // var Time_LCM = _calculateArrayLeastCommonMultiple(Time_Arr, 3);
+    // if (Time_LCM < Total_Time)
+    //     TotalTime = Time_LCM;
+    var Timetable_Arr_min_0 = Time_Arr[0];
+    while (Timetable_Arr_min_0 < TotalTime) {
+        var Timetable_Arr_min = TotalTime;
+        var ii;
+        if (Time_Arr[0] < Timetable_Arr_min) {
+            Timetable_Arr_min = Time_Arr[0];
+            ii = 0;
+        }
+        if (Time_Arr[1] < Timetable_Arr_min) {
+            Timetable_Arr_min = Time_Arr[1];
+            ii = 1;
+        }
+        if (Time_Arr[2] < Timetable_Arr_min) {
+            Timetable_Arr_min = Time_Arr[2];
+            ii = 2;
+        }
+        if (Time_Arr[3] < Timetable_Arr_min) {
+            Timetable_Arr_min = Time_Arr[3];
+            ii = 3;
+        }
+        // for (var i = 0; i < Timetable_Arr_length; i++) {
+        //     if (Time_Arr[i] < Timetable_Arr_min) {
+        //         Timetable_Arr_min = Time_Arr[i];
+        //         ii = i;
+        //     }
+        // }
+        switch (ii) {
+            case 0:
+                Time_Arr[0] += n0; break;
+            case 1:
+                Time_Arr[1] += n1; break;
+            case 2:
+                Time_Arr[2] += n2; break;
+            case 3:
+                Time_Arr[3] += n3; break;
+        }
+        var IntervalTime = Timetable_Arr_min - Timetable_Arr_min_0;
+        if (IntervalTime === 0)
+            continue;
+        Timetable_Arr_min_0 = Timetable_Arr_min;
+        minIntervalTime = minIntervalTime < IntervalTime ? minIntervalTime : IntervalTime;
+    }
+    return minIntervalTime;
+}
+function _calculateArrayLeastCommonMultiple(array, array_length_minus_1) {
+    var arr = array.slice();
+    for (var i = 0; i < array_length_minus_1; i++) {
+        // if (arr[i + 1] % arr[i] === 0)
+        //     continue;
+        arr[i + 1] = arr[i] * arr[i + 1] / _lcm(arr[i], arr[i + 1]);
+    }
+    return arr[array_length_minus_1];
+}
+function _lcm(a, b) {
+    if (b)
+        while ((a %= b) && (b %= a));
+    return a + b;
 }
 
 class Tab_Timetable extends Tab {

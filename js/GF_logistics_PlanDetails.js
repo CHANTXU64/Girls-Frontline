@@ -122,14 +122,10 @@ function _PrintPlanDetails_Total(selectedMissions, TotalMinutes, ExecutionTimes)
     else {
         var MissionTime = [];
         for (var i = 0; i < selectedMissions.length; i++) {
-            MissionTime.push(selectedMissions[i][10]);
+            MissionTime.push(selectedMissions[i][9]);
         }
-        quick_sort_expand_ascending(MissionTime, 0);
-        for (var i = MissionTime.length; i < 4; i++) {
-            MissionTime.push([MissionTime[0][MissionTime[0].length - 1]]);
-        }
-        var TAB = new Tab_Anytime;
-        var MinIntervalTime =  TAB._calculateIntervalTimeMin(MissionTime);
+        quick_sort_ascending(MissionTime);
+        var MinIntervalTime = calculateIntervalTimeMin(MissionTime, TotalMinutes);
         tab += "<td>" + TimeFormat(MinIntervalTime) + "</td>";
     }
     document.getElementById("PlanDetails_Total").innerHTML = tab;
