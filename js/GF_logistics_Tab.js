@@ -171,14 +171,11 @@ class Tab_Anytime extends Tab {
         if (MinimumIntervalTime) {
             var Time = [Qvalid_Time[Mission_n1], Qvalid_Time[Mission_n2], Qvalid_Time[Mission_n3], Qvalid_Time[Mission_n4]];
             var IntervalTime = Math.min((Time[1] - Time[0])===0?MinimumIntervalTime:Time[1] - Time[0], (Time[2] - Time[1])===0?MinimumIntervalTime:Time[2] - Time[1], (Time[3] - Time[2])===0?MinimumIntervalTime:Time[3] - Time[2]);
-            if (IntervalTime < MinimumIntervalTime) {
-                test_3++;
+            if (IntervalTime < MinimumIntervalTime)
                 return [-1, -1, -1, -1, -1, -1, -1, -1];
-            }
             IntervalTime = calculateIntervalTimeMin(Time, this.TotalTime);
-            if (IntervalTime < MinimumIntervalTime) {
+            if (IntervalTime < MinimumIntervalTime)
                 return [-1, -1, -1, -1, -1, -1, -1, -1];
-            }
         }
         var CurrentValue = [0, 0, 0, 0, 0, 0, 0, 0];
         var n1 = Qvalid[Mission_n1];
@@ -229,7 +226,6 @@ class Tab_Anytime extends Tab {
 }
 //calculateIntervalTimeMin会改变Time_Arr!!!
 function calculateIntervalTimeMin(Time_Arr, Total_Time) {
-    test_2++;
     var minIntervalTime = Time_Arr[0];
     for (var i = 0; i < 4; i++) {
         var IntervalTime_lastTimeToTotalTime = Total_Time % Time_Arr[i];
@@ -257,39 +253,19 @@ function calculateIntervalTimeMin(Time_Arr, Total_Time) {
         else
             Time_Arr[1] = TotalTime;
     }
-    if (Timetable_Arr_length === 1) {
-        test++;
+    if (Timetable_Arr_length === 1)
         return minIntervalTime;
-    }
-    // var Time_LCM = _calculateArrayLeastCommonMultiple(Time_Arr, 3);
-    // if (Time_LCM < Total_Time)
-    //     TotalTime = Time_LCM;
-    var Timetable_Arr_min_0 = Time_Arr[0];
+    var Timetable_Arr_min_0 = n0;
     while (Timetable_Arr_min_0 < TotalTime) {
         var Timetable_Arr_min = TotalTime;
-        var ii;
-        if (Time_Arr[0] < Timetable_Arr_min) {
-            Timetable_Arr_min = Time_Arr[0];
-            ii = 0;
+        var ii = 0;
+        var i = -1;
+        while (++i < Timetable_Arr_length) {
+            if (Time_Arr[i] <= Timetable_Arr_min) {
+                Timetable_Arr_min = Time_Arr[i];
+                ii = i;
+            }
         }
-        if (Time_Arr[1] < Timetable_Arr_min) {
-            Timetable_Arr_min = Time_Arr[1];
-            ii = 1;
-        }
-        if (Time_Arr[2] < Timetable_Arr_min) {
-            Timetable_Arr_min = Time_Arr[2];
-            ii = 2;
-        }
-        if (Time_Arr[3] < Timetable_Arr_min) {
-            Timetable_Arr_min = Time_Arr[3];
-            ii = 3;
-        }
-        // for (var i = 0; i < Timetable_Arr_length; i++) {
-        //     if (Time_Arr[i] < Timetable_Arr_min) {
-        //         Timetable_Arr_min = Time_Arr[i];
-        //         ii = i;
-        //     }
-        // }
         switch (ii) {
             case 0:
                 Time_Arr[0] += n0; break;
@@ -307,20 +283,6 @@ function calculateIntervalTimeMin(Time_Arr, Total_Time) {
         minIntervalTime = minIntervalTime < IntervalTime ? minIntervalTime : IntervalTime;
     }
     return minIntervalTime;
-}
-function _calculateArrayLeastCommonMultiple(array, array_length_minus_1) {
-    var arr = array.slice();
-    for (var i = 0; i < array_length_minus_1; i++) {
-        // if (arr[i + 1] % arr[i] === 0)
-        //     continue;
-        arr[i + 1] = arr[i] * arr[i + 1] / _lcm(arr[i], arr[i + 1]);
-    }
-    return arr[array_length_minus_1];
-}
-function _lcm(a, b) {
-    if (b)
-        while ((a %= b) && (b %= a));
-    return a + b;
 }
 
 class Tab_Timetable extends Tab {

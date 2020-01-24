@@ -124,6 +124,9 @@ function _PrintPlanDetails_Total(selectedMissions, TotalMinutes, ExecutionTimes)
         for (var i = 0; i < selectedMissions.length; i++) {
             MissionTime.push(selectedMissions[i][9]);
         }
+        for (var i = selectedMissions.length; i < 4; i++) {
+            MissionTime.push(TotalMinutes);
+        }
         quick_sort_ascending(MissionTime);
         var MinIntervalTime = calculateIntervalTimeMin(MissionTime, TotalMinutes);
         tab += "<td>" + TimeFormat(MinIntervalTime) + "</td>";

@@ -1,15 +1,8 @@
 let RESULT_PLAN = [];
 let RESULT_PLAN_SORT_BY = "";
 let TABLE_CALCULATE_TOTAL_TIME;
-var test = 0;
-var test_2 = 0;
-var test_3 = 0;
 
 function start_sorting_main() {
-    console.time();
-    test = 0;
-    test_2 = 0;
-    test_3 = 0;
     var ShownTab = getShownTab();
     ShownTab.setTime();
     var Q_Valid_length = ShownTab.setValidQAndReturnLengthAndSetCurrentMax();
@@ -79,7 +72,6 @@ function start_sorting_main() {
     }
     HTML_DisableInput();
     plan.print(false);
-    console.timeEnd();
 }
 
 function getShownTab() {

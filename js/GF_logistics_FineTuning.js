@@ -75,7 +75,7 @@ function FineTuning_main() {
         for (let n2 = n1 + 1; n2 < n2_max; n2++) {
             for (let n3 = n2 + 1; n3 < n3_max; n3++) {
                 for (let n4 = n3 + 1; n4 < n4_max; n4++) {
-                    plan.CalculateAndPush([n1, n2, n3, n4]);
+                    plan.CalculateAndPush(n1, n2, n3, n4);
                 }
             }
         }
