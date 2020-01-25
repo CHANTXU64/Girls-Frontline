@@ -219,45 +219,52 @@ $(function() {
 $(function() {
     $("#target").on("blur", "#MT", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#MT", function(e) {
-        if (is_KeyIsEnter(e))
+        if (is_KeyIsEnter(e)) {
             $("#AT").focus();
             $("#AT").select();
+        }
     });
     $("#target").on("blur", "#AT", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#AT", function(e) {
-        if (is_KeyIsEnter(e))
+        if (is_KeyIsEnter(e)) {
             $("#RT").focus();
             $("#RT").select();
+        }
     });
     $("#target").on("blur", "#RT", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#RT", function(e) {
-        if (is_KeyIsEnter(e))
+        if (is_KeyIsEnter(e)) {
             $("#PT").focus();
             $("#PT").select();
+        }
     });
     $("#target").on("blur", "#PT", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#PT", function(e) {
-        if (is_KeyIsEnter(e))
+        if (is_KeyIsEnter(e)) {
             $("#TT").focus();
             $("#TT").select();
+        }
     });
     $("#target").on("blur", "#TT", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#TT", function(e) {
-        if (is_KeyIsEnter(e))
+        if (is_KeyIsEnter(e)) {
             $("#ET").focus();
             $("#ET").select();
+        }
     });
     $("#target").on("blur", "#ET", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#ET", function(e) {
-        if (is_KeyIsEnter(e))
+        if (is_KeyIsEnter(e)) {
             $("#QPT").focus();
             $("#QPT").select();
+        }
     });
     $("#target").on("blur", "#QPT", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#QPT", function(e) {
-        if (is_KeyIsEnter(e))
+        if (is_KeyIsEnter(e)) {
             $("#QRT").focus();
             $("#QRT").select();
+        }
     });
     $("#target").on("blur", "#QRT", function() {TargetChangeStorage();});
 });
@@ -429,8 +436,7 @@ $(function() {
     $("#Saved_Body").on("click", "button[id^=SavedTable_apply_]", function() {Saved_apply(parseInt(stringSliceFromLast_(this.id)));});
     $("#Saved_Body").on("input propertychange", "input[id^=SavedTable_name_]", function() {Saved_rename(parseInt(stringSliceFromLast_(this.id)));});
     $("#Saved_Body").on("keyup", "input[id^=SavedTable_name_]", function(e) {
-        const key = e.which;
-        if (key == 13) {
+        if (is_KeyIsEnter(e)) {
             const id = "#" + this.id;
             $(id).attr("readOnly", true);
         }
