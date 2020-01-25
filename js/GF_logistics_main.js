@@ -53,7 +53,7 @@ function start_sorting_main() {
     }
     var TargetValue = CorrectTargetValueByPlanList(plan);
     for (var i = 0; i < 8; i++) {
-        TargetValue[i] /= ShownTab.CurrentValue_MAX[i];
+        TargetValue[i] = Math.min(1, TargetValue[i] / ShownTab.CurrentValue_MAX[i]);
     }
     //----------
     setFineTuning_TargetValue(TargetValue);
