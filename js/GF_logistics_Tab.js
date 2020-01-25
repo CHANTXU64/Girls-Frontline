@@ -24,7 +24,7 @@ class Tab {
     normalizedQValid() {
         for (var i = 0; i < this.Qvalid.length; i++) {
             for (var ii = 0; ii < 8; ii++) {
-                if (this.CurrentValue_MAX[ii] != 0) {
+                if (this.CurrentValue_MAX[ii] !== 0) {
                     this.Qvalid[i][ii + 1] /= this.CurrentValue_MAX[ii];
                 }
             }
@@ -39,7 +39,7 @@ class Tab {
     _setUnableLogisticCustomize(UnableLogistic) { //排除超时后勤
         for (var i = 0; i < Q.length; i++) {
             if (Q[i][9] > this.TotalTime) {
-                if (UnableLogistic.indexOf(i) == -1) {
+                if (UnableLogistic.indexOf(i) === -1) {
                     UnableLogistic.push(i);
                 }
             }
@@ -94,7 +94,7 @@ function _setUnableLogistic() {
     }
     var UnableNumber = [];
     for (var i = 0; i < Q.length; i++) {
-        if (UnableMap.indexOf(Q[i][0]) != -1) UnableNumber.push(i);
+        if (UnableMap.indexOf(Q[i][0]) !== -1) UnableNumber.push(i);
     }
     return UnableNumber;
 }
@@ -121,7 +121,7 @@ class Tab_Anytime extends Tab {
     setValidQAndReturnLengthAndSetCurrentMax() {
         var UnableLogistic = this._getUnableLogistic();
         for (var i = 0; i < Q.length; i++) {
-            if (UnableLogistic.indexOf(i) == -1) {
+            if (UnableLogistic.indexOf(i) === -1) {
                 var newrow = [];
                 newrow.push(Q[i][0]);
                 var times = 0;
@@ -150,13 +150,13 @@ class Tab_Anytime extends Tab {
     _setUnableLogisticCustomize(UnableLogistic) {
         for (var i = 0; i < Q.length; i++) {
             if (Q[i][9] > this.TotalTime || Q[i][9] < this.MinimumIntervalTime) {
-                if (UnableLogistic.indexOf(i) == -1) {
+                if (UnableLogistic.indexOf(i) === -1) {
                     UnableLogistic.push(i);
                 }
             }
             var IntervalTime_lastTimeToTotalTime = this.TotalTime % Q[i][9];
             if (IntervalTime_lastTimeToTotalTime < this.MinimumIntervalTime && IntervalTime_lastTimeToTotalTime !== 0) {
-                if (UnableLogistic.indexOf(i) == -1) {
+                if (UnableLogistic.indexOf(i) === -1) {
                     UnableLogistic.push(i);
                 }
             }
@@ -224,7 +224,7 @@ class Tab_Anytime extends Tab {
         storageSetItem("TabAnytimeCustom", Saved_Custom);
     }
 }
-//calculateIntervalTimeMin会改变Time_Arr!!!
+//calculateIntervalTimeMin会改变Time_Arr!!!输入Time_Arr必须从小到大排序
 function calculateIntervalTimeMin(Time_Arr, Total_Time) {
     var minIntervalTime = Time_Arr[0];
     for (var i = 0; i < 4; i++) {

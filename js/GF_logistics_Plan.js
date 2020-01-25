@@ -31,7 +31,7 @@ class Plan {
         var ResourceValue = this._CorrectResourceValue();
         var ContractValue = this._CorrectContractValue();
         var TargetValue = ResourceValue.concat(ContractValue);
-        if (TargetValue.toString() == "0,0,0,0,0,0,0,0") {
+        if (TargetValue.toString() === "0,0,0,0,0,0,0,0") {
             alert(language.JS.TargetValue0_alert);
             throw"--";
         }
@@ -53,7 +53,7 @@ class Plan {
     }
     _ValuesNotAll0(Values) {
         for (var i = 0; i < Values.length; i++) {
-            if (Values[i] != 0)
+            if (Values[i] !== 0)
                 return true;
         }
         return false;
@@ -121,7 +121,7 @@ class Plan {
     }
     _push_FirstEmptyRow(Mission_n1, Mission_n2, Mission_n3, Mission_n4, PlanValue) {
         var row = this.List.length - 1;
-        while (row != 0 && !(0 in this.List[row - 1]))
+        while (row !== 0 && !(0 in this.List[row - 1]))
             row--;
         this._PushIntoThisRow(row, Mission_n1, Mission_n2, Mission_n3, Mission_n4, PlanValue);
         this._SortListByValue(row, PlanValue);
