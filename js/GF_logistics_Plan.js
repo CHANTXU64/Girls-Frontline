@@ -190,16 +190,11 @@ class Plan {
         if (Norm_Current === 0)
             return 0;
         var Dot_product = this._getDotProduct(CurrentValue, this.TargetValue);
-        // var Dot_product = 0;
-        // for (var i = 0; i < 8; i++) {
-        //     Dot_product += CurrentValue[i] * TargetValue[i];
-        // }
         var CurrentScalarProjection = Dot_product / this._Norm_Target;
         var COStheta = CurrentScalarProjection / Norm_Current;
         var theta_ = (-0.698131700797732 * COStheta * COStheta - 0.872664625997164) * COStheta + 1.57079632679489;
         var theta = 0 < theta_ ? theta_ : 0;
         var CosineSimilarity_ = 1 - 0.5 * theta;
-        // var CosineSimilarity = Math.pow(CosineSimilarity_0, 2);
         var CosineSimilarity = CosineSimilarity_ * CosineSimilarity_;
         return CurrentScalarProjection * CosineSimilarity;
     }
@@ -304,7 +299,14 @@ function sortStringNumber(a, b) {
 }
 
 function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
+    //保存Plan Table横向位置, 用于点击排序后或微调后恢复位置
+    var result_plan_table_scrollLeft = 0;
+    if (document.getElementById("result_plan_table") !== null)
+        result_plan_table_scrollLeft = document.getElementById("result_plan_table").scrollLeft;
+
+    //保存打印前聚焦元素, 用于微调后恢复聚焦元素
     var focusedElementID = document.activeElement.id;
+
     var Table = document.getElementById("Plan_Table");
     var tab = getHTMLFineTuningTool();
     tab += '<div class="table-responsive" id="result_plan_table">';
@@ -363,4 +365,5 @@ function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
     document.getElementById("start_sorting_html").style.display = "none";
     if (focusedElementID !== "")
         document.getElementById(focusedElementID).focus();
+    document.getElementById("result_plan_table").scrollLeft = result_plan_table_scrollLeft;
 }

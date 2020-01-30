@@ -37,6 +37,21 @@ function loadHTML_Target() {
     document.getElementById("setTargetInput").innerHTML = HTML;
 }
 
+function loadHTML_ChapterLimit() {
+    const MinChapter = 6;
+    if (Q.length % 4 !== 0)
+        throw "haha";
+    var MaxChapter = (Q.length - 4) / 4;
+    var tab = "";
+    for (var i = MinChapter; i <= MaxChapter; i++) {
+        if (i === MaxChapter)
+            tab += "<option value=" + i + " id=\"chapter" + i + "\" selected></option>";
+        else
+            tab += "<option value=" + i + " id=\"chapter" + i + "\"></option>";
+    }
+    document.getElementById("ChapterLimit").innerHTML = tab;
+}
+
 function loadHTML_language() {
     document.documentElement.lang = language.lang;
     document.title = language.title;

@@ -2,6 +2,7 @@ window.onload = function () {
     checkLocalStorageWork();
     setLanguage();
     loadHTML_Target();
+    loadHTML_ChapterLimit();
     setPageByLocalStorage();
     setQContract(Input_getTotalGreatSuccessRate(true));
     PrintMissionTable();

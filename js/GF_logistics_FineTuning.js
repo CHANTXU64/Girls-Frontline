@@ -64,7 +64,6 @@ function FineTuning(Operator, ID) {
 }
 
 function FineTuning_main() {
-    var result_plan_table_scrollLeft = document.getElementById("result_plan_table").scrollLeft;
     let plan = new Plan(FineTuning_ShownTab, 16, FineTuning_TargetValue);
     const Q_Valid_length = FineTuning_ShownTab.Qvalid.length;
     const n1_max = Q_Valid_length - 3;
@@ -81,5 +80,4 @@ function FineTuning_main() {
         }
     }
     plan.print(true, RESULT_PLAN_SORT_BY);
-    document.getElementById("result_plan_table").scrollLeft = result_plan_table_scrollLeft;
 }

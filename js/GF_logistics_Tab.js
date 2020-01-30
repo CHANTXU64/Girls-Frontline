@@ -73,29 +73,14 @@ class Tab {
     ApplySaved_Custom(Saved_Custom) {}
 }
 function _setUnableLogistic() {
-    var UnableMap;
-    switch (Input_getSelectChapter()) {
-        case 6:
-            UnableMap = ["7-1","7-2","7-3","7-4","8-1","8-2","8-3","8-4","9-1","9-2","9-3","9-4","10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4","12-1","12-2","12-3","12-4"]; break;
-        case 7:
-            UnableMap = ["8-1","8-2","8-3","8-4","9-1","9-2","9-3","9-4","10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4","12-1","12-2","12-3","12-4"]; break;
-        case 8:
-            UnableMap = ["9-1","9-2","9-3","9-4","10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4","12-1","12-2","12-3","12-4"]; break;
-        case 9:
-            UnableMap = ["10-1","10-2","10-3","10-4","11-1","11-2","11-3","11-4","12-1","12-2","12-3","12-4"]; break;
-        case 10:
-            UnableMap = ["11-1","11-2","11-3","11-4","12-1","12-2","12-3","12-4"]; break;
-        case 11:
-            UnableMap = ["12-1","12-2","12-3","12-4"]; break;
-        case 12:
-            UnableMap = []; break;
-        default:
-            UnableMap = [];
-    }
+    var ChapterLimit = Input_getSelectChapter();
+    if (ChapterLimit < 6)
+        throw "haha";
+    var index = 4 * (ChapterLimit + 1);
     var UnableNumber = [];
-    for (var i = 0; i < Q.length; i++) {
-        if (UnableMap.indexOf(Q[i][0]) !== -1) UnableNumber.push(i);
-    }
+    var Q_MaxIndex = Q.length - 1;
+    while (index <= Q_MaxIndex)
+        UnableNumber.push(index++);
     return UnableNumber;
 }
 

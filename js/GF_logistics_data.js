@@ -2,6 +2,7 @@
 //The Logistics Support Number-Manpower-Ammunition-Rations-Parts-
 //T_Doll Production Contract-Equipment Development Contract-
 //Quick Production Contract-Quick Restoration Contract-Time(minute)
+//由于契约不同于资源的大成功概率计算. 在Q中, 暂时未填入契约的值, 专门使用setQContract()函数来计算契约值
 let Q = [
     ["0-1",  0,    145,   145,   0,     0, 0, 0, 0, 50],
     ["0-2",  550,  0,     0,     350,   0, 0, 0, 0, 180],
@@ -57,8 +58,10 @@ let Q = [
     ["12-4", 1800, 0,     1800,  0,     0, 0, 0, 0, 720]
 ];
 
+//计算后勤契约值
 function setQContract(TotalGreatSuccessRate) {
     const TotalRate = TotalGreatSuccessRate / 100;
+
     //人形契约 T-Doll Production Contract
     Q[1][5] = calculateContractValue(50, 50, TotalRate);//0-2
     Q[7][5] = calculateContractValue(20, 20, TotalRate);//1-4
@@ -73,6 +76,7 @@ function setQContract(TotalGreatSuccessRate) {
     Q[44][5] = 8 / 16;//???//11-1
     Q[45][5] = 12 / 12;//???//11-2
     Q[51][5] = 12 / 12;//???//12-4
+
     //装备契约 Equipment Development Contract
     Q[2][6] = calculateContractValue(40, 80, TotalRate);//0-3
     Q[15][6] = calculateContractValue(40, 80, TotalRate);//???//3-4
@@ -85,6 +89,7 @@ function setQContract(TotalGreatSuccessRate) {
     Q[43][6] = calculateContractValue(50, 50, TotalRate);//???//10-4 (12 / 10) 60%
     Q[44][6] = 8 / 16;//???//11-1
     Q[48][6] = calculateContractValue(60, 60, TotalRate);//12-1 (42 / 7) 60%GreatSuccessRate
+
     //快建 Quick Production Contract
     Q[0][7] = calculateContractValue(20, 70, TotalRate);//0-1
     Q[10][7] = 0.5;//2-3
@@ -99,6 +104,7 @@ function setQContract(TotalGreatSuccessRate) {
     Q[42][7] = calculateContractValue(30, 80, TotalRate);//???//10-3
     Q[47][7] = 1;//???//11-4
     Q[50][7] = 12 / 12;//???//12-3
+
     //快修 Quick Restoration Contract
     Q[0][8] = calculateContractValue(50, 70, TotalRate);//0-1
     Q[2][8] = calculateContractValue(40, 80, TotalRate);//0-3
@@ -115,6 +121,9 @@ function setQContract(TotalGreatSuccessRate) {
     Q[42][8] = calculateContractValue(50, 80, TotalRate);//???//10-3
     Q[46][8] = calculateContractValue(50, 50, TotalRate);//???//11-3 (10 / 7) 60%
 }
+//BaseValue为在0%大成功概率时获取该契约的概率(单位 %, 0~100)
+//SumValue为该后勤能获得的所有契约的BaseValue之和(单位 %, 0~100)
+//TotalRate为目前的总大成功概率(0~1)
 function calculateContractValue(BaseValue, SumValue, TotalRate) {
     return BaseValue / 100 + (BaseValue / SumValue - BaseValue / 100) * TotalRate;
 }
