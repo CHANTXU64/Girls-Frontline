@@ -5,7 +5,7 @@ class Plan {
         this.ShownTab = ShownTab;
         this.CurrentValue_MAX = ShownTab.CurrentValue_MAX;
         if (Target_Value === undefined) {
-            this.TargetValue_html = Input_getTarget_Correct(); 
+            this.TargetValue_html = this._CorrectTargetValueHtml(); 
             this.TargetValue = this._CorrectTargetValue();
         }
         else {
@@ -26,6 +26,26 @@ class Plan {
         for (var i = 0; i < length; i++) {
             this.List[i] = new Array(13);//13为该方案价值
         }
+    }
+    //取得输入的TargetValue, 并防止资源(或契约)之间之比过大(最大5000倍)
+    _CorrectTargetValueHtml() {
+        var TargetValue_html = Input_getTarget_Correct();
+        var ResourceValue = TargetValue_html.slice(0, 4);
+        var ContractValue = TargetValue_html.slice(4, 8);
+        ResourceValue = this._CorrectTargetValueHtml_main(ResourceValue);
+        ContractValue = this._CorrectTargetValueHtml_main(ContractValue);
+        TargetValue_html = ResourceValue.concat(ContractValue);
+        Input_setTarget(TargetValue_html);
+        return TargetValue_html;
+    }
+    _CorrectTargetValueHtml_main(Array4) {
+        var MaxValue = ArrayMax(Array4);
+        var MinValue = Math.round(MaxValue / 5000 * 100) / 100;
+        for (var i = 0; i < 4; i++) {
+            if (Array4[i] !== 0)
+                Array4[i] = Math.max(MinValue, Array4[i]);
+        }
+        return Array4;
     }
     _CorrectTargetValue() {
         var ResourceValue = this._CorrectResourceValue();

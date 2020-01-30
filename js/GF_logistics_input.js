@@ -58,19 +58,16 @@ function Input_setGreatSuccessUpRate(is_RateUP, NeedCorrectBaseRate = true) {
 
 function Input_getTarget_Correct(Target_JQ_elem = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QPT"), $("#QRT")], NeedCorrection = true) {
     if (Array.isArray(Target_JQ_elem))
-        return _getTarget_Arr(Target_JQ_elem, NeedCorrection);
+        return _getValue_Arr(Target_JQ_elem, NeedCorrection);
     else
-        return _getTarget_one(Target_JQ_elem, NeedCorrection);
+        return getPositiveValueFromHTML(Target_JQ_elem, NeedCorrection);
 }
-function _getTarget_Arr(Target_JQ_elem_Arr, NeedCorrection) {
+function _getValue_Arr(Target_JQ_elem_Arr, NeedCorrection) {
     var TargetValue_Arr = [];
     for (var i = 0; i < Target_JQ_elem_Arr.length; i++) {
         TargetValue_Arr.push(getPositiveValueFromHTML(Target_JQ_elem_Arr[i], NeedCorrection));
     }
     return TargetValue_Arr;
-}
-function _getTarget_one(Target_JQ_elem, NeedCorrection) {
-    return getPositiveValueFromHTML(Target_JQ_elem, NeedCorrection);
 }
 
 function Input_setTarget(TargetValue = [0,0,0,0,0,0,0,0], Target_JQ_elem = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QPT"), $("#QRT")]) {
@@ -240,3 +237,60 @@ function Input_getExecutionTimes(NeedCorrection = false) {
         Times_elem.val(Times);
     return Times;
 }
+
+//calcTargetValueTool-------
+function Input_getCalcTargetValueTool_Target(NeedCorrection = false) {
+    var Target_JQ_elem = [$("#calcTargetValueTool_Target_Manp"), 
+            $("#calcTargetValueTool_Target_Ammu"), $("#calcTargetValueTool_Target_Rati"), 
+            $("#calcTargetValueTool_Target_Part"), $("#calcTargetValueTool_Target_TPro"), 
+            $("#calcTargetValueTool_Target_Equi"), $("#calcTargetValueTool_Target_QPro"), $("#calcTargetValueTool_Target_QRes")];
+    return _getValue_Arr(Target_JQ_elem, NeedCorrection);
+}
+
+function Input_setCalcTargetValueTool_Target(TargetValue = [0, 0, 0, 0, 0, 0, 0, 0]) {
+    var Target_JQ_elem = [$("#calcTargetValueTool_Target_Manp"), 
+            $("#calcTargetValueTool_Target_Ammu"), $("#calcTargetValueTool_Target_Rati"), 
+            $("#calcTargetValueTool_Target_Part"), $("#calcTargetValueTool_Target_TPro"), 
+            $("#calcTargetValueTool_Target_Equi"), $("#calcTargetValueTool_Target_QPro"), $("#calcTargetValueTool_Target_QRes")];
+    _setTarget_arr(TargetValue, Target_JQ_elem);
+    storageSetItem("CalcTargetValueTool_Target", Input_getCalcTargetValueTool_Target());
+}
+
+function Input_getCalcTargetValueTool_Current(NeedCorrection = false) {
+    var Current_JQ_elem = [$("#calcTargetValueTool_Current_Manp"), 
+            $("#calcTargetValueTool_Current_Ammu"), $("#calcTargetValueTool_Current_Rati"), 
+            $("#calcTargetValueTool_Current_Part"), $("#calcTargetValueTool_Current_TPro"), 
+            $("#calcTargetValueTool_Current_Equi"), $("#calcTargetValueTool_Current_QPro"), $("#calcTargetValueTool_Current_QRes")];
+    return _getValue_Arr(Current_JQ_elem, NeedCorrection);
+}
+
+function Input_setCalcTargetValueTool_Current(CurrentValue = [0, 0, 0, 0, 0, 0, 0, 0]) {
+    var Current_JQ_elem = [$("#calcTargetValueTool_Current_Manp"), 
+            $("#calcTargetValueTool_Current_Ammu"), $("#calcTargetValueTool_Current_Rati"), 
+            $("#calcTargetValueTool_Current_Part"), $("#calcTargetValueTool_Current_TPro"), 
+            $("#calcTargetValueTool_Current_Equi"), $("#calcTargetValueTool_Current_QPro"), $("#calcTargetValueTool_Current_QRes")];
+    _setTarget_arr(CurrentValue, Current_JQ_elem);
+    storageSetItem("CalcTargetValueTool_Current", Input_getCalcTargetValueTool_Current());
+}
+
+function Input_getCalcTargetValueTool_InputExecutionTimes(NeedCorrection = false) {
+    var Times_elem = $("#calcTargetValueTool_InputExecutionTimes");
+    var Times = Times_elem.val();
+    if (is_NonPositiveNumberOrInfinity(Times) || Times < 1)
+        Times = 1;
+    else if (Times > 999)
+        Times = 999;
+    else
+        Times = Math.round(Times);
+    if (NeedCorrection)
+        Times_elem.val(Times);
+    return Times;
+}
+
+function Input_setCalcTargetValueTool_InputExecutionTimes(ExecutionTimes = 1) {
+    var Times_elem = $("#calcTargetValueTool_InputExecutionTimes");
+    ExecutionTimes = Math.round(ExecutionTimes);
+    Times_elem.val(ExecutionTimes);
+    storageSetItem("CalcTargetValueTool_ExecutionTimes", Input_getCalcTargetValueTool_InputExecutionTimes());
+}
+//--------------------------

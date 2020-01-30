@@ -13,6 +13,8 @@ window.onload = function () {
     MobileOptimization();
     if (document.getElementById("setTargetInput").getBoundingClientRect().width <= 260)
         disableTargetButton();
+    if (document.getElementById("wrapper").getBoundingClientRect().width <= 1600)
+        document.getElementById("page-wrapper").style.marginLeft = "0";
 };
 
 $(window).resize(function () {
@@ -20,6 +22,10 @@ $(window).resize(function () {
         disableTargetButton();
     else
         enableTargetButton();
+    if (document.getElementById("wrapper").getBoundingClientRect().width <= 1600)
+        document.getElementById("page-wrapper").style.marginLeft = "0";
+    else
+        document.getElementById("page-wrapper").style.marginLeft = "250px";
 })
 
 function disableTargetButton() {
@@ -88,7 +94,7 @@ function changeLanguage(lang) {
 
 function IsMobile(){
     var userAgentInfo = navigator.userAgent;
-    var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+    var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod", "KFAPWI");
     var flag = false;
     for (var v = 0; v < Agents.length; v++) {
         if (userAgentInfo.indexOf(Agents[v]) > 0) {
@@ -103,11 +109,14 @@ function MobileOptimization() {
     if (IsMobile()) {
         document.getElementById("Saved").style.transition = "none";
         document.getElementById("MissionTable_panel").style.transition = "none";
+        document.getElementById("calcTargetValueTool_panel").style.transition = "none";
         if (storageGetItem("IsSavedShow") === "noStorage") {
             $("#MissionTable_panel").collapse("hide");
         }
         document.getElementById("page-header").style.marginTop = "20px";
+        document.getElementById("page-wrapper").style.marginLeft = "0";
         document.getElementById("page-wrapper").style.padding = "0";
+        document.getElementById("calcTargetValueTool_apply_icon").innerHTML = " &darr;";
     }
 }
 

@@ -11,7 +11,6 @@
     <title>少女前线-后勤组合排序器</title>
     <!-- css and script -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../vendor/startbootstrap/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../css/GF_logistics.css" rel="stylesheet">
     <script src="../vendor/jquery-v2.1.1/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -35,58 +34,22 @@
     <script src="../js/GF_logistics_MissionTable.js"></script>
     <script src="../js/GF_logistics_PlanDetails.js"></script>
     <script src="../js/GF_logistics_Saved.js"></script>
+    <script src="../js/GF_logistics_calcTargetValueTool.js"></script>
 
 
 
 
-    
+
     <!-- css and script End-->
 </head>
 
 <body>
-    <div id="wrapper">
-        <!-- <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html"><span style="color:#FF0066">少女前线工具</span> by 命运の乐章 (GF tools)</a>
-            </div>
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav in" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                        </li>
-                        <li><a href="index.html">主页</a></li>
-                        <li><a href="GFT_Database.html">资料库</a></li>
-                        <li><a href="GFT_LogiRank.html">后勤排序器</a></li>
-                        <li><a href="GF_logistics.html" class="active">后勤组合排序器</a></li>
-                        <li><a href="GFT_LevelCal.html">练级计算器</a></li>
-                        <li><a href="GFT_IOPSimulate.html">建造模拟器</a></li>
-                        <li><a href="GFT_ChipCal.html">芯片计算器</a></li>
-                        <li><a href="GFT_Echelon.html"><i class="glyphicon glyphicon-screenshot"></i> &nbsp;阵形模拟器</a></li>
-                        <li><a href="GFT_Stat.html"><i class="glyphicon glyphicon-stats"></i> &nbsp;掉落统计</a></li>
-                        <li><a href="GFT_Class.html">格里芬人事部</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav> -->
-        <div id="page-wrapper" style="min-width: 300px;">
+    <div id="wrapper" style="background-color: rgb(245, 245, 245);">
+        <div id="page-wrapper" style="min-width: 300px; padding: 0 15px 0 15px; margin-left: 250px; background-color: #FFFFFF;">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-7">
-                        <h1 class="page-header" id="page-header">
+                        <h1 class="page-header" id="page-header" style="margin-top: 30px;">
                             <span id="header" style="cursor: default;"></span><div 
                             class="btn-group"><button type="button" class="btn btn-default dropdown-toggle"
                                     data-toggle="dropdown">中文 <span class="caret"></span></button>
@@ -101,7 +64,7 @@
                     </div>
                     <div class="col-lg-5">
                         <div class="form-group input-group"
-                            style="max-width: 360px; margin-top: 20px; margin-right: 0; margin-left: auto;">
+                            style="max-width: 400px; margin-top: 20px; margin-right: 0; margin-left: auto;">
                             <span class="input-group-addon" id="Config_text" style="cursor: default;"></span>
                             <input type="text" class="form-control" style="min-width: 40px;" id="Config_importInput"
                                 value="" onclick="this.select()" autocomplete="off">
@@ -267,7 +230,7 @@
                                         </div>
                                     </div>
                                     <h4 id="h4ChapterLimit" style="cursor: default;"></h4>
-                                    <select class="form-control" id="ChapterLimit" autocomplete="off">
+                                    <select class="form-control" id="ChapterLimit" autocomplete="off" style="margin-bottom: 15px;">
                                         <option value=6 id="chapter6"></option>
                                         <option value=7 id="chapter7"></option>
                                         <option value=8 id="chapter8"></option>
@@ -276,6 +239,113 @@
                                         <option value=11 id="chapter11"></option>
                                         <option value=12 id="chapter12" selected></option>
                                     </select>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" style="border-bottom-width: 0;">
+                                            <h4 class="panel-title"><a data-toggle="collapse" href="#calcTargetValueTool_panel" id="calcTargetValueTool_title" class="collapsed"></a></h4>
+                                        </div>
+                                        <div id="calcTargetValueTool_panel" class="panel-collapse collapse">
+                                            <div class="panel-body" style="padding: 0;">
+                                                <div class="table-responsive" style="margin-bottom: 0; border: 0;">
+                                                    <table class="table table-responsive text-nowrap table-condensed"
+                                                        style="border: 0;margin-bottom: 0; width: 100%; font-size: 13px; text-align: center; cursor: default; table-layout: fixed;">
+                                                        <tbody id="calcTargetValueTool">
+                                                            <tr>
+                                                                <td colspan="8" id="calcTargetValueTool_Target_text" style="width: 720px; text-align: left;"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td id="calcTargetValueTool_Target_Manp_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Target_Ammu_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Target_Rati_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Target_Part_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Target_TPro_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Target_Equi_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Target_QPro_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Target_QRes_text" style="width: 90px;"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="8" style="padding: 0; margin-top: 0; border-top: 0;">
+                                                                    <div class="form-group input-group" style="margin-bottom: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_Manp" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-radius: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_Ammu" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_Rati" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_Part" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_TPro" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_Equi" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_QPro" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_QRes" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-right: 0; border-radius: 0;">
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="8" id="calcTargetValueTool_Current_text" style="width: 720px; text-align: left; border-top-width: 3px;"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td id="calcTargetValueTool_Current_Manp_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Current_Ammu_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Current_Rati_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Current_Part_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Current_TPro_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Current_Equi_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Current_QPro_text" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Current_QRes_text" style="width: 90px;"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="8" style="padding: 0; margin-top: 0; border-top: 0;">
+                                                                    <div class="form-group input-group" style="margin-bottom: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_Manp" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-radius: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_Ammu" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_Rati" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_Part" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_TPro" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_Equi" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_QPro" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_QRes" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-right: 0; border-radius: 0;">
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" style="padding: 0; margin-top: 0; border-top: 0;">
+                                                                    <div class="form-group input-group" style="margin-bottom: 0;">
+                                                                        <label for="calcTargetValueTool_InputExecutionTimes" id="calcTargetValueTool_InputExecutionTimes_label" class="input-group-addon" style="font-size: 13px; border-radius: 0; border: 0;"></label>
+                                                                        <input type="number" pattern="\d*" min="1" max="999" step="1" id="calcTargetValueTool_InputExecutionTimes" class="form-control" onclick="this.select()" value="1" style="height: 28px;padding:3px 6px 3px 6px; border-radius: 0; border-width: 0 0 0 1px;" autocomplete="off">
+                                                                </td>
+                                                                <td colspan="6" style="padding: 0; margin-top: 0; border-top: 0;" align="left">
+                                                                    <div class="input-group-btn">
+                                                                        <button class="btn btn-danger" type="button" id="calcTargetValueTool_clear" style="height: 28px;padding:3px 20px 3px 20px;font-size:13px; border-width: 0 1px 0 1px;"></button>
+                                                                        <button class="btn btn-primary" type="button" id="calcTargetValueTool_startCalc" style="height: 28px;padding:3px 20px 3px 20px;font-size:13px; border-width: 0 1px 0 1px;"></button>
+                                                                        <button class="btn btn-success" type="button" id="calcTargetValueTool_apply" style="height: 28px;padding:3px 20px 3px 20px;font-size:13px; border-width: 0 1px 0 1px;">
+                                                                        <span id="calcTargetValueTool_apply_text"></span>
+                                                                        <span id="calcTargetValueTool_apply_icon"> &rarr;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr">
+                                                                <td id="calcTargetValueTool_Result_Manp_text" style="width: 90px; border-top-width: 4px;"></td>
+                                                                <td id="calcTargetValueTool_Result_Ammu_text" style="width: 90px; border-top-width: 4px;"></td>
+                                                                <td id="calcTargetValueTool_Result_Rati_text" style="width: 90px; border-top-width: 4px;"></td>
+                                                                <td id="calcTargetValueTool_Result_Part_text" style="width: 90px; border-top-width: 4px;"></td>
+                                                                <td id="calcTargetValueTool_Result_TPro_text" style="width: 90px; border-top-width: 4px;"></td>
+                                                                <td id="calcTargetValueTool_Result_Equi_text" style="width: 90px; border-top-width: 4px;"></td>
+                                                                <td id="calcTargetValueTool_Result_QPro_text" style="width: 90px; border-top-width: 4px;"></td>
+                                                                <td id="calcTargetValueTool_Result_QRes_text" style="width: 90px; border-top-width: 4px;"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td id="calcTargetValueTool_Result_Manp_value" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Result_Ammu_value" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Result_Rati_value" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Result_Part_value" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Result_TPro_value" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Result_Equi_value" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Result_QPro_value" style="width: 90px;"></td>
+                                                                <td id="calcTargetValueTool_Result_QRes_value" style="width: 90px;"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-5" id="target">
                                     <h4 id="Demand" style="cursor: default;"></h4>
@@ -361,7 +431,7 @@
                                 <div id="MissionTable_panel" class="panel-collapse collapse in" aria-expanded="true">
                                     <div class="panel-body" style="padding: 0;">
                                         <div class="table-responsive"
-                                            style="max-height: 500px; overflow-y: auto; margin-bottom: 0; border: 0;">
+                                            style="max-height: 540px; overflow-y: auto; margin-bottom: 0; border: 0;">
                                             <table class="table table-responsive text-nowrap table-condensed"
                                                 style="border: 0;text-align: center; margin-bottom: 0;">
                                                 <thead>
@@ -447,35 +517,35 @@
                                                         <td colspan=10 id="PlanDetails_Chart"></td>
                                                     </tr>
                                                 </tbody>
-                                                <tbody style="border-top-width: 1px;">
+                                                <tbody style="border-top-width: 0;">
                                                     <tr>
                                                         <td colspan=3 style="width: 174px; padding: 0; border: 0;">
                                                             <div class="input-group-btn">
                                                                 <button class="btn btn-default" type="button" id="savePlan"
-                                                                    style="width:90px; height: 28px;padding:3px 6px 3px 6px;font-size:13px;"></button>
+                                                                    style="width:90px; height: 28px;padding:3px 6px 3px 6px;font-size:13px;border-left-width: 0;border-bottom-width: 0;"></button>
                                                                 <button class="btn btn-default" type="button" id="Capture"
-                                                                    style="width:90px; height: 28px;padding:3px 6px 3px 6px;font-size:13px;"></button>
+                                                                    style="width:90px; height: 28px;padding:3px 6px 3px 6px;font-size:13px;border-bottom-width: 0;"></button>
                                                             </div>
                                                         </td>
                                                         <td colspan=4 style="width: 232px; padding: 0; border: 0;">
                                                             <div class="form-group input-group" style="margin-bottom: 0;">
-                                                                <label for="PlanDetails_InputStartTime" id="PlanDetails_InputStartTime_label"
+                                                                <label for="PlanDetails_InputStartTime" id="PlanDetails_InputStartTime_label" style="font-size: 13px; border-radius: 0;border-bottom-width: 0;"
                                                                     class="input-group-addon"></label>
                                                                 <input name=hh%3Amm type="time" step="60" id="PlanDetails_InputStartTime" class="form-control" value="00:00"
-                                                                    onclick="this.select()" style="height: 28px;padding:3px 6px 3px 6px;" autocomplete="off">
+                                                                    onclick="this.select()" style="height: 28px;padding:3px 6px 3px 6px; border-radius: 0;border-bottom-width: 0;" autocomplete="off">
                                                             </div>
                                                         </td>
                                                         <td colspan=3 style="width: 174px; padding: 0; border: 0;">
                                                             <div class="form-group input-group" style="margin-bottom: 0;">
-                                                                <label for="PlanDetails_InputExecutionTimes" id="PlanDetails_InputExecutionTimes_label"
+                                                                <label for="PlanDetails_InputExecutionTimes" id="PlanDetails_InputExecutionTimes_label" style="font-size: 13px; border-radius: 0; border-left-width: 0;border-bottom-width: 0;"
                                                                     class="input-group-addon"></label>
                                                                 <input type="number" pattern="\d*" min="1" max="999" step="1" id="PlanDetails_InputExecutionTimes"
-                                                                    class="form-control" onclick="this.select()" value="1" style="height: 28px;padding:3px 6px 3px 6px;"
+                                                                    class="form-control" onclick="this.select()" value="1" style="height: 28px;padding:3px 6px 3px 6px; border-radius: 0; border-right-width: 0;border-bottom-width: 0;"
                                                                     autocomplete="off">
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                </tbody>
+                                                </tbody style="border-top-width: 1px;">
                                             </table>
                                         </div>
                                     </div>

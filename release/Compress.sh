@@ -34,9 +34,11 @@ babel ./GF_logistics_PlanDetails.js -o ./15.js
 rm ./GF_logistics_PlanDetails.js
 babel ./GF_logistics_Saved.js -o ./16.js
 rm ./GF_logistics_Saved.js
+babel ./GF_logistics_calcTargetValueTool.js -o ./17.js
+rm ./GF_logistics_calcTargetValueTool.js
 rm ./.babelrc
-uglifyjs ./1.js ./2.js ./3.js ./4.js ./5.js ./6.js ./7.js ./8.js ./9.js ./10.js ./11.js ./12.js ./13.js ./14.js ./15.js ./16.js -c -m -o ./js/GF_logistics0.min.js --toplevel
-rm ./1.js ./2.js ./3.js ./4.js ./5.js ./6.js ./7.js ./8.js ./9.js ./10.js ./11.js ./12.js ./13.js ./14.js ./15.js ./16.js
+uglifyjs ./1.js ./2.js ./3.js ./4.js ./5.js ./6.js ./7.js ./8.js ./9.js ./10.js ./11.js ./12.js ./13.js ./14.js ./15.js ./16.js ./17.js -c -m -o ./js/GF_logistics0.min.js --toplevel
+rm ./1.js ./2.js ./3.js ./4.js ./5.js ./6.js ./7.js ./8.js ./9.js ./10.js ./11.js ./12.js ./13.js ./14.js ./15.js ./16.js ./17.js
 echo "/**
  * [GF_logistics]{@link https://github.com/CHANTXU64/Girls-Frontline}
  *

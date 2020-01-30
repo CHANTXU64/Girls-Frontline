@@ -63,6 +63,7 @@ function setPageByLocalStorage() {
     LS_setTarget();
     LS_setSaved();
     LS_setSavedOrMissionsShow();
+    LS_setCalcTargetValueTool();
 }
 
 function LS_setDescription(display = storageGetItem("Description_Display")) {
@@ -158,7 +159,16 @@ function LS_setSavedOrMissionsShow(IsSavedShow = storageGetItem("IsSavedShow")) 
     }
 }
 
-//ShownTab-PerHourOrTotal-TabAnytimeCustom-TabTimetableCustom-GreatSuccessRate-GreatSuccessRateUP-SelectChapter-ContractWeight-Target-Saved
+function LS_setCalcTargetValueTool(TargetValue = storageGetItem("CalcTargetValueTool_Target"), CurrentValue = storageGetItem("CalcTargetValueTool_Current"), ExecutionTimes = storageGetItem("CalcTargetValueTool_ExecutionTimes")) {
+    if (TargetValue !== "noStorage")
+        Input_setCalcTargetValueTool_Target(TargetValue);
+    if (CurrentValue !== "noStorage")
+        Input_setCalcTargetValueTool_Current(CurrentValue);
+    if (ExecutionTimes !== "noStorage")
+        Input_setCalcTargetValueTool_InputExecutionTimes(ExecutionTimes);
+}
+
+//ShownTab-PerHourOrTotal-TabAnytimeCustom-TabTimetableCustom-GreatSuccessRate-GreatSuccessRateUP-SelectChapter-ContractWeight-Target-Saved-calcTargetValueTool(3)
 function Config_export(){
     var data = [];
     data.push(HTML_TAB);
@@ -176,6 +186,9 @@ function Config_export(){
     data.push(Input_getContractWeight());
     data.push(Input_getTarget_Correct());
     data.push(SAVED);
+    data.push(Input_getCalcTargetValueTool_Target());
+    data.push(Input_getCalcTargetValueTool_Current());
+    data.push(Input_getCalcTargetValueTool_InputExecutionTimes());
     var SHA1 = sha1(JSON.stringify(data));
     var config = {data: [], SHA1: ""};
     config.data = data;
@@ -216,4 +229,5 @@ function setPageByImport_main(data) {
     MISSION_TABLE_SELECT = [];
     PrintMissionTable();
     PrintPlanDetails();
+    LS_setCalcTargetValueTool(data[10], data[11], data[12]);
 }

@@ -22,6 +22,7 @@ $(function (){
     });
 });
 
+//Tab
 var IS_ChangeTabByJS = false;
 $(function (){
     $("[href=#Tab_Anytime]").on("shown.bs.tab", function(){
@@ -38,6 +39,7 @@ $(function (){
     });
 });
 
+//Hourly Total
 $(function (){
     $("input[id^=Display_]").on("click", function(){
         if (is_CalculateByHour())
@@ -59,6 +61,7 @@ $(function (){
     });
 });
 
+//GreatSuccess
 $(function (){
     $("#GreatSuccessRate").on("input propertychange",function() {
         const Rate = Input_getGreatSuccessRate();
@@ -84,6 +87,7 @@ $(function (){
     });
 });
 
+//ChapterLimit
 $(function() {
     $("#ChapterLimit").on("change", function() {
         PrintMissionTable();
@@ -203,21 +207,16 @@ function Tab_Timetable_AddNew() {
     Tab_Timetable_changeStorageCustom();
 }
 
-$(function() {
-    $("#ContractWeight").change(function() {
-        storageSetItem("ContractWeight", Input_getContractWeight());
-    });
-});
-
+//Target
 $(function() {
     $("#target").on("click", "button[id^=setTarget_]", function() {
         setTarget(stringSliceFromLast_(this.id));
     });
+    $("#ContractWeight").change(function() {
+        storageSetItem("ContractWeight", Input_getContractWeight());
+    });
     $("#target").on("click", "button[id^=Target_minus_]", function() {ChangeTarget(this.id);});
     $("#target").on("click", "button[id^=Target_plus_]", function() {ChangeTarget(this.id);});
-});
-
-$(function() {
     $("#target").on("blur", "#MT", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#MT", function(e) {
         if (is_KeyIsEnter(e)) {
@@ -273,6 +272,7 @@ function TargetChangeStorage() {
     storageSetItem("TargetValue", Input_getTarget_Correct());
 }
 
+//start_sorting
 $(function() {
     $("#start_sorting").on("click", function() {start_sorting_main();});
     $("#clear_sorting").on("click", function() {
@@ -281,15 +281,9 @@ $(function() {
     });
 });
 
+//Result Plan
 $(function() {
-    $("#Plan_Table").on("shown.bs.collapse", "#FineTuningTool", function() {
-        if (!IsMobile())
-            document.getElementById("FineTuningTool").style.transition = "";
-    });
-});
-
-//排序结果点击
-$(function() {
+    //排序结果点击
     $("#Plan_Table").on("click", "tr[id^=print_result_plan_tr_]", function() {
         _PlanSort(this);
     });
@@ -297,22 +291,7 @@ $(function() {
         if (is_KeyIsEnter(e))
             _PlanSort(this);
     });
-});
-function _PlanSort(elem) {
-    const number = parseInt(stringSliceFromLast_(elem.id));
-    if (elem.className != "success") {
-        for (let i = 0; i < RESULT_PLAN.length; i++) {
-            document.getElementById("print_result_plan_tr_" + i).className = "";
-        }
-        elem.className = "success";
-        MissionTable_resultPlan_select(number);
-    }
-    else
-        elem.className = "";
-}
-
-//对排序结果某一项排序
-$(function() {
+    //对排序结果某一项排序
     $("#Plan_Table").on("click", "#resultPlan_Mission", function() {
         RESULT_PLAN_SORT_BY = "Ranking";
         resultPlan_sortByColumn(0, "ascending");
@@ -404,12 +383,30 @@ $(function() {
         }
     });
 });
+function _PlanSort(elem) {
+    const number = parseInt(stringSliceFromLast_(elem.id));
+    if (elem.className != "success") {
+        for (let i = 0; i < RESULT_PLAN.length; i++) {
+            document.getElementById("print_result_plan_tr_" + i).className = "";
+        }
+        elem.className = "success";
+        MissionTable_resultPlan_select(number);
+    }
+    else
+        elem.className = "";
+}
 
+//Fine Tuning Tool
 $(function () {
+    $("#Plan_Table").on("shown.bs.collapse", "#FineTuningTool", function() {
+        if (!IsMobile())
+            document.getElementById("FineTuningTool").style.transition = "";
+    });
     $("#Plan_Table").on("click", "button[id^=FineTuning_minus_]", function() {FineTuning(-1, stringSliceFromLast_(this.id));});
     $("#Plan_Table").on("click", "button[id^=FineTuning_plus_]", function() {FineTuning(1, stringSliceFromLast_(this.id));});
 });
 
+//Saved
 $(function() {
     $("#Saved_heading").on("keyup", function(e) {
         if (is_KeyIsEnter(e)) {
@@ -459,6 +456,7 @@ $(function() {
     $("#Saved_Body").on("click", "button[id^=SavedTable_delete_]", function() {Saved_deleteThisRow(parseInt(stringSliceFromLast_(this.id)));});
 });
 
+//MissionTable
 $(function() {
     $("#MissionTable_heading").on("keyup", function(e) {
         if (is_KeyIsEnter(e)) {
@@ -592,6 +590,7 @@ function MissionTable_clickThisRow(elem) {
         MissionTable_selectThisRow(number);
 }
 
+//Saved MissionTable Panel
 $(function() {
     $("#MissionTable_panel").on("shown.bs.collapse", function() {
         storageSetItem("IsSavedShow", false);
@@ -607,6 +606,7 @@ $(function() {
     });
 });
 
+//Plan Details
 $(function() {
     $("#savePlan").on("click", function() {saveThisPlan();});
     $("#Capture").on("click", function() {
@@ -641,11 +641,118 @@ $(function() {
     });
 });
 
+//Config
 $(function() {
     $("#Config_export").on("click", function() {Config_export();});
     $("#Config_importButton").on("click", function() {
         const input = $("#Config_importInput").val();
         setPageByImport(input);
         $("#Config_importInput").val("");
+    });
+});
+
+//calcTargetValueTool
+$(function() {
+    $("#calcTargetValueTool_clear").on("click", function() {calcTargetValueTool_Clear();});
+    $("#calcTargetValueTool_startCalc").on("click", function() {calcTargetValueTool_startCalc();});
+    $("#calcTargetValueTool_apply").on("click", function() {calcTargetValueTool_apply();});
+    $("input[id^=calcTargetValueTool_Target_]").on("blur", function() {storageSetItem("CalcTargetValueTool_Target", Input_getCalcTargetValueTool_Target());});
+    $("input[id^=calcTargetValueTool_Current_]").on("blur", function() {storageSetItem("CalcTargetValueTool_Current", Input_getCalcTargetValueTool_Current());});
+    $("#calcTargetValueTool_InputExecutionTimes").on("blur", function() {storageSetItem("CalcTargetValueTool_ExecutionTimes", Input_getCalcTargetValueTool_InputExecutionTimes());});
+    $("#calcTargetValueTool_Target_Manp").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Target_Ammu").focus();
+            $("#calcTargetValueTool_Target_Ammu").select();
+        }
+    });
+    $("#calcTargetValueTool_Target_Ammu").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Target_Rati").focus();
+            $("#calcTargetValueTool_Target_Rati").select();
+        }
+    });
+    $("#calcTargetValueTool_Target_Rati").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Target_Part").focus();
+            $("#calcTargetValueTool_Target_Part").select();
+        }
+    });
+    $("#calcTargetValueTool_Target_Part").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Target_TPro").focus();
+            $("#calcTargetValueTool_Target_TPro").select();
+        }
+    });
+    $("#calcTargetValueTool_Target_TPro").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Target_Equi").focus();
+            $("#calcTargetValueTool_Target_Equi").select();
+        }
+    });
+    $("#calcTargetValueTool_Target_Equi").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Target_QPro").focus();
+            $("#calcTargetValueTool_Target_QPro").select();
+        }
+    });
+    $("#calcTargetValueTool_Target_QPro").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Target_QRes").focus();
+            $("#calcTargetValueTool_Target_QRes").select();
+        }
+    });
+    $("#calcTargetValueTool_Target_QRes").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Current_Manp").focus();
+            $("#calcTargetValueTool_Current_Manp").select();
+        }
+    });
+    $("#calcTargetValueTool_Current_Manp").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Current_Ammu").focus();
+            $("#calcTargetValueTool_Current_Ammu").select();
+        }
+    });
+    $("#calcTargetValueTool_Current_Ammu").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Current_Rati").focus();
+            $("#calcTargetValueTool_Current_Rati").select();
+        }
+    });
+    $("#calcTargetValueTool_Current_Rati").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Current_Part").focus();
+            $("#calcTargetValueTool_Current_Part").select();
+        }
+    });
+    $("#calcTargetValueTool_Current_Part").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Current_TPro").focus();
+            $("#calcTargetValueTool_Current_TPro").select();
+        }
+    });
+    $("#calcTargetValueTool_Current_TPro").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Current_Equi").focus();
+            $("#calcTargetValueTool_Current_Equi").select();
+        }
+    });
+    $("#calcTargetValueTool_Current_Equi").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Current_QPro").focus();
+            $("#calcTargetValueTool_Current_QPro").select();
+        }
+    });
+    $("#calcTargetValueTool_Current_QPro").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_Current_QRes").focus();
+            $("#calcTargetValueTool_Current_QRes").select();
+        }
+    });
+    $("#calcTargetValueTool_Current_QRes").on("keyup", function(e) {
+        if (is_KeyIsEnter(e)) {
+            $("#calcTargetValueTool_InputExecutionTimes").focus();
+            $("#calcTargetValueTool_InputExecutionTimes").select();
+        }
     });
 });
