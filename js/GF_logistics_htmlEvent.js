@@ -8,6 +8,7 @@ function is_KeyIsEnter(e) {
 $(function (){
     $("#lang-zh-CN").on("click", function(){changeLanguage("zh-CN");});
     $("#lang-zh-TW").on("click", function(){changeLanguage("zh-TW");});
+    $("#lang-en").on("click", function(){changeLanguage("en");});
 });
 
 $(function (){

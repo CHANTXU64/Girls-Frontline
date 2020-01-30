@@ -73,6 +73,7 @@ function loadHTML_language() {
     _PrintPlanDetails_ShownTab();
     _PrintPlanDetails_TotalTime();
     _PrintPlanDetails_GreatSuccessRate();
+    _PrintPlanDetails_ExecutionTimes();
     $("#PlanDetails_PerHour_title").html(language.JS.PerHour);
     $("#PlanDetails_Total_title").html(language.JS.Total);
     $("#PlanDetails_AnytimeMinIntervalTime").html(language.JS.MinIntervalTime);
@@ -84,4 +85,17 @@ function loadHTML_language() {
     else {
         $("#Demand").html(language.HTMLJS.Demand_total);
     }
+
+    loadHTML_language_css();
+}
+function loadHTML_language_css() {
+    var lang = language.CSS;
+    document.getElementById("Manp").style.width = lang.TargetValueSpan_Width;
+    document.getElementById("Ammu").style.width = lang.TargetValueSpan_Width;
+    document.getElementById("Rati").style.width = lang.TargetValueSpan_Width;
+    document.getElementById("Part").style.width = lang.TargetValueSpan_Width;
+    document.getElementById("TPro").style.width = lang.TargetValueSpan_Width;
+    document.getElementById("Equi").style.width = lang.TargetValueSpan_Width;
+    document.getElementById("QPro").style.width = lang.TargetValueSpan_Width;
+    document.getElementById("QRes").style.width = lang.TargetValueSpan_Width;
 }

@@ -63,8 +63,8 @@ function setLanguage() {
         }
     }
     else {
-        language = languages["zh-CN"];
-        storageSetItem("lang", "zh-CN");
+        language = languages["en"];
+        storageSetItem("lang", "en");
     }
 }
 
@@ -77,6 +77,10 @@ function changeLanguage(lang) {
         case 'zh-TW':
             storageSetItem("lang", 'zh-TW');
             language = languages["zh-TW"];
+            break;
+        case 'en':
+            storageSetItem("lang", 'en');
+            language = languages["en"];
             break;
     }
     loadHTML_language();
@@ -102,6 +106,8 @@ function MobileOptimization() {
         if (storageGetItem("IsSavedShow") === "noStorage") {
             $("#MissionTable_panel").collapse("hide");
         }
+        document.getElementById("page-header").style.marginTop = "20px";
+        document.getElementById("page-wrapper").style.padding = "0";
     }
 }
 
