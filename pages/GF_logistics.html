@@ -67,7 +67,7 @@
                             style="max-width: 400px; margin-top: 20px; margin-right: 0; margin-left: auto;">
                             <span class="input-group-addon" id="Config_text" style="cursor: default;"></span>
                             <input type="text" class="form-control" style="min-width: 40px;" id="Config_importInput"
-                                value="" onclick="this.select()" autocomplete="off">
+                                value="" onfocus="this.select();" autocomplete="off">
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-default" id="Config_importButton">
                                     <span class="glyphicon glyphicon-import" style="top: 2px;"></span></button>
@@ -122,22 +122,22 @@
                                         <div class="tab-pane fade in active" id="Tab_Anytime">
                                             <h4 id="tab_Anytime_time" style="cursor: default;"></h4>
                                             <div class="form-group input-group">
-                                                <input type="number" pattern="\d*" min="0" max="72"
+                                                <input type="number" min="0" max="72"
                                                     class="form-control" id="Time_Anytime_hours" value=16
-                                                    onclick="this.select()" autocomplete="off">
+                                                    onfocus="this.select();" autocomplete="off">
                                                 <label for="Time_Anytime_hours" class="input-group-addon"
                                                     style="border-left-width: 0" id="tab_Anytime_hour"></label>
-                                                <input type="number" pattern="\d*" min="0" max="60" class="form-control"
+                                                <input type="number" min="0" max="60" class="form-control"
                                                     style="border-left-width: 0" id="Time_Anytime_minutes" value=0
-                                                    onclick="this.select()" autocomplete="off">
+                                                    onfocus="this.select();" autocomplete="off">
                                                 <label for="Time_Anytime_minutes" class="input-group-addon"
                                                     id="tab_Anytime_minute"></label>
                                             </div>
                                             <h4 id="tab_Anytime_MinimumIntervalTime" style="cursor: default;"></h4>
                                             <div class="form-group input-group">
-                                                <input type="number" pattern="\d*" min="0" max="60" class="form-control"
+                                                <input type="number" min="0" max="60" class="form-control"
                                                     id="Tab_Anytime_MinimumIntervalTime_minutes" value=0
-                                                    onclick="this.select()" autocomplete="off">
+                                                    onfocus="this.select();" autocomplete="off">
                                                 <label for="Tab_Anytime_MinimumIntervalTime_minutes"
                                                     class="input-group-addon"
                                                     id="tab_Anytime_MinimumIntervalTime_minute"></label>
@@ -148,15 +148,15 @@
                                             <div class="row" style="margin-left: 0; margin-right: 0;">
                                                 <div class="col-lg-10" style="padding-left: 0; padding-right: 0;">
                                                     <div class="form-group input-group">
-                                                        <input type="number" pattern="\d*" min="0" max="72"
+                                                        <input type="number" min="0" max="72"
                                                             class="form-control" id="Time_Timetable_hours" value=5
-                                                            onclick="this.select()" autocomplete="off">
+                                                            onfocus="this.select();" autocomplete="off">
                                                         <label for="Time_Timetable_hours" class="input-group-addon"
                                                             style="border-left-width: 0"
                                                             id="tab_Timetable_hour"></label>
-                                                        <input type="number" pattern="\d*" min="0" max="60"
+                                                        <input type="number" min="0" max="60"
                                                             class="form-control" style="border-left-width: 0"
-                                                            id="Time_Timetable_minutes" value=0 onclick="this.select()"
+                                                            id="Time_Timetable_minutes" value=0 onfocus="this.select();"
                                                             autocomplete="off">
                                                         <label for="Time_Timetable_minutes" class="input-group-addon"
                                                             id="tab_Timetable_minute"></label>
@@ -188,14 +188,14 @@
                                             </div>
                                             <label id="tab_Timetable_addtimeh5" for="Tab_Timetable_AddNew"></label>
                                             <div class="form-group input-group" id="Tab_Timetable_AddNew">
-                                                <input type="number" pattern="\d*" min="0" max="72"
+                                                <input type="number" min="0" max="72"
                                                     class="form-control" id="Tab_Timetable_new_hours"
-                                                    onclick="this.select()" autocomplete="off">
+                                                    onfocus="this.select();" autocomplete="off">
                                                 <label for="Tab_Timetable_new_hours" class="input-group-addon"
                                                     style="border-left-width: 0" id="tab_Timetable_new_hour"></label>
-                                                <input type="number" pattern="\d*" min="0" max="60" class="form-control"
+                                                <input type="number" min="0" max="60" class="form-control"
                                                     style="border-left-width: 0" id="Tab_Timetable_new_minutes"
-                                                    onclick="this.select()" autocomplete="off">
+                                                    onfocus="this.select();" autocomplete="off">
                                                 <label for="Tab_Timetable_new_minutes" class="input-group-addon"
                                                     style="border-left-width: 0" id="tab_Timetable_new_minute"></label>
                                                 <div class="input-group-btn">
@@ -212,9 +212,9 @@
                                         <div class="col-lg-6 col-md-6 col-sm-6" style="min-width: 180px;">
                                             <div class="form-group input-group"
                                                 style="margin-bottom: 0; min-width: 180px;">
-                                                <input type="number" pattern="\d*" min="15" max="69"
+                                                <input type="number" min="15" max="69"
                                                     class="form-control" id="GreatSuccessRate" value=60
-                                                    onclick="this.select()" style="min-width: 60px;" autocomplete="off">
+                                                    onfocus="this.select();" style="min-width: 60px;" autocomplete="off">
                                                 <label for="GreatSuccessRate" class="input-group-addon"
                                                     id="Display_UPRate" style="border-left-width: 0"></label>
                                                 <label for="GreatSuccessRate" class="input-group-addon">%</label>
@@ -257,14 +257,14 @@
                                                             <tr>
                                                                 <td colspan="8" style="padding: 0; margin-top: 0; border-top: 0;">
                                                                     <div class="form-group input-group" style="margin-bottom: 0; width: max-content;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_Manp" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-radius: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_Ammu" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_Rati" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_Part" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_TPro" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_Equi" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_QPro" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_QRes" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-right: 0; border-radius: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_Manp" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-radius: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_Ammu" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_Rati" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_Part" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_TPro" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_Equi" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_QPro" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Target_QRes" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-right: 0; border-radius: 0;">
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -284,14 +284,14 @@
                                                             <tr>
                                                                 <td colspan="8" style="padding: 0; margin-top: 0; border-top: 0;">
                                                                     <div class="form-group input-group" style="margin-bottom: 0; width: max-content;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_Manp" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-radius: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_Ammu" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_Rati" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_Part" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_TPro" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_Equi" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_QPro" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_QRes" onclick="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-right: 0; border-radius: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_Manp" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-radius: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_Ammu" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_Rati" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_Part" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_TPro" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_Equi" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_QPro" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
+                                                                        <input type="number" id="calcTargetValueTool_Current_QRes" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-right: 0; border-radius: 0;">
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -299,7 +299,7 @@
                                                                 <td colspan="2" style="padding: 0; margin-top: 0; border-top: 0;">
                                                                     <div class="form-group input-group" style="margin-bottom: 0;">
                                                                         <label for="calcTargetValueTool_InputExecutionTimes" id="calcTargetValueTool_InputExecutionTimes_label" class="input-group-addon" style="font-size: 13px; border-radius: 0; border: 0;"></label>
-                                                                        <input type="number" pattern="\d*" min="1" max="999" step="1" id="calcTargetValueTool_InputExecutionTimes" class="form-control" onclick="this.select()" value="1" style="height: 28px;padding:3px 6px 3px 6px; border-radius: 0; border-width: 0 0 0 1px;" autocomplete="off">
+                                                                        <input type="number" min="1" max="999" step="1" id="calcTargetValueTool_InputExecutionTimes" class="form-control" onfocus="this.select();" value="1" style="height: 28px;padding:3px 6px 3px 6px; border-radius: 0; border-width: 0 0 0 1px;" autocomplete="off">
                                                                 </td>
                                                                 <td colspan="6" style="padding: 0; margin-top: 0; border-top: 0;" align="left">
                                                                     <div class="input-group-btn">
@@ -393,7 +393,7 @@
                                                             style="margin-bottom: 0; width:100%; max-width: 320px;">
                                                             <input type="text" class="form-control"
                                                                 style="min-width: 140px;" id="importSaved_input"
-                                                                value="" onclick="this.select()" autocomplete="off">
+                                                                value="" onfocus="this.select();" autocomplete="off">
                                                             <div class="input-group-btn">
                                                                 <button type="button" class="btn btn-default"
                                                                     id="importSaved_importButton" title="">
@@ -474,7 +474,7 @@
                                 <div class="panel panel-default" style="max-width: 612px;">
                                     <div class="panel-heading" id="PlanDetailsTitle" style="cursor: default; border-bottom: 0;"></div>
                                     <div class="panel-body" style="padding: 0;">
-                                        <div class="table-responsive" style="margin-bottom: 0; border: 0;">
+                                        <div class="table-responsive" style="margin-bottom: 0; border: 0; overflow-y: hidden;">
                                             <table class="table table-responsive text-nowrap table-condensed"
                                                 style="border: 0;margin-bottom: 0; width: 610px; font-size: 13px; text-align: center; cursor: default;">
                                                 <tbody id="PlanDetails">
@@ -514,30 +514,26 @@
                                                         <td colspan=3 style="padding: 0; border: 0;">
                                                             <div class="input-group-btn" style="width: 183px;">
                                                                 <button class="btn btn-default" type="button" id="savePlan"
-                                                                    style="width: 91px; height: 28px; padding:3px 6px 3px 6px; font-size:13px; border-bottom-width: 0; border-left-width: 0;"></button>
+                                                                    style="line-height: 28px; width: 91px; height: 28px; padding:0 6px 0 6px; font-size:13px; border-bottom-width: 0; border-left-width: 0;"></button>
                                                                 <button class="btn btn-default" type="button" id="Capture"
-                                                                    style="width: 92px; height: 28px; padding:3px 6px 3px 6px; font-size:13px; border-bottom-width: 0; border-right-width: 0;"></button>
+                                                                    style="line-height: 28px; width: 92px; height: 28px; padding:0 6px 0 6px; font-size:13px; border-bottom-width: 0; border-right-width: 0;"></button>
                                                             </div>
                                                         </td>
-                                                        <td colspan=4 style="padding: 0; border: 0;">
-                                                            <div class="form-group input-group" style="margin-bottom: 0; width: 244px;">
+                                                        <td colspan=7 style="padding: 0; border: 0;">
+                                                            <div class="form-group input-group" style="margin-bottom: 0; width: 427px;">
                                                                 <label for="PlanDetails_InputStartTime" id="PlanDetails_InputStartTime_label" style="font-size: 13px; border-radius: 0;border-bottom-width: 0;"
                                                                     class="input-group-addon"></label>
-                                                                <input name=hh%3Amm type="time" step="60" id="PlanDetails_InputStartTime" class="form-control" value="00:00"
-                                                                    onclick="this.select()" style="height: 28px;padding:3px 6px 3px 6px; border-radius: 0;border-bottom-width: 0;" autocomplete="off">
-                                                            </div>
-                                                        </td>
-                                                        <td colspan=3 style="width: 183px; padding: 0; border: 0;">
-                                                            <div class="form-group input-group" style="margin-bottom: 0;">
+                                                                <input type="time" step="60" id="PlanDetails_InputStartTime" class="form-control" value="00:00"
+                                                                    onfocus="this.select();" style="height: 28px;padding:0 6px 0 6px; border-radius: 0;border-bottom-width: 0; line-height: 28px;" autocomplete="off">
                                                                 <label for="PlanDetails_InputExecutionTimes" id="PlanDetails_InputExecutionTimes_label" style="font-size: 13px; border-radius: 0; border-left-width: 0;border-bottom-width: 0;"
                                                                     class="input-group-addon"></label>
-                                                                <input type="number" pattern="\d*" min="1" max="999" step="1" id="PlanDetails_InputExecutionTimes"
-                                                                    class="form-control" onclick="this.select()" value="1" style="height: 28px;padding:3px 6px 3px 6px; border-radius: 0; border-right-width: 0;border-bottom-width: 0;"
+                                                                <input type="number" min="1" max="999" step="1" id="PlanDetails_InputExecutionTimes"
+                                                                    class="form-control" onfocus="this.select();" value="1" style="height: 28px;padding:3px 6px 3px 6px; border-radius: 0;border-left-width: 0; border-right-width: 0;border-bottom-width: 0;"
                                                                     autocomplete="off">
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                </tbody style="border-top-width: 1px;">
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>

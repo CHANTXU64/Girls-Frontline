@@ -219,52 +219,38 @@ $(function() {
     $("#target").on("click", "button[id^=Target_plus_]", function() {ChangeTarget(this.id);});
     $("#target").on("blur", "#MT", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#MT", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#AT").focus();
-            $("#AT").select();
-        }
     });
     $("#target").on("blur", "#AT", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#AT", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#RT").focus();
-            $("#RT").select();
-        }
     });
     $("#target").on("blur", "#RT", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#RT", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#PT").focus();
-            $("#PT").select();
-        }
     });
     $("#target").on("blur", "#PT", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#PT", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#TT").focus();
-            $("#TT").select();
-        }
     });
     $("#target").on("blur", "#TT", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#TT", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#ET").focus();
-            $("#ET").select();
-        }
     });
     $("#target").on("blur", "#ET", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#ET", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#QPT").focus();
-            $("#QPT").select();
-        }
     });
     $("#target").on("blur", "#QPT", function() {TargetChangeStorage();});
     $("#target").on("keyup", "#QPT", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#QRT").focus();
-            $("#QRT").select();
-        }
     });
     $("#target").on("blur", "#QRT", function() {TargetChangeStorage();});
 });
@@ -660,99 +646,67 @@ $(function() {
     $("input[id^=calcTargetValueTool_Current_]").on("blur", function() {storageSetItem("CalcTargetValueTool_Current", Input_getCalcTargetValueTool_Current());});
     $("#calcTargetValueTool_InputExecutionTimes").on("blur", function() {storageSetItem("CalcTargetValueTool_ExecutionTimes", Input_getCalcTargetValueTool_InputExecutionTimes());});
     $("#calcTargetValueTool_Target_Manp").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Target_Ammu").focus();
-            $("#calcTargetValueTool_Target_Ammu").select();
-        }
     });
     $("#calcTargetValueTool_Target_Ammu").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Target_Rati").focus();
-            $("#calcTargetValueTool_Target_Rati").select();
-        }
     });
     $("#calcTargetValueTool_Target_Rati").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Target_Part").focus();
-            $("#calcTargetValueTool_Target_Part").select();
-        }
     });
     $("#calcTargetValueTool_Target_Part").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Target_TPro").focus();
-            $("#calcTargetValueTool_Target_TPro").select();
-        }
     });
     $("#calcTargetValueTool_Target_TPro").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Target_Equi").focus();
-            $("#calcTargetValueTool_Target_Equi").select();
-        }
     });
     $("#calcTargetValueTool_Target_Equi").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Target_QPro").focus();
-            $("#calcTargetValueTool_Target_QPro").select();
-        }
     });
     $("#calcTargetValueTool_Target_QPro").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Target_QRes").focus();
-            $("#calcTargetValueTool_Target_QRes").select();
-        }
     });
     $("#calcTargetValueTool_Target_QRes").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Current_Manp").focus();
-            $("#calcTargetValueTool_Current_Manp").select();
-        }
     });
     $("#calcTargetValueTool_Current_Manp").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Current_Ammu").focus();
-            $("#calcTargetValueTool_Current_Ammu").select();
-        }
     });
     $("#calcTargetValueTool_Current_Ammu").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Current_Rati").focus();
-            $("#calcTargetValueTool_Current_Rati").select();
-        }
     });
     $("#calcTargetValueTool_Current_Rati").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Current_Part").focus();
-            $("#calcTargetValueTool_Current_Part").select();
-        }
     });
     $("#calcTargetValueTool_Current_Part").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Current_TPro").focus();
-            $("#calcTargetValueTool_Current_TPro").select();
-        }
     });
     $("#calcTargetValueTool_Current_TPro").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Current_Equi").focus();
-            $("#calcTargetValueTool_Current_Equi").select();
-        }
     });
     $("#calcTargetValueTool_Current_Equi").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Current_QPro").focus();
-            $("#calcTargetValueTool_Current_QPro").select();
-        }
     });
     $("#calcTargetValueTool_Current_QPro").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_Current_QRes").focus();
-            $("#calcTargetValueTool_Current_QRes").select();
-        }
     });
     $("#calcTargetValueTool_Current_QRes").on("keyup", function(e) {
-        if (is_KeyIsEnter(e)) {
+        if (is_KeyIsEnter(e))
             $("#calcTargetValueTool_InputExecutionTimes").focus();
-            $("#calcTargetValueTool_InputExecutionTimes").select();
-        }
     });
 });

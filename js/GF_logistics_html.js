@@ -121,9 +121,6 @@ function MobileOptimization() {
     }
 }
 
-//注释
-$(function (){$("[data-toggle='tooltip']").tooltip();});
-
 //标签页
 let HTML_TAB;
 function ChangeTab(htmltab) {
