@@ -75,9 +75,9 @@ function _PrintPlanDetails_Mission(selectedMissions) {
     let color = ['#C5D8FF', '#FFBFBE', '#B6F4B5', '#FFEBC7'];
     for (let i = 0; i < selectedMissions.length; i++) {
         let tab = "";
-        tab += "<td style='text-align:center; width: 58px;'>" + selectedMissions[i][0] + "</td>";
+        tab += "<td style='text-align:center; width: 61px;'>" + selectedMissions[i][0] + "</td>";
         for (let ii = 1; ii < 9; ii++) {
-            tab += "<td style='text-align:center; width: 58px;'>";
+            tab += "<td style='text-align:center; width: 61px;'>";
             tab += NumberAutoExact(selectedMissions[i][ii] * 60);
             tab += "</td>";
         }
@@ -89,9 +89,9 @@ function _PrintPlanDetails_Mission(selectedMissions) {
 
 function _PrintPlanDetails_PerHour(selectedMissions) {
     let tab = "";
-    tab += "<td style='text-align:center; width: 58px;'id='PlanDetails_PerHour_title'>" + language.JS.PerHour + "</td>";
+    tab += "<td style='text-align:center; width: 61px;'id='PlanDetails_PerHour_title'>" + language.JS.PerHour + "</td>";
     for (let i = 1; i < 9; i++) {
-        tab += "<td style='text-align:center; width: 58px;'>";
+        tab += "<td style='text-align:center; width: 61px;'>";
         let ResourceContractValue = 0;
         for (let ii = 0; ii < selectedMissions.length; ii++) {
             ResourceContractValue += selectedMissions[ii][i];
@@ -107,9 +107,9 @@ function _PrintPlanDetails_PerHour(selectedMissions) {
 }
 
 function _PrintPlanDetails_Total(selectedMissions, TotalMinutes, ExecutionTimes) {
-    let tab = "<td style='text-align:center; width: 58px;'id='PlanDetails_Total_title'>" + language.JS.Total + "</td>";
+    let tab = "<td style='text-align:center; width: 61px;'id='PlanDetails_Total_title'>" + language.JS.Total + "</td>";
     for (let i = 1; i < 9; i++) {
-        tab += "<td style='text-align:center; width: 58px;'>";
+        tab += "<td style='text-align:center; width: 61px;'>";
         let ResourceContractValue = 0;
         for (let ii = 0; ii < selectedMissions.length; ii++) {
             ResourceContractValue += selectedMissions[ii][i];
@@ -137,7 +137,7 @@ function _PrintPlanDetails_Total(selectedMissions, TotalMinutes, ExecutionTimes)
 function print_chart(selectedMissions_table, TotalMinutes) {
     if (TotalMinutes > 4320)
         return;
-    document.getElementById('PlanDetails_Chart').style.width = "580px";
+    document.getElementById('PlanDetails_Chart').style.width = "610px";
     document.getElementById('PlanDetails_Chart').style.height = "120px";
     let Chart = echarts.init(document.getElementById('PlanDetails_Chart'));
 

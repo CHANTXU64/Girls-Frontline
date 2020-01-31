@@ -286,3 +286,8 @@ button:disabled {
     -o-transition: left 0.15s ease-out;
     transition: left 0.15s ease-out;
 }
+
+/* 手机切换为英语会导致产生dropdown backdrop的元素导致无法滑动table */
+.dropdown-backdrop {
+    display: none;
+}
