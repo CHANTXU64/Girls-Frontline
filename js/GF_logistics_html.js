@@ -117,7 +117,7 @@ function MobileOptimization() {
         document.getElementById("page-header").style.marginTop = "20px";
         document.getElementById("page-wrapper").style.marginLeft = "0";
         document.getElementById("page-wrapper").style.padding = "0";
-        document.getElementById("calcTargetValueTool_apply_icon").innerHTML = " &darr;";
+        document.getElementById("calcTargetValueTool_apply").innerHTML = "<span id=\"calcTargetValueTool_apply_text\">" + language.HTML.calcTargetValueTool_apply_text + "</span> &darr;";
     }
 }
 
