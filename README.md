@@ -20,4 +20,4 @@ Thanks [FatalChapter](https://github.com/hycdes/GFTool)
 只需要修改js/GF_logistics_data.js, 修改Q数组和setQContract()函数即可.<br>
 (需要注意目前最大能支持到第20战役, 在此之后需要修改lang/languages.js, 增加对应战役的显示语言, 如"chapter21": "第二十一战役")
 
-![image](https://github.com/CHANTXU64/Girls-Frontline/raw/master/GF_logistics_Tab_Timetable-1018x883.png)
+![image](https://github.com/CHANTXU64/Girls-Frontline/raw/master/GF_logistics_Overview.png)
