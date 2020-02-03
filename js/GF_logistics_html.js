@@ -11,7 +11,7 @@ window.onload = function () {
     _PrintPlanDetails_GreatSuccessRate();
     _PrintPlanDetails_ExecutionTimes();
     loadHTML_language();
-    MobileOptimization();
+    MobilePCDevice();
     if (document.getElementById("setTargetInput").getBoundingClientRect().width <= 260)
         disableTargetButton();
     if (document.getElementById("wrapper").getBoundingClientRect().width <= 1600)
@@ -106,7 +106,7 @@ function IsMobile(){
     return flag;
 }
 
-function MobileOptimization() {
+function MobilePCDevice() {
     if (IsMobile()) {
         document.getElementById("Saved").style.transition = "none";
         document.getElementById("MissionTable_panel").style.transition = "none";
@@ -115,9 +115,11 @@ function MobileOptimization() {
             $("#MissionTable_panel").collapse("hide");
         }
         document.getElementById("page-header").style.marginTop = "20px";
-        document.getElementById("page-wrapper").style.marginLeft = "0";
         document.getElementById("page-wrapper").style.padding = "0";
         document.getElementById("calcTargetValueTool_apply").innerHTML = "<span id=\"calcTargetValueTool_apply_text\">" + language.HTML.calcTargetValueTool_apply_text + "</span> &darr;";
+    }
+    else {
+        document.getElementById("page-wrapper").style.marginLeft = "250px";
     }
 }
 
@@ -323,6 +325,7 @@ function HTML_DisableInput() {
     document.getElementById("GreatSuccessRateUp_text").style.cursor='not-allowed';
     document.getElementById("GreatSuccessRateUp_label").style.cursor='not-allowed';
     $("#ChapterLimit").attr('disabled', "true");
+    $("#calcTargetValueTool_apply").attr('disabled', "true");
     $("#ContractWeight").attr('disabled', "true");
     document.getElementById("ContractWeight_thumb").style.backgroundColor='#CCC';
     $("button[id^=setTarget_]").attr('disabled', "true");
@@ -360,6 +363,7 @@ function HTML_AllowInput() {
     document.getElementById("GreatSuccessRateUp_text").style.cursor='pointer';
     document.getElementById("GreatSuccessRateUp_label").style.cursor='pointer';
     $("#ChapterLimit").removeAttr("disabled");
+    $("#calcTargetValueTool_apply").removeAttr("disabled");
     $("#ContractWeight").removeAttr("disabled");
     document.getElementById("ContractWeight_thumb").style.backgroundColor='rgb(112, 166, 236)';
     $("button[id^=setTarget_]").removeAttr("disabled");
