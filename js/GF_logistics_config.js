@@ -228,7 +228,7 @@ function setPageByImport(input) {
     else {
         try {
             //尝试导入v1版本
-            input = LZString.decompressFromEncodedURIComponent(input);
+            input = LZString.decompressFromBase64(input);
             var config = JSON.parse(input);
             let SHA1 = sha1(JSON.stringify(config.data));
             var result = SHA1 === config.SHA1;
