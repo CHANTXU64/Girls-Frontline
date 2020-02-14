@@ -1,369 +1,555 @@
-class Plan {
-    constructor(ShownTab, List_length, Target_Value) {
-        this._setResourceIncreasingRate();
-        this._setList(List_length);
+class Plan_Original {
+    /**
+     * @param {Tab|Tab_Anytime|Tab_Timetable} ShownTab
+     * @param {number} list_length
+     */
+    constructor (ShownTab, list_length) {
+        /**
+         * 方案列表
+         * @type {Array.<Array.<number>>} 
+         */
+        this.List = this._setList(list_length);
+        this.List_length = list_length;
+        this.List_lastIndex = list_length - 1;
+
         this.ShownTab = ShownTab;
-        this.CurrentValue_MAX = ShownTab.CurrentValue_MAX;
-        if (Target_Value === undefined) {
-            this.TargetValue_html = this._CorrectTargetValueHtml(); 
-            this.TargetValue = this._CorrectTargetValue();
+    }
+    /**
+     * @param {number} list_length 
+     * @private
+     */
+    _setList(list_length) {
+        let List = new Array(list_length);
+        for (let i = 0; i < list_length; i++) {
+            List[i] = new Array(13);
         }
-        else {
-            this.TargetValue = Target_Value;
-            this.TargetValue_half = this.TargetValue.slice();
-            for (var i = 0; i < 8; i++) {
-                this.TargetValue_half[i] = this.TargetValue_half[i] * 0.5;
+        return List;
+    }
+
+    /**
+     * 开始排序
+     * @public
+     */
+    ranking() {
+        const Q_Valid_length = this.ShownTab.getQValidLength();
+        const n1_max = Q_Valid_length - 3;
+        const n2_max = Q_Valid_length - 2;
+        const n3_max = Q_Valid_length - 1;
+        const n4_max = Q_Valid_length;
+        for (let n1 = 0; n1 < n1_max; n1++) {
+            for (let n2 = n1 + 1; n2 < n2_max; n2++) {
+                for (let n3 = n2 + 1; n3 < n3_max; n3++) {
+                    for (let n4 = n3 + 1; n4 < n4_max; n4++) {
+                        this._calculateAndPushIntoList(n1, n2, n3, n4);
+                    }
+                }
             }
         }
-        this._Norm_Target = this._getNorm(this.TargetValue);
-    }
-    _setResourceIncreasingRate() {
-        var TotalRate = Input_getTotalGreatSuccessRate(true);
-        this.ResourceIncreasingRate = 1 + (TotalRate) / 200;
-    }
-    _setList(length) {
-        this.List = new Array(length);
-        for (var i = 0; i < length; i++) {
-            this.List[i] = new Array(13);//13为该方案价值
-        }
-    }
-    //取得输入的TargetValue, 并防止资源(或契约)之间之比过大(最大5000倍)
-    _CorrectTargetValueHtml() {
-        var TargetValue_html = Input_getTarget_Correct();
-        var ResourceValue = TargetValue_html.slice(0, 4);
-        var ContractValue = TargetValue_html.slice(4, 8);
-        ResourceValue = this._CorrectTargetValueHtml_main(ResourceValue);
-        ContractValue = this._CorrectTargetValueHtml_main(ContractValue);
-        TargetValue_html = ResourceValue.concat(ContractValue);
-        Input_setTarget(TargetValue_html);
-        return TargetValue_html;
-    }
-    _CorrectTargetValueHtml_main(Array4) {
-        var MaxValue = ArrayMax(Array4);
-        var MinValue = Math.round(MaxValue / 5000 * 100) / 100;
-        for (var i = 0; i < 4; i++) {
-            if (Array4[i] !== 0)
-                Array4[i] = Math.max(MinValue, Array4[i]);
-        }
-        return Array4;
-    }
-    _CorrectTargetValue() {
-        var ResourceValue = this._CorrectResourceValue();
-        var ContractValue = this._CorrectContractValue();
-        var TargetValue = ResourceValue.concat(ContractValue);
-        if (TargetValue.toString() === "0,0,0,0,0,0,0,0") {
-            alert(language.JS.TargetValue0_alert);
-            throw"--";
-        }
-        return TargetValue;
-    }
-    _CorrectResourceValue() {
-        var ResourceValue = this.TargetValue_html.slice(0, 4);
-        var Resource_CalibrationValue = 100 - Input_getContractWeight();
-        if (this._ValuesNotAll0(ResourceValue))
-            this._CorrectValue(ResourceValue, Resource_CalibrationValue);
-        return ResourceValue;
-    }
-    _CorrectContractValue() {
-        var ContractValue = this.TargetValue_html.slice(4, 8);
-        var Contract_CalibrationValue = Input_getContractWeight();
-        if (this._ValuesNotAll0(ContractValue))
-            this._CorrectValue(ContractValue, Contract_CalibrationValue);
-        return ContractValue;
-    }
-    _ValuesNotAll0(Values) {
-        for (var i = 0; i < Values.length; i++) {
-            if (Values[i] !== 0)
-                return true;
-        }
-        return false;
-    }
-    _CorrectValue(Values, CalibrationValue) {
-        var CorrectionRate = CalibrationValue / ArrayMax(Values);
-        for (var i = 0; i < Values.length; i++) {
-            Values[i] *= CorrectionRate;
-        }
     }
 
-	_getNorm(vector) {
-		var norm;
-		var SumOfSquares = 0;
-		for (var i = 0; i < vector.length; i++) {
-			SumOfSquares += vector[i] * vector[i];
-		}
-        norm = Math.pow(SumOfSquares, 0.5);
-        return norm;
-    }
-    
-    CalculateAndPush_Standardization_And_CalculateMissionsValue(Mission_n1, Mission_n2, Mission_n3, Mission_n4) {
-        this._CurrentValue = this.ShownTab.Calculate_Current(Mission_n1, Mission_n2, Mission_n3, Mission_n4);
-        if (this._CurrentValue[0] === -1) {
-            return;
-        }
-
-        var PlanValue = this._calculateValue();
-        var Qvalid = this.ShownTab.Qvalid;
-        Qvalid[Mission_n1][11] += PlanValue;
-        Qvalid[Mission_n2][11] += PlanValue;
-        Qvalid[Mission_n3][11] += PlanValue;
-        Qvalid[Mission_n4][11] += PlanValue;
-        if (!(0 in this.List[this.List.length - 1]))
-            this._push_FirstEmptyRow(Mission_n1, Mission_n2, Mission_n3, Mission_n4, PlanValue);
+    /**
+     * 将方案插入方案列表中, 方案价值越大越好
+     * @param {number} Mission_1
+     * @param {number} Mission_2
+     * @param {number} Mission_3
+     * @param {number} Mission_4
+     * @param {number} planValue - 方案价值, 越大代表方案越好
+     * @param {Array.<number>} currentValue - 方案的资源契约值(/min)
+     * @private
+     */
+    _pushIntoList(Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue) {
+        if (!(0 in this.List[this.List_lastIndex]))
+            this._pushIntoFirstEmpty(Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue);
         else
-            this._push(Mission_n1, Mission_n2, Mission_n3, Mission_n4, PlanValue);
+            this._push(Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue);
     }
-
-    CalculateAndPush_Standardization(Mission_n1, Mission_n2, Mission_n3, Mission_n4) {
-        this._CurrentValue = this.ShownTab.Calculate_Current(Mission_n1, Mission_n2, Mission_n3, Mission_n4);
-        if (this._CurrentValue[0] === -1) {
-            return;
-        }
-        var PlanValue = this._calculateValue();
-        if (!(0 in this.List[this.List.length - 1]))
-            this._push_FirstEmptyRow(Mission_n1, Mission_n2, Mission_n3, Mission_n4, PlanValue);
-        else
-            this._push(Mission_n1, Mission_n2, Mission_n3, Mission_n4, PlanValue);
-    }
-    CalculateAndPush(Mission_n1, Mission_n2, Mission_n3, Mission_n4) {
-        this._CurrentValue = this.ShownTab.Calculate_Current(Mission_n1, Mission_n2, Mission_n3, Mission_n4);
-        if (this._CurrentValue[0] === -1) {
-            return;
-        }
-        for (var i = 0; i < 8; i++) {
-            if (this._CurrentValue[i] < this.TargetValue_half[i])
-                return;
-        }
-        var PlanValue = this._calculateValue_2();
-        if (!(0 in this.List[this.List.length - 1]))
-            this._push_FirstEmptyRow(Mission_n1, Mission_n2, Mission_n3, Mission_n4, PlanValue);
-        else
-            this._push(Mission_n1, Mission_n2, Mission_n3, Mission_n4, PlanValue);
-    }
-    _push_FirstEmptyRow(Mission_n1, Mission_n2, Mission_n3, Mission_n4, PlanValue) {
-        var row = this.List.length - 1;
+    _pushIntoFirstEmpty(Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue) {
+        let row = this.List_lastIndex;
         while (row !== 0 && !(0 in this.List[row - 1]))
             row--;
-        this._PushIntoThisRow(row, Mission_n1, Mission_n2, Mission_n3, Mission_n4, PlanValue);
-        this._SortListByValue(row, PlanValue);
+        this._pushIntoThisRow(row, Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue);
+        this._sortList(row, planValue);
     }
-    _push(Mission_n1, Mission_n2, Mission_n3, Mission_n4, PlanValue) {
-        var ListLastRow = this.List.length - 1;
-        if (PlanValue <= this.List[ListLastRow][12])
-            return;
-        this._PushIntoThisRow(ListLastRow, Mission_n1, Mission_n2, Mission_n3, Mission_n4, PlanValue);
-        this._SortListByValue(ListLastRow, PlanValue);
+    _push(Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue) {
+        let listLastIndex = this.List_lastIndex;
+        if (planValue <= this.List[listLastIndex][12])
+            return ;
+        this._pushIntoThisRow(listLastIndex, Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue);
+        this._sortList(listLastIndex, planValue);
     }
-    _PushIntoThisRow(RowNumber, Mission_n1, Mission_n2, Mission_n3, Mission_n4, PlanValue) {
-        var _CurrentValue = this._CurrentValue;
-        this.List[RowNumber] = [Mission_n1, Mission_n2, Mission_n3, Mission_n4, _CurrentValue[0], _CurrentValue[1], _CurrentValue[2], _CurrentValue[3], _CurrentValue[4], _CurrentValue[5], _CurrentValue[6], _CurrentValue[7], PlanValue];
+    _pushIntoThisRow(row, Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue) {
+        this.List[row] = [Mission_1, Mission_2, Mission_3, Mission_4, currentValue[0], currentValue[1], currentValue[2], currentValue[3], currentValue[4], currentValue[5], currentValue[6], currentValue[7], planValue];
     }
-    _SortListByValue(thisrow, PlanValue) {
-        for (var i = thisrow - 1; i >= 0; i--) {
-            if (PlanValue > this.List[i][12])
+    _sortList(row, planValue) {
+        for (let i = row - 1; i >= 0; i--) {
+            if (planValue > this.List[i][12])
                 [this.List[i + 1], this.List[i]] = [this.List[i], this.List[i + 1]];
             else
                 break;
         }
     }
+    //End pushIntoList()
+}
 
-    _calculateValue() {
-        var CurrentValue = [0, 0, 0, 0, 0, 0, 0, 0];
-        var TargetValue = this.TargetValue;
-        var _CurrentValue = this._CurrentValue;
-        if (TargetValue[0] !== 0)
-            CurrentValue[0] = _CurrentValue[0];
-        if (TargetValue[1] !== 0)
-            CurrentValue[1] = _CurrentValue[1];
-        if (TargetValue[2] !== 0)
-            CurrentValue[2] = _CurrentValue[2];
-        if (TargetValue[3] !== 0)
-            CurrentValue[3] = _CurrentValue[3];
-        if (TargetValue[4] !== 0)
-            CurrentValue[4] = _CurrentValue[4] * 500;
-        if (TargetValue[5] !== 0)
-            CurrentValue[5] = _CurrentValue[5] * 500;
-        if (TargetValue[6] !== 0)
-            CurrentValue[6] = _CurrentValue[6] * 500;
-        if (TargetValue[7] !== 0)
-            CurrentValue[7] = _CurrentValue[7] * 500;
-        var Norm_Current = this._getNorm(CurrentValue);
-        if (Norm_Current === 0)
+/**
+ * 正式排序前为标准化归一化而进行的一次大致排序
+ * @class
+ */
+class Plan_Stdzn extends Plan_Original {
+    /**
+     * QValidMaxLength限制是为正式排序做准备, 减少无用关卡以加快计算速度
+     * @param {Tab|Tab_Anytime|Tab_Timetable} ShownTab - 已经setQValid的ShownTab
+     * @param {number} list_length
+     * @param {number} QValidMaxLength_firstCalc - 用于这次限制QValid长度加快计算
+     * @param {number} QValidMaxLength_secondCalc - 用于正式计算, 若QValid.length大于, 则还需进行更详细的关卡价值计算
+     */
+    constructor (ShownTab, list_length, QValidMaxLength_firstCalc, QValidMaxLength_secondCalc) {
+        super(ShownTab, list_length);
+
+        let QValid_length = this.ShownTab.getQValidLength();
+        this.QValidMaxLength_1 = Math.min(QValidMaxLength_firstCalc, QValid_length);
+        this.QValidMaxLength_2 = Math.min(QValidMaxLength_secondCalc, QValid_length);
+    
+        //如果Qvalid大于第二次计算最大限制长度, 将再计算关卡价值以便排除无用的关卡
+        if (QValid_length > QValidMaxLength_secondCalc) {
+            this._calculateAndPushIntoList = this._calculateAndPushIntoList_andCalculateMissionsValue;
+
+            //用来记录关卡价值
+            let Qvalid_missionValue = new Array(this.QValidMaxLength_1);
+            Qvalid_missionValue.fill(0);
+            this.Qvalid_missionValue = Qvalid_missionValue;
+        }
+        else
+            this._calculateAndPushIntoList = this._calculateAndPushIntoList_normal;
+
+        this.targetValue_html = this._correctTargetValueHTML();
+        this.targetValue = this._correctTargetValue();
+        this._norm_target = this._getNorm(this.targetValue);
+    }
+    /** 
+     * 取得页面上的TargetValue, 并防止资源(或契约)之间之比过大(最大5000倍)
+     * @returns {Array.<number>}
+     */
+    _correctTargetValueHTML() {
+        let targetValue_html = Input_getTarget_Correct();
+        let ResourceValue = targetValue_html.slice(0, 4);
+        let ContractValue = targetValue_html.slice(4, 8);
+        ResourceValue = this._correctTargetValueHTML_main(ResourceValue);
+        ContractValue = this._correctTargetValueHTML_main(ContractValue);
+        targetValue_html = ResourceValue.concat(ContractValue);
+        Input_setTarget(targetValue_html);
+        return targetValue_html;
+    }
+    /** @param {Array.<number>} Array4 - 资源或契约数组, 长度为4 */
+    _correctTargetValueHTML_main(Array4) {
+        const MaxValue = ArrayMax(Array4);
+        const MinValue = Math.round(MaxValue / 5000 * 100) / 100;
+        for (let i = 0; i < 4; i++) {
+            if (Array4[i] !== 0)
+                Array4[i] = Math.max(MinValue, Array4[i]);
+        }
+        return Array4;
+    }
+    _correctTargetValue() {
+        let ResourceValue = this._correctResourceValue();
+        let ContractValue = this._correctContractValue();
+        let TargetValue = ResourceValue.concat(ContractValue);
+        if ("" + TargetValue === "0,0,0,0,0,0,0,0") {
+            alert(language.JS.TargetValue0_alert);
+            throw "Warning: TargetValue cannot all be 0!";
+        }
+        return TargetValue;
+    }
+    _correctResourceValue() {
+        let ResourceValue = this.targetValue_html.slice(0, 4);
+        const Resource_CalibrationValue = 100 - Input_getContractWeight();
+        if (this._valuesNotAll0(ResourceValue))
+            this._correctValue(ResourceValue, Resource_CalibrationValue);
+        return ResourceValue;
+    }
+    _correctContractValue() {
+        let ContractValue = this.targetValue_html.slice(4, 8);
+        const Contract_CalibrationValue = Input_getContractWeight();
+        if (this._valuesNotAll0(ContractValue))
+            this._correctValue(ContractValue, Contract_CalibrationValue);
+        return ContractValue;
+    }
+    _valuesNotAll0(Values) {
+        for (let i = 0; i < Values.length; i++) {
+            if (Values[i] !== 0)
+                return true;
+        }
+        return false;
+    }
+    /**
+     * @param {Array.<number>} Values 
+     * @param {number} CalibrationValue 
+     */
+    _correctValue(Values, CalibrationValue) {
+        const CorrectionRate = CalibrationValue / ArrayMax(Values);
+        for (let i = 0; i < Values.length; i++) {
+            Values[i] *= CorrectionRate;
+        }
+    }
+    //End constructor
+
+    /**
+     * 取得向量(数组)的模
+     * @param {Array.<number>} vector - 8维向量
+     * @returns {number} 模
+     * @private
+     */
+    _getNorm(vector) {
+        let sumOfSquares = 0;
+        for (let i = 0; i < 8; i++) {
+            sumOfSquares += Math.pow(vector[i], 2);
+        }
+        return Math.pow(sumOfSquares, 0.5);
+    }
+
+    /**
+     * 开始排序
+     * @public
+     */
+    ranking() {
+        this.ShownTab.deleteUselessMissions(this.QValidMaxLength_1, this.targetValue);
+        super.ranking();
+        if (this.ShownTab.getQValidLength() > this.QValidMaxLength_2)
+            this.ShownTab.deleteUselessMissions(this.QValidMaxLength_2, this.targetValue, this.Qvalid_missionValue);
+    }
+
+    /**
+     * 由四个关卡计算出方案, 并添加进方案列表中, 并计算关卡价值
+     * @param {number} Mission_1
+     * @param {number} Mission_2
+     * @param {number} Mission_3
+     * @param {number} Mission_4
+     * @private
+     */
+    _calculateAndPushIntoList_andCalculateMissionsValue(Mission_1, Mission_2, Mission_3, Mission_4) {
+        let currentValue = this.ShownTab.calculateCurrentValue(Mission_1, Mission_2, Mission_3, Mission_4);
+
+        //ShownTab的计算现值函数返回全为-1的数组, 说明由于某些原因该组合不可用
+        if (currentValue[0] === -1) {
+            return;
+        }
+
+        let planValue = this._calculateValue(currentValue);
+
+        //计算关卡价值, 将该方案价值加入该方案的所有关卡价值中
+        let Qvalid_missionValue = this.Qvalid_missionValue;
+        Qvalid_missionValue[Mission_1] += planValue;
+        Qvalid_missionValue[Mission_2] += planValue;
+        Qvalid_missionValue[Mission_3] += planValue;
+        Qvalid_missionValue[Mission_4] += planValue;
+
+        this._pushIntoList(Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue);
+    }
+
+    /**
+     * 由四个关卡计算出方案, 并添加进方案列表中
+     * @param {number} Mission_1
+     * @param {number} Mission_2
+     * @param {number} Mission_3
+     * @param {number} Mission_4
+     * @private
+     */
+    _calculateAndPushIntoList_normal(Mission_1, Mission_2, Mission_3, Mission_4) {
+        let currentValue = this.ShownTab.calculateCurrentValue(Mission_1, Mission_2, Mission_3, Mission_4);
+
+        //ShownTab的计算现值函数返回全为-1的数组, 说明由于某些原因该组合不可用
+        if (currentValue[0] === -1) {
+            return;
+        }
+
+        let planValue = this._calculateValue(currentValue);
+        this._pushIntoList(Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue);
+    }
+
+    /**
+     * 方案价值算法 目标向量与现值向量的点积与余弦相似度的乘积
+     * @param {Array.<number>} _currentValue
+     * @private
+     */
+    _calculateValue(_currentValue) {
+        let targetValue = this.targetValue;
+
+        //因为这种计算方案价值算法考虑了目标向量与现值向量的余弦相似度
+        //当某一目标值为0, 对应现值也应计为0, 否则会由于余弦相似度减小导致方案价值变小
+        let currentValue = [0, 0, 0, 0, 0, 0, 0, 0];
+        if (targetValue[0] !== 0) currentValue[0] = _currentValue[0];
+        if (targetValue[1] !== 0) currentValue[1] = _currentValue[1];
+        if (targetValue[2] !== 0) currentValue[2] = _currentValue[2];
+        if (targetValue[3] !== 0) currentValue[3] = _currentValue[3];
+        if (targetValue[4] !== 0) currentValue[4] = _currentValue[4] * 500;
+        if (targetValue[5] !== 0) currentValue[5] = _currentValue[5] * 500;
+        if (targetValue[6] !== 0) currentValue[6] = _currentValue[6] * 500;
+        if (targetValue[7] !== 0) currentValue[7] = _currentValue[7] * 500;
+
+        const norm_current = this._getNorm(currentValue);
+        if (norm_current === 0)
             return 0;
-        var Dot_product = this._getDotProduct(CurrentValue, this.TargetValue);
-        var CurrentScalarProjection = Dot_product / this._Norm_Target;
-        var COStheta = CurrentScalarProjection / Norm_Current;
-        var theta_ = (-0.698131700797732 * COStheta * COStheta - 0.872664625997164) * COStheta + 1.57079632679489;
-        var theta = 0 < theta_ ? theta_ : 0;
-        var CosineSimilarity_ = 1 - 0.5 * theta;
-        var CosineSimilarity = CosineSimilarity_ * CosineSimilarity_;
-        return CurrentScalarProjection * CosineSimilarity;
+        const dotProduct = this._getDotProduct(currentValue, targetValue);
+        const currentScalarProjection = dotProduct / this._norm_target;
+        const COStheta = currentScalarProjection / norm_current;
+
+        //acos近似算法
+        const theta_ = (-0.698131700797732 * COStheta * COStheta - 0.872664625997164) * COStheta + 1.57079632679489;
+        const theta = 0 < theta_ ? theta_ : 0;
+
+        const cosineSimilarity_ = 1 - 0.5 * theta;
+        const cosineSimilarity = cosineSimilarity_ * cosineSimilarity_;
+        return currentScalarProjection * cosineSimilarity;
     }
-    // 仅适用于此
+
+    /**
+     * 计算两个8维向量(数组)的点积
+     * @param {Array.<number>} vector1 - 数组长度为8
+     * @param {Array.<number>} vector2 - 数组长度为8
+     * @private
+     */
     _getDotProduct(vector1, vector2) {
-        var Dot_product = 0;
-        for (var i = 0; i < 8; i++) {//vector1 == vector2 == 8
-            Dot_product += (vector1[i] * vector2[i]);
+        let dotProduct = 0;
+        for (let i = 0; i < 8; i++) {//vector1 == vector2 == 8
+            dotProduct += (vector1[i] * vector2[i]);
         }
-        return Dot_product;
+        return dotProduct;
     }
 
-    _calculateValue_2() {
-        return Value2(this.TargetValue, this._CurrentValue);
+    /**
+     * 在ranking之后可计算标准化的TargetValue
+     * @returns {Array.<number>} 已标准化的targetValue
+     * @public
+     */
+    getStdznTargetValue() {
+        let targetValue = this._getAvgCurrentByList();
+        let target_Resource = targetValue.slice(0, 4);
+        target_Resource.class = "Resource";
+        let target_Contract = targetValue.slice(4, 8);
+        target_Contract.class = "Contract";
+        let Resource_CalibrationValue = this._getCalibration(target_Resource);
+        let Contract_CalibrationValue = this._getCalibration(target_Contract);
+        for (let i = 0; i < 4; i++) {
+            if (Resource_CalibrationValue !== 0)
+                targetValue[i] = this.targetValue_html[i] / Resource_CalibrationValue;
+            else
+                targetValue[i] = 0;
+        }
+        for (let i = 4; i < 8; i++) {
+            if (Contract_CalibrationValue !== 0)
+                targetValue[i] = this.targetValue_html[i] / Contract_CalibrationValue;
+            else
+                targetValue[i] = 0;
+        }
+        return targetValue;
+    }
+    /**
+     * 由List的实际能获取到的资源契约来假定targetValue
+     * @returns {Array.<number>} 每种资源契约在所有方案中平均(不计入0)获取到的值
+     * @private
+     */
+    _getAvgCurrentByList() {
+        let avgCurrentValue = [0, 0, 0, 0, 0, 0, 0, 0];
+        let validLength = new Array(8);
+        let list = this.List;
+        validLength.fill(this.List_length);
+        for (let i = 0; i < 8; i++) {
+            for (let ii = 0; ii < this.List_length; ii++) {
+                avgCurrentValue[i] += list[ii][i + 4];
+                if (list[ii][i + 4] === 0)
+                    validLength[i]--;
+            }
+        }
+        for (let i = 0; i < 8; i++) {
+            if (validLength[i] === 0)
+                avgCurrentValue[i] = 0;
+            else
+                avgCurrentValue[i] /= validLength[i];
+        }
+        return avgCurrentValue;
+    }
+    /**
+     * @param {Array.<number>} target_0 - 资源或契约目标值(4数组)
+     * @private
+     */
+    _getCalibration(target_0) {
+        let target_0_html = this._getTarget0Html(target_0.class);
+        let current_0_max = this._getCurrent0Max(target_0.class);
+        let calibration = 0;
+        let validLength = target_0.length;
+        for (let i = 0; i < target_0.length; i++) {
+            if (target_0[i] !== 0) {
+                calibration += (target_0_html[i] / target_0[i]);
+                if (target_0_html[i] === 0)
+                    validLength--;
+            }
+            else
+                validLength--;
+        }
+        if (calibration !== 0)
+            calibration /= validLength;
+        else {
+            let Current_0_AMAX = 0;
+            let validLength = target_0.length;
+            for (let i = 0; i < target_0.length; i++) {
+                if (current_0_max[i] !== 0)
+                    Current_0_AMAX += current_0_max[i];
+                else
+                    validLength--;
+            }
+            if (validLength === 0)
+                Current_0_AMAX = 0;
+            else
+                Current_0_AMAX /= validLength;
+            let Target_0_html_MAX = ArrayMax(target_0_html);
+            calibration = Target_0_html_MAX / Current_0_AMAX;
+        }
+        return calibration;
+    }
+    /**
+     * @param {string} target_0_class
+     * @returns {Array.<number>}
+     * @private
+     */
+    _getTarget0Html(target_0_class) {
+        let target_0_html = new Array(4);
+        if (target_0_class === "Resource")
+            target_0_html = this.targetValue_html.slice(0, 4);
+        else
+            target_0_html = this.targetValue_html.slice(4, 8);
+        return target_0_html;
+    }
+    /**
+     * @param {string} target_0_class
+     * @returns {Array.<number>}
+     * @private
+     */
+    _getCurrent0Max(target_0_class) {
+        let current_0_max = new Array(4);
+        if (target_0_class === "Resource")
+            current_0_max = this.ShownTab.getCurrentValueMax().slice(0, 4);
+        else
+            current_0_max = this.ShownTab.getCurrentValueMax().slice(4, 8);
+        return current_0_max;
+    }
+}
+
+/**
+ * 正式排序, 在此之前需要标准化归一化数据
+ * @class
+ */
+class Plan extends Plan_Original {
+    /**
+     * @param {Tab|Tab_Anytime|Tab_Timetable} ShownTab - 已经setQValid的ShownTab
+     * @param {number} list_length
+     * @param {Array.<number>} targetValue_StandardizationAndNormalization - 资源契约目标值(已进行标准化归一化的值)
+     */
+    constructor (ShownTab, list_length, targetValue_StandardizationAndNormalization) {
+        super(ShownTab, list_length);
+        this.targetValue = targetValue_StandardizationAndNormalization;
+
+        //由于已标准化归一化, 当方案的现值小于目标值一半可以直接跳过
+        this.targetValue_half = this.targetValue.slice();
+        for (let i = 0; i < 8; i++) {
+            this.targetValue_half[i] = this.targetValue_half[i] * 0.5;
+        }
     }
 
-    print(fineTuningExpanded, SortBy = "Ranking") {
-        if (!(0 in this.List[0])) {
-            var Table = document.getElementById("Plan_Table");
-            Table.innerHTML = language.JS.NoPlan;
-            RESULT_PLAN = [];
-            throw"--";
+    /**
+     * 由四个关卡计算出方案, 并添加进方案列表中
+     * @param {number} Mission_1
+     * @param {number} Mission_2
+     * @param {number} Mission_3
+     * @param {number} Mission_4
+     * @private
+     */
+    _calculateAndPushIntoList(Mission_1, Mission_2, Mission_3, Mission_4) {
+        let currentValue = this.ShownTab.calculateCurrentValue(Mission_1, Mission_2, Mission_3, Mission_4);
+
+        //ShownTab的计算现值函数返回全为-1的数组, 说明由于某些原因该组合不可用
+        if (currentValue[0] === -1)
+            return ;
+
+        for (let i = 0; i < 8; i++) {
+            if (currentValue[i] < this.targetValue_half[i])
+                return ;
         }
-        var result_plan = [];
-        for (var i = 0; i < this.List.length; i++) {
-            if (!(0 in this.List[i])) break;
-            var one_plan = [];
+
+        let planValue = this._calculateValue(currentValue);
+        this._pushIntoList(Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue);
+    }
+
+    /**
+     * 计算方案价值
+     * @param {Array.<number>} currentValue
+     * @private
+     */
+    _calculateValue(currentValue) {
+        let value = 0;
+        let minval = 99999999999;
+        let targetValue = this.targetValue;
+        for (let i = 0; i < 8; i++) {
+            if (targetValue[i] !== 0)
+                minval = Math.min(minval, currentValue[i] / targetValue[i]);
+        }
+        for (let i = 0; i < 8; i++) {
+            value += this._calculateValue_main(targetValue[i], currentValue[i], minval);
+        }
+        return value;
+    }
+    /**
+     * @param {number} target
+     * @param {number} current
+     * @param {number} minval
+     * @private
+     */
+    _calculateValue_main(target, current, minval) {
+        if (target === 0)
+            return 0;
+        return 0.5 * (Math.min(current, target) + Math.min(current, 1.5 * target * minval));
+    }
+
+    /**
+     * 打印方案
+     * @param {string} sortBy - 排序方式, 默认为Ranking
+     * @public
+     */
+    print(sortBy = "Ranking") {
+        let ShownTab = this.ShownTab;
+        let QValid = ShownTab.getQValid(true);
+        let currentValue_MAX = ShownTab.getCurrentValueMax();
+        let result_plan = [];
+
+        for (let i = 0; i < this.List_length; i++) {
+            const List_i_row = this.List[i];
+            if (!(0 in List_i_row))
+                break;
+            
+            /**
+             * 0Ranking序号-1关卡1-2关卡2-3关卡3-4关卡4-5~12 8种资源契约-自定义内容...
+             * @type {Array.<number|string>}
+             */
+            let one_plan = [];
+
             one_plan.push(i);
-            var MissionsNumber = new Array(4);
-            for (var ii = 0; ii < 4; ii++) {
-                MissionsNumber[ii] = this.ShownTab.Qvalid[this.List[i][ii]][0];
+            let MissionsNumber = new Array(4);
+            for (let ii = 0; ii < 4; ii++) {
+                MissionsNumber[ii] = QValid[List_i_row[ii]][0];
             }
             MissionsNumber = MissionsNumber.sort(sortStringNumber);
-            for (var ii = 0; ii < 4; ii++) {
+            for (let ii = 0; ii < 4; ii++) {
                 one_plan.push(MissionsNumber[ii]);
             }
-            for (var ii = 0; ii < 4; ii++) {
-                one_plan.push(this.List[i][ii + 4] * this.ResourceIncreasingRate * this.CurrentValue_MAX[ii]);
+            for (let ii = 0; ii < 8; ii++) {
+                one_plan.push(List_i_row[ii + 4] * currentValue_MAX[ii]);
             }
-            for (var ii = 4; ii < 8; ii++) {
-                one_plan.push(this.List[i][ii + 4] * this.CurrentValue_MAX[ii]);
-            }
-            var customPrint = this.ShownTab.PrintTableCustomize(this, i);
-            for (var ii = 0; ii < customPrint.length; ii++) {
+            const customPrint = this.ShownTab.printTableCustomize(List_i_row[0], List_i_row[1], List_i_row[2], List_i_row[3]);
+            for (let ii = 0; ii < customPrint.length; ii++) {
                 one_plan.push(customPrint[ii]);
             }
             result_plan.push(one_plan);
         }
-        var Minutes;
-        if (is_CalculateByHour())
-            Minutes = 60;
-        else
-            Minutes = this.ShownTab.TotalTime;
 
-        switch(SortBy) {
-            case "Ranking":
-                RESULT_PLAN_SORT_BY = "Ranking";
-                break;
-            case "Manp":
-                quick_sort_expand_descending(result_plan, 5);
-                RESULT_PLAN_SORT_BY = "Manp";
-                break;
-            case "Ammu":
-                quick_sort_expand_descending(result_plan, 6);
-                RESULT_PLAN_SORT_BY = "Ammu";
-                break;
-            case "Rati":
-                quick_sort_expand_descending(result_plan, 7);
-                RESULT_PLAN_SORT_BY = "Rati";
-                break;
-            case "Part":
-                quick_sort_expand_descending(result_plan, 8);
-                RESULT_PLAN_SORT_BY = "Part";
-                break;
-            case "TPro":
-                quick_sort_expand_descending(result_plan, 9);
-                RESULT_PLAN_SORT_BY = "TPro";
-                break;
-            case "Equi":
-                quick_sort_expand_descending(result_plan, 10);
-                RESULT_PLAN_SORT_BY = "Equi";
-                break;
-            case "QPro":
-                quick_sort_expand_descending(result_plan, 11);
-                RESULT_PLAN_SORT_BY = "QPro";
-                break;
-            case "QRes":
-                quick_sort_expand_descending(result_plan, 12);
-                RESULT_PLAN_SORT_BY = "QRes";
-                break;
-        }
-        RESULT_PLAN = result_plan;
-        print_result_plan(fineTuningExpanded, result_plan, Minutes);
+        printResultsPlan(result_plan, sortBy);
     }
-}
-
-function sortStringNumber(a, b) {
-    var aa, bb;
-    aa = parseInt(a.replace(/[^0-9]/ig,""));
-    bb = parseInt(b.replace(/[^0-9]/ig,""));
-    return aa - bb;
-}
-
-function print_result_plan(fineTuningExpanded, result_plan, Minutes) {
-    //保存Plan Table横向位置, 用于点击排序后或微调后恢复位置
-    var result_plan_table_scrollLeft = 0;
-    if (document.getElementById("result_plan_table") !== null)
-        result_plan_table_scrollLeft = document.getElementById("result_plan_table").scrollLeft;
-
-    //保存打印前聚焦元素, 用于微调后恢复聚焦元素
-    var focusedElementID = document.activeElement.id;
-
-    var Table = document.getElementById("Plan_Table");
-    var tab = getHTMLFineTuningTool();
-    tab += '<div class="table-responsive" id="result_plan_table">';
-    tab += '<table class="table table-striped table-hover table-responsive text-nowrap" style="margin-bottom: 0px; cursor: default;">';
-    var ShownTab = getShownTab();
-    tab += (ShownTab.PrintPlanTableTitle() + '<tbody>');
-    var is_selected;
-    var selectedMissions;
-    if (MISSION_TABLE_SELECT.length === 4) {
-        is_selected = true;
-        selectedMissions = MISSION_TABLE_SELECT.slice();
-        selectedMissions.sort(sortStringNumber);
-    }
-    else
-        is_selected = false;
-    for (var i = 0; i < result_plan.length; i++) {
-        if (is_selected) {
-            if (result_plan[i][1] === selectedMissions[0] && result_plan[i][2] === selectedMissions[1] && result_plan[i][3] === selectedMissions[2] && result_plan[i][4] === selectedMissions[3])
-                tab += "<tr tabindex='0' id='print_result_plan_tr_" + i + "' class='success'>";
-            else
-                tab += "<tr tabindex='0' id='print_result_plan_tr_" + i + "'>";
-        }
-        else
-            tab += "<tr tabindex='0' id='print_result_plan_tr_" + i + "'>";
-        for (var ii = 0; ii < 4; ii++) {
-            tab += "<td style='text-align: center; width: 5%;'>";
-            tab += "" + result_plan[i][ii + 1];
-            tab += "</td>";
-        }
-        for (var ii = 4; ii < 8; ii++) {
-            tab += "<td style='text-align: center; width:" + ShownTab.PlanTableResourceAndContractWidth + "'>";
-            tab += "" + Math.round(result_plan[i][ii + 1] * Minutes * 10) / 10;
-            tab += "</td>";
-        }
-        for (var ii = 8; ii < 12; ii++) {
-            tab += "<td style='text-align: center; width:" + ShownTab.PlanTableResourceAndContractWidth + ";'>";
-            tab += "" + Math.round(result_plan[i][ii + 1] * Minutes * 100) / 100;
-            tab += "</td>";
-        }
-        var one_plan_length = result_plan[0].length;
-        for (var ii = 13; ii < one_plan_length; ii++) {
-            tab += "<td style='text-align: center; width:" + ShownTab.PlanTableResourceAndContractWidth + ";'>";
-            tab += result_plan[i][ii];
-            tab += "</td>";
-        }
-        tab += "</tr>";
-    }
-    tab += '</tbody>';
-    Table.innerHTML = tab;
-    if (fineTuningExpanded) {
-        document.getElementById("FineTuningTool").style.transition = "none";
-        $("#FineTuningTool").collapse("show");
-    }
-    if (IsMobile())
-        document.getElementById("FineTuningTool").style.transition = "none";
-    document.getElementById("start_sorting_html").style.display = "none";
-    if (focusedElementID !== "")
-        document.getElementById(focusedElementID).focus();
-    document.getElementById("result_plan_table").scrollLeft = result_plan_table_scrollLeft;
 }

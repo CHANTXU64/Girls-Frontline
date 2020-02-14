@@ -1,110 +1,231 @@
-var MISSION_TABLE = [];
-var MISSION_TABLE_SELECT = [];
+class MissionsDetails {
+    /**
+     * 返回已选择的关卡名称, 已按关卡名称排序
+     * @param {boolean} NeedSort - 是否需要按关卡名称排序, 默认是
+     * @public
+     */
+    static getSelectedMissions(NeedSort = true) {
+        let selectedMissions = this._selectedMissions.slice();
+        if (NeedSort)
+            return selectedMissions.sort(sortStringNumber);
+        else
+            return selectedMissions;
+    }
 
-function PrintMissionTable(NeedCalculate_MISSION_TABLE = true) {
-    if (NeedCalculate_MISSION_TABLE)
-        MISSION_TABLE = _getMissionTableByShownTab();
-    var MissionTable = MISSION_TABLE;
-    var time_calculate = TABLE_CALCULATE_TOTAL_TIME;
-    var tab = '';
-    var MissionTable_length = MissionTable.length;
-    var selectMissions = MISSION_TABLE_SELECT.slice();
-    for (var i = 0; i < MissionTable_length; i++) {
-        tab += '<tr style="cursor: default;" id="MissionTable_' + i + '" tabindex="0"';
-        for (var ii = 0; ii < selectMissions.length; ii++) {
-            if (selectMissions[ii] === MissionTable[i][0]) {
-                selectMissions.splice(ii, 1);
-                tab += 'class="success"';
+    /**
+     * 重新设置selectedMissions数组
+     * @param {Array.<string>} new_selectedMissions - 新的选择关卡
+     */
+    static setSelectedMissions(new_selectedMissions) {
+        //test
+        if (new_selectedMissions.length > 4)
+            throw "error";
+        //End test
+        this._selectedMissions = new_selectedMissions;
+    }
+
+    /**
+     * 选中某一关卡, 添加进selectedMissions
+     * @param {string} missionName - 增加的关卡的名称
+     * @public
+     */
+    static selectMission(missionName) {
+        //test
+        if (this._selectedMissions.indexOf(missionName) !== -1)
+            throw "error";
+        //End test
+        this._selectedMissions.push(missionName);
+    }
+
+    /**
+     * 删去一个已选择的关卡
+     * @param {string=} missionName - 删除关卡的名称, 默认值为数组中第一个关卡
+     * @public
+     */
+    static deleteSelectedMission(missionName = this._selectedMissions[0]) {
+        this._selectedMissions.remove_First(missionName);
+    }
+
+    /**
+     * 返回已选择的关卡详情, 已按关卡名称排序
+     * @public
+     */
+    static getSelectedMissionsDetails() {
+        let selectedMissionsDetails = [];
+        const selectedMissions = this.getSelectedMissions();
+        const mission_table = this._missionsTable;
+        for (let i = 0; i < selectedMissions.length; i++) {
+            const rowIndex = this.getMissionsTableRowIndex(selectedMissions[i]);
+            selectedMissionsDetails.push(mission_table[rowIndex]);
+        }
+        return selectedMissionsDetails;
+    }
+
+    /**
+     * 依据获取方式返回MissionsTable, 获取方式:
+     * 
+     * "default": 返回MissionsTable.slice()
+     * 
+     * "quick": 快速获取, 直接返回, 可能会修改MissionsTable, 不安全
+     * 
+     * "missionSort": 返回按方案名称排序的MissionsTable.slice()
+     * @param {string=} method - 获取方式
+     * @public
+     */
+    static getMissionsTable(method = "default") {
+        switch (method) {
+            case "default":
+                return this._missionsTable.slice();
+            case "quick":
+                return this._missionsTable;
+            case "missionSort":
+                let missionsTable = this._missionsTable.slice();
+                quick_sort_expand_ascending_missionName(missionsTable, 0);
+                return missionsTable;
+        }
+    }
+
+    /**
+     * 由关卡名称返回MissionsTable的行索引
+     * @param {string} missionName - 关卡名称
+     */
+    static getMissionsTableRowIndex(missionName) {
+        let rowIndex = -1;
+        const missionsTable_length = this._missionsTable.length;
+        for (let i = 0; i < missionsTable_length; i++) {
+            if (missionName === this._missionsTable[i][0]) {
+                rowIndex = i;
                 break;
             }
         }
-        tab += '><td style="width: 10%;">' + MissionTable[i][0] + '</td>';
-        for (var ii = 1; ii < 9; ii++) {
-            tab += '<td style="width: 10%;">' + NumberAutoExact(MissionTable[i][ii] * time_calculate) + '</td>';
-        }
-        tab += '<td style="width: 10%;">' + TimeFormat(MissionTable[i][9]) + '</td>';
-        tab += '<tr>';
+        //test
+        if (rowIndex === -1)
+            throw "-1";
+        //End test
+        return rowIndex;
     }
-    for (var i = 0; i < selectMissions.length; i++) {
-        MISSION_TABLE_SELECT.remove_First(selectMissions[i]);
-    }
-    if (MissionTable_length === 0)
-        tab = '<tr><td>' + language.JS.NoMission + '</td></tr>';
-    var tbody = document.getElementById("MissionTable_tbody");
-    tbody.innerHTML = tab;
-}
 
-function _getMissionTableByShownTab() {
-    var ShownTab = getShownTab();
-    ShownTab.setTime(false);
-    ShownTab.setValidQAndReturnLengthAndSetCurrentMax();
-    var MissionTable = ShownTab.Qvalid;
-    var MissionTable_length = MissionTable.length;
-    for (var i = 0; i < MissionTable_length; i++) {
-        var MissionName = MissionTable[i][0];
-        var minusSignIndex = MissionName.indexOf('-');
-        var chapter = MissionName.slice(0, minusSignIndex);
-        var number = MissionName.slice(minusSignIndex + 1);
-        var MissionNumber = 4 * parseInt(chapter) + parseInt(number);
-        MissionTable[i].push(MissionNumber);
-    }
-    quick_sort_expand_ascending(MissionTable, 12);
-    var TotalRate = Input_getTotalGreatSuccessRate();
-    var ResourceIncreasingRate = 1 + (TotalRate) / 200;
-    for (var i = 0; i < MissionTable_length; i++) {
-        MissionTable[i][1] *= ResourceIncreasingRate;
-        MissionTable[i][2] *= ResourceIncreasingRate;
-        MissionTable[i][3] *= ResourceIncreasingRate;
-        MissionTable[i][4] *= ResourceIncreasingRate;
-    }
-    return MissionTable;
-}
+    /**
+     * 设置私有变量_missionsTable, 按关卡排序
+     * @public
+     */
+    static setMissionsTable() {
+        let ShownTab = getShownTab();
+        this._missionsTable = ShownTab.getQValid(false);
 
-function MissionTable_resultPlan_select(number) {
-    var missionTable_length = MISSION_TABLE.length;
-    var missionTable = MISSION_TABLE;
-    for (var i = 0; i < missionTable_length; i++) {
-        document.getElementById("MissionTable_" + i).className = "";
+        //Tab_Anytime为快速计算最小间隔, 不按关卡排序, 所以还得重新排序
+        this._sortMissionsTable("Mission");
     }
-    var Missions = [];
-    for (var i = 0; i < 4; i++) {
-        Missions.push(RESULT_PLAN[number][i + 1]);
-    }
-    MISSION_TABLE_SELECT = Missions;
-    PrintPlanDetails();
-    for (var i = 0; i < 4; i++) {
-        for (var ii = 0; ii < missionTable_length; ii++) {
-            if (missionTable[ii][0] === Missions[i]) {
-                document.getElementById("MissionTable_" + ii).className = "success";
+
+    /**
+     * 对missionsTable排序
+     * @param {string} sortBy - 排序依据
+     * @private
+     */
+    static _sortMissionsTable(sortBy) {
+        switch (sortBy) {
+            case "Mission":
+                quick_sort_expand_ascending_missionName(this._missionsTable, 0);
                 break;
-            }
-        }
-    }
-}
-
-function MissionTable_selectThisRow(number) {
-    if (MISSION_TABLE_SELECT.length === 4) {
-        var mission_table_select_first_mission = MISSION_TABLE_SELECT[0];
-        MISSION_TABLE_SELECT.shift();
-        var mission_table_select_first_mission_number;
-        for (var i = 0; i < MISSION_TABLE.length; i++) {
-            if (mission_table_select_first_mission === MISSION_TABLE[i][0]) {
-                mission_table_select_first_mission_number = i;
+            case "Manp":
+                quick_sort_expand_descending(this._missionsTable, 1);
                 break;
-            }
+            case "Ammu":
+                quick_sort_expand_descending(this._missionsTable, 2);
+                break;
+            case "Rati":
+                quick_sort_expand_descending(this._missionsTable, 3);
+                break;
+            case "Part":
+                quick_sort_expand_descending(this._missionsTable, 4);
+                break;
+            case "TPro":
+                quick_sort_expand_descending(this._missionsTable, 5);
+                break;
+            case "Equi":
+                quick_sort_expand_descending(this._missionsTable, 6);
+                break;
+            case "QPro":
+                quick_sort_expand_descending(this._missionsTable, 7);
+                break;
+            case "QRes":
+                quick_sort_expand_descending(this._missionsTable, 8);
+                break;
+            case "Time":
+                quick_sort_expand_ascending(this._missionsTable, 9);
+                break;
+            //test
+            default:
+                throw "error";
+            //End test
         }
-        document.getElementById("MissionTable_" + mission_table_select_first_mission_number).className = "";
     }
-    var selectedMission = MISSION_TABLE[number][0];
-    MISSION_TABLE_SELECT.push(selectedMission);
-    document.getElementById("MissionTable_" + number).className = "success";
-    PrintPlanDetails();
+
+    /**
+     * 打印方案详情, 第一次打印(或重新打印)必须以关卡排序, 不需要输入排序方式 
+     * 若输入排序方式, 则不再重新计算MissionsTable
+     * @param {string=} sortBy - 排序方式
+     * @public
+     */
+    static print(sortBy) {
+        //第一次打印, 设置MissionsTable, 否则设置sortBy
+        if (sortBy !== undefined)
+            this._sortMissionsTable(sortBy);
+        else
+            this.setMissionsTable();
+
+        const missionsTable = this._missionsTable;
+        const missionsTable_length = missionsTable.length;
+        let selectedMissions = this.getSelectedMissions();
+
+        //显示资源契约的值所需的分钟数
+        let time_calculate = 60;
+        if (!is_CalculateByHour()) {
+            let ShownTab = getShownTab();
+            time_calculate = ShownTab.getTotalTime(false);
+        }
+
+        //main
+        let tab = "";
+        for (let i = 0; i < missionsTable_length; i++) {
+            tab += '<tr id="MissionTable_' + i + '" tabindex="0"';
+            for (let ii = 0; ii < selectedMissions.length; ii++) {
+                if (selectedMissions[ii] === missionsTable[i][0]) {
+                    selectedMissions.splice(ii, 1);
+                    tab += 'class="success"';
+                    break;
+                }
+            }
+            tab += '><td>' + missionsTable[i][0] + '</td>';
+            for (let ii = 1; ii < 9; ii++) {
+                tab += '<td>' + NumberAutoExact(missionsTable[i][ii] * time_calculate) + '</td>';
+            }
+            tab += '<td>' + TimeFormat(missionsTable[i][9]) + '</td>';
+            tab += '</tr>';
+        }
+
+        //当重新打印关卡详情时, 可能导致原先选择的关卡不再显示, 于是需要删除这些关卡
+        for (let i = 0; i < selectedMissions.length; i++) {
+            this._selectedMissions.remove_First(selectedMissions[i]);
+        }
+
+        if (missionsTable_length === 0)
+            tab = '<tr><td>' + language.JS.NoMission + '</td></tr>';
+
+        document.getElementById("MissionTable_tbody").innerHTML = tab;
+    }//End print
 }
 
-function MissionTable_cancelSelectThisRow(number) {
-    var mission = MISSION_TABLE[number][0];
-    var index = MISSION_TABLE_SELECT.indexOf(mission);
-    MISSION_TABLE_SELECT.splice(index, 1);
-    document.getElementById("MissionTable_" + number).className = "";
-    PrintPlanDetails();
-}
+/**
+ * 关卡详情列表, 不一定按方案名称排序
+ * @type {Array.<Array.<string|number>>}
+ * @private
+ */
+MissionsDetails._missionsTable = [];
+
+/**
+ * 选择的关卡名称, 最多4个, 不一定按方案名称排序
+ * @type {Array.<string>}
+ * @private
+ */
+MissionsDetails._selectedMissions = [];

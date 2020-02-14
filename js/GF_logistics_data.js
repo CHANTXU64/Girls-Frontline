@@ -1,8 +1,12 @@
-//后勤战役编号-人力 弹药 口粮 零件 人形 装备 快建 快修 时间(hour)
-//The Logistics Support Number-Manpower-Ammunition-Rations-Parts-
-//T_Doll Production Contract-Equipment Development Contract-
-//Quick Production Contract-Quick Restoration Contract-Time(minute)
-//由于契约不同于资源的大成功概率计算. 在Q中, 暂时未填入契约的值, 专门使用setQContract()函数来计算契约值
+/**
+ * 0后勤战役编号-1人力-2弹药-3口粮-4零件-5人形-6装备-7快建-8快修-9时间(minute)
+ * 
+ * 0The Logistics Support Number-1Manpower-2Ammunition-3Ratins-4Parts-5T_Doll Production Contract-
+ * 6Equipment Development Contract-7Quick Production Contract-8Quick Restoration Contract-9Time(minute)
+ * 
+ * 由于契约不同于资源的大成功概率计算. 在Q中, 暂时未填入契约的值, 专门使用setQContract()函数来计算契约值
+ * @type {Array.<[string, number, number, number, number, number, number, number, number, number]>}
+ */
 let Q = [
     ["0-1",  0,    145,   145,   0,     0, 0, 0, 0, 50],
     ["0-2",  550,  0,     0,     350,   0, 0, 0, 0, 180],
@@ -58,7 +62,11 @@ let Q = [
     ["12-4", 1800, 0,     1800,  0,     0, 0, 0, 0, 720]
 ];
 
-//计算后勤契约值
+/**
+ * 计算后勤契约值
+ * @param {number} TotalGreatSuccessRate - 总计大成功概率(单位%)
+ * @example setQContract(60)
+ */
 function setQContract(TotalGreatSuccessRate) {
     const TotalRate = TotalGreatSuccessRate / 100;
 
@@ -121,9 +129,14 @@ function setQContract(TotalGreatSuccessRate) {
     Q[42][8] = calculateContractValue(50, 80, TotalRate);//???//10-3
     Q[46][8] = calculateContractValue(50, 50, TotalRate);//???//11-3 (10 / 7) 60%
 }
-//BaseValue为在0%大成功概率时获取该契约的概率(单位 %, 0~100)
-//SumValue为该后勤能获得的所有契约的BaseValue之和(单位 %, 0~100)
-//TotalRate为目前的总大成功概率(0~1)
+/**
+ * 根据概率计算单次后勤获得的契约值
+ * @param {number} BaseValue - 在0%大成功概率时获取该契约的概率(单位 %, 0~100)
+ * @param {number} SumValue - 该后勤能获得的所有契约的BaseValue之和(单位 %, 0~100)
+ * @param {number} TotalRate - 目前的总大成功概率(0~1)
+ * @return {number} 进行一次后勤获得的契约数量
+ * @example calculateContractValue(50, 100, 0.6)
+ */
 function calculateContractValue(BaseValue, SumValue, TotalRate) {
     return BaseValue / 100 + (BaseValue / SumValue - BaseValue / 100) * TotalRate;
 }

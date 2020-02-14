@@ -291,3 +291,27 @@ button:disabled {
 .dropdown-backdrop {
     display: none;
 }
+
+#MissionTable_tbody>tr>td {
+    width: 10%;
+}
+
+#PlanDetails>tr>td {
+    width: 61px;
+}
+
+th {
+    text-align: center;
+}
+
+.slider-Tooltip-bottom {
+    top:12px;
+    margin-left: -15px;
+    cursor: default;
+}
+
+.slider-Tooltip-top {
+    top:-32px;
+    margin-left: -15px;
+    cursor: default;
+}

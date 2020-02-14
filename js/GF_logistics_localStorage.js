@@ -1,5 +1,24 @@
-var CAN_LOCALSTORAGE_WORK;
+/**版本 */
+const VERSION = "1.0.0-alpha";
 
+/**
+ * 用于判断浏览器是否能使用local storage
+ * 
+ * 在window.onload初始化, 之后将不再改变
+ * @type {boolean}
+ */
+let CAN_LOCALSTORAGE_WORK;
+
+/**
+ * localstorage存储使用的key
+ * @example GF_Logistics_v1.x.x
+ */
+const LOCAL_STORAGE_KEY = "GF_Logistics_v" + VERSION.slice(0, VERSION.indexOf(".")) + ".x.x";
+
+/**
+ * 在window.onload使用, 设置CAN_LOCALSTORAGE_WORK, 
+ * 并且在HTML页面上显示信息
+ */
 function checkLocalStorageWork() {
     CAN_LOCALSTORAGE_WORK = _localStorageWorks();
     if (CAN_LOCALSTORAGE_WORK !== true) {
@@ -7,38 +26,152 @@ function checkLocalStorageWork() {
         document.getElementById("localstorageWarning").style.display = "none";
         document.getElementById("neverShowAgain_description").style.display = "none";
     }
-    else
+    else {
         document.getElementById("localstorageDoesNotWork").style.display = "none";
+        if (localStorage.getItem("GF_Logistics_windowOnloadSuccess") === "false")
+            removeStorageAndWarnDueToFailedWindowLoad();
+        localStorage.setItem("GF_Logistics_windowOnloadSuccess", false);
+    }
 }
+/**判断浏览器是否能使用local storage */
 function _localStorageWorks() {
     try {
-        localStorage.setItem("test_Dlz3bH", "KwNYPCpyH7yl2S1K");
-        var result = localStorage.getItem("test_Dlz3bH") == "KwNYPCpyH7yl2S1K";
-        localStorage.removeItem("test_Dlz3bH");
+        let Random1 = Math.random();
+        let Random2 = Math.random();
+        localStorage.setItem("test_PzrJwG" + Random1, "Rx3IyFdmJMji0Alo" + Random2);
+        let result = localStorage.getItem("test_PzrJwG" + Random1) == "Rx3IyFdmJMji0Alo" + Random2;
+        localStorage.removeItem("test_PzrJwG" + Random1);
         return result;
     } catch (ex) {}
 }
 
+function removeStorageAndWarnDueToFailedWindowLoad() {
+    let storage = localStorage.getItem(LOCAL_STORAGE_KEY);
+    let data = {};
+    data.userAgent = navigator.userAgent;
+    data.appName = navigator.appName;
+    data.appCodeName = navigator.appCodeName;
+    data.appVersion = navigator.appVersion;
+    data.appMinorVersion = navigator.appMinorVersion;
+    data.platform = navigator.platform;
+    data.cookieEnabled = navigator.cookieEnabled;
+    data.onLine = navigator.onLine;
+    data.language = navigator.language;
+    data.localStorage = storage;
+
+    let warn = "<div class=\"alert alert-danger\" style=\"color:#000000; cursor: default;\">";
+    warn += language_zh_CN.JS.FailedWindowLoadWarn + "<br>";
+    warn += language_zh_TW.JS.FailedWindowLoadWarn + "<br>";
+    warn += language_en.JS.FailedWindowLoadWarn + "<br>";
+    warn += "<br><code style=\"color:#000000; cursor:auto\">";
+    warn += JSON.stringify(data);
+    warn += "</code></div>";
+    $("#description").before(warn);
+
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+}
+
+/**
+ * 如果不存在目前版本对应的localstorage, 
+ * 尝试从以前版本的localstorage转换过来
+ */
+function updateLocalStorage() {
+    if (!CAN_LOCALSTORAGE_WORK)
+        return ;
+    let LS_data = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (LS_data === null) {
+        _updateLSFrom_v_0_x_x_To_v_1_x_x();
+    }
+}
+
+/**
+ * 从v0.x.x版本localstorage转换为v1.x.x版本, 并删除原来的存储数据
+ */
+function _updateLSFrom_v_0_x_x_To_v_1_x_x() {
+    let LS_Key = "GF_Logistics";
+    let LS_data = localStorage.getItem(LS_Key);
+    if (LS_data === null)
+        return ;
+    LS_data = JSON.parse(LS_data);
+    
+    let newData = {};
+    newData.Lang = LS_data.lang;
+    newData.Description_Display = LS_data.Description_Display;
+    newData.LocalstorageWarning_Display = LS_data.LocalstorageWarning_Display;
+    newData.TabName = LS_data.HTML_TAB;
+    newData.HourlyOrTotal = LS_data.PerHourOrTotal;
+    newData.TabAnytimeCustom = LS_data.TabAnytimeCustom;
+    newData.TabTimetableCustom = LS_data.TabTimetableCustom;
+    newData.GreatSuccessRate = LS_data.GreatSuccessRate;
+    newData.Is_GreatSuccessRateUP = LS_data.is_GreatSuccessRateUP;
+    newData.ChapterLimit = LS_data.SelectChapter;
+    newData.ContractWeight = LS_data.ContractWeight;
+    newData.TargetValue = LS_data.TargetValue;
+    newData.Saved = _savedData_v_0_x_x_To_v_1_x_x(LS_data.SAVED);
+    newData.IsSavedPanelShow = LS_data.IsSavedShow;
+    newData.CalcTargetValueTool_Target = LS_data.CalcTargetValueTool_Target;
+    newData.CalcTargetValueTool_Current = LS_data.CalcTargetValueTool_Current;
+    newData.CalcTargetValueTool_ExecutionTimes = LS_data.CalcTargetValueTool_ExecutionTimes;
+    let storageValue = JSON.stringify(newData)
+    
+    localStorage.setItem("GF_Logistics_v1.x.x", storageValue);
+    localStorage.removeItem(LS_Key);
+}
+/**
+ * 将v0版本saved数转换成v1版本的saved数据
+ * @param {Array} v_0_x_x_savedData - v0.x.x版本的saved数据
+ * @returns {Saved._saved} v1.x.x版本的saved数据
+ */
+function _savedData_v_0_x_x_To_v_1_x_x(v_0_x_x_savedData) {
+    let v_1_x_x_savedDate = [];
+    for (let i = 0; i < v_0_x_x_savedData.length; i++) {
+        let data = v_0_x_x_savedData[i].data;
+        let newData = {};
+        newData.name = data[0];
+        newData.TabName = data[1];
+        newData.GSRate = data[2];
+        newData.is_UP = data[3];
+        newData.Chapter = data[4];
+        newData.TabCustom = data[5];
+        newData.Missions = data[6];
+        newData.startTime = data[7];
+
+        v_1_x_x_savedDate.push(newData);
+    }
+    return v_1_x_x_savedDate;
+}
+
+/**
+ * 向localstorage存入数据, 不用考虑localstorage是否能工作
+ * @param {string} Key - 存储名称
+ * @param {*} Value - 存储数据
+ */
 function storageSetItem(Key, Value) {
     if (CAN_LOCALSTORAGE_WORK) {
-        var storageValue = localStorage.getItem("GF_Logistics");
+        let storageValue = localStorage.getItem(LOCAL_STORAGE_KEY);
         storageValue = JSON.parse(storageValue);
         if (storageValue === null)
             storageValue = {};
         storageValue[Key] = Value;
+        storageValue.version = VERSION;
         storageValue = JSON.stringify(storageValue);
-        localStorage.setItem("GF_Logistics", storageValue);
+        localStorage.setItem(LOCAL_STORAGE_KEY, storageValue);
     }
 }
 
+/**
+ * 向localstorage取出数据
+ * @param {string} Key - 存储名称
+ * @returns {*} 存储数据, 若无数据则返回"noStorage"
+ */
 function storageGetItem(Key) {
     if (CAN_LOCALSTORAGE_WORK) {
-        var storageValue0 = localStorage.getItem("GF_Logistics");
-        if (storageValue0 === null)
+        let storageValue = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (storageValue === null)
             return "noStorage";
         else {
-            storageValue0 = JSON.parse(storageValue0);
-            var Value = storageValue0[Key];
+            storageValue = JSON.parse(storageValue);
+            let Value = storageValue[Key];
             if (Value === undefined)
                 return "noStorage";
             else
@@ -47,187 +180,4 @@ function storageGetItem(Key) {
     }
     else
         return "noStorage";
-}
-
-function setPageByLocalStorage() {
-    LS_setDescription();
-    LS_setLocalstorageWarning();
-    LS_setHTMLtab();
-    LS_setPerHourOrTotal();
-    LS_setTabAnytimeCustom();
-    LS_setTabTimetableCustom();
-    LS_setGreatSuccessRate();
-    LS_setGreatSuccessRateUP();
-    LS_setSelectChapter();
-    LS_setContractWeight();
-    LS_setTarget();
-    LS_setSaved();
-    LS_setSavedOrMissionsShow();
-    LS_setCalcTargetValueTool();
-}
-
-function LS_setDescription(display = storageGetItem("Description_Display")) {
-    if (display === false)
-        document.getElementById("description").style.display = "none";
-}
-
-function LS_setLocalstorageWarning(display = storageGetItem("LocalstorageWarning_Display")) {
-    if (display === false)
-        document.getElementById("localstorageWarning").style.display = "none";
-}
-
-function LS_setHTMLtab(htmltab = storageGetItem("HTML_TAB")) {
-    if (htmltab === "Timetable") {
-        IS_ChangeTabByJS = true;
-        ChangeTab(htmltab);
-    }
-    else {
-        IS_ChangeTabByJS = true;
-        ChangeTab("Anytime");
-    }
-}
-
-function LS_setPerHourOrTotal(PerHourOrTotal = storageGetItem("PerHourOrTotal")) {
-    if (PerHourOrTotal === "PerHour") {
-        storageSetItem("PerHourOrTotal", "PerHour");
-        TABLE_CALCULATE_TOTAL_TIME = 60;
-        document.getElementById("Display_PerHour").checked = true;
-    }
-    else {
-        storageSetItem("PerHourOrTotal", "Total");
-        var ShownTab = getShownTab();
-        ShownTab.setTime();
-        TABLE_CALCULATE_TOTAL_TIME = ShownTab.TotalTime;
-        document.getElementById("Display_Total").checked = true;
-    }
-}
-
-function LS_setTabAnytimeCustom(Custom = storageGetItem("TabAnytimeCustom")) {
-    if (Custom !== "noStorage") {
-        var Tab = new Tab_Anytime;
-        Tab.ApplySaved_Custom(Custom);
-    }
-}
-
-function LS_setTabTimetableCustom(Custom = storageGetItem("TabTimetableCustom")) {
-    if (Custom !== "noStorage") {
-        var Tab = new Tab_Timetable;
-        Tab.ApplySaved_Custom(Custom);
-    }
-}
-
-function LS_setGreatSuccessRate(Rate = storageGetItem("GreatSuccessRate")) {
-    if (Rate !== "noStorage")
-        Input_setGreatSuccessRate(Rate);
-}
-
-function LS_setGreatSuccessRateUP(is_UP = storageGetItem("is_GreatSuccessRateUP")) {
-    if (is_UP !== "noStorage")
-        Input_setGreatSuccessUpRate(is_UP, false);
-}
-
-function LS_setSelectChapter(Chapter = storageGetItem("SelectChapter")) {
-    if (Chapter !== "noStorage")
-        Input_setSelectChapter(Chapter);
-}
-
-function LS_setContractWeight(Weight = storageGetItem("ContractWeight")) {
-    if (Weight !== "noStorage")
-        Input_setContractWeight(Weight);
-}
-
-function LS_setTarget(Target = storageGetItem("TargetValue")) {
-    if (Target !== "noStorage")
-        Input_setTarget(Target);
-}
-
-function LS_setSaved(Saved = storageGetItem("SAVED")) {
-    if (Saved !== "noStorage")
-        Saved_importAndCover_SAVED(Saved);
-}
-
-function LS_setSavedOrMissionsShow(IsSavedShow = storageGetItem("IsSavedShow")) {
-    if (IsSavedShow === true) {
-        if (SAVED.length === 0)
-            storageSetItem("IsSavedShow", false);
-        else {
-            document.getElementById("MissionTable_panel").style.transition = "none";
-            document.getElementById("Saved").style.transition = "none";
-            $("#Saved").collapse('show');
-            $("#MissionTable_panel").collapse('hide');
-        }
-    }
-}
-
-function LS_setCalcTargetValueTool(TargetValue = storageGetItem("CalcTargetValueTool_Target"), CurrentValue = storageGetItem("CalcTargetValueTool_Current"), ExecutionTimes = storageGetItem("CalcTargetValueTool_ExecutionTimes")) {
-    if (TargetValue !== "noStorage")
-        Input_setCalcTargetValueTool_Target(TargetValue);
-    if (CurrentValue !== "noStorage")
-        Input_setCalcTargetValueTool_Current(CurrentValue);
-    if (ExecutionTimes !== "noStorage")
-        Input_setCalcTargetValueTool_InputExecutionTimes(ExecutionTimes);
-}
-
-//ShownTab-PerHourOrTotal-TabAnytimeCustom-TabTimetableCustom-GreatSuccessRate-GreatSuccessRateUP-SelectChapter-ContractWeight-Target-Saved-calcTargetValueTool(3)
-function Config_export(){
-    var data = [];
-    data.push(HTML_TAB);
-    if (is_CalculateByHour())
-        data.push("PerHour");
-    else
-        data.push("Total");
-    var Tab = new Tab_Anytime;
-    data.push(Tab.Saved_Custom());
-    Tab = new Tab_Timetable;
-    data.push(Tab.Saved_Custom());
-    data.push(Input_getGreatSuccessRate());
-    data.push(IsGreatSuccessRateUp());
-    data.push(Input_getSelectChapter());
-    data.push(Input_getContractWeight());
-    data.push(Input_getTarget_Correct());
-    data.push(SAVED);
-    data.push(Input_getCalcTargetValueTool_Target());
-    data.push(Input_getCalcTargetValueTool_Current());
-    data.push(Input_getCalcTargetValueTool_InputExecutionTimes());
-    var SHA1 = sha1(JSON.stringify(data));
-    var config = {data: [], SHA1: ""};
-    config.data = data;
-    config.SHA1 = SHA1;
-    prompt("export", JSON.stringify(config));
-}
-
-function setPageByImport(input) {
-    var flag = true;
-    if (SAVED.length !== 0)
-        flag = confirm(language.JS.config_alert);
-    if (flag !== true)
-        return;
-    try {
-        var config = JSON.parse(input);
-        var SHA1 = sha1(JSON.stringify(config.data));
-        var result = SHA1 === config.SHA1;
-    } catch (ex) {}
-    if (result) {
-        setPageByImport_main(config.data);
-    }
-    else
-        alert(language.JS.Saved_alert);
-}
-
-function setPageByImport_main(data) {
-    LS_setHTMLtab(data[0]);
-    LS_setPerHourOrTotal(data[1]);
-    LS_setTabAnytimeCustom(data[2]);
-    LS_setTabTimetableCustom(data[3]);
-    LS_setGreatSuccessRate(data[4]);
-    LS_setGreatSuccessRateUP(data[5]);
-    LS_setSelectChapter(data[6]);
-    LS_setContractWeight(data[7]);
-    LS_setTarget(data[8]);
-    LS_setSaved(data[9]);
-    setQContract(Input_getTotalGreatSuccessRate());
-    MISSION_TABLE_SELECT = [];
-    PrintMissionTable();
-    PrintPlanDetails();
-    LS_setCalcTargetValueTool(data[10], data[11], data[12]);
 }
