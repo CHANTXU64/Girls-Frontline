@@ -194,7 +194,38 @@ const language_zh_CN = {
     JS: {
         chapter_start: "第",
         chapter_end: "战役",
-        number: ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"],
+        number(num) {
+            //author: zdluffy
+            //CC 4.0 BY-SA
+            //https://blog.csdn.net/zdluffy/article/details/98970516
+            let AA = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
+            let BB = ["", "十", "百", "千", "万", "十万", "百万", "千万", "亿"];
+            let res = "";
+            let numstr = "" + num;
+            let k = numstr.length;
+            for (let i = 0; i < numstr.length; i++) {
+                let tmp = numstr[i] - '0';
+                let bIndex = k - i - 1;
+                if (0 === tmp) {
+                    if ("0" === numstr[i - 1] || i === numstr.length - 1)//处理2003、230出现多余的零
+                        continue;
+                    else if (bIndex >= 4 && 0 === bIndex % 4)//处理2103243在万位出现多余的零
+                        res = res + BB[bIndex];
+                    else
+                        res = res + AA[tmp];//正常零
+                }
+                else {
+                    res = res + AA[tmp];
+                    if (numstr.length === 2 && numstr[0] === '1' && i === 0)
+                        res = "";//12读作十二，把1删掉
+                    if (0 === bIndex % 4)//万、亿位的要输出
+                        res = res + BB[bIndex];
+                    else//"十万","百万","千万"其实就是一摆设，万不输出
+                        res = res + BB[bIndex % 4];
+                }
+            }
+            return res;
+        },
         Manp: "人力",
         Ammu: "弹药",
         Rati: "口粮",
@@ -434,7 +465,38 @@ const language_zh_TW = {
     JS: {
         chapter_start: "第",
         chapter_end: "戰役",
-        number: ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"],
+        number(num) {
+            //author: zdluffy
+            //CC 4.0 BY-SA
+            //https://blog.csdn.net/zdluffy/article/details/98970516
+            let AA = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
+            let BB = ["", "十", "百", "千", "萬", "十萬", "百萬", "千萬", "億"];
+            let res = "";
+            let numstr = "" + num;
+            let k = numstr.length;
+            for (let i = 0; i < numstr.length; i++) {
+                let tmp = numstr[i] - '0';
+                let bIndex = k - i - 1;
+                if (0 === tmp) {
+                    if ("0" === numstr[i - 1] || i === numstr.length - 1)//处理2003、230出现多余的零
+                        continue;
+                    else if (bIndex >= 4 && 0 === bIndex % 4)//处理2103243在万位出现多余的零
+                        res = res + BB[bIndex];
+                    else
+                        res = res + AA[tmp];//正常零
+                }
+                else {
+                    res = res + AA[tmp];
+                    if (numstr.length === 2 && numstr[0] === '1' && i === 0)
+                        res = "";//12读作十二，把1删掉
+                    if (0 === bIndex % 4)//万、亿位的要输出
+                        res = res + BB[bIndex];
+                    else//"十万","百万","千万"其实就是一摆设，万不输出
+                        res = res + BB[bIndex % 4];
+                }
+            }
+            return res;
+        },
         Manp: "人力",
         Ammu: "彈藥",
         Rati: "口糧",
@@ -674,7 +736,7 @@ const language_en = {
     JS: {
         chapter_start: "Chapter ",
         chapter_end: "",
-        number: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+        number(num) {return num;},
         Manp: "Mpwr",
         Ammu: "Ammo",
         Rati: "Ration",

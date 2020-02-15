@@ -91,7 +91,7 @@ function loadHTML_language() {
     //ChapterLimit------
     let MaxChapter = (Q.length - 4) / 4;
     for (let i = MIN_CHAPTER; i <= MaxChapter; i++) {
-        document.getElementById("chapter_" + i).innerHTML = language_JS.chapter_start + i + language_JS.chapter_end;
+        document.getElementById("chapter_" + i).innerHTML = language_JS.chapter_start + language_JS.number(i) + language_JS.chapter_end;
     }
 
     //Timetable---------
