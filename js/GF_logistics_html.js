@@ -33,7 +33,7 @@ window.onload = function () {
 
     //用于checkLocalStorageWork()中检测是否由于localstorage不正确的数据导致浏览器崩溃
     if (CAN_LOCALSTORAGE_WORK)
-        localStorage.setItem("GF_Logistics_windowOnloadSuccess", true);
+        localStorage.setItem("GF_Logistics_windowOnload", "success");
 };
 
 //当页面分辨率改变时调整样式
