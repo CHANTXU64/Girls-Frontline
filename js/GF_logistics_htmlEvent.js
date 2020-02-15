@@ -347,10 +347,10 @@ $(function() {
     });
     JQ_selector_Saved_Body.on("click", "button[id^=SavedTable_rename_]", function() {
         const Row = parseInt(stringSliceFromLast_(this.id));
-        const name_elem_id = "#SavedTable_name_" + Row;
-        $(name_elem_id).attr("readOnly", false);
-        $(name_elem_id).focus();
-        $(name_elem_id).select();
+        const JQ_selector = $("#SavedTable_name_" + Row);
+        JQ_selector.attr("readOnly", false);
+        JQ_selector.focus();
+        JQ_selector.select();
     });
     JQ_selector_Saved_Body.on("click", "button[id^=SavedTable_up_]", function() {Saved.upThisRow(parseInt(stringSliceFromLast_(this.id)));});
     JQ_selector_Saved_Body.on("click", "button[id^=SavedTable_down_]", function() {Saved.downThisRow(parseInt(stringSliceFromLast_(this.id)));});
