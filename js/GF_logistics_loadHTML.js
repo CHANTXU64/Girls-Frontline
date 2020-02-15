@@ -47,8 +47,10 @@ const MIN_CHAPTER = 6;
  * 加载解锁章节, 默认选择最大章节
  */
 function loadHTML_ChapterLimit() {
+    //test
     if (Q.length % 4 !== 0)
         throw "haha";
+    //End test
     let MaxChapter = (Q.length - 4) / 4;
     let tab = "";
     for (let i = MIN_CHAPTER; i <= MaxChapter; i++) {

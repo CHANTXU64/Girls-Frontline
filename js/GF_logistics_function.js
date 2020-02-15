@@ -174,3 +174,60 @@ function IsMobile(){
     }
     return flag;
 }
+
+//重写console方法, 获取控制台信息
+let CONSOLE = "";
+if (console) {
+    var _console = {
+        log: console.log,
+        info: console.info,
+        debug: console.debug,
+        warn: console.warn,
+        error: console.error,
+    };
+    console.log = function (data) {
+        let date = new Date;
+        let CONSOLE_ = date.toLocaleString() + " log: " + JSON.stringify(data) + "\n";
+        CONSOLE = CONSOLE + CONSOLE_;
+        CONSOLE = limitCONSOLELength(CONSOLE);
+        try {
+            CONSOLE_ = sessionStorage.getItem("GF_Logistics_console") + CONSOLE_;
+            CONSOLE_ = limitCONSOLELength(CONSOLE_);
+            sessionStorage.setItem("GF_Logistics_console", CONSOLE_);
+        } catch (ex) {}
+        _console.log.apply(this, Array.prototype.slice.call(arguments, 0));
+    };
+    console.warn = function (a) {
+        let date = new Date;
+        let CONSOLE_ = date.toLocaleString() + " warn: " + JSON.stringify(data) + "\n";
+        CONSOLE = CONSOLE + CONSOLE_;
+        CONSOLE = limitCONSOLELength(CONSOLE);
+        try {
+            CONSOLE_ = sessionStorage.getItem("GF_Logistics_console") + CONSOLE_;
+            CONSOLE_ = limitCONSOLELength(CONSOLE_);
+            sessionStorage.setItem("GF_Logistics_console", CONSOLE_);
+        } catch (ex) {}
+        _console.warn.apply(this, Array.prototype.slice.call(arguments, 0));
+    };
+    console.error = function (a) {
+        let date = new Date;
+        let CONSOLE_ = date.toLocaleString() + " error: " + JSON.stringify(data) + "\n";
+        CONSOLE = CONSOLE + CONSOLE_;
+        CONSOLE = limitCONSOLELength(CONSOLE);
+        try {
+            CONSOLE_ = sessionStorage.getItem("GF_Logistics_console") + CONSOLE_;
+            CONSOLE_ = limitCONSOLELength(CONSOLE_);
+            sessionStorage.setItem("GF_Logistics_console", CONSOLE_);
+        } catch (ex) {}
+        _console.error.apply(this, Array.prototype.slice.call(arguments, 0));
+    };
+}
+/**限制CONSOLE长度 */
+function limitCONSOLELength(console_string) {
+    let maxLength = 200000;
+    let length = console_string.length;
+    if (length > maxLength)
+        return console_string.slice(length - maxLength);
+    else
+        return console_string;
+}

@@ -100,9 +100,11 @@ class Tab {
      */
     _setUnableLogistic() {
         const ChapterLimit = Input_getSelectChapter();
+        //test
         //考虑到第零战役的解锁条件, 设定可选择的最小后勤数为6
         if (ChapterLimit < 6)
             throw "haha";
+        //End test
         let index = 4 * (ChapterLimit + 1);
         let UnableNumber = [];
         const Q_MaxIndex = Q.length - 1;
@@ -779,7 +781,7 @@ class Tab_Timetable extends Tab {
             if (this._totalTime === 0) {
                 alert(language.JS.tab_Timetable_alert4);
                 HTML_AllowRankingInput();
-                throw"--";
+                throw "Warning: Total time cannot be 0!";
             }
         }
         this.TimeList.push(this._totalTime);
