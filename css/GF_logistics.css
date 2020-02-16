@@ -217,7 +217,13 @@ div[slider]>input[type=range]::-ms-tooltip {
 }
 
 button:disabled {
-    background: #DADADA;
+    background: rgb(153, 153, 153);
+}
+button:disabled:hover {
+    background: rgb(153, 153, 153);
+}
+.btn:disabled:hover {
+    background: rgb(153, 153, 153);
 }
 
 .switch {
