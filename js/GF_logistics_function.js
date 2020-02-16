@@ -224,7 +224,7 @@ if (console) {
 }
 /**限制CONSOLE长度 */
 function limitCONSOLELength(console_string) {
-    let maxLength = 200000;
+    let maxLength = 10000;
     let length = console_string.length;
     if (length > maxLength)
         return console_string.slice(length - maxLength);

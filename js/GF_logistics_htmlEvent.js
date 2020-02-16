@@ -388,11 +388,11 @@ $(function() {
         if (is_KeyIsEnter(e))
             MissionsDetails.print(stringSliceFromLast_(this.id));
     });
-    JQ_selector_MissionTable_panel.on("click", "tr[id^=MissionTable_]", function() {
+    $("#MissionTable_tbody").on("click", "tr[id^=MissionTable_]", function() {
         let row = parseInt(stringSliceFromLast_(this.id));
         MissionsDetails_clickRow(row);
     });
-    JQ_selector_MissionTable_panel.on("keyup", "tr[id^=MissionTable_]", function(e) {
+    $("#MissionTable_tbody").on("keyup", "tr[id^=MissionTable_]", function(e) {
         if (is_KeyIsEnter(e)) {
             let row = parseInt(stringSliceFromLast_(this.id));
             MissionsDetails_clickRow(row);

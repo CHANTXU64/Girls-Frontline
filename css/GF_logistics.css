@@ -315,3 +315,26 @@ th {
     margin-left: -15px;
     cursor: default;
 }
+
+#MissionTable_thead_tr>th {
+    width: 10%;
+    position: sticky;
+    top: 0;
+    background: white;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);
+}
+
+#calcTargetValueTool>tr>td {
+    width: 85px;
+}
+
+.GF_table-input {
+    width: 85px;
+    display: table-cell;
+    border-radius: 0;
+    float: left;
+    height: 28px;
+    padding:3px 6px 3px 6px;
+    border-left: 0;
+    border-bottom: 0;
+}

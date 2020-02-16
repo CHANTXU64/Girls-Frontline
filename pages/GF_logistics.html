@@ -9,7 +9,7 @@
     <meta name="author" content="ChantXu">
     <meta name="keywords" content="少女前线, 后勤, 计算, Girls' Frontline, Logistics Support, Calculator">
     <title>Girls' Frontline Logistics Combination Calculator</title>
-    <!-- css and script -->
+    <!-- css and js -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/GF_logistics.css" rel="stylesheet">
     <script src="../vendor/jquery-v2.1.1/jquery.min.js"></script>
@@ -41,14 +41,13 @@
     <script src="../js/GF_logistics_calcTargetValueTool.js"></script>
     <script src="../js/GF_logistics_config.js"></script>
     <script src="../js/GF_logistics_htmlEvent.js"></script>
-    <!-- css and script End-->
+    <!-- css and js End-->
 </head>
 
 <body>
     <div id="wrapper" style="background-color: rgb(245, 245, 245);">
-        <div id="page-wrapper" style="min-width: 300px; padding: 0 15px 0 15px; background-color: #FFFFFF;">
-            <div class="container-fluid">
-                <div class="row">
+        <div id="page-wrapper" style="min-width: 300px; padding: 0; background-color: #FFFFFF;">
+            <div class="container-fluid" id="container-fluid">
                     <div class="col-lg-7">
                         <h1 class="page-header" id="page-header" style="margin-top: 30px;">
                             <span id="header" style="cursor: default;"></span><div 
@@ -77,8 +76,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-7">
                         <div class="alert alert-warning" id="description" role="alert" style="color:#000000">
                             <span id="description_text" style="cursor: default;"></span>
@@ -90,8 +87,6 @@
                             <span id="neverShowAgain_localstorageWarning" style="cursor:pointer;"></span>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-7">
                         <div class="panel panel-default">
                             <div class="panel-heading" style="padding-top: 8px; padding-bottom: 8px;">
@@ -222,7 +217,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <div class="checkbox">
+                                            <div class="checkbox" style="margin: 7px 0 7px 0;">
                                                 <label id="GreatSuccessRateUp_label" style="min-width: 110px;"> <input
                                                         type="checkbox" id="GreatSuccessRateUp" autocomplete="off">
                                                     <span id="GreatSuccessRateUp_text"></span>
@@ -231,78 +226,73 @@
                                         </div>
                                     </div>
                                     <h4 id="h4ChapterLimit" style="cursor: default;"></h4>
-                                    <select class="form-control" id="ChapterLimit" autocomplete="off" style="margin-bottom: 15px;"></select>
-                                    <div class="panel panel-default" style="max-width: 722px;">
+                                    <select class="form-control" id="ChapterLimit" autocomplete="off" style="margin-bottom: 10px;"></select>
+                                    <div class="panel panel-default" style="max-width: 767px; margin-bottom: 15px;">
                                         <div class="panel-heading" style="border-bottom-width: 0;">
                                             <h4 class="panel-title"><a data-toggle="collapse" href="#calcTargetValueTool_panel" id="calcTargetValueTool_title" class="collapsed"></a></h4>
                                         </div>
                                         <div id="calcTargetValueTool_panel" class="panel-collapse collapse">
                                             <div class="panel-body" style="padding: 0;">
                                                 <div class="table-responsive" style="margin-bottom: 0; border: 0;">
-                                                    <table class="table table-responsive text-nowrap table-condensed"
+                                                    <table class="table  text-nowrap table-condensed"
                                                         style="border: 0;margin-bottom: 0; width: 100%; font-size: 13px; text-align: center; cursor: default; table-layout: fixed;">
                                                         <tbody id="calcTargetValueTool">
                                                             <tr>
-                                                                <td colspan="8" id="calcTargetValueTool_Target_text" style="width: 720px; text-align: left;"></td>
+                                                                <td id="calcTargetValueTool_text_ResourceContract" style="border-right: 1px solid #ddd;"></td>
+                                                                <td id="calcTargetValueTool_Manp_text"></td>
+                                                                <td id="calcTargetValueTool_Ammu_text"></td>
+                                                                <td id="calcTargetValueTool_Rati_text"></td>
+                                                                <td id="calcTargetValueTool_Part_text"></td>
+                                                                <td id="calcTargetValueTool_TPro_text"></td>
+                                                                <td id="calcTargetValueTool_Equi_text"></td>
+                                                                <td id="calcTargetValueTool_QPro_text"></td>
+                                                                <td id="calcTargetValueTool_QRes_text"></td>
                                                             </tr>
                                                             <tr>
-                                                                <td id="calcTargetValueTool_Target_Manp_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Target_Ammu_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Target_Rati_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Target_Part_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Target_TPro_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Target_Equi_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Target_QPro_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Target_QRes_text" style="width: 90px;"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="8" style="padding: 0; margin-top: 0; border-top: 0;">
-                                                                    <div class="form-group input-group" style="margin-bottom: 0; width: max-content;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_Manp" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-radius: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_Ammu" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_Rati" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_Part" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_TPro" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_Equi" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_QPro" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Target_QRes" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-right: 0; border-radius: 0;">
-                                                                    </div>
+                                                                <td id="calcTargetValueTool_text_target" style="border-right: 1px solid #ddd;"></td>
+                                                                <td colspan="8" style="padding: 0; margin-top: 0; border: 0;">
+                                                                    <input type="number" id="calcTargetValueTool_Target_Manp" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off" style="width: 84px;">
+                                                                    <input type="number" id="calcTargetValueTool_Target_Ammu" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off">
+                                                                    <input type="number" id="calcTargetValueTool_Target_Rati" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off">
+                                                                    <input type="number" id="calcTargetValueTool_Target_Part" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off">
+                                                                    <input type="number" id="calcTargetValueTool_Target_TPro" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off">
+                                                                    <input type="number" id="calcTargetValueTool_Target_Equi" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off">
+                                                                    <input type="number" id="calcTargetValueTool_Target_QPro" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off">
+                                                                    <input type="number" id="calcTargetValueTool_Target_QRes" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off" style="border-right-width: 0;">
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td colspan="8" id="calcTargetValueTool_Current_text" style="width: 720px; text-align: left; border-top-width: 3px;"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td id="calcTargetValueTool_Current_Manp_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Current_Ammu_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Current_Rati_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Current_Part_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Current_TPro_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Current_Equi_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Current_QPro_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Current_QRes_text" style="width: 90px;"></td>
-                                                            </tr>
-                                                            <tr>
+                                                                <td id="calcTargetValueTool_text_current" style="border-right: 1px solid #ddd;"></td>
                                                                 <td colspan="8" style="padding: 0; margin-top: 0; border-top: 0;">
-                                                                    <div class="form-group input-group" style="margin-bottom: 0; width: max-content;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_Manp" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-radius: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_Ammu" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_Rati" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_Part" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_TPro" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_Equi" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_QPro" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0;">
-                                                                        <input type="number" id="calcTargetValueTool_Current_QRes" onfocus="this.select();" min="0" value="0" class="form-control" autocomplete="off" style="width: 90px; height: 28px; padding:3px 6px 3px 6px; border-left: 0; border-right: 0; border-radius: 0;">
-                                                                    </div>
+                                                                    <input type="number" id="calcTargetValueTool_Current_Manp" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off" style="width: 84px;">
+                                                                    <input type="number" id="calcTargetValueTool_Current_Ammu" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off">
+                                                                    <input type="number" id="calcTargetValueTool_Current_Rati" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off">
+                                                                    <input type="number" id="calcTargetValueTool_Current_Part" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off">
+                                                                    <input type="number" id="calcTargetValueTool_Current_TPro" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off">
+                                                                    <input type="number" id="calcTargetValueTool_Current_Equi" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off">
+                                                                    <input type="number" id="calcTargetValueTool_Current_QPro" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off">
+                                                                    <input type="number" id="calcTargetValueTool_Current_QRes" onfocus="this.select();" min="0" value="0" class="GF_table-input form-control" autocomplete="off" style="border-right-width: 0;">
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td colspan="2" style="padding: 0; margin-top: 0; border-top-width: 3px;">
+                                                                <td id="calcTargetValueTool_text_result" style="border-right: 1px solid #ddd;"></td>
+                                                                <td id="calcTargetValueTool_Result_Manp_value"></td>
+                                                                <td id="calcTargetValueTool_Result_Ammu_value"></td>
+                                                                <td id="calcTargetValueTool_Result_Rati_value"></td>
+                                                                <td id="calcTargetValueTool_Result_Part_value"></td>
+                                                                <td id="calcTargetValueTool_Result_TPro_value"></td>
+                                                                <td id="calcTargetValueTool_Result_Equi_value"></td>
+                                                                <td id="calcTargetValueTool_Result_QPro_value"></td>
+                                                                <td id="calcTargetValueTool_Result_QRes_value"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3" style="padding: 0; margin-top: 0;">
                                                                     <div class="form-group input-group" style="margin-bottom: 0;">
                                                                         <label for="calcTargetValueTool_InputExecutionTimes" id="calcTargetValueTool_InputExecutionTimes_label" class="input-group-addon" style="font-size: 13px; border-radius: 0; border: 0;"></label>
                                                                         <input type="number" min="1" max="999" step="1" id="calcTargetValueTool_InputExecutionTimes" class="form-control" onfocus="this.select();" value="1" style="height: 28px;padding:3px 6px 3px 6px; border-radius: 0; border-width: 0 0 0 1px;" autocomplete="off">
+                                                                    </div>
                                                                 </td>
-                                                                <td colspan="6" style="padding: 0; margin-top: 0; border-top-width: 3px;" align="left">
+                                                                <td colspan="6" style="padding: 0; margin-top: 0;" align="left">
                                                                     <div class="input-group-btn">
                                                                         <button class="btn btn-danger" type="button" id="calcTargetValueTool_clear" style="height: 28px;padding:3px 20px 3px 20px;font-size:13px; border-width: 0 1px 0 1px;"></button>
                                                                         <button class="btn btn-primary" type="button" id="calcTargetValueTool_startCalc" style="height: 28px;padding:3px 20px 3px 20px;font-size:13px; border-width: 0 1px 0 1px;"></button>
@@ -311,26 +301,6 @@
                                                                         </button>
                                                                     </div>
                                                                 </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td id="calcTargetValueTool_Result_Manp_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_Ammu_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_Rati_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_Part_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_TPro_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_Equi_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_QPro_text" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_QRes_text" style="width: 90px;"></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td id="calcTargetValueTool_Result_Manp_value" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_Ammu_value" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_Rati_value" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_Part_value" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_TPro_value" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_Equi_value" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_QPro_value" style="width: 90px;"></td>
-                                                                <td id="calcTargetValueTool_Result_QRes_value" style="width: 90px;"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -342,7 +312,7 @@
                                 <div class="col-lg-5" id="target">
                                     <h4 id="Demand" style="cursor: default;"></h4>
                                     <div id="setTargetButton"></div>
-                                    <div slider style="margin-top: 5px; margin-bottom: 35px;">
+                                    <div slider style="margin-top: 5px; margin-bottom: 40px;">
                                         <label id="ContractWeight_label" style="width:100%;">
                                             <span id="ContractWeight_notImportant" style="font-weight: normal;"></span>
                                             <span id="ContractWeight_Important"
@@ -429,37 +399,17 @@
                                             <table class="table table-responsive text-nowrap table-condensed"
                                                 style="border: 0;text-align: center; margin-bottom: 0; cursor: default;">
                                                 <thead>
-                                                    <tr style="cursor: pointer;">
-                                                        <th id="MissionTable_head_Mission" tabindex="0"
-                                                            style="width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);">
-                                                        </th>
-                                                        <th id="MissionTable_head_Manp" tabindex="0"
-                                                            style="width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);">
-                                                        </th>
-                                                        <th id="MissionTable_head_Ammu" tabindex="0"
-                                                            style="width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);">
-                                                        </th>
-                                                        <th id="MissionTable_head_Rati" tabindex="0"
-                                                            style="width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);">
-                                                        </th>
-                                                        <th id="MissionTable_head_Part" tabindex="0"
-                                                            style="width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);">
-                                                        </th>
-                                                        <th id="MissionTable_head_TPro" tabindex="0"
-                                                            style="width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);">
-                                                        </th>
-                                                        <th id="MissionTable_head_Equi" tabindex="0"
-                                                            style="width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);">
-                                                        </th>
-                                                        <th id="MissionTable_head_QPro" tabindex="0"
-                                                            style="width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);">
-                                                        </th>
-                                                        <th id="MissionTable_head_QRes" tabindex="0"
-                                                            style="width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);">
-                                                        </th>
-                                                        <th id="MissionTable_head_Time" tabindex="0"
-                                                            style="width: 10%; position: sticky; top: 0; background: white;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);">
-                                                        </th>
+                                                    <tr style="cursor: pointer;" id="MissionTable_thead_tr">
+                                                        <th id="MissionTable_head_Mission" tabindex="0"></th>
+                                                        <th id="MissionTable_head_Manp" tabindex="0"></th>
+                                                        <th id="MissionTable_head_Ammu" tabindex="0"></th>
+                                                        <th id="MissionTable_head_Rati" tabindex="0"></th>
+                                                        <th id="MissionTable_head_Part" tabindex="0"></th>
+                                                        <th id="MissionTable_head_TPro" tabindex="0"></th>
+                                                        <th id="MissionTable_head_Equi" tabindex="0"></th>
+                                                        <th id="MissionTable_head_QPro" tabindex="0"></th>
+                                                        <th id="MissionTable_head_QRes" tabindex="0"></th>
+                                                        <th id="MissionTable_head_Time" tabindex="0"></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="MissionTable_tbody"></tbody>
@@ -470,8 +420,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
-                        <div class="row">
+                    <div class="col-lg-12" style="padding: 0;">
                             <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12" style="float: right;">
                                 <div class="panel panel-default" style="max-width: 612px;">
                                     <div class="panel-heading" id="PlanDetailsTitle" style="cursor: default; border-bottom: 0;"></div>
@@ -551,15 +500,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
-                </div>
-                <hr style="margin-top: 0; margin-bottom: 0;">
-                <div class="row" style="padding-top: 5px; padding-bottom: 10px; cursor: default;">
-                    <footer class="col-lg-3" style="margin-right: 15px;">
+                <div class="col-lg-12" style="padding: 0 15px 10px 15px; cursor: default;">
+                    <hr style="margin: 0 0 5px 0;"/>
+                    <footer class="col-lg-3" style="padding: 0;">
                         GitHub: <a href="https://github.com/CHANTXU64/Girls-Frontline">https://github.com/CHANTXU64/Girls-Frontline</a>
                     </footer>
-                    <footer class="col-lg-3">
+                    <footer class="col-lg-3" style="padding: 0;">
                         <span id="permanentAddress"></span><a
                             href="https://chantxu64.github.io/GF_logistics.html">https://chantxu64.github.io/GF_logistics.html</a>
                     </footer>

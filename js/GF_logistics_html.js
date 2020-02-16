@@ -118,7 +118,7 @@ function MobilePCDevice() {
             $("#MissionTable_panel").collapse("hide");
         }
         document.getElementById("page-header").style.marginTop = "20px";
-        document.getElementById("page-wrapper").style.padding = "0";
+        document.getElementById("container-fluid").style.padding = "0";
         document.getElementById("calcTargetValueTool_apply").innerHTML = "<span id=\"calcTargetValueTool_apply_text\">" + language.HTML.calcTargetValueTool_apply_text + "</span> &darr;";
     }
     else {

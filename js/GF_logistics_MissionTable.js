@@ -210,7 +210,7 @@ class MissionsDetails {
         }
 
         if (missionsTable_length === 0)
-            tab = '<tr><td>' + language.JS.NoMission + '</td></tr>';
+            tab = '<tr><td colspan="10">' + language.JS.NoMission + '</td></tr>';
 
         document.getElementById("MissionTable_tbody").innerHTML = tab;
     }//End print
