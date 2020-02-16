@@ -207,6 +207,21 @@ function config_export() {
  * @param {string} input - 导入的数据
  */
 function setPageByImport(input) {
+    //debug
+    if (input === "clearCONSOLE") {
+        CONSOLE = "";
+        if (CAN_STORAGE_WORK)
+            sessionStorage.removeItem("GF_Logistics_console");
+        return ;
+    }
+    if (input === "clearSTORAGE" && CAN_STORAGE_WORK) {
+        sessionStorage.removeItem("GF_Logistics_console");
+        sessionStorage.removeItem("GF_Logistics_windowOnload");
+        localStorage.removeItem("GF_Logistics");
+        localStorage.removeItem("GF_Logistics_v1.x.x");
+        return ;
+    }
+
     //当有saved, 询问是否要覆盖当前config
     let flag = true;
     if (Saved.getSaved().length !== 0)
