@@ -2,7 +2,7 @@
  * [GF_logistics]{@link https://github.com/CHANTXU64/Girls-Frontline}
  *
  * @namespace GF_logistics
- * @version 1.0.0
+ * @version v1_0_0
  * @author ChantXu64 [chantxu@outlook.com]
  * @copyright ChantXu64
  * @license MIT
@@ -1255,7 +1255,7 @@ function calculateContractValue(BaseValue, SumValue, TotalRate) {
     return BaseValue / 100 + (BaseValue / SumValue - BaseValue / 100) * TotalRate;
 }
 /**版本 */
-var VERSION = "1.0.0-alpha";
+var VERSION = "1.0.0";
 
 /**
  * 用于判断浏览器是否能使用storage

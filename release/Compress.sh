@@ -33,7 +33,7 @@ echo "/**
  * [GF_logistics]{@link https://github.com/CHANTXU64/Girls-Frontline}
  *
  * @namespace GF_logistics
- * @version 1.0.0
+ * @version $version
  * @author ChantXu64 [chantxu@outlook.com]
  * @copyright ChantXu64
  * @license MIT
@@ -49,7 +49,6 @@ uglifyjs $jsfile -c -m \
 
 #html
 cd ../
-rm ./GF_logistics.html
 cp ../pages/GF_logistics.html ./
 cssdependent="<!---->\n\t<link\thref=\"./dependent/css/"$cssdependentfile"\"rel=\"stylesheet\">"
 css="<!---->\n\t<link\thref=\"./css/"$cssfile"\"rel=\"stylesheet\">"

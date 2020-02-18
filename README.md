@@ -1,9 +1,6 @@
 # Girls-Frontline logistics calculators
 后勤组合计算器
 
-预览版:https://chantxu64.github.io/GF_logistics.html<br>
-Preview version:https://chantxu64.github.io/GF_logistics.html
-
 参考 [星光下的彩虹](https://pan.baidu.com/s/1c3iS9Ks#list/path=/Girls%20Frontline)<br>
 Reference from [星光下的彩虹](https://pan.baidu.com/s/1c3iS9Ks#list/path=/Girls%20Frontline)
 
@@ -17,7 +14,8 @@ Picture archive https://imgur.com/XY6kEqh
 Thanks [FatalChapter](https://github.com/hycdes/GFTool)
 
 **该如何维护更新后勤战役?**<br>
-只需要修改js/GF_logistics_data.js, 修改Q数组和setQContract()函数即可.<br>
+1.只需要修改js/GF_logistics_data.js, 修改Q数组和setQContract()函数即可.<br>
+2.修改js/GF_logistics_localStorage.js的VERSION以及release/Compress.sh的version<br>
 
 测试代码格式: //test[\w|\W]+?//End test
 
