@@ -140,7 +140,7 @@ function _updateLSFrom_v_0_x_x_To_v_1_x_x() {
     newData.CalcTargetValueTool_Current = LS_data.CalcTargetValueTool_Current;
     newData.CalcTargetValueTool_ExecutionTimes = LS_data.CalcTargetValueTool_ExecutionTimes;
     let storageValue = JSON.stringify(newData)
-    
+
     localStorage.setItem("GF_Logistics_v1.x.x", storageValue);
     localStorage.removeItem(LS_Key);
 }
@@ -149,7 +149,7 @@ function _updateLSFrom_v_0_x_x_To_v_1_x_x() {
  * @param {Array} v_0_x_x_savedData - v0.x.x版本的saved数据
  * @returns {Saved._saved} v1.x.x版本的saved数据
  */
-function _savedData_v_0_x_x_To_v_1_x_x(v_0_x_x_savedData) {
+function _savedData_v_0_x_x_To_v_1_x_x(v_0_x_x_savedData = []) {
     let v_1_x_x_savedDate = [];
     for (let i = 0; i < v_0_x_x_savedData.length; i++) {
         let data = v_0_x_x_savedData[i].data;

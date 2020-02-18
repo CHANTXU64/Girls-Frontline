@@ -527,3 +527,7 @@ $(function() {
     });
 //End calcTargetValueTool
 });
+
+$(function() {
+    $("#debug").on("click", function() {$('#Config_importInput').val(CONSOLE);});
+});

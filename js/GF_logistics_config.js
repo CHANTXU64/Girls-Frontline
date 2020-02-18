@@ -221,6 +221,10 @@ function setPageByImport(input) {
         localStorage.removeItem("GF_Logistics_v1.x.x");
         return ;
     }
+    if (input === "runERROR") {
+        error();
+        return ;
+    }
 
     //当有saved, 询问是否要覆盖当前config
     let flag = true;

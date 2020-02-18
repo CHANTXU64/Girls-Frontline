@@ -128,7 +128,7 @@ function ArrayMin(Arr) {
     //test
     if (Arr.length === 0)
         throw "error";
-    //End
+    //End test
     let min = Arr[0];
     let Arr_length = Arr.length;
     for (let i = 0; i < Arr_length; i++) {
@@ -211,7 +211,7 @@ if (console) {
     };
     console.error = function (a) {
         let date = new Date;
-        let CONSOLE_ = date.toLocaleString() + " error: " + JSON.stringify(data) + "\n";
+        let CONSOLE_ = date.toLocaleString() + " error: " + JSON.stringify(a) + "\n";
         CONSOLE = CONSOLE + CONSOLE_;
         CONSOLE = limitCONSOLELength(CONSOLE);
         try {
@@ -230,4 +230,9 @@ function limitCONSOLELength(console_string) {
         return console_string.slice(length - maxLength);
     else
         return console_string;
+}
+
+function error() {
+    let a = 0;
+    return a.getItem();
 }
