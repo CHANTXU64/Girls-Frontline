@@ -2,7 +2,6 @@
  * 打印方案结果列表, 包括微调工具.
  * @param {Array.<Array>=} result_plan - 需要打印的方案, 默认按上次的方案打印
  * @param {string=} sortBy - 根据哪种方式进行排序, 默认按上次排序方式排序
- * @public
  */
 function printResultsPlan(result_plan, sortBy) {
     ResultsPlan.print(result_plan, sortBy);
@@ -36,6 +35,20 @@ function highlightResultsPlanRow(missionsName) {
                 $("#print_result_plan_tr_" + i).addClass("success");
                 break;
             }
+    }
+}
+
+/**
+ * 取消排序结果中的第一个高亮
+ */
+function cancelHighlightingResultsPlan() {
+    const resultPlan_length = ResultsPlan.getLastResultsPlan().length;
+    for (let i = 0; i < resultPlan_length; i++) {
+        let tr_selector = $("#print_result_plan_tr_" + i);
+        if (tr_selector.hasClass("success")) {
+            tr_selector.removeClass("success");
+            break;
+        }
     }
 }
 
@@ -98,6 +111,9 @@ function MissionsDetails_clickRow(Row) {
         MissionsDetails.selectMission(missionName);
         printPlanDetails();
 
+        if (hasResultPlan())
+            cancelHighlightingResultsPlan();
+
         //若已经选择了4个关卡, 则这四个关卡可能为排序结果的某一方案, 高亮那个方案
         if (selectedMissions.length >= 3 && hasResultPlan()) {
             const selectedMissions = MissionsDetails.getSelectedMissions();
@@ -111,13 +127,7 @@ function MissionsDetails_clickRow(Row) {
         printPlanDetails();
 
         //若存在排序结果, 也取消排序结果的高亮
-        if (hasResultPlan()) {
-            const result_plan_length = ResultsPlan.getLastResultsPlan().length;
-            for (let i = 0; i < result_plan_length; i++) {
-                let tr_selector = $("#print_result_plan_tr_" + i);
-                if (tr_selector.hasClass("success"))
-                    tr_selector.removeClass("success");
-            }
-        }
+        if (hasResultPlan())
+            cancelHighlightingResultsPlan();
     }
 }
