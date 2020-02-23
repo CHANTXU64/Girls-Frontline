@@ -1,7 +1,7 @@
 #需要使用babel-cli, babel-preset-es2015, UglifyJS 3, closure-stylesheets.jar
 #先通过MergeJS.sh合并js，然后手动删除测试代码//test[\w|\W]+?//End test, 再运行该脚本
 
-version="v1_0_0"
+version="v1_0_1"
 
 date=$(date "+%m%d")_$version
 jsfile="GFLGSTS_"$date".js"

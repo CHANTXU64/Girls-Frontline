@@ -1,5 +1,5 @@
 /**版本 */
-const VERSION = "1.0.0";
+const VERSION = "1.0.1";
 
 /**
  * 用于判断浏览器是否能使用storage

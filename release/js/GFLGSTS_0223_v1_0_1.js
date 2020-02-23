@@ -2,7 +2,7 @@
  * [GF_logistics]{@link https://github.com/CHANTXU64/Girls-Frontline}
  *
  * @namespace GF_logistics
- * @version v1_0_0
+ * @version v1_0_1
  * @author ChantXu64 [chantxu@outlook.com]
  * @copyright ChantXu64
  * @license MIT
@@ -125,7 +125,8 @@ var language_zh_CN = {
         calcTargetValueTool_InputExecutionTimes_label: "后勤执行次数",
         calcTargetValueTool_clear: "重置",
         calcTargetValueTool_startCalc: "计算",
-        calcTargetValueTool_apply_text: "应用"
+        calcTargetValueTool_apply_text: "应用",
+        OfflineVersion: "下载离线版本"
     },
     HTMLJS: {
         placeholder: {
@@ -377,7 +378,8 @@ var language_zh_TW = {
         calcTargetValueTool_InputExecutionTimes_label: "後勤執行次數",
         calcTargetValueTool_clear: "重置",
         calcTargetValueTool_startCalc: "計算",
-        calcTargetValueTool_apply_text: "應用"
+        calcTargetValueTool_apply_text: "應用",
+        OfflineVersion: "下載離線版本"
     },
     HTMLJS: {
         placeholder: {
@@ -629,7 +631,8 @@ var language_en = {
         calcTargetValueTool_InputExecutionTimes_label: "Execution Times",
         calcTargetValueTool_clear: "Clear",
         calcTargetValueTool_startCalc: "Calculate",
-        calcTargetValueTool_apply_text: "Apply"
+        calcTargetValueTool_apply_text: "Apply",
+        OfflineVersion: "Download offline version"
     },
     HTMLJS: {
         placeholder: {
@@ -1165,6 +1168,48 @@ function error() {
     var a = 0;
     return a.getItem();
 }
+
+//run on IE 11
+//https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/fill
+if (!Array.prototype.fill) {
+    Object.defineProperty(Array.prototype, 'fill', {
+        value: function value(_value) {
+
+            // Steps 1-2.
+            if (this == null) {
+                throw new TypeError('this is null or not defined');
+            }
+
+            var O = Object(this);
+
+            // Steps 3-5.
+            var len = O.length >>> 0;
+
+            // Steps 6-7.
+            var start = arguments[1];
+            var relativeStart = start >> 0;
+
+            // Step 8.
+            var k = relativeStart < 0 ? Math.max(len + relativeStart, 0) : Math.min(relativeStart, len);
+
+            // Steps 9-10.
+            var end = arguments[2];
+            var relativeEnd = end === undefined ? len : end >> 0;
+
+            // Step 11.
+            var final = relativeEnd < 0 ? Math.max(len + relativeEnd, 0) : Math.min(relativeEnd, len);
+
+            // Step 12.
+            while (k < final) {
+                O[k] = _value;
+                k++;
+            }
+
+            // Step 13.
+            return O;
+        }
+    });
+}
 /**
  * 0后勤战役编号-1人力-2弹药-3口粮-4零件-5人形-6装备-7快建-8快修-9时间(minute)
  * 
@@ -1255,7 +1300,7 @@ function calculateContractValue(BaseValue, SumValue, TotalRate) {
     return BaseValue / 100 + (BaseValue / SumValue - BaseValue / 100) * TotalRate;
 }
 /**版本 */
-var VERSION = "1.0.0";
+var VERSION = "1.0.1";
 
 /**
  * 用于判断浏览器是否能使用storage
@@ -4141,7 +4186,6 @@ MissionsDetails._selectedMissions = [];
  * 打印方案结果列表, 包括微调工具.
  * @param {Array.<Array>=} result_plan - 需要打印的方案, 默认按上次的方案打印
  * @param {string=} sortBy - 根据哪种方式进行排序, 默认按上次排序方式排序
- * @public
  */
 function printResultsPlan(result_plan, sortBy) {
     ResultsPlan.print(result_plan, sortBy);
@@ -4171,6 +4215,20 @@ function highlightResultsPlanRow(missionsName) {
     for (var i = 0; i < result_plan_length; i++) {
         if (missionsName[0] === result_plan[i][1] && missionsName[1] === result_plan[i][2] && missionsName[2] === result_plan[i][3] && missionsName[3] === result_plan[i][4]) {
             $("#print_result_plan_tr_" + i).addClass("success");
+            break;
+        }
+    }
+}
+
+/**
+ * 取消排序结果中的第一个高亮
+ */
+function cancelHighlightingResultsPlan() {
+    var resultPlan_length = ResultsPlan.getLastResultsPlan().length;
+    for (var i = 0; i < resultPlan_length; i++) {
+        var tr_selector = $("#print_result_plan_tr_" + i);
+        if (tr_selector.hasClass("success")) {
+            tr_selector.removeClass("success");
             break;
         }
     }
@@ -4235,6 +4293,8 @@ function MissionsDetails_clickRow(Row) {
         MissionsDetails.selectMission(missionName);
         printPlanDetails();
 
+        if (hasResultPlan()) cancelHighlightingResultsPlan();
+
         //若已经选择了4个关卡, 则这四个关卡可能为排序结果的某一方案, 高亮那个方案
         if (selectedMissions.length >= 3 && hasResultPlan()) {
             var _selectedMissions = MissionsDetails.getSelectedMissions();
@@ -4248,13 +4308,7 @@ function MissionsDetails_clickRow(Row) {
         printPlanDetails();
 
         //若存在排序结果, 也取消排序结果的高亮
-        if (hasResultPlan()) {
-            var result_plan_length = ResultsPlan.getLastResultsPlan().length;
-            for (var i = 0; i < result_plan_length; i++) {
-                var tr_selector = $("#print_result_plan_tr_" + i);
-                if (tr_selector.hasClass("success")) tr_selector.removeClass("success");
-            }
-        }
+        if (hasResultPlan()) cancelHighlightingResultsPlan();
     }
 }
 window.onload = function () {
