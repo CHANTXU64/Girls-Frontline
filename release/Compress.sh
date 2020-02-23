@@ -18,7 +18,7 @@ rm ./dependent/js/*
 
 #dependent
 cat ../vendor/bootstrap/css/bootstrap.min.css > ./dependent/css/$cssdependentfile
-awk '{print $0}' ../vendor/jquery-v2.1.1/jquery.min.js ../vendor/bootstrap/js/bootstrap.min.js ../vendor/echarts/echarts.min.js ../vendor/html2canvas/html2canvas.min.js ../vendor/js-sha1/sha1.min.js ../vendor/js-md5/md5.min.js ../vendor/lz-string/lz-string.min.js > ./dependent/js/$jsdependentfile
+awk '{print $0}' ../vendor/jquery-v2.1.1/jquery.min.js ../vendor/bootstrap/js/bootstrap.min.js ../vendor/echarts/echarts.min.js ../vendor/es6-promise/es6_promise.auto.min.js ../vendor/html2canvas/html2canvas.min.js ../vendor/js-sha1/sha1.min.js ../vendor/js-md5/md5.min.js ../vendor/lz-string/lz-string.min.js > ./dependent/js/$jsdependentfile
 
 #css
 java -jar closure-stylesheets.jar ../css/GF_logistics.css > ./css/$cssfile
@@ -54,9 +54,9 @@ cssdependent="<!---->\n\t<link\thref=\"./dependent/css/"$cssdependentfile"\"rel=
 css="<!---->\n\t<link\thref=\"./css/"$cssfile"\"rel=\"stylesheet\">"
 jsdependent="<!---->\n\t<script\tsrc=\"./dependent/js/"$jsdependentfile"\"></script>"
 js="<!---->\n\t<script\tsrc=\"./js/"$jsfile_min"\"></script>"
-sed -i '12,44d' GF_logistics.html
-sed -i 11a$js GF_logistics.html
-sed -i 12c$jsdependent GF_logistics.html
-sed -i 12c$css GF_logistics.html
-sed -i 12c$cssdependent GF_logistics.html
-sed -i '12c\' GF_logistics.html
+sed -i '13,46d' GF_logistics.html
+sed -i 12a$js GF_logistics.html
+sed -i 13c$jsdependent GF_logistics.html
+sed -i 13c$css GF_logistics.html
+sed -i 13c$cssdependent GF_logistics.html
+sed -i '13c\' GF_logistics.html
