@@ -20,7 +20,10 @@ Thanks [FatalChapter](https://github.com/hycdes/GFTool)
 1.修改js/GF_logistics_localStorage.js的VERSION<br>
 2.修改release/Compress.sh的version<br>
 3.修改html中的footer离线版页脚(链接)<br>
-4.离线版标题以及文件名
+4.运行MergeJS.sh<br>
+5.删去GF_logistics_.js测试代码//test[\w|\W]+?//End test<br>
+6.运行Compress.sh<br>
+7.修改离线版标题
 
 测试代码格式: //test[\w|\W]+?//End test
 

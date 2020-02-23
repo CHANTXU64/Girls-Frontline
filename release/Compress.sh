@@ -1,3 +1,4 @@
+#需要使用babel-cli, babel-preset-es2015, UglifyJS 3, closure-stylesheets.jar
 #先通过MergeJS.sh合并js，然后手动删除测试代码//test[\w|\W]+?//End test, 再运行该脚本
 
 version="v1_0_0"
@@ -60,3 +61,24 @@ sed -i 13c$jsdependent GF_logistics.html
 sed -i 13c$css GF_logistics.html
 sed -i 13c$cssdependent GF_logistics.html
 sed -i '13c\' GF_logistics.html
+
+#offline version
+cp GF_logistics.html GF_logistics_offline.html
+cp css/$cssfile css/GFLGSTS.min.css
+sed -i '1a\</style>' css/GFLGSTS.min.css
+cp js/$jsfile_min js/GFLGSTS.min.js
+sed -i '11c\</script>' js/GFLGSTS.min.js
+cp dependent/css/$cssdependentfile dependent/css/GFLGSTS_dependent.min.css
+sed -i '1i\<style>' dependent/css/GFLGSTS_dependent.min.css
+cp dependent/js/$jsdependentfile dependent/js/GFLGSTS_dependent.min.js
+sed -i '1i\<script>' dependent/js/GFLGSTS_dependent.min.js
+sed -i '13,16d' GF_logistics_offline.html
+sed -i '/<\/head>/{h;s/.*/cat dependent\/css\/GFLGSTS_dependent.min.css/e;G}' GF_logistics_offline.html
+sed -i '/<\/head>/{h;s/.*/cat css\/GFLGSTS.min.css/e;G}' GF_logistics_offline.html
+sed -i '/<\/head>/{h;s/.*/cat dependent\/js\/GFLGSTS_dependent.min.js/e;G}' GF_logistics_offline.html
+sed -i '/<\/head>/{h;s/.*/cat js\/GFLGSTS.min.js/e;G}' GF_logistics_offline.html
+rm css/GFLGSTS.min.css
+rm js/GFLGSTS.min.js
+rm dependent/css/GFLGSTS_dependent.min.css
+rm dependent/js/GFLGSTS_dependent.min.js
+mv GF_logistics_offline.html GF_logistics_offline_$version.html
