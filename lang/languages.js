@@ -100,6 +100,7 @@ const language_zh_CN = {
         calcTargetValueTool_clear: "重置",
         calcTargetValueTool_startCalc: "计算",
         calcTargetValueTool_apply_text: "应用",
+        OfflineVersion: "下载离线版本"
     },
     HTMLJS: {
         placeholder: {
@@ -357,6 +358,7 @@ const language_zh_TW = {
         calcTargetValueTool_clear: "重置",
         calcTargetValueTool_startCalc: "計算",
         calcTargetValueTool_apply_text: "應用",
+        OfflineVersion: "下載離線版本"
     },
     HTMLJS: {
         placeholder: {
@@ -614,6 +616,7 @@ const language_en = {
         calcTargetValueTool_clear: "Clear",
         calcTargetValueTool_startCalc: "Calculate",
         calcTargetValueTool_apply_text: "Apply",
+        OfflineVersion: "Download offline version"
     },
     HTMLJS: {
         placeholder: {

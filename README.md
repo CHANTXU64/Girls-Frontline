@@ -14,8 +14,13 @@ Picture archive https://imgur.com/XY6kEqh
 Thanks [FatalChapter](https://github.com/hycdes/GFTool)
 
 **该如何维护更新后勤战役?**<br>
-1.只需要修改js/GF_logistics_data.js, 修改Q数组和setQContract()函数即可.<br>
-2.修改js/GF_logistics_localStorage.js的VERSION以及release/Compress.sh的version<br>
+只需要修改js/GF_logistics_data.js, 修改Q数组和setQContract()函数即可.<br>
+
+**如何发布新版本?**<br>
+1.修改js/GF_logistics_localStorage.js的VERSION<br>
+2.修改release/Compress.sh的version<br>
+3.修改html中的footer离线版页脚(链接)<br>
+4.离线版标题以及文件名
 
 测试代码格式: //test[\w|\W]+?//End test
 
