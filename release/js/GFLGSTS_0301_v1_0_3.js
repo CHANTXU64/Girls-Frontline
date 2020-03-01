@@ -2,7 +2,7 @@
  * [GF_logistics]{@link https://github.com/CHANTXU64/Girls-Frontline}
  *
  * @namespace GF_logistics
- * @version v1_0_2
+ * @version v1_0_3
  * @author ChantXu64 [chantxu@outlook.com]
  * @copyright ChantXu64
  * @license MIT
@@ -1300,7 +1300,7 @@ function calculateContractValue(BaseValue, SumValue, TotalRate) {
     return BaseValue / 100 + (BaseValue / SumValue - BaseValue / 100) * TotalRate;
 }
 /**版本 */
-var VERSION = "1.0.2";
+var VERSION = "1.0.3";
 
 /**
  * 用于判断浏览器是否能使用storage
@@ -2668,11 +2668,7 @@ var Tab_Anytime = function (_Tab) {
         key: "printPlanTableTitle",
         value: function printPlanTableTitle() {
             var title = "";
-            if (is_CalculateByHour()) {
-                title = this._title + '<th style="width:8.88%;" tabindex="0" id="resultPlan_Manp">' + language.JS.Manp + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Ammu">' + language.JS.Ammu + '/h</th><th style="width:8.88%;"tabindex="0" id="resultPlan_Rati">' + language.JS.Rati + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Part">' + language.JS.Part + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_TPro">' + language.JS.TPro + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Equi">' + language.JS.Equi + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QPro">' + language.JS.QPro + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QRes">' + language.JS.QRes + '/h</th><th style="width:8.88%;cursor:default;">' + language.JS.MinIntervalTime + '</th>' + this._titleEnd;
-            } else {
-                title = this._title + '<th style="width:8.88%;" tabindex="0" id="resultPlan_Manp">' + language.JS.Manp + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Ammu">' + language.JS.Ammu + '</th><th style="width:8.88%;"tabindex="0" id="resultPlan_Rati">' + language.JS.Rati + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Part">' + language.JS.Part + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_TPro">' + language.JS.TPro + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Equi">' + language.JS.Equi + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QPro">' + language.JS.QPro + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QRes">' + language.JS.QRes + '</th><th style="width:8.88%;cursor:default;">' + language.JS.MinIntervalTime + '</th>' + this._titleEnd;
-            }
+            if (is_CalculateByHour()) title = this._title + '<th style="width:8.88%;" tabindex="0" id="resultPlan_Manp">' + language.JS.Manp + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Ammu">' + language.JS.Ammu + '/h</th><th style="width:8.88%;"tabindex="0" id="resultPlan_Rati">' + language.JS.Rati + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Part">' + language.JS.Part + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_TPro">' + language.JS.TPro + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Equi">' + language.JS.Equi + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QPro">' + language.JS.QPro + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QRes">' + language.JS.QRes + '/h</th><th style="width:8.88%;cursor:default;">' + language.JS.MinIntervalTime + '</th>' + this._titleEnd;else title = this._title + '<th style="width:8.88%;" tabindex="0" id="resultPlan_Manp">' + language.JS.Manp + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Ammu">' + language.JS.Ammu + '</th><th style="width:8.88%;"tabindex="0" id="resultPlan_Rati">' + language.JS.Rati + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Part">' + language.JS.Part + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_TPro">' + language.JS.TPro + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Equi">' + language.JS.Equi + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QPro">' + language.JS.QPro + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QRes">' + language.JS.QRes + '</th><th style="width:8.88%;cursor:default;">' + language.JS.MinIntervalTime + '</th>' + this._titleEnd;
             return title;
         }
 
@@ -2968,11 +2964,7 @@ var Tab_Timetable = function (_Tab2) {
         key: "printPlanTableTitle",
         value: function printPlanTableTitle() {
             var title = "";
-            if (is_CalculateByHour()) {
-                title = this._title + '<th style="width:10%;" tabindex="0" id="resultPlan_Manp">' + language.JS.Manp + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Ammu">' + language.JS.Ammu + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Rati">' + language.JS.Rati + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Part">' + language.JS.Part + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_TPro">' + language.JS.TPro + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Equi">' + language.JS.Equi + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_QPro">' + language.JS.QPro + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_QRes">' + language.JS.QRes + '/h</th>' + this._titleEnd;
-            } else {
-                title = this._title + '<th style="width:10%;" tabindex="0" id="resultPlan_Manp">' + language.JS.Manp + '</th><th style="width:10%;" tabindex="0" id="resultPlan_Ammu">' + language.JS.Ammu + '</th><th style="width:10%;" tabindex="0" id="resultPlan_Rati">' + language.JS.Rati + '</th><th style="width:10%;" tabindex="0" id="resultPlan_Part">' + language.JS.Part + '</th><th style="width:10%;" tabindex="0" id="resultPlan_TPro">' + language.JS.TPro + '</th><th style="width:10%;" tabindex="0" id="resultPlan_Equi">' + language.JS.Equi + '</th><th style="width:10%;" tabindex="0" id="resultPlan_QPro">' + language.JS.QPro + '</th><th style="width:10%;" tabindex="0" id="resultPlan_QRes">' + language.JS.QRes + '</th>' + this._titleEnd;
-            }
+            if (is_CalculateByHour()) title = this._title + '<th style="width:10%;" tabindex="0" id="resultPlan_Manp">' + language.JS.Manp + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Ammu">' + language.JS.Ammu + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Rati">' + language.JS.Rati + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Part">' + language.JS.Part + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_TPro">' + language.JS.TPro + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Equi">' + language.JS.Equi + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_QPro">' + language.JS.QPro + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_QRes">' + language.JS.QRes + '/h</th>' + this._titleEnd;else title = this._title + '<th style="width:10%;" tabindex="0" id="resultPlan_Manp">' + language.JS.Manp + '</th><th style="width:10%;" tabindex="0" id="resultPlan_Ammu">' + language.JS.Ammu + '</th><th style="width:10%;" tabindex="0" id="resultPlan_Rati">' + language.JS.Rati + '</th><th style="width:10%;" tabindex="0" id="resultPlan_Part">' + language.JS.Part + '</th><th style="width:10%;" tabindex="0" id="resultPlan_TPro">' + language.JS.TPro + '</th><th style="width:10%;" tabindex="0" id="resultPlan_Equi">' + language.JS.Equi + '</th><th style="width:10%;" tabindex="0" id="resultPlan_QPro">' + language.JS.QPro + '</th><th style="width:10%;" tabindex="0" id="resultPlan_QRes">' + language.JS.QRes + '</th>' + this._titleEnd;
             return title;
         }
 
@@ -3367,10 +3359,8 @@ var PlanDetails = function () {
             //判断打印之前是否已存在图表, 若存在选择更新或销毁(关卡数组为空), 否则添加图表
             var Chart = void 0; //图表实例
             if (Chart_elem.getAttribute("_echarts_instance_") === "" || Chart_elem.getAttribute("_echarts_instance_") === null) {
-                if (missionsDetails.length === 0) {
-                    //跳过打印图表
+                if (missionsDetails.length === 0) //跳过打印图表
                     return;
-                }
                 Chart_elem.style.cssText = "width: 610px; height: 120px;";
                 Chart = echarts.init(Chart_elem);
             } else {
@@ -3523,7 +3513,12 @@ var PlanDetails = function () {
  */
 
 
-PlanDetails._chartLastParam = { missionsName: [], collectTimetable: [], totalTime: -1, startTIme: -1 };
+PlanDetails._chartLastParam = {
+    missionsName: [],
+    collectTimetable: [],
+    totalTime: -1,
+    startTIme: -1
+};
 
 /**绘图Fun */
 function renderItem(params, api) {
@@ -3644,12 +3639,12 @@ var ResultsPlan = function () {
         } //End print
 
         /**
-        * 对方案排序
-        * @param {Array.<Array>} result_plan - 需要排序的方案
-        * @param {string} sortBy - 排序方式
-        * @returns {Array.<Array>} 排序后的方案
-        * @public
-        */
+         * 对方案排序
+         * @param {Array.<Array>} result_plan - 需要排序的方案
+         * @param {string} sortBy - 排序方式
+         * @returns {Array.<Array>} 排序后的方案
+         * @public
+         */
 
     }, {
         key: "sortResultPlan",
@@ -4904,9 +4899,7 @@ var Plan_Stdzn = function (_Plan_Original) {
             var currentValue = this.ShownTab.calculateCurrentValue(Mission_1, Mission_2, Mission_3, Mission_4);
 
             //ShownTab的计算现值函数返回全为-1的数组, 说明由于某些原因该组合不可用
-            if (currentValue[0] === -1) {
-                return;
-            }
+            if (currentValue[0] === -1) return;
 
             var planValue = this._calculateValue(currentValue);
 
@@ -4935,9 +4928,7 @@ var Plan_Stdzn = function (_Plan_Original) {
             var currentValue = this.ShownTab.calculateCurrentValue(Mission_1, Mission_2, Mission_3, Mission_4);
 
             //ShownTab的计算现值函数返回全为-1的数组, 说明由于某些原因该组合不可用
-            if (currentValue[0] === -1) {
-                return;
-            }
+            if (currentValue[0] === -1) return;
 
             var planValue = this._calculateValue(currentValue);
             this._pushIntoList(Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue);
@@ -5493,7 +5484,10 @@ var Saved = function () {
         value: function _export(row) {
             var data = this._saved[row];
             var MD5 = md5(JSON.stringify(data));
-            var exportData = { data: data, MD5: MD5 };
+            var exportData = {
+                data: data,
+                MD5: MD5
+            };
             var exportText = JSON.stringify(exportData);
             exportText = LZString.compressToEncodedURIComponent(exportText);
             var export_elem = document.getElementById("importSaved_input");
@@ -5828,7 +5822,10 @@ function config_export() {
     data.CalcTargetValueTool_Execution = Input_getCalcTargetValueTool_InputExecutionTimes();
 
     var SHA1 = sha1(JSON.stringify(data));
-    var config = { data: data, SHA1: SHA1 };
+    var config = {
+        data: data,
+        SHA1: SHA1
+    };
     config = JSON.stringify(config);
     config = LZString.compressToBase64(config);
 
@@ -6485,8 +6482,8 @@ $(function () {
     $("#calcTargetValueTool_Current_QRes").on("keyup", function (e) {
         if (is_KeyIsEnter(e)) $("#calcTargetValueTool_InputExecutionTimes").focus();
     });
-    //End calcTargetValueTool
 });
+//End calcTargetValueTool
 
 $(function () {
     $("#debug").on("click", function () {
