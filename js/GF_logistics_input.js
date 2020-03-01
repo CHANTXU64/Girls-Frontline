@@ -35,7 +35,7 @@ function IsGreatSuccessRateUp() {
  */
 function _getGreatSuccessUpRate(Index_BaseRate) {
     /**当基础后勤大成功概率为i时, 增加的概率为第i个元素 */
-    const Array_GreatSuccessRate = [ "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15 / 16", "15 / 16", "16", "16", "16 / 17", "17", "17 / 18", "17 / 18", "17 / 18", "18 / 19", "18 / 19", "19", "19", "19 / 20", "20", "20 / 21", "20 / 21", "20 / 21", "21 / 22", "21 / 22", "22", "22", "22 / 23", "23", "23 / 24", "23 / 24", "23 / 24", "24 / 25", "24 / 25", "25", "25", "25 / 26", "26", "26 / 27", "26 / 27", "26 / 27", "27 / 28", "27 / 28", "28", "28", "28 / 29", "29", "29 / 30", "29 / 30", "29 / 30", "30 / 31", "30 / 31", "31", "31", "31 / 21", "32", "32 / 33", "32 / 33", "32", "31"];
+    const Array_GreatSuccessRate = ["15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15", "15 / 16", "15 / 16", "16", "16", "16 / 17", "17", "17 / 18", "17 / 18", "17 / 18", "18 / 19", "18 / 19", "19", "19", "19 / 20", "20", "20 / 21", "20 / 21", "20 / 21", "21 / 22", "21 / 22", "22", "22", "22 / 23", "23", "23 / 24", "23 / 24", "23 / 24", "24 / 25", "24 / 25", "25", "25", "25 / 26", "26", "26 / 27", "26 / 27", "26 / 27", "27 / 28", "27 / 28", "28", "28", "28 / 29", "29", "29 / 30", "29 / 30", "29 / 30", "30 / 31", "30 / 31", "31", "31", "31 / 21", "32", "32 / 33", "32 / 33", "32", "31"];
     return Array_GreatSuccessRate[Index_BaseRate];
 }
 
@@ -74,7 +74,8 @@ function Input_setGreatSuccessUpRate(is_RateUP, NeedCorrectBaseRate = true) {
  * 返回目标值(需求量), NeedCorrection 默认为true 
  * @param {*} Target_JQ_selector - Target的jQuery选择器, 也可以是选择器数组
  */
-function Input_getTarget_Correct(Target_JQ_selector = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QPT"), $("#QRT")], NeedCorrection = true) {
+function Input_getTarget_Correct(Target_JQ_selector = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QPT"), $("#QRT")],
+                                    NeedCorrection = true) {
     if (Array.isArray(Target_JQ_selector))
         return _getValue_Arr(Target_JQ_selector, NeedCorrection);
     else
@@ -97,7 +98,8 @@ function _getValue_Arr(Target_JQ_selector_Arr, NeedCorrection) {
  * @param {number|Array.<number>} TargetValue
  * @param {*} Target_JQ_selector - Target的jQuery选择器, 也可以是选择器数组
  */
-function Input_setTarget(TargetValue = [0,0,0,0,0,0,0,0], Target_JQ_selector = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QPT"), $("#QRT")]) {
+function Input_setTarget(TargetValue = [0, 0, 0, 0, 0, 0, 0, 0], 
+                            Target_JQ_selector = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QPT"), $("#QRT")]) {
     if (Array.isArray(TargetValue))
         _setTarget_arr(TargetValue, Target_JQ_selector);
     else
@@ -280,7 +282,8 @@ function Input_getCalcTargetValueTool_Target(NeedCorrection = false) {
     const Target_JQ_selector = [$("#calcTargetValueTool_Target_Manp"),
         $("#calcTargetValueTool_Target_Ammu"), $("#calcTargetValueTool_Target_Rati"),
         $("#calcTargetValueTool_Target_Part"), $("#calcTargetValueTool_Target_TPro"),
-        $("#calcTargetValueTool_Target_Equi"), $("#calcTargetValueTool_Target_QPro"), $("#calcTargetValueTool_Target_QRes")];
+        $("#calcTargetValueTool_Target_Equi"), $("#calcTargetValueTool_Target_QPro"), $("#calcTargetValueTool_Target_QRes")
+    ];
     return _getValue_Arr(Target_JQ_selector, NeedCorrection);
 }
 
@@ -288,7 +291,8 @@ function Input_setCalcTargetValueTool_Target(TargetValue = [0, 0, 0, 0, 0, 0, 0,
     const Target_JQ_selector = [$("#calcTargetValueTool_Target_Manp"),
         $("#calcTargetValueTool_Target_Ammu"), $("#calcTargetValueTool_Target_Rati"),
         $("#calcTargetValueTool_Target_Part"), $("#calcTargetValueTool_Target_TPro"),
-        $("#calcTargetValueTool_Target_Equi"), $("#calcTargetValueTool_Target_QPro"), $("#calcTargetValueTool_Target_QRes")];
+        $("#calcTargetValueTool_Target_Equi"), $("#calcTargetValueTool_Target_QPro"), $("#calcTargetValueTool_Target_QRes")
+    ];
     _setTarget_arr(TargetValue, Target_JQ_selector);
     storageSetItem("CalcTargetValueTool_Target", Input_getCalcTargetValueTool_Target());
 }
@@ -297,7 +301,8 @@ function Input_getCalcTargetValueTool_Current(NeedCorrection = false) {
     const Current_JQ_selector = [$("#calcTargetValueTool_Current_Manp"),
         $("#calcTargetValueTool_Current_Ammu"), $("#calcTargetValueTool_Current_Rati"),
         $("#calcTargetValueTool_Current_Part"), $("#calcTargetValueTool_Current_TPro"),
-        $("#calcTargetValueTool_Current_Equi"), $("#calcTargetValueTool_Current_QPro"), $("#calcTargetValueTool_Current_QRes")];
+        $("#calcTargetValueTool_Current_Equi"), $("#calcTargetValueTool_Current_QPro"), $("#calcTargetValueTool_Current_QRes")
+    ];
     return _getValue_Arr(Current_JQ_selector, NeedCorrection);
 }
 
@@ -305,7 +310,8 @@ function Input_setCalcTargetValueTool_Current(CurrentValue = [0, 0, 0, 0, 0, 0, 
     const Current_JQ_selector = [$("#calcTargetValueTool_Current_Manp"),
         $("#calcTargetValueTool_Current_Ammu"), $("#calcTargetValueTool_Current_Rati"),
         $("#calcTargetValueTool_Current_Part"), $("#calcTargetValueTool_Current_TPro"),
-        $("#calcTargetValueTool_Current_Equi"), $("#calcTargetValueTool_Current_QPro"), $("#calcTargetValueTool_Current_QRes")];
+        $("#calcTargetValueTool_Current_Equi"), $("#calcTargetValueTool_Current_QPro"), $("#calcTargetValueTool_Current_QRes")
+    ];
     _setTarget_arr(CurrentValue, Current_JQ_selector);
     storageSetItem("CalcTargetValueTool_Current", Input_getCalcTargetValueTool_Current());
 }

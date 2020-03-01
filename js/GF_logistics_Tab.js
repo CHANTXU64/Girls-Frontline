@@ -1,6 +1,6 @@
 class Tab {
     constructor() {
-        this._title = '<thead><tr style="cursor:pointer;"><th style="width:20%;" colspan="4" tabindex="0" id="resultPlan_Mission">'+ language.JS.Mission +'</th>';
+        this._title = '<thead><tr style="cursor:pointer;"><th style="width:20%;" colspan="4" tabindex="0" id="resultPlan_Mission">' + language.JS.Mission + '</th>';
         this._titleEnd = '</tr></thead>';
         this._totalTime = 0;
 
@@ -464,7 +464,7 @@ class Tab_Anytime extends Tab {
 
                 //该关卡在后勤总时间内可执行次数
                 let times = 0;
-                while((++times + 1) * Q[i][9] <= this._totalTime);
+                while ((++times + 1) * Q[i][9] <= this._totalTime);
 
                 for (let ii = 1; ii < 5; ii++) {
                     newrow.push(Q[i][ii] * times * resourceIncreasingRate / this._totalTime);
@@ -492,7 +492,7 @@ class Tab_Anytime extends Tab {
         //启用这行代码应该能让排序结果与以前一致
         // this._setCurrentMax();
         //End test
-    }//End setValidQAndReturnLengthAndSetCurrentMax()
+    } //End setValidQAndReturnLengthAndSetCurrentMax()
     /**
      * 排除超时后勤以及在总时间内的时间间隔小于最小间隔时间的关卡(等于0的除外)
      * @param {Array.<number>} UnableLogistic - 之前排除的后勤
@@ -532,7 +532,7 @@ class Tab_Anytime extends Tab {
             const Time = [Qvalid_Time[Mission_n1], Qvalid_Time[Mission_n2], Qvalid_Time[Mission_n3], Qvalid_Time[Mission_n4]];
 
             //若各个关卡在第一次部署后的间隔时间已经小于设置的最小间隔时间, 不必再精确计算最小间隔时间, 直接返回
-            let IntervalTime = Math.min((Time[1] - Time[0])===0?MinimumIntervalTime:Time[1] - Time[0], (Time[2] - Time[1])===0?MinimumIntervalTime:Time[2] - Time[1], (Time[3] - Time[2])===0?MinimumIntervalTime:Time[3] - Time[2]);
+            let IntervalTime = Math.min((Time[1] - Time[0]) === 0 ? MinimumIntervalTime : Time[1] - Time[0], (Time[2] - Time[1]) === 0 ? MinimumIntervalTime : Time[2] - Time[1], (Time[3] - Time[2]) === 0 ? MinimumIntervalTime : Time[3] - Time[2]);
             if (IntervalTime < MinimumIntervalTime)
                 return [-1, -1, -1, -1, -1, -1, -1, -1];
 
@@ -570,12 +570,10 @@ class Tab_Anytime extends Tab {
      */
     printPlanTableTitle() {
         let title = "";
-        if (is_CalculateByHour()) {
-            title = this._title + '<th style="width:8.88%;" tabindex="0" id="resultPlan_Manp">'+language.JS.Manp+'/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Ammu">'+language.JS.Ammu+'/h</th><th style="width:8.88%;"tabindex="0" id="resultPlan_Rati">'+language.JS.Rati+'/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Part">'+language.JS.Part+'/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_TPro">'+language.JS.TPro+'/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Equi">'+language.JS.Equi+'/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QPro">'+language.JS.QPro+'/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QRes">'+language.JS.QRes+'/h</th><th style="width:8.88%;cursor:default;">'+language.JS.MinIntervalTime+'</th>' + this._titleEnd;
-        }
-        else {
-            title = this._title + '<th style="width:8.88%;" tabindex="0" id="resultPlan_Manp">'+language.JS.Manp+'</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Ammu">'+language.JS.Ammu+'</th><th style="width:8.88%;"tabindex="0" id="resultPlan_Rati">'+language.JS.Rati+'</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Part">'+language.JS.Part+'</th><th style="width:8.88%;" tabindex="0" id="resultPlan_TPro">'+language.JS.TPro+'</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Equi">'+language.JS.Equi+'</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QPro">'+language.JS.QPro+'</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QRes">'+language.JS.QRes+'</th><th style="width:8.88%;cursor:default;">'+language.JS.MinIntervalTime+'</th>' + this._titleEnd;
-        }
+        if (is_CalculateByHour())
+            title = this._title + '<th style="width:8.88%;" tabindex="0" id="resultPlan_Manp">' + language.JS.Manp + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Ammu">' + language.JS.Ammu + '/h</th><th style="width:8.88%;"tabindex="0" id="resultPlan_Rati">' + language.JS.Rati + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Part">' + language.JS.Part + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_TPro">' + language.JS.TPro + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Equi">' + language.JS.Equi + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QPro">' + language.JS.QPro + '/h</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QRes">' + language.JS.QRes + '/h</th><th style="width:8.88%;cursor:default;">' + language.JS.MinIntervalTime + '</th>' + this._titleEnd;
+        else
+            title = this._title + '<th style="width:8.88%;" tabindex="0" id="resultPlan_Manp">' + language.JS.Manp + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Ammu">' + language.JS.Ammu + '</th><th style="width:8.88%;"tabindex="0" id="resultPlan_Rati">' + language.JS.Rati + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Part">' + language.JS.Part + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_TPro">' + language.JS.TPro + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_Equi">' + language.JS.Equi + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QPro">' + language.JS.QPro + '</th><th style="width:8.88%;" tabindex="0" id="resultPlan_QRes">' + language.JS.QRes + '</th><th style="width:8.88%;cursor:default;">' + language.JS.MinIntervalTime + '</th>' + this._titleEnd;
         return title;
     }
 
@@ -738,7 +736,7 @@ function calculateIntervalTimeMin(Time_Arr, Total_Time) {
         minIntervalTime = minIntervalTime < IntervalTime ? minIntervalTime : IntervalTime;
     }
     return minIntervalTime;
-}//End calculateIntervalTimeMin()
+} //End calculateIntervalTimeMin()
 
 /**
  * @extends Tab
@@ -840,12 +838,10 @@ class Tab_Timetable extends Tab {
      */
     printPlanTableTitle() {
         let title = "";
-        if (is_CalculateByHour()) {
-            title = this._title + '<th style="width:10%;" tabindex="0" id="resultPlan_Manp">'+language.JS.Manp+'/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Ammu">'+language.JS.Ammu+'/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Rati">'+language.JS.Rati+'/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Part">'+language.JS.Part+'/h</th><th style="width:10%;" tabindex="0" id="resultPlan_TPro">'+language.JS.TPro+'/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Equi">'+language.JS.Equi+'/h</th><th style="width:10%;" tabindex="0" id="resultPlan_QPro">'+language.JS.QPro+'/h</th><th style="width:10%;" tabindex="0" id="resultPlan_QRes">'+language.JS.QRes+'/h</th>' + this._titleEnd;
-        }
-        else {
-            title = this._title + '<th style="width:10%;" tabindex="0" id="resultPlan_Manp">'+language.JS.Manp+'</th><th style="width:10%;" tabindex="0" id="resultPlan_Ammu">'+language.JS.Ammu+'</th><th style="width:10%;" tabindex="0" id="resultPlan_Rati">'+language.JS.Rati+'</th><th style="width:10%;" tabindex="0" id="resultPlan_Part">'+language.JS.Part+'</th><th style="width:10%;" tabindex="0" id="resultPlan_TPro">'+language.JS.TPro+'</th><th style="width:10%;" tabindex="0" id="resultPlan_Equi">'+language.JS.Equi+'</th><th style="width:10%;" tabindex="0" id="resultPlan_QPro">'+language.JS.QPro+'</th><th style="width:10%;" tabindex="0" id="resultPlan_QRes">'+language.JS.QRes+'</th>' + this._titleEnd;
-        }
+        if (is_CalculateByHour())
+            title = this._title + '<th style="width:10%;" tabindex="0" id="resultPlan_Manp">' + language.JS.Manp + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Ammu">' + language.JS.Ammu + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Rati">' + language.JS.Rati + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Part">' + language.JS.Part + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_TPro">' + language.JS.TPro + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_Equi">' + language.JS.Equi + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_QPro">' + language.JS.QPro + '/h</th><th style="width:10%;" tabindex="0" id="resultPlan_QRes">' + language.JS.QRes + '/h</th>' + this._titleEnd;
+        else
+            title = this._title + '<th style="width:10%;" tabindex="0" id="resultPlan_Manp">' + language.JS.Manp + '</th><th style="width:10%;" tabindex="0" id="resultPlan_Ammu">' + language.JS.Ammu + '</th><th style="width:10%;" tabindex="0" id="resultPlan_Rati">' + language.JS.Rati + '</th><th style="width:10%;" tabindex="0" id="resultPlan_Part">' + language.JS.Part + '</th><th style="width:10%;" tabindex="0" id="resultPlan_TPro">' + language.JS.TPro + '</th><th style="width:10%;" tabindex="0" id="resultPlan_Equi">' + language.JS.Equi + '</th><th style="width:10%;" tabindex="0" id="resultPlan_QPro">' + language.JS.QPro + '</th><th style="width:10%;" tabindex="0" id="resultPlan_QRes">' + language.JS.QRes + '</th>' + this._titleEnd;
         return title;
     }
 

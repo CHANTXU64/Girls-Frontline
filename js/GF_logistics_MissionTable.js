@@ -213,7 +213,7 @@ class MissionsDetails {
             tab = '<tr><td colspan="10">' + language.JS.NoMission + '</td></tr>';
 
         document.getElementById("MissionTable_tbody").innerHTML = tab;
-    }//End print
+    } //End print
 }
 
 /**

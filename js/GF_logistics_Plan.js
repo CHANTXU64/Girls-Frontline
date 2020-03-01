@@ -3,7 +3,7 @@ class Plan_Original {
      * @param {Tab|Tab_Anytime|Tab_Timetable} ShownTab
      * @param {number} list_length
      */
-    constructor (ShownTab, list_length) {
+    constructor(ShownTab, list_length) {
         /**
          * 方案列表
          * @type {Array.<Array.<number>>} 
@@ -103,13 +103,13 @@ class Plan_Stdzn extends Plan_Original {
      * @param {number} QValidMaxLength_firstCalc - 用于这次限制QValid长度加快计算
      * @param {number} QValidMaxLength_secondCalc - 用于正式计算, 若QValid.length大于, 则还需进行更详细的关卡价值计算
      */
-    constructor (ShownTab, list_length, QValidMaxLength_firstCalc, QValidMaxLength_secondCalc) {
+    constructor(ShownTab, list_length, QValidMaxLength_firstCalc, QValidMaxLength_secondCalc) {
         super(ShownTab, list_length);
 
         let QValid_length = this.ShownTab.getQValidLength();
         this.QValidMaxLength_1 = Math.min(QValidMaxLength_firstCalc, QValid_length);
         this.QValidMaxLength_2 = Math.min(QValidMaxLength_secondCalc, QValid_length);
-    
+
         //如果Qvalid大于第二次计算最大限制长度, 将再计算关卡价值以便排除无用的关卡
         if (QValid_length > QValidMaxLength_secondCalc) {
             this._calculateAndPushIntoList = this._calculateAndPushIntoList_andCalculateMissionsValue;
@@ -230,9 +230,8 @@ class Plan_Stdzn extends Plan_Original {
         let currentValue = this.ShownTab.calculateCurrentValue(Mission_1, Mission_2, Mission_3, Mission_4);
 
         //ShownTab的计算现值函数返回全为-1的数组, 说明由于某些原因该组合不可用
-        if (currentValue[0] === -1) {
-            return;
-        }
+        if (currentValue[0] === -1)
+            return ;
 
         let planValue = this._calculateValue(currentValue);
 
@@ -258,9 +257,8 @@ class Plan_Stdzn extends Plan_Original {
         let currentValue = this.ShownTab.calculateCurrentValue(Mission_1, Mission_2, Mission_3, Mission_4);
 
         //ShownTab的计算现值函数返回全为-1的数组, 说明由于某些原因该组合不可用
-        if (currentValue[0] === -1) {
-            return;
-        }
+        if (currentValue[0] === -1)
+            return ;
 
         let planValue = this._calculateValue(currentValue);
         this._pushIntoList(Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue);
@@ -310,7 +308,7 @@ class Plan_Stdzn extends Plan_Original {
      */
     _getDotProduct(vector1, vector2) {
         let dotProduct = 0;
-        for (let i = 0; i < 8; i++) {//vector1 == vector2 == 8
+        for (let i = 0; i < 8; i++) { //vector1 == vector2 == 8
             dotProduct += (vector1[i] * vector2[i]);
         }
         return dotProduct;
@@ -444,7 +442,7 @@ class Plan extends Plan_Original {
      * @param {number} list_length
      * @param {Array.<number>} targetValue_StandardizationAndNormalization - 资源契约目标值(已进行标准化归一化的值)
      */
-    constructor (ShownTab, list_length, targetValue_StandardizationAndNormalization) {
+    constructor(ShownTab, list_length, targetValue_StandardizationAndNormalization) {
         super(ShownTab, list_length);
         this.targetValue = targetValue_StandardizationAndNormalization;
 
@@ -524,7 +522,7 @@ class Plan extends Plan_Original {
             const List_i_row = this.List[i];
             if (!(0 in List_i_row))
                 break;
-            
+
             /**
              * 0Ranking序号-1关卡1-2关卡2-3关卡3-4关卡4-5~12 8种资源契约-自定义内容...
              * @type {Array.<number|string>}

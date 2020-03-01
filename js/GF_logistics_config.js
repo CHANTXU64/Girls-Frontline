@@ -193,7 +193,10 @@ function config_export() {
     data.CalcTargetValueTool_Execution = Input_getCalcTargetValueTool_InputExecutionTimes();
 
     let SHA1 = sha1(JSON.stringify(data));
-    let config = {data: data, SHA1: SHA1};
+    let config = {
+        data: data,
+        SHA1: SHA1
+    };
     config = JSON.stringify(config);
     config = LZString.compressToBase64(config);
 

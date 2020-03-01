@@ -21,7 +21,7 @@ function quick_sort_descending(arr) {
     r[p++] = new Range(0, arr.length - 1);
     while (p) {
         const range = r[--p];
-        if (range.start >= range.end) 
+        if (range.start >= range.end)
             continue;
         const mid = arr[range.end];
         let left = range.start;
@@ -33,7 +33,7 @@ function quick_sort_descending(arr) {
         }
         if (arr[left] <= arr[range.end])
             [arr[left], arr[range.end]] = [arr[range.end], arr[left]];
-        else 
+        else
             left++;
         r[p++] = new Range(range.start, left - 1);
         r[p++] = new Range(left + 1, range.end);
@@ -50,7 +50,7 @@ function quick_sort_ascending(arr) {
     r[p++] = new Range(0, arr.length - 1);
     while (p) {
         const range = r[--p];
-        if (range.start >= range.end) 
+        if (range.start >= range.end)
             continue;
         const mid = arr[range.end];
         let left = range.start;
@@ -62,7 +62,7 @@ function quick_sort_ascending(arr) {
         }
         if (arr[left] >= arr[range.end])
             [arr[left], arr[range.end]] = [arr[range.end], arr[left]];
-        else 
+        else
             left++;
         r[p++] = new Range(range.start, left - 1);
         r[p++] = new Range(left + 1, range.end);
@@ -80,7 +80,7 @@ function quick_sort_expand_descending(arr, compare_Column) {
     r[p++] = new Range(0, arr.length - 1);
     while (p) {
         const range = r[--p];
-        if (range.start >= range.end) 
+        if (range.start >= range.end)
             continue;
         const mid = arr[range.end][compare_Column];
         let left = range.start;
@@ -92,7 +92,7 @@ function quick_sort_expand_descending(arr, compare_Column) {
         }
         if (arr[left][compare_Column] < arr[range.end][compare_Column])
             [arr[left], arr[range.end]] = [arr[range.end], arr[left]];
-        else 
+        else
             left++;
         r[p++] = new Range(range.start, left - 1);
         r[p++] = new Range(left + 1, range.end);
@@ -110,7 +110,7 @@ function quick_sort_expand_ascending(arr, compare_Column) {
     r[p++] = new Range(0, arr.length - 1);
     while (p) {
         const range = r[--p];
-        if (range.start >= range.end) 
+        if (range.start >= range.end)
             continue;
         const mid = arr[range.end][compare_Column];
         let left = range.start;
@@ -122,7 +122,7 @@ function quick_sort_expand_ascending(arr, compare_Column) {
         }
         if (arr[left][compare_Column] > arr[range.end][compare_Column])
             [arr[left], arr[range.end]] = [arr[range.end], arr[left]];
-        else 
+        else
             left++;
         r[p++] = new Range(range.start, left - 1);
         r[p++] = new Range(left + 1, range.end);
@@ -140,19 +140,19 @@ function quick_sort_expand_ascending_missionName(arr, Mission_Column) {
     r[p++] = new Range(0, arr.length - 1);
     while (p) {
         const range = r[--p];
-        if (range.start >= range.end) 
+        if (range.start >= range.end)
             continue;
-        const mid = parseInt(arr[range.end][Mission_Column].replace(/[^0-9]/ig,""));
+        const mid = parseInt(arr[range.end][Mission_Column].replace(/[^0-9]/ig, ""));
         let left = range.start;
         let right = range.end - 1;
         while (left < right) {
-            while (parseInt(arr[left][Mission_Column].replace(/[^0-9]/ig,"")) < mid && left < right) left++;
-            while (parseInt(arr[right][Mission_Column].replace(/[^0-9]/ig,"")) >= mid && left < right) right--;
+            while (parseInt(arr[left][Mission_Column].replace(/[^0-9]/ig, "")) < mid && left < right) left++;
+            while (parseInt(arr[right][Mission_Column].replace(/[^0-9]/ig, "")) >= mid && left < right) right--;
             [arr[left], arr[right]] = [arr[right], arr[left]];
         }
-        if (parseInt(arr[left][Mission_Column].replace(/[^0-9]/ig,"")) >= parseInt(arr[range.end][Mission_Column].replace(/[^0-9]/ig,"")))
+        if (parseInt(arr[left][Mission_Column].replace(/[^0-9]/ig, "")) >= parseInt(arr[range.end][Mission_Column].replace(/[^0-9]/ig, "")))
             [arr[left], arr[range.end]] = [arr[range.end], arr[left]];
-        else 
+        else
             left++;
         r[p++] = new Range(range.start, left - 1);
         r[p++] = new Range(left + 1, range.end);

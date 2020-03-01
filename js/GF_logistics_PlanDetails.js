@@ -156,9 +156,8 @@ class PlanDetails {
         //判断打印之前是否已存在图表, 若存在选择更新或销毁(关卡数组为空), 否则添加图表
         let Chart; //图表实例
         if (Chart_elem.getAttribute("_echarts_instance_") === "" || Chart_elem.getAttribute("_echarts_instance_") === null) {
-            if (missionsDetails.length === 0) { //跳过打印图表
+            if (missionsDetails.length === 0) //跳过打印图表
                 return ;
-            }
             Chart_elem.style.cssText = "width: 610px; height: 120px;";
             Chart = echarts.init(Chart_elem);
         }
@@ -184,7 +183,7 @@ class PlanDetails {
             dataCount.push(missionsDetails[i][10].length);
             types.push({name: missionsDetails[i][0], color: color[i]});
         }
-    
+
         let data = [];
         const categories = ['0', '1', '2', '3'];
 
@@ -237,10 +236,10 @@ class PlanDetails {
                 });
             }
         });
-    
+
         let option = {
             title: {
-                show:false
+                show: false
             },
             grid: {
                 left: 35,
@@ -277,10 +276,10 @@ class PlanDetails {
                 },
                 data: data
             }],
-            animation:false,
+            animation: false,
             backgroundColor: "#FFFFFF"
         };
-    
+
         Chart.setOption(option);
 
         //保存这次的参数
@@ -295,7 +294,7 @@ class PlanDetails {
         }
         lastParam.missionsName = missionsName;
         lastParam.collectTimetable = collectTimetable;
-    }//End printChart()
+    } //End printChart()
 
     /**
      * 打印完整的方案详情
@@ -322,7 +321,12 @@ class PlanDetails {
  * 用于保存上次打印chart的参数, 若这次参数一致则意味着chart没有改变, 可跳过打印
  * @type {{missionsName: Array.<string>, collectTimetable: Array.<string>, totalTime: number, startTIme: number}}
  */
-PlanDetails._chartLastParam = {missionsName: [], collectTimetable: [], totalTime: -1, startTIme: -1};
+PlanDetails._chartLastParam = {
+    missionsName: [],
+    collectTimetable: [],
+    totalTime: -1,
+    startTIme: -1
+};
 
 /**绘图Fun */
 function renderItem(params, api) {

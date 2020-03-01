@@ -66,9 +66,9 @@ function enableTargetButton() {
 function setLanguage() {
     let lang = storageGetItem("Lang");
     if (lang === "noStorage")
-        lang = navigator.language||navigator.userLanguage;
+        lang = navigator.language || navigator.userLanguage;
     if (lang.substr(0, 2) === "zh") {
-        switch(lang) {
+        switch (lang) {
             case "zh-HK":
             case "zh-TW":
             case "zh-MO":
@@ -91,7 +91,7 @@ function setLanguage() {
  * @param {string} lang
  */
 function changeLanguage(lang) {
-    switch(lang) {
+    switch (lang) {
         case "zh-CN":
             storageSetItem("Lang", "zh-CN");
             language = language_zh_CN;
@@ -260,12 +260,12 @@ function HTML_DisableRankingInput() {
     $("#Tab_Timetable_AddNewTimePoint").attr("disabled", "true");
     $("#GreatSuccessRate").attr("disabled", "true");
     $("#GreatSuccessRateUp").attr("disabled", "true");
-    document.getElementById("GreatSuccessRateUp_text").style.cursor="not-allowed";
-    document.getElementById("GreatSuccessRateUp_label").style.cursor="not-allowed";
+    document.getElementById("GreatSuccessRateUp_text").style.cursor = "not-allowed";
+    document.getElementById("GreatSuccessRateUp_label").style.cursor = "not-allowed";
     $("#ChapterLimit").attr("disabled", "true");
     $("#calcTargetValueTool_apply").attr("disabled", "true");
     $("#ContractWeight").attr("disabled", "true");
-    document.getElementById("ContractWeight_thumb").style.backgroundColor="#CCC";
+    document.getElementById("ContractWeight_thumb").style.backgroundColor = "#CCC";
     $("button[id^=setTarget_]").attr("disabled", "true");
     $("#MT").attr("disabled", "true");
     $("#AT").attr("disabled", "true");
@@ -298,12 +298,12 @@ function HTML_AllowRankingInput() {
     $("#Tab_Timetable_AddNewTimePoint").removeAttr("disabled");
     $("#GreatSuccessRate").removeAttr("disabled");
     $("#GreatSuccessRateUp").removeAttr("disabled");
-    document.getElementById("GreatSuccessRateUp_text").style.cursor="pointer";
-    document.getElementById("GreatSuccessRateUp_label").style.cursor="pointer";
+    document.getElementById("GreatSuccessRateUp_text").style.cursor = "pointer";
+    document.getElementById("GreatSuccessRateUp_label").style.cursor = "pointer";
     $("#ChapterLimit").removeAttr("disabled");
     $("#calcTargetValueTool_apply").removeAttr("disabled");
     $("#ContractWeight").removeAttr("disabled");
-    document.getElementById("ContractWeight_thumb").style.backgroundColor="rgb(112, 166, 236)";
+    document.getElementById("ContractWeight_thumb").style.backgroundColor = "rgb(112, 166, 236)";
     $("button[id^=setTarget_]").removeAttr("disabled");
     $("#MT").removeAttr("disabled");
     $("#AT").removeAttr("disabled");

@@ -6,7 +6,7 @@
 function printResultsPlan(result_plan, sortBy) {
     ResultsPlan.print(result_plan, sortBy);
     FineTuning.print();
-    
+
     //如果已经在MissionTable选择了四个关卡, 且这四个关卡就是result_plan的某一个方案, 则高亮
     let selectedMissions = MissionsDetails.getSelectedMissions();
     if (selectedMissions.length === 4)
@@ -32,9 +32,9 @@ function highlightResultsPlanRow(missionsName) {
     for (let i = 0; i < result_plan_length; i++) {
         if (missionsName[0] === result_plan[i][1] && missionsName[1] === result_plan[i][2] &&
             missionsName[2] === result_plan[i][3] && missionsName[3] === result_plan[i][4]) {
-                $("#print_result_plan_tr_" + i).addClass("success");
-                break;
-            }
+            $("#print_result_plan_tr_" + i).addClass("success");
+            break;
+        }
     }
 }
 

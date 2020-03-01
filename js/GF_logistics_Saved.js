@@ -74,7 +74,7 @@ class Saved {
         HTML += '<button type="button" class="btn btn-default"id="SavedTable_down_' + row + '" title="' + language.HTMLJS.SavedTable_down + '"';
         if (row === allSaved.length - 1)
             HTML += 'disabled="disabled"';
-        HTML +='><span class="glyphicon glyphicon-arrow-down"style="top: 2px;" /></button></div></td>';
+        HTML += '><span class="glyphicon glyphicon-arrow-down"style="top: 2px;" /></button></div></td>';
         HTML += '<td><button type="button" class="btn btn-default"id="SavedTable_export_' + row + '" title="' + language.HTMLJS.SavedTable_export + '"><span class="glyphicon glyphicon-export"style="top: 2px;" /></button></td>';
         HTML += '<td><button type="button" class="btn btn-default"id="SavedTable_delete_' + row + '" title="' + language.HTMLJS.SavedTable_delete + '" style="background-color: #F48380;"><span class="glyphicon glyphicon-trash"style="top: 2px;" /></button></td></tr>';
         return HTML;
@@ -146,7 +146,10 @@ class Saved {
     static export(row) {
         const data = this._saved[row];
         const MD5 = md5(JSON.stringify(data));
-        const exportData = {data: data, MD5: MD5};
+        const exportData = {
+            data: data,
+            MD5: MD5
+        };
         let exportText = JSON.stringify(exportData);
         exportText = LZString.compressToEncodedURIComponent(exportText);
         let export_elem = document.getElementById("importSaved_input");

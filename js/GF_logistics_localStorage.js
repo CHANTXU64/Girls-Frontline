@@ -42,7 +42,7 @@ function _localStorageWorks() {
         let result = localStorage.getItem("test_PzrJwG" + Random1) == "Rx3IyFdmJMji0Alo" + Random2;
         localStorage.removeItem("test_PzrJwG" + Random1);
         return result;
-    }catch (ex) {
+    } catch (ex) {
         return false;
     }
 }

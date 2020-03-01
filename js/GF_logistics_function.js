@@ -2,7 +2,7 @@
  * 返回字符串最后一个"_"字符后面的内容
  * @param {string} str - 字符串
  * @param {number=} end - End index
- */ 
+ */
 function stringSliceFromLast_(str, end) {
     const start = str.lastIndexOf("_");
     if (end === undefined)
@@ -82,7 +82,7 @@ function getPositiveValueFromHTML(JQ_selector, NeedCorrection = false) {
 }
 
 //移除数组中值为val的所有元素
-Array.prototype.remove = function(val) {
+Array.prototype.remove = function (val) {
     let i = 0;
     while (i < this.length) {
         if (this[i] === val)
@@ -93,7 +93,7 @@ Array.prototype.remove = function(val) {
 };
 
 //移除数组中值为val的第一个元素
-Array.prototype.remove_First = function(val) {
+Array.prototype.remove_First = function (val) {
     let i = 0;
     while (i < this.length) {
         if (this[i] === val) {
@@ -153,8 +153,8 @@ function sortNumber(a, b) {
  */
 function sortStringNumber(a, b) {
     let aa, bb;
-    aa = parseInt(a.replace(/[^0-9]/ig,""));
-    bb = parseInt(b.replace(/[^0-9]/ig,""));
+    aa = parseInt(a.replace(/[^0-9]/ig, ""));
+    bb = parseInt(b.replace(/[^0-9]/ig, ""));
     return aa - bb;
 }
 
@@ -162,7 +162,7 @@ function sortStringNumber(a, b) {
  * 判断设备是否是移动设备
  * @return {boolean}
  */
-function IsMobile(){
+function IsMobile() {
     const userAgentInfo = navigator.userAgent;
     const Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod", "KFAPWI"];
     let flag = false;

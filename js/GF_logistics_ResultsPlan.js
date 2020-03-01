@@ -67,15 +67,15 @@ class ResultsPlan {
             this._lastResultsPlan = sorted_result_plan;
             this._lastSortBy = sortBy;
         }
-    }//End print
+    } //End print
 
     /**
-    * 对方案排序
-    * @param {Array.<Array>} result_plan - 需要排序的方案
-    * @param {string} sortBy - 排序方式
-    * @returns {Array.<Array>} 排序后的方案
-    * @public
-    */
+     * 对方案排序
+     * @param {Array.<Array>} result_plan - 需要排序的方案
+     * @param {string} sortBy - 排序方式
+     * @returns {Array.<Array>} 排序后的方案
+     * @public
+     */
     static sortResultPlan(result_plan, sortBy) {
         let sorted_result_plan = result_plan.slice();
         switch (sortBy) {
@@ -148,7 +148,7 @@ class ResultsPlan {
         }
         tab += '</tbody>';
         return tab;
-    }//End getPrintHtml
+    } //End getPrintHtml
 }
 
 /**
