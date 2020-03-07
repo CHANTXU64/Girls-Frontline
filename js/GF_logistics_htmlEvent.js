@@ -485,14 +485,23 @@ $(function () {
         Saved.saveThisPlan();
     });
     $("#Capture").on("click", function () {
-        html2canvas(document.getElementById("PlanDetails"),
-                    {logging: false, scale: 1}).then(function (canvas) {
-            let link = document.createElement("a");
-            link.href = canvas.toDataURL();
-            link.download = "Capture.png";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+        html2canvas(document.getElementById("PlanDetails")).then(function (canvas) {
+            if (window.navigator.msSaveBlob) { // IE
+                var bstr = atob(canvas.toDataURL().split(',')[1]);
+                var n = bstr.length;
+                var u8arr = new Uint8Array(n);
+                while (n--) {
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+                var blob = new Blob([u8arr]);
+                navigator.msSaveBlob(blob, "Capture.png");
+			}
+			else {
+                let link = document.createElement("a");
+                link.download = "Capture.png";
+                link.href = canvas.toDataURL();
+                link.click();
+            }
         });
     });
     $("#PlanDetails_InputStartTime").on("input propertychange", function () {
