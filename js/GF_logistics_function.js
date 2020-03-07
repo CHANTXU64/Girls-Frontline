@@ -232,7 +232,7 @@ function limitCONSOLELength(console_string) {
         return console_string;
 }
 
-function error() {
+function runError() {
     let a = 0;
     return a.getItem();
 }

@@ -21,13 +21,25 @@ $(function () {
         if ($("#Config_export").attr("aria-expanded") !== "true")
             config_export();
     });
+    $("#Config_importInput").on("keyup", function (e) {
+        if (is_KeyIsEnter(e))
+            Config_import();
+    });
     $("#Config_importButton").on("click", function () {
-        let input_JQ_selector = $("#Config_importInput");
-        const input = input_JQ_selector.val();
-        setPageByImport(input);
-        input_JQ_selector.val("");
+        Config_import();
+    });
+    $("#Config_export_group").on("shown.bs.dropdown", function () {
+        let exportInput = $("#Config_exportInput");
+        exportInput.focus();
+        exportInput.select();
     });
 });
+function Config_import() {
+    let input_JQ_selector = $("#Config_importInput");
+    const input = input_JQ_selector.val();
+    setPageByImport(input);
+    input_JQ_selector.val("");
+}
 
 //Never Show Again
 $(function () {
@@ -374,11 +386,12 @@ $(function () {
         else
             $("#Saved").collapse("hide");
     });
+    $("#importSaved_input").on("keyup", function (e) {
+        if (is_KeyIsEnter(e))
+            Saved_import();
+    });
     $("#importSaved_importButton").on("click", function () {
-        const input_selector = $("#importSaved_input");
-        const input = input_selector.val();
-        Saved.import(input);
-        input_selector.val("");
+        Saved_import();
     });
     let JQ_selector_Saved_Body = $("#Saved_Body");
     JQ_selector_Saved_Body.on("click", "button[id^=SavedTable_apply_]", function () {
@@ -419,7 +432,19 @@ $(function () {
     JQ_selector_Saved_Body.on("click", "button[id^=SavedTable_delete_]", function () {
         Saved.deleteThisRow(parseInt(stringSliceFromLast_(this.id)));
     });
+    JQ_selector_Saved_Body.on("shown.bs.dropdown", "div[id^=Saved_export_group_]", function () {
+        let row = parseInt(stringSliceFromLast_(this.id));
+        let exportInput = $("#exportSaved_input_" + row);
+        exportInput.focus();
+        exportInput.select();
+    });
 });
+function Saved_import() {
+    const input_selector = $("#importSaved_input");
+    const input = input_selector.val();
+    Saved.import(input);
+    input_selector.val("");
+}
 //End Saved
 
 //MissionTable
@@ -614,9 +639,3 @@ $(function () {
     });
 });
 //End calcTargetValueTool
-
-$(function () {
-    $("#debug").on("click", function () {
-        $('#Config_importInput').val(CONSOLE);
-    });
-});

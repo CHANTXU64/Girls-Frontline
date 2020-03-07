@@ -75,7 +75,7 @@ class Saved {
         if (row === allSaved.length - 1)
             HTML += 'disabled="disabled"';
         HTML += '><span class="glyphicon glyphicon-arrow-down"style="top: 2px;" /></button></div></td>';
-        HTML += '<td><div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="SavedTable_export_' + row + '" title="' + language.HTMLJS.SavedTable_export + '">';
+        HTML += '<td><div id="Saved_export_group_' + row + '" class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="SavedTable_export_' + row + '" title="' + language.HTMLJS.SavedTable_export + '">';
         HTML += '<span class="glyphicon glyphicon-export" style="top: 2px;"></span></button>';
         HTML += '<ul class="dropdown-menu" role="menu" style="width: 280px; left: -239px; top: -42px;">';
         HTML += '<li><input id="exportSaved_input_' + row + '" type="text" readonly style="width: 260px; position: relative; left: 9px;" onclick="this.select();" placeholder="' + language.HTMLJS.exportSaved_input + '"></li>';

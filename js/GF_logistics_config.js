@@ -224,7 +224,11 @@ function setPageByImport(input) {
         return ;
     }
     if (input === "runERROR") {
-        error();
+        runError();
+        return ;
+    }
+    if (input === "debug") {
+        $('#importSaved_input').val(CONSOLE);
         return ;
     }
 
