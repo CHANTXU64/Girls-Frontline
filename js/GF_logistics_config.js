@@ -200,9 +200,8 @@ function config_export() {
     config = JSON.stringify(config);
     config = LZString.compressToBase64(config);
 
-    let config_elem = document.getElementById("Config_importInput");
+    let config_elem = document.getElementById("Config_exportInput");
     config_elem.value = config;
-    config_elem.select();
 }
 
 /**

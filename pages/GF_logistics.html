@@ -52,16 +52,15 @@
             <div class="container-fluid" id="container-fluid">
                     <div class="col-lg-7">
                         <h1 class="page-header" id="page-header" style="margin-top: 30px;">
-                            <span id="header" style="cursor: default;"></span><div 
-                            class="btn-group"><button type="button" class="btn btn-default dropdown-toggle"
+                            <span id="header" style="cursor: default;"></span>
+                            <div class="btn-group"><button type="button" class="btn btn-default dropdown-toggle"
                                     data-toggle="dropdown">中文 &#9660</button>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="#" id="lang-zh-CN">简体中文</a></li>
                                     <li><a href="#" id="lang-zh-TW">繁體中文</a></li>
                                 </ul>
                             </div>
-                            <button type="button" class="btn btn-default dropdown-toggle"
-                                    data-toggle="dropdown" id="lang-en">English</button>
+                            <button type="button" class="btn btn-default" id="lang-en">English</button>
                         </h1>
                     </div>
                     <div class="col-lg-5">
@@ -73,8 +72,13 @@
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-default" id="Config_importButton">
                                     <span class="glyphicon glyphicon-import" style="top: 2px;"></span></button>
-                                <button type="button" class="btn btn-default" id="Config_export"><span
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="Config_export"><span
                                         class="glyphicon glyphicon-export" style="top: 2px;"></span></button>
+                                    <ul class="dropdown-menu" role="menu" style="width: 280px; left: -239px;">
+                                        <li><input id="Config_exportInput" type="text" readonly style="width: 260px; position: relative; left: 9px;" onclick="this.select();"></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -18,7 +18,8 @@ $(function () {
 //Config
 $(function () {
     $("#Config_export").on("click", function () {
-        config_export();
+        if ($("#Config_export").attr("aria-expanded") !== "true")
+            config_export();
     });
     $("#Config_importButton").on("click", function () {
         let input_JQ_selector = $("#Config_importInput");
@@ -411,7 +412,9 @@ $(function () {
         Saved.downThisRow(parseInt(stringSliceFromLast_(this.id)));
     });
     JQ_selector_Saved_Body.on("click", "button[id^=SavedTable_export_]", function () {
-        Saved.export(parseInt(stringSliceFromLast_(this.id)));
+        let row = parseInt(stringSliceFromLast_(this.id));
+        if ($("#SavedTable_export_" + row).attr("aria-expanded") !== "true")
+            Saved.export(row);
     });
     JQ_selector_Saved_Body.on("click", "button[id^=SavedTable_delete_]", function () {
         Saved.deleteThisRow(parseInt(stringSliceFromLast_(this.id)));

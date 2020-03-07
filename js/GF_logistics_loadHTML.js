@@ -106,6 +106,7 @@ function loadHTML_language() {
     $("button[id^=SavedTable_up_]").attr("title", language_HTMLJS.SavedTable_up);
     $("button[id^=SavedTable_down_]").attr("title", language_HTMLJS.SavedTable_down);
     $("button[id^=SavedTable_export_]").attr("title", language_HTMLJS.SavedTable_export);
+    $("input[id^=exportSaved_input_]").attr("placeholder", language_HTMLJS.exportSaved_input);
     $("button[id^=SavedTable_delete_]").attr("title", language_HTMLJS.SavedTable_delete);
     //------------------
 

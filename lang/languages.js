@@ -104,7 +104,8 @@ const language_zh_CN = {
     },
     HTMLJS: {
         placeholder: {
-            Config_importInput: "导出或导入的配置",
+            Config_importInput: "需要导入的配置",
+            Config_exportInput: "导出的配置",
             Time_Anytime_hours: "总时长小时数",
             Time_Anytime_minutes: "总时长分钟数",
             Tab_Anytime_MinimumIntervalTime_minutes: "最小时间间隔分钟数",
@@ -121,7 +122,7 @@ const language_zh_CN = {
             ET: "装备需求量",
             QPT: "快建需求量",
             QRT: "快修需求量",
-            importSaved_input: "导出或导入的数据",
+            importSaved_input: "需要导入的数据",
             PlanDetails_InputExecutionTimes: "执行次数",
         },
         title: {
@@ -174,6 +175,7 @@ const language_zh_CN = {
         SavedTable_up: "往上移动",
         SavedTable_down: "往下移动",
         SavedTable_export: "导出方案",
+        exportSaved_input: "导出的数据",
         SavedTable_delete: "删除方案",
         FineTuning_minus: "减小需求量",
         FineTuning_plus: "增大需求量",
@@ -362,7 +364,8 @@ const language_zh_TW = {
     },
     HTMLJS: {
         placeholder: {
-            Config_importInput: "導出或導入的數據",
+            Config_importInput: "需要導入的配置",
+            Config_exportInput: "導出的配置",
             Time_Anytime_hours: "總時長小時數",
             Time_Anytime_minutes: "總時長分鐘數",
             Tab_Anytime_MinimumIntervalTime_minutes: "最小時間間隔分鐘數",
@@ -379,7 +382,7 @@ const language_zh_TW = {
             ET: "裝備需求量",
             QPT: "快建需求量",
             QRT: "快修需求量",
-            importSaved_input: "導出或導入的數據",
+            importSaved_input: "需要導入的數據",
             PlanDetails_InputExecutionTimes: "後勤執行次數",
         },
         title: {
@@ -432,6 +435,7 @@ const language_zh_TW = {
         SavedTable_up: "往上移動",
         SavedTable_down: "往下移動",
         SavedTable_export: "導出方案",
+        exportSaved_input: "導出的數據",
         SavedTable_delete: "刪除方案",
         FineTuning_minus: "減小需求量",
         FineTuning_plus: "增大需求量",
@@ -620,7 +624,8 @@ const language_en = {
     },
     HTMLJS: {
         placeholder: {
-            Config_importInput: "Exported or imported configurations",
+            Config_importInput: "Imported configurations",
+            Config_exportInput: "Exported configurations",
             Time_Anytime_hours: "Hours of total time",
             Time_Anytime_minutes: "Minutes of total time",
             Tab_Anytime_MinimumIntervalTime_minutes: "Minutes of minimum interval time",
@@ -637,7 +642,7 @@ const language_en = {
             ET: "Equipment Contract demand",
             QPT: "Quick Production Contract demand",
             QRT: "Quick Restoration Contract demand",
-            importSaved_input: "Exported or imported data",
+            importSaved_input: "Imported data",
             PlanDetails_InputExecutionTimes: "Number of executions",
         },
         title: {
@@ -690,6 +695,7 @@ const language_en = {
         SavedTable_up: "Move Up",
         SavedTable_down: "Move Down",
         SavedTable_export: "Export Plan",
+        exportSaved_input: "Exported data",
         SavedTable_delete: "Delete Plan",
         FineTuning_minus: "Reduce demand",
         FineTuning_plus: "Increase demand",
