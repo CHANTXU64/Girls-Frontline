@@ -68,7 +68,7 @@ function Tab_Timetable_setTimePoints(timeList) {
 function _Tab_Timetable_getSliderHTML(totalTime) {
     let sliderHTML = '<div inverse-left style="width:70%;"></div><div inverse-right style="width:70%;"></div><div range style="left:0%;right:0%; background-color:#CCC;"></div>';
     sliderHTML += '<span thumb id="Tab_Timetable_range_thumb"style="left:100%; background-color:rgb(221, 155, 155); cursor:default;"></span>';
-    sliderHTML += '<div id="Tab_Timetable_range_tooltip"class="tooltip right custom-tooltip"style="right: -72px; top:-15px; cursor: default;">';
+    sliderHTML += '<div id="Tab_Timetable_range_tooltip"class="tooltip right custom-tooltip disable-selected-text"style="right: -72px; top:-15px;">';
     sliderHTML += '<div class="tooltip-arrow"></div><div id="Tab_Timetable_range_tooltip_0_value"class="tooltip-inner">';
     sliderHTML += TimeFormat(totalTime) + '</div></div>';
     return sliderHTML;
@@ -116,7 +116,7 @@ function _Tab_Timetable_getNewTooltip(time, position, pointIndex) {
     else
         HTML += 'class="slider-Tooltip-bottom tooltip bottom custom-tooltip"';
     HTML += 'style="left:' + position + ';">';
-    HTML += '<div class="tooltip-arrow"></div><div class="tooltip-inner">';
+    HTML += '<div class="tooltip-arrow"></div><div class="tooltip-inner disable-selected-text">';
     HTML += TimeFormat(time) + '</div></div>';
     return HTML;
 }

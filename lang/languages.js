@@ -259,6 +259,7 @@ const language_zh_CN = {
     },
     CSS: {
         TargetValueSpan_Width: "55px",
+        FineTuningSpan_Width: "40%",
         FineTuningButton_Width: "60%",
     }
 };
@@ -519,6 +520,7 @@ const language_zh_TW = {
     },
     CSS: {
         TargetValueSpan_Width: "55px",
+        FineTuningSpan_Width: "40%",
         FineTuningButton_Width: "60%",
     }
 };
@@ -748,6 +750,7 @@ const language_en = {
     },
     CSS: {
         TargetValueSpan_Width: "66px",
+        FineTuningSpan_Width: "60%",
         FineTuningButton_Width: "40%",
     }
 };

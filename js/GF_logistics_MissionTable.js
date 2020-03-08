@@ -192,7 +192,7 @@ class MissionsDetails {
             for (let ii = 0; ii < selectedMissions.length; ii++) {
                 if (selectedMissions[ii] === missionsTable[i][0]) {
                     selectedMissions.splice(ii, 1);
-                    tab += 'class="success"';
+                    tab += 'class="table-success"';
                     break;
                 }
             }

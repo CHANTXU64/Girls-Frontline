@@ -95,29 +95,29 @@ class FineTuning {
 
         const lang = language.JS;
         const TargetHTMLText = [lang.FineTuningManp, lang.FineTuningAmmu, lang.FineTuningRati, lang.FineTuningPart, lang.FineTuningTPro, lang.FineTuningEqui, lang.FineTuningQPro, lang.FineTuningQRes];
-        let HTML = '<div class="panel panel-default" style="margin-bottom:5px">';
-        HTML += '<div class="panel-heading">';
-        HTML += '<h4 class="panel-title"><a data-toggle="collapse" id="FineTuningTool_panelTitle" href="#FineTuningTool" class="collapsed">' + lang.FineTuningTool + '</a></h4></div>';
-        HTML += '<div id="FineTuningTool" class="panel-collapse collapse"';
+        let HTML = '<div class="card" style="margin-bottom:5px">';
+        HTML += '<div class="card-header">';
+        HTML += '<a data-toggle="collapse" id="FineTuningTool_panelTitle" href="#FineTuningTool" class="collapsed">' + lang.FineTuningTool + '</a></div>';
+        HTML += '<div id="FineTuningTool" class="collapse"';
         if (IsMobile())
             HTML += 'style="transition: none;"';
         HTML += '>';
-        HTML += '<div class="panel-body" style="padding-left: 5px; padding-right: 5px;">';
+        HTML += '<div class="card-body row" style="padding: 10px 5px; margin: 0; text-aligh: center;">';
         for (let i = 0; i < 8; i++) {
             if (i === 0)
                 HTML += '<div class="col-lg-6 col-md-6 col-sm-6" style="padding-left: 5px; padding-right: 5px;">';
             if (i === 4)
                 HTML += '</div> <div class="col-lg-6 col-md-6 col-sm-6" style="padding-left: 5px; padding-right: 5px;">';
-            HTML += '<div class="form-group input-group" style="margin-bottom: 10px; width: 100%;">';
-            HTML += '<span class="input-group-addon" style="width:auto;" id="FineTuningTool_' + TargetName[i] + '">' + TargetHTMLText[i] + '</span>';
-            HTML += '<div class="input-group-btn" style="width: ' + language.CSS.FineTuningButton_Width + ';">';
-            HTML += '<button class="btn btn-default" style="width: 50%;" type="button" id="FineTuning_minus_' + TargetName[i] + '"';
+            HTML += '<div class="input-group" style="margin-bottom: 10px; width: 100%;">';
+            HTML += '<span class="input-group-text text-group-start" style="font-size: 14px; width:' + language.CSS.FineTuningSpan_Width + ';" id="FineTuningTool_' + TargetName[i] + '">' + TargetHTMLText[i] + '</span>';
+            HTML += '<div class="input-group-append" style="width: ' + language.CSS.FineTuningButton_Width + ';">';
+            HTML += '<button class="btn btn-outline-dark" style="width: 50%;" type="button" id="FineTuning_minus_' + TargetName[i] + '"';
             let Target_0 = this._TargetValue_Original[i];
             let Target = this._TargetValue[i];
             if (Target_0 === 0 || Target - Target_0 / 50 <= 0 || Target - Target_0 / 50 < Target_0 * 0.9)
                 HTML += 'disabled="disabled"';
             HTML += 'title="' + language.HTMLJS.FineTuning_minus + '"><b>-</b></button>';
-            HTML += '<button class="btn btn-default" style="width: 50%;" type="button" id="FineTuning_plus_' + TargetName[i] + '"';
+            HTML += '<button class="btn btn-outline-dark" style="width: 50%;" type="button" id="FineTuning_plus_' + TargetName[i] + '"';
             if (Target_0 === 0 || Target + Target_0 / 50 >= 1 || Target + Target_0 / 50 > Target_0 * 1.14)
                 HTML += 'disabled="disabled"';
             HTML += 'title="' + language.HTMLJS.FineTuning_plus + '"><b>+</b></button>';

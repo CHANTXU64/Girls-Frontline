@@ -1,230 +1,3 @@
-.custom-tooltip {
-    display: inline-block;
-    margin: 10px 20px;
-    opacity: 1;
-    position: absolute;
-}
-
-.custom-tooltip .tooltip-inner {
-    background: rgb(112, 201, 236);
-    max-width: 40px;
-    width: 40px;
-    padding: 3px 0px;
-    color: #fff;
-    text-align: center;
-    border-radius: 4px;
-}
-
-.custom-tooltip.top .tooltip-arrow {
-    border-top-color: rgb(112, 201, 236);
-}
-
-.custom-tooltip.bottom .tooltip-arrow {
-    border-bottom-color: rgb(112, 201, 236);
-}
-
-.custom-tooltip.right .tooltip-arrow {
-    border-right-color: rgb(112, 201, 236);
-}
-
-[slider] {
-    position: relative;
-    height: 14px;
-    border-radius: 10px;
-    text-align: left;
-    margin: 36px 0 15px 0;
-}
-
-[slider]>div {
-    position: absolute;
-    left: 7px;
-    right: 14px;
-    height: 14px;
-}
-
-[slider]>div>[inverse-left] {
-    position: absolute;
-    left: -4px;
-    height: 14px;
-    border-radius: 10px;
-    background-color: #CCC;
-    margin: 0 7px;
-}
-
-[slider]>div>[inverse-right] {
-    position: absolute;
-    right: -12px;
-    height: 14px;
-    border-radius: 10px;
-    background-color: #CCC;
-    margin: 0 7px;
-}
-
-[slider]>div>[range] {
-    position: absolute;
-    left: 0;
-    height: 14px;
-    border-radius: 14px;
-    background-color: rgb(112, 201, 236);
-}
-
-[slider]>div>[thumb] {
-    position: absolute;
-    top: -4px;
-    z-index: 2;
-    height: 22px;
-    width: 22px;
-    text-align: left;
-    margin-left: -7px;
-    cursor: pointer;
-    background-color: rgb(112, 166, 236);
-    border-radius: 50%;
-    outline: none;
-}
-
-[slider]>input[type=range] {
-    position: absolute;
-    pointer-events: none;
-    -webkit-appearance: none;
-    z-index: 3;
-    height: 14px;
-    top: -2px;
-    width: 100%;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    filter: alpha(opacity=0);
-    -moz-opacity: 0;
-    opacity: 0;
-}
-
-div[slider]>input[type=range]::-ms-track {
-    -webkit-appearance: none;
-    background: transparent;
-    color: transparent;
-}
-
-div[slider]>input[type=range]::-moz-range-track {
-    -moz-appearance: none;
-    background: transparent;
-    color: transparent;
-}
-
-div[slider]>input[type=range]:focus::-webkit-slider-runnable-track {
-    background: transparent;
-    border: transparent;
-}
-
-div[slider]>input[type=range]:focus {
-    outline: none;
-}
-
-div[slider]>input[type=range]::-ms-thumb {
-    pointer-events: all;
-    width: 24px;
-    height: 24px;
-    border-radius: 0px;
-    border: 0 none;
-    background: red;
-}
-
-div[slider]>input[type=range]::-moz-range-thumb {
-    pointer-events: all;
-    width: 24px;
-    height: 24px;
-    border-radius: 0px;
-    border: 0 none;
-    background: red;
-}
-
-div[slider]>input[type=range]::-webkit-slider-thumb {
-    pointer-events: all;
-    width: 24px;
-    height: 24px;
-    border-radius: 0px;
-    border: 0 none;
-    background: red;
-    -webkit-appearance: none;
-}
-
-div[slider]>input[type=range]::-ms-fill-lower {
-    background: transparent;
-    border: 0 none;
-}
-
-div[slider]>input[type=range]::-ms-fill-upper {
-    background: transparent;
-    border: 0 none;
-}
-
-div[slider]>input[type=range]::-ms-tooltip {
-    display: none;
-}
-
-[slider]>div>[sign] {
-    opacity: 0;
-    position: absolute;
-    margin-left: -10px;
-    top: -36px;
-    z-index: 3;
-    background-color: rgb(112, 201, 236);
-    color: #fff;
-    width: 28px;
-    height: 28px;
-    border-radius: 22px;
-    -webkit-border-radius: 22px;
-    align-items: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    text-align: center;
-}
-
-[slider]>div>[sign]:after {
-    position: absolute;
-    content: '';
-    left: 0;
-    border-radius: 16px;
-    top: 19px;
-    border-left: 14px solid transparent;
-    border-right: 14px solid transparent;
-    border-top-width: 16px;
-    border-top-style: solid;
-    border-top-color: rgb(112, 201, 236);
-}
-
-[slider]>div>[sign]>span {
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 28px;
-}
-
-[slider]:hover>div>[sign] {
-    opacity: 1;
-}
-
-.slider-button {
-    position: absolute;
-    background-color: rgb(221, 155, 155);
-    border: none;
-    color: rgb(0, 0, 0);
-    padding: 0px 0px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 0px;
-    margin: -4px -7px;
-    border-radius: 100%;
-    cursor: pointer;
-}
-
-button:disabled {
-    background: rgb(153, 153, 153);
-}
-button:disabled:hover {
-    background: rgb(153, 153, 153);
-}
-.btn:disabled:hover {
-    background: rgb(153, 153, 153);
-}
-
 .switch {
     position: relative;
     height: 24px;
@@ -292,11 +65,6 @@ button:disabled:hover {
     transition: left 0.15s ease-out;
 }
 
-/* 手机切换为英语会导致产生dropdown backdrop的元素导致无法滑动table */
-.dropdown-backdrop {
-    display: none;
-}
-
 #MissionTable_tbody>tr>td {
     width: 10%;
 }
@@ -309,18 +77,6 @@ th {
     text-align: center;
 }
 
-.slider-Tooltip-bottom {
-    top:12px;
-    margin-left: -15px;
-    cursor: default;
-}
-
-.slider-Tooltip-top {
-    top:-32px;
-    margin-left: -15px;
-    cursor: default;
-}
-
 #MissionTable_thead_tr>th {
     width: 10%;
     position: sticky;
@@ -330,16 +86,95 @@ th {
 }
 
 #calcTargetValueTool>tr>td {
-    width: 85px;
+    width: 65px;
 }
 
 .GF_table-input {
-    width: 85px;
+    width: 65px;
     display: table-cell;
     border-radius: 0;
     float: left;
     height: 28px;
-    padding:3px 6px 3px 6px;
-    border-left: 0;
+    padding: 3px 6px 3px 6px;
     border-bottom: 0;
+}
+
+/*glyphicon*/
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-import:before {
+    content: "\e169";
+}
+.glyphicon-export:before {
+    content: "\e170";
+}
+.glyphicon-remove-sign:before {
+    content: "\e083";
+}
+.glyphicon-remove-circle:before {
+    content: "\e088";
+}
+.glyphicon-plus:before {
+    content: "\002b";
+}
+.glyphicon-ok:before {
+    content: "\e013";
+}
+.glyphicon-trash:before {
+    content: "\e020";
+}
+.glyphicon-pencil:before {
+    content: "\270f";
+}
+.glyphicon-arrow-up:before {
+    content: "\e093";
+}
+.glyphicon-arrow-down:before {
+    content: "\e094";
+}
+
+.input-group-text {
+    display: block;
+}
+
+.text-group-start {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.text-group-end {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 0;
+}
+
+.text-group-middle {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+}
+
+.disable-selected-text {
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+/*去除input后面浏览器带的标记*/
+input::-webkit-inner-spin-button {
+    display: none;
 }

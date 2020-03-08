@@ -32,7 +32,7 @@ function highlightResultsPlanRow(missionsName) {
     for (let i = 0; i < result_plan_length; i++) {
         if (missionsName[0] === result_plan[i][1] && missionsName[1] === result_plan[i][2] &&
             missionsName[2] === result_plan[i][3] && missionsName[3] === result_plan[i][4]) {
-            $("#print_result_plan_tr_" + i).addClass("success");
+            $("#print_result_plan_tr_" + i).addClass("table-success");
             break;
         }
     }
@@ -45,8 +45,8 @@ function cancelHighlightingResultsPlan() {
     const resultPlan_length = ResultsPlan.getLastResultsPlan().length;
     for (let i = 0; i < resultPlan_length; i++) {
         let tr_selector = $("#print_result_plan_tr_" + i);
-        if (tr_selector.hasClass("success")) {
-            tr_selector.removeClass("success");
+        if (tr_selector.hasClass("table-success")) {
+            tr_selector.removeClass("table-success");
             break;
         }
     }
@@ -58,23 +58,23 @@ function cancelHighlightingResultsPlan() {
  */
 function ResultsPlan_clickRow(Row) {
     const row_JQ_selector = $("#print_result_plan_tr_" + Row);
-    if (!row_JQ_selector.hasClass("success")) { //该行未被选中, 选中
+    if (!row_JQ_selector.hasClass("table-success")) { //该行未被选中, 选中
         //若其他行已被选中, 取消之前的选择
         const result_plan = ResultsPlan.getLastResultsPlan();
         const result_plan_length = result_plan.length;
         for (let i = 0; i < result_plan_length; i++) {
             const planRow_JQ_selector = $("#print_result_plan_tr_" + i);
-            if (planRow_JQ_selector.hasClass("success"))
-                planRow_JQ_selector.removeClass("success");
+            if (planRow_JQ_selector.hasClass("table-success"))
+                planRow_JQ_selector.removeClass("table-success");
         }
 
-        row_JQ_selector.addClass("success");
+        row_JQ_selector.addClass("table-success");
 
         //取消之前选择
         let selectedMissions = MissionsDetails.getSelectedMissions(false);
         for (let i = 0; i < selectedMissions.length; i++) {
             const index = MissionsDetails.getMissionsTableRowIndex(selectedMissions[i]);
-            $("#MissionTable_" + index).removeClass("success");
+            $("#MissionTable_" + index).removeClass("table-success");
         }
         for (let i = 0; i < 4; i++) {
             selectedMissions[i] = result_plan[Row][i + 1];
@@ -84,11 +84,11 @@ function ResultsPlan_clickRow(Row) {
         printPlanDetails();
         for (let i = 0; i < 4; i++) {
             const index = MissionsDetails.getMissionsTableRowIndex(selectedMissions[i]);
-            $("#MissionTable_" + index).addClass("success");
+            $("#MissionTable_" + index).addClass("table-success");
         }
     }
     else //该行已被选中, 取消选中
-        row_JQ_selector.removeClass("success");
+        row_JQ_selector.removeClass("table-success");
 }
 
 /**
@@ -97,13 +97,13 @@ function ResultsPlan_clickRow(Row) {
  */
 function MissionsDetails_clickRow(Row) {
     const row_JQ_selector = $("#MissionTable_" + Row);
-    if (!row_JQ_selector.hasClass("success")) { //该行未被选中, 选中
-        row_JQ_selector.addClass("success");
+    if (!row_JQ_selector.hasClass("table-success")) { //该行未被选中, 选中
+        row_JQ_selector.addClass("table-success");
         //若已经选择了4个关卡, 则取消最开始选中的关卡
         const selectedMissions = MissionsDetails.getSelectedMissions(false);
         if (selectedMissions.length === 4) {
             const firstSelectedMissionIndex = MissionsDetails.getMissionsTableRowIndex(selectedMissions[0]);
-            $("#MissionTable_" + firstSelectedMissionIndex).removeClass("success");
+            $("#MissionTable_" + firstSelectedMissionIndex).removeClass("table-success");
             MissionsDetails.deleteSelectedMission();
         }
 
@@ -121,7 +121,7 @@ function MissionsDetails_clickRow(Row) {
         }
     }
     else { //该行已被选中, 取消选中
-        row_JQ_selector.removeClass("success");
+        row_JQ_selector.removeClass("table-success");
         const missionName = MissionsDetails.getMissionsTable("quick")[Row][0];
         MissionsDetails.deleteSelectedMission(missionName);
         printPlanDetails();

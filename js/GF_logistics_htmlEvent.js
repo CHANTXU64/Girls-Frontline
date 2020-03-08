@@ -453,7 +453,7 @@ $(function () {
     let JQ_selector_MissionTable_panel = $("#MissionTable_panel");
     JQ_selector_MissionTable_heading.on("keyup", function (e) {
         if (is_KeyIsEnter(e)) {
-            if (JQ_selector_MissionTable_panel.attr("aria-expanded") === "false") {
+            if ($("#MissionTable_heading").attr("aria-expanded") === "false") {
                 JQ_selector_MissionTable_panel.collapse("show");
                 $("#Saved").collapse("hide");
             }
@@ -462,7 +462,7 @@ $(function () {
         }
     });
     JQ_selector_MissionTable_heading.on("click", function () {
-        if (JQ_selector_MissionTable_panel.attr("aria-expanded") === "false") {
+        if ($("#MissionTable_heading").attr("aria-expanded") === "false") {
             JQ_selector_MissionTable_panel.collapse("show");
             $("#Saved").collapse("hide");
         }

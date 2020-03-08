@@ -139,14 +139,14 @@ function ChangeTab(tabName, isShow = true) {
         case "Anytime":
             if (isShow)
                 $("#Tab_Anytime_name").tab("show");
-            //用于getShownTab()判断目前显示的Tab, 现在添加class"in"会导致闪烁
-            Timetable_JQ_selector.removeClass("active in");
+            //用于getShownTab()判断目前显示的Tab, 现在添加class"show"会导致闪烁
+            Timetable_JQ_selector.removeClass("active show");
             Anytime_JQ_selector.addClass("active");
             break;
         case "Timetable":
             if (isShow)
                 $("#Tab_Timetable_name").tab("show");
-            Anytime_JQ_selector.removeClass("active in");
+            Anytime_JQ_selector.removeClass("active show");
             Timetable_JQ_selector.addClass("active");
             break;
     }

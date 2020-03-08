@@ -60,27 +60,27 @@ class Saved {
      */
     static _getSavedRowHTML(row, allSaved = this._saved) {
         let HTML = '<tr id="SavedTable_row_' + row + '"';
-        HTML += '><td><button type="button" class="btn btn-default"id="SavedTable_apply_' + row + '" title="' + language.HTMLJS.SavedTable_apply + '" style="background-color: #88E063;">';
-        HTML += '<span class="glyphicon glyphicon-ok"style="top: 2px;" /></button></td><td><div class="form-group input-group" style="margin-bottom: 0;">';
+        HTML += '><td><button type="button" class="btn btn-outline-dark"id="SavedTable_apply_' + row + '" title="' + language.HTMLJS.SavedTable_apply + '" style="background-color: #88E063;">';
+        HTML += '<span class="glyphicon glyphicon-ok"style="top: 2px;" /></button></td><td><div class="input-group input-group-sm" style="margin-bottom: 0;">';
         HTML += '<input type="text" class="form-control" style="min-width: 140px;"id="SavedTable_name_' + row + '" placeholder="' + language.HTMLJS.SavedTable_name + '"';
         HTML += 'value="' + allSaved[row].name + '"readonly="readonly">';
-        HTML += '<div class="input-group-btn"><button type="button" class="btn btn-default"id="SavedTable_rename_' + row + '" title="' + language.HTMLJS.SavedTable_rename + '"><span class="glyphicon glyphicon-pencil"style="top: 2px;" /></button></div>';
+        HTML += '<div class="input-group-append"><button type="button" class="btn btn-outline-dark"id="SavedTable_rename_' + row + '" title="' + language.HTMLJS.SavedTable_rename + '"><span class="glyphicon glyphicon-pencil"style="top: 2px;" /></button></div>';
         HTML += '</div></td>';
-        HTML += '<td><div class="btn-group" style="min-width: 80px;"><button type="button" class="btn btn-default"id="SavedTable_up_' + row + '"" title="' + language.HTMLJS.SavedTable_up + '"';
+        HTML += '<td><div class="btn-group" style="min-width: 80px;"><button type="button" class="btn btn-outline-dark"id="SavedTable_up_' + row + '"" title="' + language.HTMLJS.SavedTable_up + '"';
         if (row === 0)
             HTML += 'disabled="disabled"';
         HTML += '>';
         HTML += '<span class="glyphicon glyphicon-arrow-up"style="top: 2px;" /></button>';
-        HTML += '<button type="button" class="btn btn-default"id="SavedTable_down_' + row + '" title="' + language.HTMLJS.SavedTable_down + '"';
+        HTML += '<button type="button" class="btn btn-outline-dark"id="SavedTable_down_' + row + '" title="' + language.HTMLJS.SavedTable_down + '"';
         if (row === allSaved.length - 1)
             HTML += 'disabled="disabled"';
         HTML += '><span class="glyphicon glyphicon-arrow-down"style="top: 2px;" /></button></div></td>';
-        HTML += '<td><div id="Saved_export_group_' + row + '" class="btn-group"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="SavedTable_export_' + row + '" title="' + language.HTMLJS.SavedTable_export + '">';
+        HTML += '<td><div id="Saved_export_group_' + row + '" class="btn-group dropup"><button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" id="SavedTable_export_' + row + '" title="' + language.HTMLJS.SavedTable_export + '">';
         HTML += '<span class="glyphicon glyphicon-export" style="top: 2px;"></span></button>';
-        HTML += '<ul class="dropdown-menu" role="menu" style="width: 280px; left: -239px; top: -42px;">';
-        HTML += '<li><input id="exportSaved_input_' + row + '" type="text" readonly style="width: 260px; position: relative; left: 9px;" onclick="this.select();" placeholder="' + language.HTMLJS.exportSaved_input + '"></li>';
+        HTML += '<ul class="dropdown-menu dropdown-menu-right" style="width: 280px;">';
+        HTML += '<input id="exportSaved_input_' + row + '" type="text" readonly style="width: 260px; position: relative; left: 9px;" onclick="this.select();" placeholder="' + language.HTMLJS.exportSaved_input + '">';
         HTML += '</ul></div></td>';
-        HTML += '<td><button type="button" class="btn btn-default"id="SavedTable_delete_' + row + '" title="' + language.HTMLJS.SavedTable_delete + '" style="background-color: #F48380;"><span class="glyphicon glyphicon-trash"style="top: 2px;" /></button></td></tr>';
+        HTML += '<td><button type="button" class="btn btn-outline-dark"id="SavedTable_delete_' + row + '" title="' + language.HTMLJS.SavedTable_delete + '" style="background-color: #F48380;"><span class="glyphicon glyphicon-trash"style="top: 2px;" /></button></td></tr>';
         return HTML;
     }
 

@@ -3,38 +3,38 @@
  */
 function loadHTML_Target() {
     let HTML = '';
-    HTML += '<button type="button" class="btn btn-default"id="setTarget_HG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-default"id="setTarget_SMG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-default"id="setTarget_RF" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-default"id="setTarget_AR" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-default"id="setTarget_MG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-default"id="setTarget_SG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-default"id="setTarget_2221" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-danger"id="setTarget_Clear" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_HG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_SMG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_RF" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_AR" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_MG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_SG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_2221" style="margin-right: 5px; margin-bottom: 5px;"></button>';
+    HTML += '<button type="button" class="btn btn-danger btn-regular"id="setTarget_Clear" style="margin-right: 5px; margin-bottom: 5px;"></button>';
     document.getElementById("setTargetButton").innerHTML = HTML;
     HTML = '';
     const TargetName = ["Manp", "Ammu", "Rati", "Part", "TPro", "Equi", "QPro", "QRes"];
     const Target = ['MT', 'AT', 'RT', 'PT', 'TT', 'ET', 'QPT', 'QRT'];
     for (let i = 0; i < 4; i++) {
-        HTML += '<div class="form-group input-group"style="margin-bottom: 10px;"><span class="input-group-addon"style="padding-right:10px;padding-left:10px;cursor:default;"';
+        HTML += '<div class="input-group"style="margin-bottom: 10px;"><span class="input-group-text text-group-start disable-selected-text"style="padding-right:10px;padding-left:10px;"';
         HTML += 'id=' + TargetName[i] + '>';
-        HTML += '</span><div class="input-group-btn"><button class="btn btn-default"type="button"id="Target_minus_100_' + Target[i] + '"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1>';
-        HTML += '<b>&minus;</b></button><button class="btn btn-default"type="button"id="Target_minus_10_' + Target[i] + '"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1>';
+        HTML += '</span><div class="input-group-append"><button class="btn btn-outline-dark"type="button"id="Target_minus_100_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '<b>&minus;</b></button><button class="btn btn-outline-dark"type="button"id="Target_minus_10_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
         HTML += '&minus;</button></div><input type="number" min="0"class="form-control"id="';
         HTML += Target[i];
-        HTML += '"value=0 onfocus="this.select();"style="border-left-width:0"><div class="input-group-btn"><button class="btn btn-default"type="button"id="Target_plus_10_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
-        HTML += '+</button><button class="btn btn-default"type="button"id="Target_plus_100_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '"value=0 onfocus="this.select();"style="border-left-width:0"><div class="input-group-append"><button class="btn btn-outline-dark"type="button"id="Target_plus_10_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '+</button><button class="btn btn-outline-dark"type="button"id="Target_plus_100_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
         HTML += '<b>&plus;</b></button></div></div>';
     }
     for (let i = 4; i < 8; i++) {
-        HTML += '<div class="form-group input-group"style="margin-bottom: 10px;"><span class="input-group-addon"style="padding-right:10px;padding-left:10px;cursor:default;"';
+        HTML += '<div class="input-group"style="margin-bottom: 10px;"><span class="input-group-text text-group-start disable-selected-text"style="padding-right:10px;padding-left:10px;"';
         HTML += 'id=' + TargetName[i] + '>';
-        HTML += '</span><div class="input-group-btn"><button class="btn btn-default"id="Target_minus_1_' + Target[i] + '"type="button"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1>';
-        HTML += '<b>&minus;</b></button><button class="btn btn-default"type="button"id="Target_minus_01_' + Target[i] + '"style="padding-right:10px;padding-left:10px;border-radius:0;"tabindex=-1>';
+        HTML += '</span><div class="input-group-append"><button class="btn btn-outline-dark"id="Target_minus_1_' + Target[i] + '"type="button"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '<b>&minus;</b></button><button class="btn btn-outline-dark"type="button"id="Target_minus_01_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
         HTML += '&minus;</button></div><input type="number" min="0" step="0.01" class="form-control"id="';
         HTML += Target[i];
-        HTML += '"value=0 onfocus="this.select();"style="border-left-width:0"><div class="input-group-btn"><button class="btn btn-default"type="button"id="Target_plus_01_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
-        HTML += '+</button><button class="btn btn-default"type="button"id="Target_plus_1_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '"value=0 onfocus="this.select();"style="border-left-width:0"><div class="input-group-append"><button class="btn btn-outline-dark"type="button"id="Target_plus_01_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '+</button><button class="btn btn-outline-dark"type="button"id="Target_plus_1_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
         HTML += '<b>&plus;</b></button></div></div>';
     }
     document.getElementById("setTargetInput").innerHTML = HTML;
