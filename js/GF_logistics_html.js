@@ -1,67 +1,3 @@
-window.onload = function () {
-    checkLocalStorageWork();
-    updateLocalStorage();
-
-    setLanguage();
-
-    loadHTML_Target();
-    loadHTML_ChapterLimit();
-
-    setPageByLocalStorage();
-
-    //设置契约值(必要)
-    let TotalGreatSuccessRate = Input_getTotalGreatSuccessRate(true);
-    setQContract(TotalGreatSuccessRate);
-
-    MissionsDetails.print();
-    let ShownTab = getShownTab();
-    PlanDetails.printShownTab(ShownTab.name);
-    PlanDetails.printTotalTime(ShownTab.getTotalTime(false));
-    PlanDetails.printGreatSuccessRate(TotalGreatSuccessRate);
-    PlanDetails.printExecutionTimes(Input_getExecutionTimes());
-
-    loadHTML_language();
-
-    //根据移动设备或PC设备更改样式
-    MobilePCDevice();
-
-    //根据页面分辨率更改样式
-    if (document.getElementById("setTargetInput").getBoundingClientRect().width <= 260)
-        disableTargetButton();
-    if (document.getElementById("wrapper").getBoundingClientRect().width <= 1600)
-        document.getElementById("page-wrapper").style.marginLeft = "0";
-
-    //用于checkLocalStorageWork()中检测是否由于localstorage不正确的数据导致浏览器崩溃
-    if (CAN_STORAGE_WORK)
-        sessionStorage.setItem("GF_Logistics_windowOnload", "success");
-};
-
-//当页面分辨率改变时调整样式
-$(window).resize(function () {
-    if (document.getElementById("setTargetInput").getBoundingClientRect().width <= 260)
-        disableTargetButton();
-    else
-        enableTargetButton();
-    if (document.getElementById("wrapper").getBoundingClientRect().width <= 1600)
-        document.getElementById("page-wrapper").style.marginLeft = "0";
-    else
-        document.getElementById("page-wrapper").style.marginLeft = "250px";
-});
-/**Target宽度太短, 为避免输入框中看不全输入数字, 隐藏一些按钮 */
-function disableTargetButton() {
-    $("button[id^=Target_plus_10_]").attr("style", "display:none;");
-    $("button[id^=Target_plus_0]").attr("style", "display:none;");
-    $("button[id^=Target_minus_10_]").attr("style", "display:none;");
-    $("button[id^=Target_minus_0]").attr("style", "display:none;");
-}
-/**Target宽度足够, 启用一些按钮 */
-function enableTargetButton() {
-    $("button[id^=Target_plus_10_]").attr("style", "padding-right:10px;padding-left:10px;border-radius:0;");
-    $("button[id^=Target_plus_0]").attr("style", "padding-right:10px;padding-left:10px;border-radius:0;");
-    $("button[id^=Target_minus_10_]").attr("style", "padding-right:10px;padding-left:10px;border-radius:0;");
-    $("button[id^=Target_minus_0]").attr("style", "padding-right:10px;padding-left:10px;border-radius:0;");
-}
-
 /**根据localstorage或浏览器语言设置语言 */
 function setLanguage() {
     let lang = storageGetItem("Lang");
@@ -93,14 +29,20 @@ function setLanguage() {
 function changeLanguage(lang) {
     switch (lang) {
         case "zh-CN":
+            if (language.lang === language_zh_CN.lang)
+                return ;
             storageSetItem("Lang", "zh-CN");
             language = language_zh_CN;
             break;
         case "zh-TW":
+            if (language.lang === language_zh_TW.lang)
+                return ;
             storageSetItem("Lang", "zh-TW");
             language = language_zh_TW;
             break;
         case "en":
+            if (language.lang === language_en.lang)
+                return ;
             storageSetItem("Lang", "en");
             language = language_en;
             break;
@@ -111,18 +53,17 @@ function changeLanguage(lang) {
 /**根据移动设备或PC设备切换不同样式或进行优化 */
 function MobilePCDevice() {
     if (IsMobile()) {
-        document.getElementById("Saved").style.transition = "none";
-        document.getElementById("MissionTable_panel").style.transition = "none";
-        document.getElementById("calcTargetValueTool_panel").style.transition = "none";
+        document.getElementById("Saved_card").style.transition = "none";
+        document.getElementById("MissionTable_card").style.transition = "none";
+        document.getElementById("calcTargetValueTool_card").style.transition = "none";
         if (storageGetItem("IsSavedPanelShow") === "noStorage") {
-            $("#MissionTable_panel").collapse("hide");
+            $("#MissionTable_card").collapse("hide");
         }
-        document.getElementById("page-header").style.marginTop = "20px";
+        const page_header = $("#page-header");
+        page_header.removeClass("mt-4");
+        page_header.addClass("mt-3");
         document.getElementById("container-fluid").style.padding = "0";
         document.getElementById("calcTargetValueTool_apply").innerHTML = "<span id=\"calcTargetValueTool_apply_text\">" + language.HTML.calcTargetValueTool_apply_text + "</span> &darr;";
-    }
-    else {
-        document.getElementById("page-wrapper").style.marginLeft = "250px";
     }
 }
 
@@ -135,10 +76,17 @@ function MobilePCDevice() {
 function ChangeTab(tabName, isShow = true) {
     let Timetable_JQ_selector = $("#Tab_Timetable");
     let Anytime_JQ_selector = $("#Tab_Anytime");
+    let ShownTabName = getShownTab().name;
+    if (ShownTabName === tabName)
+        return ;
     switch (tabName) {
         case "Anytime":
-            if (isShow)
+            if (isShow) {
                 $("#Tab_Anytime_name").tab("show");
+                // Anytime_JQ_selector.addClass("show");
+                // $("#Tab_Timetable_name").removeClass("active");
+                // $("#Tab_Anytime_name").addClass("active");
+            }
             //用于getShownTab()判断目前显示的Tab, 现在添加class"show"会导致闪烁
             Timetable_JQ_selector.removeClass("active show");
             Anytime_JQ_selector.addClass("active");
@@ -259,13 +207,11 @@ function HTML_DisableRankingInput() {
     $("#Tab_Timetable_new_minutes").attr("disabled", "true");
     $("#Tab_Timetable_AddNewTimePoint").attr("disabled", "true");
     $("#GreatSuccessRate").attr("disabled", "true");
-    $("#GreatSuccessRateUp").attr("disabled", "true");
-    document.getElementById("GreatSuccessRateUp_text").style.cursor = "not-allowed";
-    document.getElementById("GreatSuccessRateUp_label").style.cursor = "not-allowed";
+    $("#GreatSuccessRateUp_btn").attr("disabled", "true");
+    $("#GreatSuccessRateUp_btn").addClass("disabled");
     $("#ChapterLimit").attr("disabled", "true");
     $("#calcTargetValueTool_apply").attr("disabled", "true");
     $("#ContractWeight").attr("disabled", "true");
-    document.getElementById("ContractWeight_thumb").style.backgroundColor = "#CCC";
     $("button[id^=setTarget_]").attr("disabled", "true");
     $("#MT").attr("disabled", "true");
     $("#AT").attr("disabled", "true");
@@ -297,13 +243,11 @@ function HTML_AllowRankingInput() {
     $("#Tab_Timetable_new_minutes").removeAttr("disabled");
     $("#Tab_Timetable_AddNewTimePoint").removeAttr("disabled");
     $("#GreatSuccessRate").removeAttr("disabled");
-    $("#GreatSuccessRateUp").removeAttr("disabled");
-    document.getElementById("GreatSuccessRateUp_text").style.cursor = "pointer";
-    document.getElementById("GreatSuccessRateUp_label").style.cursor = "pointer";
+    $("#GreatSuccessRateUp_btn").removeAttr("disabled");
+    $("#GreatSuccessRateUp_btn").removeClass("disabled");
     $("#ChapterLimit").removeAttr("disabled");
     $("#calcTargetValueTool_apply").removeAttr("disabled");
     $("#ContractWeight").removeAttr("disabled");
-    document.getElementById("ContractWeight_thumb").style.backgroundColor = "rgb(112, 166, 236)";
     $("button[id^=setTarget_]").removeAttr("disabled");
     $("#MT").removeAttr("disabled");
     $("#AT").removeAttr("disabled");
@@ -323,6 +267,8 @@ function delete_rankingResults() {
     document.getElementById("start_ranking_html").style.display = "";
     document.getElementById("FineTuning").innerHTML = "";
     document.getElementById("Plan_Table").innerHTML = "";
-    FineTuning.clear();
-    ResultsPlan.clear();
+    if (!!window.FineTuning_JS)
+        FineTuning.clear();
+    if (!!window.ResultsPlan_JS)
+        ResultsPlan.clear();
 }

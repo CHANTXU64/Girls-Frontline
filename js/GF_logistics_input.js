@@ -56,13 +56,16 @@ function Input_getTotalGreatSuccessRate(NeedCorrection = false) {
 /** @param {boolean} is_RateUP - 是否大成功概率提升 */
 function Input_setGreatSuccessUpRate(is_RateUP, NeedCorrectBaseRate = true) {
     const checkbox_elem = document.getElementById("GreatSuccessRateUp");
+    const checkbtn_JQ_selector = $("#GreatSuccessRateUp_btn");
     const UpRateText_elem = document.getElementById("Display_UPRate");
     if (is_RateUP === false) {
         checkbox_elem.checked = false;
+        checkbtn_JQ_selector.removeClass("active");
         UpRateText_elem.innerHTML = "";
     }
     else {
         checkbox_elem.checked = true;
+        checkbtn_JQ_selector.addClass("active");
         const BaseRate = Input_getGreatSuccessRate(NeedCorrectBaseRate);
         UpRateText_elem.innerHTML = "+" + _getGreatSuccessUpRate(BaseRate);
     }
@@ -131,8 +134,6 @@ function Input_getContractWeight() {
 function Input_setContractWeight(ContractWeight = 50) {
     $("#ContractWeight").val(ContractWeight);
     const ContractWeight_Corrected = Input_getContractWeight();
-    document.getElementById("ContractWeight_range").style.right = 100 - ContractWeight_Corrected + "%";
-    document.getElementById("ContractWeight_thumb").style.left = ContractWeight_Corrected + "%";
     storageSetItem("ContractWeight", ContractWeight_Corrected);
 }
 

@@ -1,4 +1,9 @@
-/**版本 */
+/**
+ * 版本
+ * 
+ * 注意, 会导致LOCAL_STORAGE_KEY改变,
+ * 可能需要修改html中的script(当用js切换nav显示时, 4.4.1bootstrap会在全部东西处理完后开始切换动画, 避免阻塞, 事先切换nav)
+ */
 const VERSION = "1.0.3";
 
 /**
@@ -104,6 +109,25 @@ function updateLocalStorage() {
         _updateLSFrom_v_0_x_x_To_v_1_x_x();
     }
 }
+
+//v1.x.x localstorage 键名
+//Lang - 语言
+//Description_Display - 说明警告是否显示
+//LocalstorageWarning_Display - web存储警告是否显示
+//TabName - ShownTab的name
+//HourlyOrTotal - 以每小时显示还是以总计显示
+//TabAnytimeCustom - AnyTime中的数据
+//TabTimetable - Timetable中的数据
+//GreatSuccessRate - 大成功基础概率
+//Is_GreatSuccessRateUP - 是否UP
+//ChapterLimit - 解锁章节
+//ContractWeight - 契约权重
+//TargetValue - 需求值
+//Saved - 已保存的方案
+//IsSavedPanelShow - "已保存"是否展开
+//CalcTargetValueTool_Target
+//CalcTargetValueTool_Current
+//CalcTargetValueTool_ExecutionTimes
 
 /**
  * 从v0.x.x版本localstorage转换为v1.x.x版本, 并删除原来的存储数据

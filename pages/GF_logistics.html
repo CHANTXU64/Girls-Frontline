@@ -15,20 +15,472 @@
       src: url(data:application/font-woff;charset=utf-8;base64,d09GRgABAAAAAAfQAA0AAAAADEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAHtAAAABoAAAAcipDpvUdERUYAAAeYAAAAHAAAAB4AJwAVT1MvMgAAAZgAAABBAAAAYI+d/YJjbWFwAAAB/AAAAHgAAAGeEBhFD2dhc3AAAAeQAAAACAAAAAgAAAAQZ2x5ZgAAApQAAAPEAAAGNKpRyK5oZWFkAAABMAAAAC4AAAA2GC0HU2hoZWEAAAFgAAAAIAAAACQHWAMKaG10eAAAAdwAAAAgAAAAKAoiAN9sb2NhAAACdAAAACAAAAAgB8gJam1heHAAAAGAAAAAGAAAACAAFwBmbmFtZQAABlgAAADcAAABm/pYTdhwb3N0AAAHNAAAAFsAAACX/nfUdnjaY2BkAINNNZ+uxfPbfGXgZgHzb5UlRsHo/5/+O7AYsCQBuRwMTCBRAGlTDJAAAHjaY2BkYGA2/m/CwMDC8P/T/wssBgxAERTACgCDmAVpeNpjYGRgYOBnSGFgZwABJgY0AAAMWwB+eNpjYGZhYJzAwMrAwDST6QwDA0M/hGZ8zWDMyMmAChgFGBpQRRwYGB8WMBv/N2E4w2zMANLPiCSrwMAIAC1aCqQAAAB42mNhgADGUAjNAib/f2JQYAhlEAEyZwAhEAAAO8AECXjaY2BgYGaAYBkGRgYQmAHkMYL5LAw1QFqKQQAowgUUU2DQVud/IPxA4UHzg44HUx5mPiz4//f/f7AuVLnJCLn/T/7fuvFd/ov8C/k2+Sb5CrklcvPANkgx4AKMIPcwsgExM1SACUgwYagCOhAOWBmGIQAATGEnXwAAAAAACAAIABAAGABaAIYAugEWAYgCGgJKAnoCygMaeNqNVM1vG0UUf29nPeNZzxbv2o4xqCSOpd3WRkrljWMiQHU2LeJCJRDrVkqFURvFPaBekBA5gUp7REJRRTlXnOJTKW44UP4L94oQByToBQRSo8Zr3qw3NKYI8Mi/nTfvzZv3DQiHPwNg1YD/Q9tswPagAYBBszxXcqqEx7EoeK3qEDZw0fdaTpXwVVxurwRVhxA/HrhKYcNVtq3ceKSUSwd2/MC1lbJdrNuK7amEY7u7mjNyNMfBBsnvkpS+q7QlbPLbZGJKswQK8lAgO5rzOFcqPoM+vVZAX2KmwHp5dU2pt/feVHkc/75nqHgr/vEds5S7pvKOOnfvLRXfHv9xz1AHv76LL2i9CAvQNE+xHSBS4kowVSuQ1xZ99FrLp9OzoNnGT/EnkZX8lhDjTS4lj78R4haXWbHDpcXxS2ITnZVifFkIfD2V3eEcQEAEtgnmJXgWjkMdlmAZXoJXyIBpJIMEqy2K2suoMdBUFZ0kxNPgZpzAqQWHoBcOEGqVyi9ZwQ8iweXPz1VqCBPKG23GA2IxGEdRNIii3W4UmZcqlVqXc9npSM67xI663QlJ0I44xqA7HhjR0T9pKsICe8j2KU5v6KiX5/SiCHG9KEieXtpivYLyImXEqxHyUnEeRYIUvNNYTnCltbyE7QS9mgGbGxvroe95fri+sbE5S23nsltb2ZyV/TCrN/Sxnj5h+763HiZ3L4ahT78wvJhoCtc9/4cjF/silxPbQvT7gj6076eqgAFMOiawDsxDGy7/t5flRX1aKmoZqosV7Y/mpxVZTpBuLaFIMCkj/0kxUZyaBlzp9c6cPXnixMmzZ3q9K7NU//yFZhA0L5zv/7XzVjm/epXzVV1rtLEkf+qEdf5RW0rdmFU43Q3/TV96kvTJFzQD7lMdPK/7ZE63/JHG1xFqa+fKxmv4Xs403Ud20uxq3zXNHB05+Rx7GIfHpBXX0yZ/YMlj+J1tQ6p/gd03ba0/nTEaDxtRt4UeKQGO9Ah5pLXGN3N5RyM9t09jxEymTMOybHpHa7YsHJGw1m+mM+wxzY95eBFOARTaSTJEktcMZXWuxHSyM+QLpauddmbSk0GmFLTe31auq8JhSDPt27tKSgP18DJcxtSdT4bxRyyi1w4iGmbGKGIfbCsSXrPpzmdfK5O5MTq2jVKqOzeG49tk60hb163Xn9hH/hcO7cOMLsECBZnqyG9TgGnQHSko9nf7sIETCm3ywvXh9buKme7NNdtxFVmy9v2MdaZNxtuONt5UXyXSUo61a1Mn489n7PsTZE8ipnjadc6xasJQGMXxfzRatCCdSul0R6eg4AN0KnVw6SAdG+MlBPReiBF07yN07DP0YXwiT8K3JnDD7zs35yPAjH8S2ifhgSfzQJ6bh/KbOZW/zCMeuZjHyn/NU165qZWkEyWzbkPrgfxiHsoLcyp/mEc8820eK/8xT1nxR0VB5KgTCVAV8Rij8Imn5MyBnFqjL8+HXOj7vi/fak/NSfdt7liS6S/Z+vpUxeCW2aK/+97NjVqltoRuU67Zs1e246r3uuturJupFEPjSh98nTd+73ZXty7iRvsy7uXbPkN42n3HSw5AMBRG4fu3qFfYym2JtgtgK0hETAzsXrQdO5MvhwT91xNBkIAkSR0y5CigUKJCjQZtsR7PtWl1nzszB43l5XNmPUQNR11656I+vR+DevJRyy9qSxiwAAABAAH//wAPeNpjYGRgYOABYjEgZmJgBEI+IGYB8xgABDgAPXjaY2BgYGQAgqtL1DlA9K2yxCgYDQA8bwXAAAA=) format('woff');
     }
   </style>
-  <!-- css and js -->
-  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous">
   <link href="../css/GF_logistics_slider.css" rel="stylesheet">
   <link href="../css/GF_logistics_button.css" rel="stylesheet">
+  <link href="../css/GF_logistics_group.css" rel="stylesheet">
   <link href="../css/GF_logistics.css" rel="stylesheet">
-  <script src="../vendor/jquery/jquery-3.4.1.min.js"></script>
-  <script src="../vendor/popper/popper.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-  <script src="../vendor/echarts/echarts.min.js"></script>
-  <script src="../vendor/es6-promise/es6_promise.auto.min.js"></script>
-  <script src="../vendor/html2canvas/html2canvas.min.js"></script>
-  <script src="../vendor/js-sha1/sha1.min.js"></script>
-  <script src="../vendor/js-md5/md5.min.js"></script>
-  <script src="../vendor/lz-string/lz-string.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="../vendor/jquery/jquery-3.4.1.slim.min.js"><\/script>');</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js" integrity="sha256-OUFW7hFO0/r5aEGTQOz9F/aXQOt+TwqI1Z4fbVvww04=" crossorigin="anonymous"></script>
+  <script>window.bootstrap || document.write('<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"><link href="../css/GF_logistics_slider.css" rel="stylesheet"><link href="../css/GF_logistics_button.css" rel="stylesheet"><link href="../css/GF_logistics_group.css" rel="stylesheet"><link href="../css/GF_logistics.css" rel="stylesheet"><script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"><\/script>');</script>
+</head>
+
+<body class="container-fluid" id="container-fluid" style="min-width: 300px; background-color: #FFFFFF;">
+  <h1 id="page-header" class="col-lg-7 float-left disable-selected-text mb-0 mt-4">
+    <span id="header"></span>
+    <div class="btn-group"><button type="button" class="btn btn-outline-dark dropdown-toggle btn-regular"
+        data-toggle="dropdown">中文</button>
+      <ul class="dropdown-menu">
+        <a href="#" class="dropdown-item" id="lang-zh-CN">简体中文</a>
+        <a href="#" class="dropdown-item" id="lang-zh-TW">繁體中文</a>
+      </ul>
+    </div>
+    <button type="button" class="btn btn-outline-dark btn-regular" id="lang-en">English</button>
+    <hr style="margin: 0.5rem 0 1rem 0; width: 100%;" />
+  </h1>
+  <div class="col-lg-5 float-right input-group input-group-regular mb-3"
+    style="max-width: 440px; margin-top: 20px; margin-right: 0; margin-left: auto;">
+    <span class="input-group-label input-group-text disable-selected-text" id="Config_text"></span>
+    <input type="text" class="form-control" style="min-width: 40px;" id="Config_importInput" onclick="this.select();"
+      autocomplete="off">
+    <button type="button" class="btn btn-outline-dark input-group-btn" id="Config_importButton">
+      <span class="glyphicon glyphicon-import"></span></button>
+    <div id="Config_export_group">
+      <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" id="Config_export"
+        style="border-top-left-radius: 0; border-bottom-left-radius: 0; display: inline-block; font-size: 0.875rem; margin-left: -1px;"><span
+          class="glyphicon glyphicon-export"></span></button>
+      <div class="dropdown-menu dropdown-menu-right pr-2 pl-2" style="width: 280px;">
+        <input id="Config_exportInput" class="form-control form-control-sm" type="text" readonly
+          onclick="this.select();">
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-7 float-left">
+    <div class="alert alert-warning" id="description" role="alert" style="color:#000000">
+      <span id="description_text" class="disable-selected-text"></span>
+      <span id="neverShowAgain_description" class="disable-selected-text" style="cursor:pointer;"></span>
+    </div>
+    <div class="alert alert-danger disable-selected-text" id="localstorageDoesNotWork"></div>
+    <div class="alert alert-warning" id="localstorageWarning" role="alert" style="color: #000000;">
+      <span id="localstorageWarning_text" class="disable-selected-text"></span>
+      <span id="neverShowAgain_localstorageWarning" class="disable-selected-text" style="cursor:pointer;"></span>
+    </div>
+  </div>
+  <div class="col-lg-7 float-left">
+    <div class="card border-dark mb-3">
+      <div class="card-header pt-2 pb-2">
+        <span id="setting" class="disable-selected-text" style="padding-top: 2px; padding-bottom: 2px;"></span>
+        <div class="switch float-right">
+          <input type="radio" class="switch-input" name="Display_PerHourOrTotal" id="Display_PerHour">
+          <label tabindex="0" for="Display_PerHour" class="disable-selected-text switch-label switch-label-off"
+            id="Display_PerHour_text" style="cursor: pointer;"></label>
+          <input type="radio" class="switch-input" name="Display_PerHourOrTotal" id="Display_Total" checked>
+          <label tabindex="0" for="Display_Total" class="disable-selected-text switch-label switch-label-on"
+            id="Display_Total_text" style="cursor: pointer;"></label>
+          <span class="switch-selection"></span>
+        </div>
+      </div>
+      <div class="card-body row" style="padding-left: 5px; padding-right: 5px; margin: 0;">
+        <div class="col-lg-7">
+          <ul class="nav nav-tabs nav-justified">
+            <li class="nav-item text-nowrap">
+              <a class="nav-link active" href="#Tab_Anytime" id="Tab_Anytime_name" data-toggle="tab"></a>
+            </li>
+            <li class="nav-item text-nowrap">
+              <a class="nav-link" href="#Tab_Timetable" id="Tab_Timetable_name" data-toggle="tab"></a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade active show" id="Tab_Anytime">
+              <h4 id="tab_Anytime_time" class="disable-selected-text"></h4>
+              <div class="input-group input-group-regular mb-2">
+                <input type="number" min="0" max="72" class="form-control" id="Time_Anytime_hours" value=16
+                  onfocus="this.select();" autocomplete="off">
+                <label for="Time_Anytime_hours" class="input-group-label input-group-text disable-selected-text"
+                  id="tab_Anytime_hour"></label>
+                <input type="number" min="0" max="60" class="form-control" id="Time_Anytime_minutes" value=0
+                  onfocus="this.select();" autocomplete="off">
+                <label for="Time_Anytime_minutes" class="input-group-label input-group-text disable-selected-text"
+                  id="tab_Anytime_minute"></label>
+              </div>
+              <h4 id="tab_Anytime_MinimumIntervalTime" class="disable-selected-text"></h4>
+              <div class="input-group input-group-regular mb-2">
+                <input type="number" min="0" max="60" class="form-control" id="Tab_Anytime_MinimumIntervalTime_minutes"
+                  value=0 onfocus="this.select();" autocomplete="off">
+                <label for="Tab_Anytime_MinimumIntervalTime_minutes"
+                  class="input-group-label input-group-text disable-selected-text"
+                  id="tab_Anytime_MinimumIntervalTime_minute"></label>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="Tab_Timetable">
+              <h4 id="tab_Timetable_time" class="disable-selected-text"></h4>
+              <div class="input-group input-group-regular mb-2" style="width: 100%;">
+                <input type="number" min="0" max="72" class="form-control" id="Time_Timetable_hours" value=5
+                  onfocus="this.select();" autocomplete="off">
+                <label for="Time_Timetable_hours" class="input-group-label input-group-text disable-selected-text"
+                  id="tab_Timetable_hour"></label>
+                <input type="number" min="0" max="60" class="form-control" id="Time_Timetable_minutes" value=0
+                  onfocus="this.select();" autocomplete="off">
+                <label for="Time_Timetable_minutes" class="input-group-label input-group-text disable-selected-text"
+                  id="tab_Timetable_minute"></label>
+              </div>
+              <button type="button" class="btn btn-outline-dark btn-sm float-right" id="tab_Timetable_deleteall">
+                <span class="glyphicon glyphicon-remove-sign" style="font-size: 17px; top: 3px;"></span></button>
+              <div slider style="margin: 33px 0 0 0;">
+                <div id="Tab_Timetable_range" style="right: 49px;">
+                  <div inverse-left style="width:70%;"></div>
+                  <div inverse-right style="width:70%;"></div>
+                  <div range style="left:0%;right:0%; background-color:#CCC;"></div>
+                  <span thumb id="Tab_Timetable_range_thumb"
+                    style="left:100%; background-color:rgb(221, 155, 155); cursor:default;"></span>
+                  <div id="Tab_Timetable_range_tooltip" class="tooltip right custom-tooltip disable-selected-text"
+                    style="right: -69px; top:-16px;">
+                    <div class="tooltip-arrow"></div>
+                    <div id="Tab_Timetable_range_tooltip_0_value" class="tooltip-inner">
+                      5:00</div>
+                  </div>
+                </div>
+              </div>
+              <label id="tab_Timetable_addtimeh5" for="Tab_Timetable_AddNew" class="disable-selected-text"></label>
+              <div class="input-group input-group-regular mb-2" id="Tab_Timetable_AddNew">
+                <input type="number" min="0" max="72" class="form-control" id="Tab_Timetable_new_hours"
+                  onfocus="this.select();" autocomplete="off">
+                <label for="Tab_Timetable_new_hours" class="input-group-label input-group-text disable-selected-text"
+                  id="tab_Timetable_new_hour"></label>
+                <input type="number" min="0" max="60" class="form-control" id="Tab_Timetable_new_minutes"
+                  onfocus="this.select();" autocomplete="off">
+                <label for="Tab_Timetable_new_minutes" class="input-group-label input-group-text disable-selected-text"
+                  id="tab_Timetable_new_minute"></label>
+                <button type="button" class="btn btn-info input-group-btn" id="Tab_Timetable_AddNewTimePoint">
+                  <span class="glyphicon glyphicon-plus" style="left: 1px;"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <h4 id="h4GreatSuccessRate" class="disable-selected-text"></h4>
+          <div class="input-group input-group-regular disable-selected-text mb-2">
+            <input type="number" min="15" max="69" class="form-control" id="GreatSuccessRate" value=60
+              onfocus="this.select();" autocomplete="off">
+            <label for="GreatSuccessRate" class="input-group-label input-group-text" id="Display_UPRate"></label>
+            <label for="GreatSuccessRate" class="input-group-label input-group-text">%</label>
+            <div class="input-group-append btn-group-toggle ml-0" data-toggle="buttons">
+              <label id="GreatSuccessRateUp_btn" class="btn btn-checkbox"
+                style="padding: 0.3rem 0.7rem; font-size: 0.875rem;">
+                <input type="checkbox" id="GreatSuccessRateUp">UP
+              </label>
+            </div>
+          </div>
+          <div class="input-group mb-2">
+            <label class="input-group-text input-group-label" id="h4ChapterLimit" for="ChapterLimit"></label>
+            <select class="custom-select" id="ChapterLimit" autocomplete="off"></select>
+          </div>
+          <div class="card mb-2" style="max-width: 587px;">
+            <div class="card-header pt-2 pb-2 border-bottom-0">
+              <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"
+                data-target="#calcTargetValueTool_card" aria-expanded="false" aria-controls="calcTargetValueTool_card"
+                id="calcTargetValueTool_title">
+              </button>
+            </div>
+            <div id="calcTargetValueTool_card" class="collapse">
+              <div class="table-responsive calc-target-table">
+                <table class="table text-nowrap mb-0">
+                  <tbody id="calcTargetValueTool">
+                    <tr class="disable-selected-text">
+                      <td id="calcTargetValueTool_text_ResourceContract" style="border-right: 1px solid #ddd;"></td>
+                      <td id="calcTargetValueTool_Manp_text"></td>
+                      <td id="calcTargetValueTool_Ammu_text"></td>
+                      <td id="calcTargetValueTool_Rati_text"></td>
+                      <td id="calcTargetValueTool_Part_text"></td>
+                      <td id="calcTargetValueTool_TPro_text"></td>
+                      <td id="calcTargetValueTool_Equi_text"></td>
+                      <td id="calcTargetValueTool_QPro_text"></td>
+                      <td id="calcTargetValueTool_QRes_text"></td>
+                    </tr>
+                    <tr>
+                      <td id="calcTargetValueTool_text_target" class="disable-selected-text"></td>
+                      <td colspan="8" class="p-0 border-0">
+                        <div class="input-group">
+                          <input type="number" id="calcTargetValueTool_Target_Manp" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Target_Ammu" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Target_Rati" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Target_Part" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Target_TPro" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Target_Equi" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Target_QPro" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Target_QRes" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td id="calcTargetValueTool_text_current" class="disable-selected-text"></td>
+                      <td colspan="8" class="p-0 border-0">
+                        <div class="input-group">
+                          <input type="number" id="calcTargetValueTool_Current_Manp" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Current_Ammu" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Current_Rati" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Current_Part" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Current_TPro" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Current_Equi" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Current_QPro" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                          <input type="number" id="calcTargetValueTool_Current_QRes" min="0" value="0"
+                            class="form-control" autocomplete="off">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td id="calcTargetValueTool_text_result" class="disable-selected-text"
+                        style="border-right: 1px solid #ddd;"></td>
+                      <td id="calcTargetValueTool_Result_Manp_value"></td>
+                      <td id="calcTargetValueTool_Result_Ammu_value"></td>
+                      <td id="calcTargetValueTool_Result_Rati_value"></td>
+                      <td id="calcTargetValueTool_Result_Part_value"></td>
+                      <td id="calcTargetValueTool_Result_TPro_value"></td>
+                      <td id="calcTargetValueTool_Result_Equi_value"></td>
+                      <td id="calcTargetValueTool_Result_QPro_value"></td>
+                      <td id="calcTargetValueTool_Result_QRes_value"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" class="p-0 mt-0">
+                        <div class="input-group">
+                          <label for="calcTargetValueTool_InputExecutionTimes"
+                            id="calcTargetValueTool_InputExecutionTimes_label"
+                            class="input-group-label input-group-text disable-selected-text"
+                            style="font-size: 0.82rem; border-radius: 0; border-width: 0 1px 0 0;"></label>
+                          <input type="number" min="1" max="999" step="1" id="calcTargetValueTool_InputExecutionTimes"
+                            class="form-control" onfocus="this.select();" value="1"
+                            style="height: 30px;padding:3px 6px 3px 6px; border-radius: 0; border-width: 0 1px;"
+                            autocomplete="off">
+                        </div>
+                      </td>
+                      <td colspan="6" class="p-0 mt-0 float-left">
+                        <button class="btn btn-danger" type="button" id="calcTargetValueTool_clear"
+                          style="height: 30px;padding:3px 20px 3px 20px;font-size:13px; border-width: 0 1px 0 1px;"></button>
+                        <button class="btn btn-primary" type="button" id="calcTargetValueTool_startCalc"
+                          style="height: 30px;padding:3px 20px 3px 20px;font-size:13px; border-width: 0 1px 0 1px;"></button>
+                        <button class="btn btn-success" type="button" id="calcTargetValueTool_apply"
+                          style="height: 30px;padding:0 20px 0 20px;font-size:13px; border-width: 0 1px 0 1px; line-height: 30px;">
+                          <span id="calcTargetValueTool_apply_text"></span>
+                          &rarr;
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 disable-selected-text" id="target">
+          <h4 id="Demand"></h4>
+          <div id="setTargetButton"></div>
+          <label id="ContractWeight_label" class="btn-toolbar justify-content-between mb-0" for="customRange1">
+            <span id="ContractWeight_notImportant"></span>
+            <span id="ContractWeight_Important"></span>
+          </label>
+          <input type="range" class="custom-range" id="ContractWeight" min="0" max="100" step="2">
+          <div id="setTargetInput"></div>
+        </div>
+        <div class="col-lg-12 btn-toolbar">
+          <button type="button" class="btn btn-primary" id="start_ranking"></button>
+          <button type="button" class="btn btn-danger" style="display: none;" id="clear_ranking"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5 float-right">
+    <div class="accordion disable-selected-text" id="SavedAndMissionTableGroupCard">
+      <div class="card border-dark">
+        <div class="card-header pt-2 pb-2" id="Saved_header">
+          <button class="btn btn-link p-0 collapsed" id="Saved_Title" type="button" data-toggle="collapse"
+            data-target="#Saved_card" aria-expanded="false" aria-controls="Saved_card">
+          </button>
+        </div>
+        <div id="Saved_card" class="collapse" aria-labelledby="Saved_header"
+          data-parent="#SavedAndMissionTableGroupCard">
+          <div class="table-responsive" style="max-height: 287px; overflow-y: auto;">
+            <table class="table text-nowrap table-sm"
+              style="margin-bottom: 0; text-align: center; cursor: default; border: 0;">
+              <tbody>
+                <tr id="importSaved">
+                  <td colspan=5>
+                    <div class="input-group input-group-regular"
+                      style="margin-bottom: 0; width:100%; max-width: 320px;">
+                      <input type="text" class="form-control" style="min-width: 140px;" id="importSaved_input"
+                        onclick="this.select();" autocomplete="off">
+                      <button type="button" class="input-group-btn btn btn-outline-dark input-group-btn"
+                        id="importSaved_importButton">
+                        <span class="glyphicon glyphicon-import"></span></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td id="NoSaved" colspan=5></td>
+                </tr>
+              </tbody>
+              <tbody id="Saved_Body" style="border-top-width: 1px;">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="card border-dark mb-3">
+        <div class="card-header pt-2 pb-2" id="MissionTable_header">
+          <button class="btn btn-link p-0" id="MissionTable_Title" type="button" data-toggle="collapse"
+            data-target="#MissionTable_card" aria-expanded="true" aria-controls="MissionTable_card">
+          </button>
+        </div>
+        <div id="MissionTable_card" class="collapse show" aria-labelledby="MissionTable_header"
+          data-parent="#SavedAndMissionTableGroupCard">
+          <div class="table-responsive mission-table">
+            <table class="table text-nowrap mb-0">
+              <thead class="disable-selected-text">
+                <tr>
+                  <th id="MissionTable_head_Mission" tabindex="0"></th>
+                  <th id="MissionTable_head_Manp" tabindex="0"></th>
+                  <th id="MissionTable_head_Ammu" tabindex="0"></th>
+                  <th id="MissionTable_head_Rati" tabindex="0"></th>
+                  <th id="MissionTable_head_Part" tabindex="0"></th>
+                  <th id="MissionTable_head_TPro" tabindex="0"></th>
+                  <th id="MissionTable_head_Equi" tabindex="0"></th>
+                  <th id="MissionTable_head_QPro" tabindex="0"></th>
+                  <th id="MissionTable_head_QRes" tabindex="0"></th>
+                  <th id="MissionTable_head_Time" tabindex="0"></th>
+                </tr>
+              </thead>
+              <tbody id="MissionTable_tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card border-dark mb-3" style="max-width: 662px;">
+      <div class="card-header disable-selected-text pt-2 pb-2 border-bottom-0" id="PlanDetailsTitle"></div>
+      <div class="table-responsive plan-details-table"
+        style="border-bottom-left-radius: 0.25rem; border-bottom-right-radius: 0.25rem;">
+        <table class="table text-nowrap mb-0">
+          <tbody id="PlanDetails">
+            <tr>
+              <td style="width: 198px;" colspan=3 id="PlanDetails_ShownTab">
+              </td>
+              <td style="width: 132px;" colspan=2 id="PlanDetails_TotalTime">
+              </td>
+              <td style="width: 198px;" colspan=3 id="PlanDetails_GreatSuccessRate"></td>
+              <td style="width: 132px;" colspan=2 id="PlanDetails_ExecutionTimes"></td>
+            </tr>
+            <tr>
+              <td id="PlanDetails_Mission"></td>
+              <td id="PlanDetails_Manp"></td>
+              <td id="PlanDetails_Ammu"></td>
+              <td id="PlanDetails_Rati"></td>
+              <td id="PlanDetails_Part"></td>
+              <td id="PlanDetails_TPro"></td>
+              <td id="PlanDetails_Equi"></td>
+              <td id="PlanDetails_QPro"></td>
+              <td id="PlanDetails_QRes"></td>
+              <td id="PlanDetails_Time"></td>
+            </tr>
+            <tr id="PlanDetails_Mission_1" style="background-color: #C5D8FF;"></tr>
+            <tr id="PlanDetails_Mission_2" style="background-color: #FFBFBE;"></tr>
+            <tr id="PlanDetails_Mission_3" style="background-color: #B6F4B5;"></tr>
+            <tr id="PlanDetails_Mission_4" style="background-color: #FFEBC7;"></tr>
+            <tr id="PlanDetails_PerHour"></tr>
+            <tr id="PlanDetails_Total"></tr>
+            <tr id="PlanDetails_Chart_row">
+              <td colspan=10 id="PlanDetails_Chart"></td>
+            </tr>
+          </tbody>
+          <tbody class="border-top-0">
+            <tr>
+              <td colspan=10 class="p-0 border-0">
+                <div class="input-group">
+                  <button class="btn btn-outline-dark" type="button" id="savePlan"
+                    style="line-height: 30px; width: 99px; height: 30px; padding:0 6px 0 6px; font-size:13px; border-width: 1px 0 0 0; border-radius: 0; border-bottom-left-radius: 0.25em;"></button>
+                  <button class="btn btn-outline-dark" type="button" id="Capture"
+                    style="line-height: 30px; width: 99px; height: 30px; padding:0 6px 0 6px; font-size:13px; border-bottom-width: 0; border-radius: 0;"></button>
+                  <label for="PlanDetails_InputStartTime" id="PlanDetails_InputStartTime_label"
+                    style="font-size: 13px; border-radius: 0;border-width: 1px 0 0 0; padding: 5px 12px; border-top-color: #000000;"
+                    class="input-group-span input-group-text disable-selected-text"></label>
+                  <input type="time" step="60" id="PlanDetails_InputStartTime" class="form-control" value="00:00"
+                    onfocus="this.select();"
+                    style="height: 30px;padding:0 6px 0 6px; border-radius: 0;border-bottom-width: 0; line-height: 28px; border-top-color: #000000; border-right-color: #000000;"
+                    autocomplete="off">
+                  <label for="PlanDetails_InputExecutionTimes" id="PlanDetails_InputExecutionTimes_label"
+                    style="font-size: 13px; border-radius: 0; border-left-width: 0;border-bottom-width: 0; padding: 5px 12px; border-top-color: #000000;"
+                    class="input-group-span input-group-text disable-selected-text"></label>
+                  <input type="number" min="1" max="999" step="1" id="PlanDetails_InputExecutionTimes"
+                    class="form-control" onfocus="this.select();" value="1"
+                    style="height: 30px;padding:3px 6px 3px 6px; border-radius: 0;border-left-width: 0; border-right-width: 0;border-bottom-width: 0; border-top-color: #000000; border-bottom-right-radius: 0.25em;"
+                    autocomplete="off">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 float-left">
+    <div class="card border-dark mb-3 disable-selected-text">
+      <div class="card-header disable-selected-text pt-2 pb-2" id="result"></div>
+      <div class="card-body">
+        <div id="start_ranking_html" style="font-size: 0.875rem;"></div>
+        <div id="FineTuning"></div>
+        <div id="Plan_Table"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-12 row disable-selected-text m-0" style="padding: 5px 15px; font-size: 0.815rem;">
+    <hr style="margin: 0; width: 100%;" />
+    <footer class="col-lg-4 p-0">
+      GitHub: <a href="https://github.com/CHANTXU64/Girls-Frontline"
+        target="_blank">https://github.com/CHANTXU64/Girls-Frontline</a>
+    </footer>
+    <footer class="col-lg-4 p-0">
+      <span id="permanentAddress"></span><a href="https://chantxu64.github.io/GF_logistics.html"
+        target="_blank">https://chantxu64.github.io/GF_logistics.html</a>
+    </footer>
+    <footer class="col-lg-4 p-0">
+      <a id="OfflineVersion" href="https://chantxu64.github.io/GF_logistics_offline.zip"
+        download="GF_logistics_offline.zip" target="_blank;"></a>
+    </footer>
+  </div>
+
+  <script>
+    //当用js切换nav显示时, 4.4.1bootstrap会在全部东西处理完后开始切换动画, 避免阻塞, 事先切换nav
+    var HTMLSCRIPT_ShownTab = "Anytime";
+    try {
+      HTMLSCRIPT_ShownTab = JSON.parse(localStorage.getItem("GF_Logistics_v1.x.x")).TabName;
+    } catch (ex) {}
+    switch (HTMLSCRIPT_ShownTab) {
+      case "Anytime":
+        break;
+      case "Timetable":
+        $("#Tab_Anytime_name").removeClass("active");
+        $("#Tab_Anytime").removeClass("active show");
+        $("#Tab_Timetable_name").addClass("active");
+        $("#Tab_Timetable").addClass("active show");
+        break;
+    }
+    document.documentElement.lang = "zh";
+  </script>
+
   <script src="../js/GF_logistics_debug.js" crossorigin></script>
   <script src="../lang/languages.js"></script>
   <script src="../js/Quick_Sort.js"></script>
@@ -40,557 +492,36 @@
   <script src="../js/GF_logistics_Tab.js"></script>
   <script src="../js/GF_logistics_loadHTML.js"></script>
   <script src="../js/GF_logistics_PlanDetails.js"></script>
-  <script src="../js/GF_logistics_ResultsPlan.js"></script>
-  <script src="../js/GF_logistics_FineTuning.js"></script>
   <script src="../js/GF_logistics_MissionTable.js"></script>
   <script src="../js/GF_logistics_ResultAndDetailsEvent.js"></script>
   <script src="../js/GF_logistics_html.js"></script>
+  <script src="../js/GF_logistics_Saved.js"></script>
+  <script src="../js/GF_logistics_config.js"></script>
+  <script src="../js/GF_logistics_LoadFirst.js"></script>
+  <script src="../js/GF_logistics_htmlEvent.js"></script>
+
+  <script src="../js/GF_logistics_ResultsPlan.js"></script>
+  <script src="../js/GF_logistics_FineTuning.js"></script>
   <script src="../js/GF_logistics_Plan.js"></script>
   <script src="../js/GF_logistics_main.js"></script>
-  <script src="../js/GF_logistics_Saved.js"></script>
   <script src="../js/GF_logistics_calcTargetValueTool.js"></script>
-  <script src="../js/GF_logistics_config.js"></script>
-  <script src="../js/GF_logistics_htmlEvent.js"></script>
-  <!-- css and js End-->
-</head>
+  <script src="../js/GF_logistics_LoadLast.js"></script>
+  <script src="../js/GF_logistics_LoadSecond.js"></script>
 
-<body>
-  <div id="wrapper" style="background-color: rgb(245, 245, 245);">
-    <div id="page-wrapper" style="min-width: 300px; padding: 0; background-color: #FFFFFF;">
-      <div class="container-fluid" id="container-fluid">
-        <div class="col-lg-7 float-left">
-          <h1 id="page-header" class="disable-selected-text" style="margin-top: 30px;">
-            <span id="header"></span>
-            <div class="btn-group"><button type="button" class="btn btn-outline-dark dropdown-toggle"
-                data-toggle="dropdown">中文</button>
-              <ul class="dropdown-menu">
-                <a href="#" class="dropdown-item" id="lang-zh-CN">简体中文</a>
-                <a href="#" class="dropdown-item" id="lang-zh-TW">繁體中文</a>
-              </ul>
-            </div>
-            <button type="button" class="btn btn-outline-dark" id="lang-en">English</button>
-          </h1>
-        </div>
-        <div class="col-lg-5 float-right">
-          <div class="input-group input-group-sm"
-            style="max-width: 400px; margin-top: 20px; margin-right: 0; margin-left: auto;">
-            <div class="input-group-prepend">
-              <span class="input-group-text disable-selected-text" id="Config_text"></span>
-            </div>
-            <input type="text" class="form-control" style="min-width: 40px;" id="Config_importInput" value=""
-              onclick="this.select();" autocomplete="off">
-            <div class="input-group-append">
-              <button type="button" class="btn btn-outline-dark" id="Config_importButton">
-                <span class="glyphicon glyphicon-import" style="top: 2px;"></span></button>
-            </div>
-            <div id="Config_export_group" class="input-group-append">
-              <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown"
-                id="Config_export"><span class="glyphicon glyphicon-export" style="top: 2px;"></span></button>
-              <div class="dropdown-menu dropdown-menu-right" style="width: 280px;">
-                <input id="Config_exportInput" type="text" readonly style="width: 260px; position: relative; left: 9px;"
-                  onclick="this.select();">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-7 float-left">
-          <div class="alert alert-warning" id="description" role="alert" style="color:#000000">
-            <span id="description_text" class="disable-selected-text"></span>
-            <span id="neverShowAgain_description" class="disable-selected-text" style="cursor:pointer;"></span>
-          </div>
-          <div class="alert alert-danger disable-selected-text" id="localstorageDoesNotWork"></div>
-          <div class="alert alert-warning" id="localstorageWarning" role="alert" style="color: #000000;">
-            <span id="localstorageWarning_text" class="disable-selected-text"></span>
-            <span id="neverShowAgain_localstorageWarning" class="disable-selected-text" style="cursor:pointer;"></span>
-          </div>
-        </div>
-        <div class="col-lg-7 float-left">
-          <div class="card border-dark" style="margin-bottom: 20px;">
-            <div class="card-header" style="padding-top: 8px; padding-bottom: 8px;">
-              <span id="setting" class="disable-selected-text" style="padding-top: 2px; padding-bottom: 2px;"></span>
-              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-switch btn-ssm active">
-                  <input type="radio" name="options" id="option1" checked> Active
-                </label>
-                <label class="btn btn-switch btn-ssm">
-                  <input type="radio" name="options" id="option2"> Radio
-                </label>
-              </div>
-              <div class="switch float-right">
-                <input type="radio" class="switch-input" name="Display_PerHourOrTotal" value="" id="Display_PerHour">
-                <label tabindex="0" for="Display_PerHour" class="disable-selected-text switch-label switch-label-off"
-                  id="Display_PerHour_text" style="cursor: pointer;"></label>
-                <input type="radio" class="switch-input" name="Display_PerHourOrTotal" value="" id="Display_Total"
-                  checked>
-                <label tabindex="0" for="Display_Total" class="disable-selected-text switch-label switch-label-on"
-                  id="Display_Total_text" style="cursor: pointer;"></label>
-                <span class="switch-selection"></span>
-              </div>
-            </div>
-            <div class="card-body row" style="padding-left: 5px; padding-right: 5px; margin: 0;">
-              <div class="col-lg-7">
-                <ul class="nav nav-tabs nav-justified">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="#Tab_Anytime" id="Tab_Anytime_name" data-toggle="tab"></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#Tab_Timetable" id="Tab_Timetable_name" data-toggle="tab"></a>
-                  </li>
-                </ul>
-                <div class="tab-content">
-                  <div class="tab-pane fade active in" id="Tab_Anytime">
-                    <h4 id="tab_Anytime_time" class="disable-selected-text"></h4>
-                    <div class="input-group input-group-sm mb-2">
-                      <input type="number" min="0" max="72" class="form-control" id="Time_Anytime_hours" value=16
-                        onfocus="this.select();" autocomplete="off">
-                      <div class="input-group-append">
-                        <label for="Time_Anytime_hours" class="input-group-text text-group-middle disable-selected-text"
-                          id="tab_Anytime_hour"></label>
-                      </div>
-                      <input type="number" min="0" max="60" class="form-control" id="Time_Anytime_minutes" value=0
-                        onfocus="this.select();" autocomplete="off">
-                      <div class="input-group-append">
-                        <label for="Time_Anytime_minutes" class="input-group-text disable-selected-text"
-                          id="tab_Anytime_minute"></label>
-                      </div>
-                    </div>
-                    <h4 id="tab_Anytime_MinimumIntervalTime" class="disable-selected-text"></h4>
-                    <div class="input-group input-group-sm mb-2">
-                      <input type="number" min="0" max="60" class="form-control"
-                        id="Tab_Anytime_MinimumIntervalTime_minutes" value=0 onfocus="this.select();"
-                        autocomplete="off">
-                      <div class="input-group-append">
-                        <label for="Tab_Anytime_MinimumIntervalTime_minutes"
-                          class="input-group-text text-group-end disable-selected-text"
-                          id="tab_Anytime_MinimumIntervalTime_minute"></label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="Tab_Timetable">
-                    <h4 id="tab_Timetable_time" class="disable-selected-text"></h4>
-                    <div class="row" style="margin: 0;">
-                      <div class="col-lg-10" style="padding-left: 0; padding-right: 0;">
-                        <div class="input-group input-group-sm mb-2">
-                          <input type="number" min="0" max="72" class="form-control" id="Time_Timetable_hours" value=5
-                            onfocus="this.select();" autocomplete="off">
-                          <div class="input-group-append">
-                            <label for="Time_Timetable_hours"
-                              class="input-group-text text-group-middle disable-selected-text"
-                              id="tab_Timetable_hour"></label>
-                          </div>
-                          <input type="number" min="0" max="60" class="form-control" id="Time_Timetable_minutes" value=0
-                            onfocus="this.select();" autocomplete="off">
-                          <div class="input-group-append">
-                            <label for="Time_Timetable_minutes"
-                              class="input-group-text text-group-end disable-selected-text"
-                              id="tab_Timetable_minute"></label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-lg-2" align="right" style="padding-left: 0; padding-right: 0;">
-                        <button type="button" class="btn btn-outline-dark btn-sm" id="tab_Timetable_deleteall" title="">
-                          <span class="glyphicon glyphicon-remove-sign"
-                            style="font-size: 17px; top: 3px;"></span></button>
-                      </div>
-                    </div>
-                    <div slider style="margin: 24px 0 0 0;">
-                      <div id="Tab_Timetable_range" style="right: 49px;">
-                        <div inverse-left style="width:70%;"></div>
-                        <div inverse-right style="width:70%;"></div>
-                        <div range style="left:0%;right:0%; background-color:#CCC;"></div>
-                        <span thumb id="Tab_Timetable_range_thumb"
-                          style="left:100%; background-color:rgb(221, 155, 155); cursor:default;"></span>
-                        <div id="Tab_Timetable_range_tooltip" class="tooltip right custom-tooltip disable-selected-text"
-                          style="right: -69px; top:-16px;">
-                          <div class="tooltip-arrow"></div>
-                          <div id="Tab_Timetable_range_tooltip_0_value" class="tooltip-inner">
-                            5:00</div>
-                        </div>
-                      </div>
-                    </div>
-                    <label id="tab_Timetable_addtimeh5" for="Tab_Timetable_AddNew"
-                      class="disable-selected-text"></label>
-                    <div class="input-group input-group-sm mb-2" id="Tab_Timetable_AddNew">
-                      <input type="number" min="0" max="72" class="form-control" id="Tab_Timetable_new_hours"
-                        onfocus="this.select();" autocomplete="off">
-                      <div class="input-group-append">
-                        <label for="Tab_Timetable_new_hours"
-                          class="input-group-text text-group-middle disable-selected-text"
-                          id="tab_Timetable_new_hour"></label>
-                      </div>
-                      <input type="number" min="0" max="60" class="form-control" id="Tab_Timetable_new_minutes"
-                        onfocus="this.select();" autocomplete="off">
-                      <div class="input-group-append">
-                        <label for="Tab_Timetable_new_minutes"
-                          class="input-group-text text-group-middle disable-selected-text"
-                          id="tab_Timetable_new_minute"></label>
-                        <button type="button" class="btn btn-info" id="Tab_Timetable_AddNewTimePoint"
-                          style="padding: 6px 10px 6px 10px; height: 31px;">
-                          <span class="glyphicon glyphicon-plus" style="top: -1px; left: 1px;"></span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <h4 id="h4GreatSuccessRate" class="disable-selected-text"></h4>
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-6" style="min-width: 180px;">
-                    <div class="input-group input-group-sm" style="margin-bottom: 0; min-width: 180px;">
-                      <input type="number" min="15" max="69" class="form-control" id="GreatSuccessRate" value=60
-                        onfocus="this.select();" style="min-width: 60px;" autocomplete="off">
-                      <div class="input-group-append disable-selected-text">
-                        <label for="GreatSuccessRate" class="input-group-text" style="border-right-width: 1px;"
-                          id="Display_UPRate"></label>
-                        <label for="GreatSuccessRate" class="input-group-text">%</label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="checkbox disable-selected-text" style="margin: 7px 0 7px 0;">
-                      <label id="GreatSuccessRateUp_label" style="min-width: 110px; cursor: pointer;"><input
-                          type="checkbox" id="GreatSuccessRateUp" autocomplete="off" style="cursor: pointer;">
-                        <span id="GreatSuccessRateUp_text" style="cursor: pointer;"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class="input-group mb-2">
-                  <div class="input-group-prepend">
-                    <label class="input-group-text" id="h4ChapterLimit" for="ChapterLimit"></label>
-                  </div>
-                  <select class="custom-select" id="ChapterLimit" autocomplete="off"></select>
-                </div>
-                <div class="card" style="max-width: 587px; margin-bottom: 15px;">
-                  <div class="card-header" style="padding: 8px 20px; border-bottom-width: 0;">
-                    <div data-toggle="collapse" href="#calcTargetValueTool_panel" style="cursor: pointer;"
-                      id="calcTargetValueTool_title" class="collapsed disable-selected-text" tabindex="0"></div>
-                  </div>
-                  <div id="calcTargetValueTool_panel" class="collapse">
-                    <div class="card-body" style="padding: 0;">
-                      <div class="table-responsive" style="margin-bottom: 0; border: 0;">
-                        <table class="table table-sm text-nowrap table-condensed"
-                          style="border: 0;margin-bottom: 0; width: 100%; font-size: 13px; text-align: center; cursor: default; table-layout: fixed;">
-                          <tbody id="calcTargetValueTool">
-                            <tr class="disable-selected-text">
-                              <td id="calcTargetValueTool_text_ResourceContract" style="border-right: 1px solid #ddd;">
-                              </td>
-                              <td id="calcTargetValueTool_Manp_text"></td>
-                              <td id="calcTargetValueTool_Ammu_text"></td>
-                              <td id="calcTargetValueTool_Rati_text"></td>
-                              <td id="calcTargetValueTool_Part_text"></td>
-                              <td id="calcTargetValueTool_TPro_text"></td>
-                              <td id="calcTargetValueTool_Equi_text"></td>
-                              <td id="calcTargetValueTool_QPro_text"></td>
-                              <td id="calcTargetValueTool_QRes_text"></td>
-                            </tr>
-                            <tr>
-                              <td id="calcTargetValueTool_text_target" class="disable-selected-text"
-                                style="border-right: 1px solid #ddd;"></td>
-                              <td colspan="8" style="padding: 0; border: 0;">
-                                <div class="input-group">
-                                  <input type="number" id="calcTargetValueTool_Target_Manp" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off"
-                                    style="border-left-width: 0;">
-                                  <input type="number" id="calcTargetValueTool_Target_Ammu" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off">
-                                  <input type="number" id="calcTargetValueTool_Target_Rati" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off">
-                                  <input type="number" id="calcTargetValueTool_Target_Part" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off">
-                                  <input type="number" id="calcTargetValueTool_Target_TPro" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off">
-                                  <input type="number" id="calcTargetValueTool_Target_Equi" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off">
-                                  <input type="number" id="calcTargetValueTool_Target_QPro" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off">
-                                  <input type="number" id="calcTargetValueTool_Target_QRes" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off"
-                                    style="border-right-width: 0;">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td id="calcTargetValueTool_text_current" class="disable-selected-text"
-                                style="border-right: 1px solid #ddd;"></td>
-                              <td colspan="8" style="padding: 0; border-top: 0;">
-                                <div class="input-group">
-                                  <input type="number" id="calcTargetValueTool_Current_Manp" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off"
-                                    style="border-left-width: 0;">
-                                  <input type="number" id="calcTargetValueTool_Current_Ammu" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off">
-                                  <input type="number" id="calcTargetValueTool_Current_Rati" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off">
-                                  <input type="number" id="calcTargetValueTool_Current_Part" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off">
-                                  <input type="number" id="calcTargetValueTool_Current_TPro" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off">
-                                  <input type="number" id="calcTargetValueTool_Current_Equi" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off">
-                                  <input type="number" id="calcTargetValueTool_Current_QPro" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off">
-                                  <input type="number" id="calcTargetValueTool_Current_QRes" onfocus="this.select();"
-                                    min="0" value="0" class="GF_table-input form-control" autocomplete="off"
-                                    style="border-right-width: 0;">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td id="calcTargetValueTool_text_result" class="disable-selected-text"
-                                style="border-right: 1px solid #ddd;"></td>
-                              <td id="calcTargetValueTool_Result_Manp_value"></td>
-                              <td id="calcTargetValueTool_Result_Ammu_value"></td>
-                              <td id="calcTargetValueTool_Result_Rati_value"></td>
-                              <td id="calcTargetValueTool_Result_Part_value"></td>
-                              <td id="calcTargetValueTool_Result_TPro_value"></td>
-                              <td id="calcTargetValueTool_Result_Equi_value"></td>
-                              <td id="calcTargetValueTool_Result_QPro_value"></td>
-                              <td id="calcTargetValueTool_Result_QRes_value"></td>
-                            </tr>
-                            <tr>
-                              <td colspan="3" style="padding: 0; margin-top: 0;">
-                                <div class="input-group" style="margin-bottom: 0;">
-                                  <div class="input-group-prepend">
-                                    <label for="calcTargetValueTool_InputExecutionTimes"
-                                      id="calcTargetValueTool_InputExecutionTimes_label"
-                                      class="input-group-text disable-selected-text"
-                                      style="font-size: 13px; border-radius: 0; border: 0;"></label>
-                                  </div>
-                                  <input type="number" min="1" max="999" step="1"
-                                    id="calcTargetValueTool_InputExecutionTimes" class="form-control"
-                                    onfocus="this.select();" value="1"
-                                    style="height: 28px;padding:3px 6px 3px 6px; border-radius: 0; border-width: 0 0 0 1px;"
-                                    autocomplete="off">
-                                </div>
-                              </td>
-                              <td colspan="6" style="padding: 0; margin-top: 0;" align="left">
-                                <button class="btn btn-danger" type="button" id="calcTargetValueTool_clear"
-                                  style="height: 28px;padding:3px 20px 3px 20px;font-size:13px; border-width: 0 1px 0 1px;"></button>
-                                <button class="btn btn-primary" type="button" id="calcTargetValueTool_startCalc"
-                                  style="height: 28px;padding:3px 20px 3px 20px;font-size:13px; border-width: 0 1px 0 1px;"></button>
-                                <button class="btn btn-success" type="button" id="calcTargetValueTool_apply"
-                                  style="height: 28px;padding:0 20px 0 20px;font-size:13px; border-width: 0 1px 0 1px; line-height: 28px;">
-                                  <span id="calcTargetValueTool_apply_text"></span>
-                                  &rarr;
-                                </button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-5" id="target">
-                <h4 id="Demand" class="disable-selected-text"></h4>
-                <div id="setTargetButton"></div>
-                <div slider style="margin-top: 5px; margin-bottom: 40px;">
-                  <label id="ContractWeight_label" class="disable-selected-text" style="width:100%;">
-                    <span id="ContractWeight_notImportant" style="font-weight: normal;"></span>
-                    <span id="ContractWeight_Important" style="float: right; font-weight: normal;"></span>
-                  </label>
-                  <div>
-                    <div inverse-left style="width:100%;"></div>
-                    <div range id="ContractWeight_range" style="left:0;right:50%;"></div>
-                    <span thumb id="ContractWeight_thumb" style="left:50%; background-color:rgb(112, 166, 236);"></span>
-                  </div>
-                  <input id="ContractWeight" type="range" tabindex="0" style="margin-top: 27px;" value="50" max="100"
-                    min="0" step="2" oninput="
-                                          var value=(100/(parseFloat(this.max)-parseInt(this.min)))*parseFloat(this.value)-(100/(parseInt(this.max)-parseFloat(this.min)))*parseFloat(this.min);
-                                          document.getElementById('ContractWeight_range').style.right=(100-value)+'%';
-                                          document.getElementById('ContractWeight_thumb').style.left=value+'%';" />
-                </div>
-                <div id="setTargetInput"></div>
-              </div>
-              <div class="col-lg-12">
-                <button type="button" class="btn btn-primary" style="outline:none;" id="start_ranking"></button>
-                <button type="button" class="btn btn-danger" style="outline: none; display: none;"
-                  id="clear_ranking"></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-5 float-right" float="top">
-          <div class="accordion" id="accordion" style="margin-bottom: 20px;">
-            <div class="card border-dark">
-              <div class="card-header" style="padding: 8px 20px;">
-                <div data-toggle="collapse" data-parent="#accordion" href="#Saved" class="disable-selected-text"
-                  id="Saved_heading" tabindex="0" aria-expanded="false" style="cursor: pointer;">
-                  <span style="transform: scale(1.5, 1); display: inline-block;">&equiv;</span>
-                  <span id="Saved_Title"></span>
-                </div>
-              </div>
-              <div id="Saved" class="collapse">
-                <div class="table-responsive" style="max-height: 287px; overflow-y: auto; margin-bottom: 0; border: 0;">
-                  <table class="table text-nowrap table-sm"
-                    style="margin-bottom: 0; text-align: center; cursor: default; border: 0;">
-                    <tbody>
-                      <tr id="importSaved">
-                        <td colspan=5>
-                          <div class="input-group input-group-sm"
-                            style="margin-bottom: 0; width:100%; max-width: 320px;">
-                            <input type="text" class="form-control" style="min-width: 140px;" id="importSaved_input"
-                              value="" onclick="this.select();" autocomplete="off">
-                            <div class="input-group-append">
-                              <button type="button" class="btn btn-outline-dark" id="importSaved_importButton">
-                                <span class="glyphicon glyphicon-import" style="top: 2px;"></span></button>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td id="NoSaved" colspan=5></td>
-                      </tr>
-                    </tbody>
-                    <tbody id="Saved_Body" style="border-top-width: 1px;">
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div class="card border-dark">
-              <div class="card-header" style="padding: 8px 20px;">
-                <div data-toggle="collapse" data-parent="#accordion" href="#MissionTable_panel"
-                  class="disable-selected-text" id="MissionTable_heading" tabindex="0" aria-expanded="true"
-                  style="cursor: pointer;">
-                  <span style="transform: scale(1.5, 1); display: inline-block;">&equiv;</span>
-                  <span id="MissionTableTitle"></span>
-                </div>
-              </div>
-              <div id="MissionTable_panel" class="collapse show">
-                <div class="card-body" style="padding: 0;">
-                  <div class="table-responsive"
-                    style="max-height: 540px; overflow-y: auto; margin-bottom: 0; border: 0;">
-                    <table class="table table-sm text-nowrap"
-                      style="border: 0;text-align: center; margin-bottom: 0; cursor: default; font-size: 14px;">
-                      <thead class="disable-selected-text">
-                        <tr style="cursor: pointer;" id="MissionTable_thead_tr">
-                          <th id="MissionTable_head_Mission" tabindex="0"></th>
-                          <th id="MissionTable_head_Manp" tabindex="0"></th>
-                          <th id="MissionTable_head_Ammu" tabindex="0"></th>
-                          <th id="MissionTable_head_Rati" tabindex="0"></th>
-                          <th id="MissionTable_head_Part" tabindex="0"></th>
-                          <th id="MissionTable_head_TPro" tabindex="0"></th>
-                          <th id="MissionTable_head_Equi" tabindex="0"></th>
-                          <th id="MissionTable_head_QPro" tabindex="0"></th>
-                          <th id="MissionTable_head_QRes" tabindex="0"></th>
-                          <th id="MissionTable_head_Time" tabindex="0"></th>
-                        </tr>
-                      </thead>
-                      <tbody id="MissionTable_tbody"></tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card border-dark" style="max-width: 612px; margin-bottom: 20px;">
-            <div class="card-header disable-selected-text" id="PlanDetailsTitle"
-              style="padding: 8px 20px; border-bottom: 0;"></div>
-            <div class="card-body" style="padding: 0;">
-              <div class="table-responsive" style="margin-bottom: 0; border: 0; overflow-y: hidden;">
-                <table class="table table-ssm text-nowrap"
-                  style="border: 0;margin-bottom: 0; width: 610px; font-size: 13px; text-align: center; cursor: default;">
-                  <tbody id="PlanDetails">
-                    <tr>
-                      <td style="width: 183px;" colspan=3 id="PlanDetails_ShownTab">
-                      </td>
-                      <td style="width: 122px;" colspan=2 id="PlanDetails_TotalTime">
-                      </td>
-                      <td style="width: 183px;" colspan=3 id="PlanDetails_GreatSuccessRate"></td>
-                      <td style="width: 122px;" colspan=2 id="PlanDetails_ExecutionTimes"></td>
-                    </tr>
-                    <tr>
-                      <td id="PlanDetails_Mission" style="width: 61px;"></td>
-                      <td id="PlanDetails_Manp" style="width: 61px;"></td>
-                      <td id="PlanDetails_Ammu" style="width: 61px;"></td>
-                      <td id="PlanDetails_Rati" style="width: 61px;"></td>
-                      <td id="PlanDetails_Part" style="width: 61px;"></td>
-                      <td id="PlanDetails_TPro" style="width: 61px;"></td>
-                      <td id="PlanDetails_Equi" style="width: 61px;"></td>
-                      <td id="PlanDetails_QPro" style="width: 61px;"></td>
-                      <td id="PlanDetails_QRes" style="width: 61px;"></td>
-                      <td id="PlanDetails_Time" style="width: 61px;"></td>
-                    </tr>
-                    <tr id="PlanDetails_Mission_1" style="background-color: #C5D8FF;"></tr>
-                    <tr id="PlanDetails_Mission_2" style="background-color: #FFBFBE;"></tr>
-                    <tr id="PlanDetails_Mission_3" style="background-color: #B6F4B5;"></tr>
-                    <tr id="PlanDetails_Mission_4" style="background-color: #FFEBC7;"></tr>
-                    <tr id="PlanDetails_PerHour"></tr>
-                    <tr id="PlanDetails_Total"></tr>
-                    <tr id="PlanDetails_Chart_row">
-                      <td colspan=10 id="PlanDetails_Chart"></td>
-                    </tr>
-                  </tbody>
-                  <tbody style="border-top-width: 0;">
-                    <tr>
-                      <td colspan=3 style="padding: 0; border: 0;">
-                        <div class="btn-group" style="width: 183px;">
-                          <button class="btn btn-outline-dark" type="button" id="savePlan"
-                            style="line-height: 30px; width: 91px; height: 30px; padding:0 6px 0 6px; font-size:13px; border-width: 1px 0 0 0; border-radius: 0; border-bottom-left-radius: 0.25em;"></button>
-                          <button class="btn btn-outline-dark" type="button" id="Capture"
-                            style="line-height: 30px; width: 92px; height: 30px; padding:0 6px 0 6px; font-size:13px; border-bottom-width: 0; border-radius: 0;"></button>
-                        </div>
-                      </td>
-                      <td colspan=7 style="padding: 0; border: 0;">
-                        <div class="input-group" style="margin-bottom: 0; width: 427px;">
-                          <div class="input-group-prepend">
-                            <label for="PlanDetails_InputStartTime" id="PlanDetails_InputStartTime_label"
-                              style="font-size: 13px; border-radius: 0;border-width: 1px 1px 0 0; padding: 5px 12px; border-top-color: #000000;"
-                              class="input-group-text disable-selected-text"></label>
-                          </div>
-                          <input type="time" step="60" id="PlanDetails_InputStartTime" class="form-control"
-                            value="00:00" onfocus="this.select();"
-                            style="height: 30px;padding:0 6px 0 6px; border-radius: 0;border-bottom-width: 0; line-height: 28px; border-top-color: #000000; border-right-color: #000000;"
-                            autocomplete="off">
-                          <div class="input-group-prepend">
-                            <label for="PlanDetails_InputExecutionTimes" id="PlanDetails_InputExecutionTimes_label"
-                              style="font-size: 13px; border-radius: 0; border-left-width: 0;border-bottom-width: 0; padding: 5px 12px; border-top-color: #000000;"
-                              class="input-group-text disable-selected-text"></label>
-                          </div>
-                          <input type="number" min="1" max="999" step="1" id="PlanDetails_InputExecutionTimes"
-                            class="form-control" onfocus="this.select();" value="1"
-                            style="height: 30px;padding:3px 6px 3px 6px; border-radius: 0;border-left-width: 0; border-right-width: 0;border-bottom-width: 0; border-top-color: #000000; border-bottom-right-radius: 0.25em;"
-                            autocomplete="off">
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12" style="float: left;">
-          <div class="card border-dark" style="cursor: default; margin-bottom: 20px;">
-            <div class="card-header disable-selected-text" id="result" style="padding: 8px 20px;"></div>
-            <div class="card-body">
-              <div id="start_ranking_html" class="disable-selected-text" style="font-size: 14px;"></div>
-              <div id="FineTuning" class="disable-selected-text"></div>
-              <div id="Plan_Table"></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-12 row disable-selected-text"
-          style="padding: 0 15px 10px 15px; cursor: default; margin: 0; font-size: 13px;">
-          <hr style="margin: 0 0 5px 0;" />
-          <footer class="col-lg-4" style="padding: 0;">
-            GitHub: <a href="https://github.com/CHANTXU64/Girls-Frontline"
-              target="_blank">https://github.com/CHANTXU64/Girls-Frontline</a>
-          </footer>
-          <footer class="col-lg-4" style="padding: 0;">
-            <span id="permanentAddress"></span><a href="https://chantxu64.github.io/GF_logistics.html"
-              target="_blank">https://chantxu64.github.io/GF_logistics.html</a>
-          </footer>
-          <footer class="col-lg-4" style="padding: 0;">
-            <a id="OfflineVersion" href="https://chantxu64.github.io/GF_logistics_offline.zip"
-              download="GF_logistics_offline.zip" target="_blank;"></a>
-          </footer>
-        </div>
-      </div>
-    </div>
-  </div>
+  <script src="https://cdn.jsdelivr.net/npm/js-sha1@0.6.0/src/sha1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js" integrity="sha256-nRoO8HoupfqozUr7YKBRgHXmdx40Hl/04OSBzv7e7L8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@4.6.0/dist/echarts.min.js" integrity="sha256-9TvhGliyfFW2O8SvloAhdFQbfjluHQ+vQ7WWWX5Z7oM=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4.2.8/dist/es6-promise.auto.min.js" integrity="sha256-Xxrdry6fWSKu1j2ALyuK/gHFQ+2Bp76ZrR6f3QXI47Y=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.1/dist/html2canvas.min.js" integrity="sha256-uacRffSSMP9qpvNWhVmYLykBv9YKMA1d/VSIN1AmfyQ=" crossorigin="anonymous"></script>
+  <script>
+    window.sha1 || document.write('<script src="../vendor/js-sha1/sha1.min.js"><\/script>');
+    window.md5 || document.write('<script src="../vendor/js-md5/md5.min.js"><\/script>');
+    window.LZString || document.write('<script src="../vendor/lz-string/lz-string.min.js"><\/script>');
+    window.echarts || document.write('<script src="../vendor/echarts/echarts.min.js"><\/script>');
+    window.ES6Promise || document.write('<script src="../vendor/es6-promise/es6_promise.auto.min.js"><\/script>');
+    window.html2canvas || document.write('<script src="../vendor/html2canvas/html2canvas.min.js"><\/script>');
+  </script>
 </body>
 
 </html>

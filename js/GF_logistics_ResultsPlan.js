@@ -1,3 +1,5 @@
+window.ResultsPlan_JS = true;
+
 class ResultsPlan {
     /**
      * 清除ResultsPlan

@@ -65,44 +65,31 @@
     transition: left 0.15s ease-out;
 }
 
-#MissionTable_tbody>tr>td {
-    width: 10%;
-}
-
 #PlanDetails>tr>td {
-    width: 61px;
+    width: 66px;
 }
 
-th {
+th,
+td {
     text-align: center;
 }
 
-#MissionTable_thead_tr>th {
-    width: 10%;
-    position: sticky;
-    top: 0;
-    background: white;
-    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);
+td {
+    cursor: default;
+}
+
+th {
+    cursor: pointer;
 }
 
 #calcTargetValueTool>tr>td {
     width: 65px;
 }
 
-.GF_table-input {
-    width: 65px;
-    display: table-cell;
-    border-radius: 0;
-    float: left;
-    height: 28px;
-    padding: 3px 6px 3px 6px;
-    border-bottom: 0;
-}
-
 /*glyphicon*/
 .glyphicon {
     position: relative;
-    top: 1px;
+    top: 2px;
     display: inline-block;
     font-family: 'Glyphicons Halflings';
     font-style: normal;
@@ -112,56 +99,49 @@ th {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
 .glyphicon-import:before {
     content: "\e169";
 }
+
 .glyphicon-export:before {
     content: "\e170";
 }
+
 .glyphicon-remove-sign:before {
     content: "\e083";
 }
+
 .glyphicon-remove-circle:before {
     content: "\e088";
 }
+
 .glyphicon-plus:before {
     content: "\002b";
 }
+
 .glyphicon-ok:before {
     content: "\e013";
 }
+
 .glyphicon-trash:before {
     content: "\e020";
 }
+
 .glyphicon-pencil:before {
     content: "\270f";
 }
+
 .glyphicon-arrow-up:before {
     content: "\e093";
 }
+
 .glyphicon-arrow-down:before {
     content: "\e094";
 }
 
 .input-group-text {
     display: block;
-}
-
-.text-group-start {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.text-group-end {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-left: 0;
-}
-
-.text-group-middle {
-    border-radius: 0;
-    border-left: 0;
-    border-right: 0;
 }
 
 .disable-selected-text {
@@ -174,7 +154,93 @@ th {
     cursor: default;
 }
 
+.endable-selected-text {
+    cursor: auto;
+    user-select: auto;
+    -ms-user-select: text;
+    -webkit-user-select: auto;
+    -khtml-user-select: auto;
+    -o-user-select: auto;
+    -moz-user-select: text;
+}
+
 /*去除input后面浏览器带的标记*/
 input::-webkit-inner-spin-button {
     display: none;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.calc-target-table>table {
+    font-size: 0.82rem;
+    table-layout: fixed;
+}
+
+.calc-target-table td {
+    padding: 0.3rem;
+}
+
+.calc-target-table input {
+    padding: 3px 6px;
+    width: 65px;
+    border-radius: 0;
+    height: 28px;
+    border-bottom: 0;
+}
+
+.calc-target-table input:last-child {
+    border-right-width: 0;
+}
+
+.mission-table {
+    max-height: 510px;
+    overflow-y: auto;
+}
+
+.mission-table th,
+.mission-table td {
+    padding: 4.8px;
+    width: 10%;
+    font-size: 0.875rem;
+}
+
+.mission-table th {
+    position: sticky;
+    top: 0;
+    background: white;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);
+}
+
+.plan-details-table {
+    overflow-y: hidden;
+}
+
+.plan-details-table>table {
+    width: 660px;
+    font-size: 0.815rem;
+}
+
+.plan-details-table th,
+.plan-details-table td {
+    padding: 0.2rem;
+}
+
+/*分辨率样式*/
+@media (min-width: 1400px) {
+    .container-fluid {
+        padding-left: 200px;
+    }
+}
+
+@media screen and (max-width: 1560px) and (min-width: 992px) {
+    .target-btn-hidden {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .target-btn-hidden {
+        display: none;
+    }
 }

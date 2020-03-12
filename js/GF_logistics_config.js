@@ -134,10 +134,10 @@ function LS_setSavedOrMissionsShow(IsSavedPanelShow = storageGetItem("IsSavedPan
         if (Saved.getSaved().length === 0)
             storageSetItem("IsSavedPanelShow", false);
         else {
-            document.getElementById("MissionTable_panel").style.transition = "none";
-            document.getElementById("Saved").style.transition = "none";
-            $("#Saved").collapse('show');
-            $("#MissionTable_panel").collapse('hide');
+            document.getElementById("MissionTable_card").style.transition = "none";
+            document.getElementById("Saved_card").style.transition = "none";
+            $("#Saved_card").collapse('show');
+            $("#MissionTable_card").collapse('hide');
         }
     }
 }

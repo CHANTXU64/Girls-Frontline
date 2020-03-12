@@ -28,12 +28,11 @@ const language_zh_CN = {
         tab_Timetable_new_hour: "小时",
         tab_Timetable_new_minute: "分钟",
         h4GreatSuccessRate: "后勤队伍平均大成功概率",
-        GreatSuccessRateUp_text: "后勤大成功UP",
         h4ChapterLimit: "章节解锁",
         Display_PerHour_text: "以每小时显示",
         Display_Total_text: "以总计显示",
-        ContractWeight_notImportant: "契约不重要",
-        ContractWeight_Important: "契约重要",
+        ContractWeight_notImportant: "资源更重要",
+        ContractWeight_Important: "契约更重要",
         start_ranking: "开始排序",
         clear_ranking: "清除排序结果",
         result: "排序结果",
@@ -53,7 +52,7 @@ const language_zh_CN = {
         setTarget_SG: "霰弹枪SG",
         setTarget_2221: "均衡",
         setTarget_Clear: "清零",
-        MissionTableTitle: "关卡",
+        MissionTable_Title: "关卡",
         MissionTable_head_Mission: "关卡",
         MissionTable_head_Manp: "人力",
         MissionTable_head_Ammu: "弹药",
@@ -130,6 +129,7 @@ const language_zh_CN = {
             Config_export: "导出全局数据",
             tab_Timetable_deleteall: "删除全部时间点",
             Tab_Timetable_AddNewTimePoint: "添加一个收取后勤时间点",
+            GreatSuccessRateUp_btn: "后勤大成功UP",
             ChapterLimit: "最大已解锁的战役章节",
             ContractWeight: "契约权重",
             Target_minus_100_MT: "人力需求量减少100",
@@ -260,7 +260,7 @@ const language_zh_CN = {
     CSS: {
         TargetValueSpan_Width: "55px",
         FineTuningSpan_Width: "40%",
-        FineTuningButton_Width: "60%",
+        FineTuningButton_Width: "30%",
     }
 };
 const language_zh_TW = {
@@ -289,12 +289,11 @@ const language_zh_TW = {
         tab_Timetable_new_hour: "小時",
         tab_Timetable_new_minute: "分鐘",
         h4GreatSuccessRate: "後勤隊伍平均大成功概率",
-        GreatSuccessRateUp_text: "後勤大成功UP",
         h4ChapterLimit: "章節解鎖",
         Display_PerHour_text: "以每小時顯示",
         Display_Total_text: "以總計顯示",
-        ContractWeight_notImportant: "契約不重要",
-        ContractWeight_Important: "契約重要",
+        ContractWeight_notImportant: "資源更重要",
+        ContractWeight_Important: "契約更重要",
         start_ranking: "開始排序",
         clear_ranking: "清除排序結果",
         result: "排序結果",
@@ -314,7 +313,7 @@ const language_zh_TW = {
         setTarget_SG: "霰彈槍SG",
         setTarget_2221: "均衡",
         setTarget_Clear: "清零",
-        MissionTableTitle: "關卡",
+        MissionTable_Title: "關卡",
         MissionTable_head_Mission: "關卡",
         MissionTable_head_Manp: "人力",
         MissionTable_head_Ammu: "彈藥",
@@ -391,6 +390,7 @@ const language_zh_TW = {
             Config_export: "導出全局數據",
             tab_Timetable_deleteall: "刪除全部時間點",
             Tab_Timetable_AddNewTimePoint: "添加一個收取後勤時間點",
+            GreatSuccessRateUp_btn: "後勤大成功UP",
             ChapterLimit: "最大已解鎖的戰役章節",
             ContractWeight: "契約權重",
             Target_minus_100_MT: "人力需求量減少100",
@@ -521,7 +521,7 @@ const language_zh_TW = {
     CSS: {
         TargetValueSpan_Width: "55px",
         FineTuningSpan_Width: "40%",
-        FineTuningButton_Width: "60%",
+        FineTuningButton_Width: "30%",
     }
 };
 const language_en = {
@@ -550,7 +550,6 @@ const language_en = {
         tab_Timetable_new_hour: "hr",
         tab_Timetable_new_minute: "min",
         h4GreatSuccessRate: "Average Great Success Rate",
-        GreatSuccessRateUp_text: "Great Success rate up",
         h4ChapterLimit: "Unlocked chapter",
         Display_PerHour_text: "Hourly",
         Display_Total_text: "Total",
@@ -575,7 +574,7 @@ const language_en = {
         setTarget_SG: "Shotgun",
         setTarget_2221: "Balanced",
         setTarget_Clear: "Clear",
-        MissionTableTitle: "Missions",
+        MissionTable_Title: "Missions",
         MissionTable_head_Mission: "Mission",
         MissionTable_head_Manp: "Mpwr",
         MissionTable_head_Ammu: "Ammo",
@@ -652,6 +651,7 @@ const language_en = {
             Config_export: "Export configurations",
             tab_Timetable_deleteall: "Delete all points",
             Tab_Timetable_AddNewTimePoint: "Add a deployment logistics time point",
+            GreatSuccessRateUp_btn: "Great Success rate up",
             ChapterLimit: "Maximum unlocked chapter",
             ContractWeight: "Contract Weight",
             Target_minus_100_MT: "Reduced Manpower demand by 100",
@@ -751,6 +751,6 @@ const language_en = {
     CSS: {
         TargetValueSpan_Width: "66px",
         FineTuningSpan_Width: "60%",
-        FineTuningButton_Width: "40%",
+        FineTuningButton_Width: "20%",
     }
 };
