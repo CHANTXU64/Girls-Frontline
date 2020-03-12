@@ -603,7 +603,7 @@ class Tab_Anytime extends Tab {
         Saved_Custom.push(TotalTime);
         const MinimumIntervalTime = Input_getAnytimeMinimumIntervalTime();
         Saved_Custom.push(MinimumIntervalTime);
-        return Saved_Custom;
+        return Saved_Custom.slice();
     }
 
     /**
@@ -613,11 +613,12 @@ class Tab_Anytime extends Tab {
      * @public
      */
     applySavedCustom(Saved_Custom) {
-        const TotalTime = Saved_Custom[0];
-        const MinimumIntervalTime = Saved_Custom[1];
+        const data = Saved_Custom.slice();
+        const TotalTime = data[0];
+        const MinimumIntervalTime = data[1];
         Input_setAnytimeTotalTime(TotalTime);
         Input_setAnytimeMinimumIntervalTime(MinimumIntervalTime);
-        storageSetItem("TabAnytimeCustom", Saved_Custom);
+        storageSetItem("TabAnytimeCustom", data);
     }
 
     /**
@@ -856,7 +857,7 @@ class Tab_Timetable extends Tab {
         Saved_Custom.push(TotalTime);
         const Timetable = Tab_Timetable_TIMELIST.slice();
         Saved_Custom.push(Timetable);
-        return Saved_Custom;
+        return Saved_Custom.slice();
     }
 
     /**
@@ -866,11 +867,12 @@ class Tab_Timetable extends Tab {
      * @public
      */
     applySavedCustom(Saved_Custom) {
-        const TotalTime = Saved_Custom[0];
+        const data = Saved_Custom.slice();
+        const TotalTime = data[0];
         Input_setTimetableTotalTime(TotalTime);
-        const Timetable = Saved_Custom[1];
+        const Timetable = data[1].slice();
         Input_setTimetableTimetable(Timetable);
-        storageSetItem("TabTimetableCustom", Saved_Custom);
+        storageSetItem("TabTimetableCustom", data);
     }
 }
 

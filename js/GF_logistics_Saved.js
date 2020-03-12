@@ -48,8 +48,6 @@ class Saved {
             document.getElementById("NoSaved").style.display = "none";
         let HTML = this._getSavedRowHTML(row);
         $("#Saved_Body").append(HTML);
-        if (row !== 0)
-            $("#SavedTable_down_" + (row - 1)).removeAttr("disabled");
     }
 
     /**
@@ -59,37 +57,73 @@ class Saved {
      * @private
      */
     static _getSavedRowHTML(row, allSaved = this._saved) {
-        let HTML = '<tr id="SavedTable_row_' + row + '"';
-        HTML += '><td><button type="button" class="btn btn-outline-dark btn-regular"id="SavedTable_apply_' + row + '" title="' + language.HTMLJS.SavedTable_apply + '" style="background-color: #88E063;">';
-        HTML += '<span class="glyphicon glyphicon-ok"/></button></td><td><div class="input-group input-group-regular" style="margin-bottom: 0;">';
-        HTML += '<input type="text" class="form-control" style="min-width: 140px;"id="SavedTable_name_' + row + '" placeholder="' + language.HTMLJS.SavedTable_name + '"';
-        HTML += 'value="' + allSaved[row].name + '"readonly="readonly">';
-        HTML += '<button type="button" class="btn btn-outline-dark input-group-btn"id="SavedTable_rename_' + row + '" title="' + language.HTMLJS.SavedTable_rename + '"><span class="glyphicon glyphicon-pencil"/></button></div>';
-        HTML += '</td>';
-        HTML += '<td><div class="input-group" style="min-width: 80px;"><button type="button" class="btn btn-outline-dark input-group-btn"id="SavedTable_up_' + row + '"" title="' + language.HTMLJS.SavedTable_up + '"';
-        if (row === 0)
-            HTML += 'disabled="disabled"';
-        HTML += '>';
-        HTML += '<span class="glyphicon glyphicon-arrow-up"/></button>';
-        HTML += '<button type="button" class="btn btn-outline-dark input-group-btn"id="SavedTable_down_' + row + '" title="' + language.HTMLJS.SavedTable_down + '"';
-        if (row === allSaved.length - 1)
-            HTML += 'disabled="disabled"';
-        HTML += '><span class="glyphicon glyphicon-arrow-down"/></button></div></td>';
-        HTML += '<td><div id="Saved_export_group_' + row + '" class="btn-group dropup"><button type="button" class="btn btn-outline-dark dropdown-toggle btn-regular" data-toggle="dropdown" id="SavedTable_export_' + row + '" title="' + language.HTMLJS.SavedTable_export + '">';
-        HTML += '<span class="glyphicon glyphicon-export"/></button>';
-        HTML += '<ul class="dropdown-menu dropdown-menu-right" style="width: 280px;">';
-        HTML += '<input id="exportSaved_input_' + row + '" type="text" readonly style="width: 260px; position: relative; left: 9px;" onclick="this.select();" placeholder="' + language.HTMLJS.exportSaved_input + '">';
-        HTML += '</ul></div></td>';
-        HTML += '<td><button type="button" class="btn btn-outline-dark btn-regular"id="SavedTable_delete_' + row + '" title="' + language.HTMLJS.SavedTable_delete + '" style="background-color: #F48380;"><span class="glyphicon glyphicon-trash"/></button></td></tr>';
+        let HTML = '<a class="list-group-item list-group-item-action" tabindex="0" id="SavedTable_row_' + row + '">' + allSaved[row].name + '</a>';
         return HTML;
+    }
+
+    /**
+     * 点击某行的事件
+     * @param {number} row - 选中的行数
+     * @public
+     */
+    static clickThisRow(row) {
+        const thisRow_JQselector = $("#SavedTable_row_" + row);
+        if (thisRow_JQselector.hasClass("list-group-item-success"))
+            this._cancelSelectThisRow(row);
+        else
+            this._selectThisRow(row);
+    }
+
+    /**
+     * 取消选择某行
+     * @param {number} row - 选中的行数
+     * @private
+     */
+    static _cancelSelectThisRow(row) {
+        this._selectRow = -1;
+        const thisRow_JQselector = $("#SavedTable_row_" + row);
+        thisRow_JQselector.removeClass("list-group-item-success");
+        $("#exportSaved_button").attr("disabled", "true");
+        $("#renameSaved_button").attr("disabled", "true");
+        $("#moveSaved_up").attr("disabled", "true");
+        $("#moveSaved_down").attr("disabled", "true");
+        $("#deleteSaved").attr("disabled", "true");
+    }
+
+    /**
+     * 选择某行
+     * @param {number} row - 选中的行数
+     * @private
+     */
+    static _selectThisRow(row) {
+        if (this._selectRow !== -1) {
+            $("#SavedTable_row_" + this._selectRow).removeClass("list-group-item-success");
+        }
+        else {
+            $("#exportSaved_button").removeAttr("disabled");
+            $("#renameSaved_button").removeAttr("disabled");
+            $("#deleteSaved").removeAttr("disabled");
+        }
+        this._selectRow = row;
+        const thisRow_JQselector = $("#SavedTable_row_" + row);
+        thisRow_JQselector.addClass("list-group-item-success");
+        if (row !== 0)
+            $("#moveSaved_up").removeAttr("disabled");
+        else
+            $("#moveSaved_up").attr("disabled", "true");
+        if (row !== this._saved.length - 1)
+            $("#moveSaved_down").removeAttr("disabled");
+        else
+            $("#moveSaved_down").attr("disabled", "true");
+        this._apply(row);
     }
 
     /**
      * 应用某行的方案
      * @param {number} row
-     * @public
+     * @private
      */
-    static apply(row) {
+    static _apply(row) {
         const data = this._saved[row];
         const tabName = data.TabName;
         ChangeTab(tabName);
@@ -108,46 +142,72 @@ class Saved {
     }
 
     /**
-     * 重命名某行Saved
-     * @param {string} newName
-     * @param {number} row
+     * 获取选中已保存方案的名称
+     * @returns {string}
      * @public
      */
-    static rename(newName, row) {
+    static getSelectedName() {
+        //test
+        if (this._selectRow === -1)
+            throw ("Error Saved get name");
+        //End test
+        return this._saved[this._selectRow].name;
+    }
+
+    /**
+     * 重命名选中行Saved
+     * @public
+     */
+    static renameSelected() {
+        const row = this._selectRow;
+        const newName = $("#renameSaved_input").val();
         this._saved[row].name = newName;
+        $("#SavedTable_row_" + row).html(newName);
         storageSetItem("Saved", this._saved);
     }
 
     /**
-     * 将Saved的Row行往上移动一行
-     * @param {number} row 
+     * 将Saved的选中行往上移动一行
      * @public
      */
-    static upThisRow(row) {
-        $("#SavedTable_name_" + row).val(this._saved[row - 1].name);
-        $("#SavedTable_name_" + (row - 1)).val(this._saved[row].name);
+    static moveSelected_up() {
+        let row = this._selectRow;
+        $("#SavedTable_row_" + row).removeClass("list-group-item-success");
+        $("#SavedTable_row_" + (row - 1)).addClass("list-group-item-success");
+        $("#SavedTable_row_" + row).html(this._saved[row - 1].name);
+        $("#SavedTable_row_" + (row - 1)).html(this._saved[row].name);
         [this._saved[row], this._saved[row - 1]] = [this._saved[row - 1], this._saved[row]];
+        this._selectRow--;
+        $("#moveSaved_down").removeAttr("disabled");
+        if (this._selectRow === 0)
+            $("#moveSaved_up").attr("disabled", "true");
         storageSetItem("Saved", this._saved);
     }
 
     /**
-     * 将Saved的Row行往下移动一行
-     * @param {number} row
+     * 将Saved的选中行往下移动一行
      * @public
      */
-    static downThisRow(row) {
-        $("#SavedTable_name_" + row).val(this._saved[row + 1].name);
-        $("#SavedTable_name_" + (row + 1)).val(this._saved[row].name);
+    static moveSelected_down() {
+        let row = this._selectRow;
+        $("#SavedTable_row_" + row).removeClass("list-group-item-success");
+        $("#SavedTable_row_" + (row + 1)).addClass("list-group-item-success");
+        $("#SavedTable_row_" + row).html(this._saved[row + 1].name);
+        $("#SavedTable_row_" + (row + 1)).html(this._saved[row].name);
         [this._saved[row], this._saved[row + 1]] = [this._saved[row + 1], this._saved[row]];
+        this._selectRow++;
+        $("#moveSaved_up").removeAttr("disabled");
+        if (this._selectRow === this._saved.length - 1)
+            $("#moveSaved_down").attr("disabled", "true");
         storageSetItem("Saved", this._saved);
     }
 
     /**
-     * 将Saved的Row行数据导出
-     * @param {number} row
+     * 将Saved选中的某行数据导出
      * @public
      */
-    static export(row) {
+    static exportSelected() {
+        const row = this._selectRow;
         const data = this._saved[row];
         const MD5 = md5(JSON.stringify(data));
         const exportData = {
@@ -156,34 +216,30 @@ class Saved {
         };
         let exportText = JSON.stringify(exportData);
         exportText = LZString.compressToEncodedURIComponent(exportText);
-        let export_elem = document.getElementById("exportSaved_input_" + row);
-        export_elem.value = exportText;
+        $("#exportSaved_input").val(exportText);
     }
 
     /**
-     * 将Saved的Row行删除
-     * @param {number} row
+     * 将Saved选中行删除
      * @public
      */
-    static deleteThisRow(row) {
+    static deleteSelected() {
         //如果不确认删除, 跳过
+        const row = this._selectRow;
         const name = this._saved[row].name;
         const warning = language.JS.deleteSavedWarning_1 + '"' + name + '"' + language.JS.deleteSavedWarning_2;
         let flag = confirm(warning);
         if (!flag)
             return ;
 
+        this._cancelSelectThisRow(row);
         for (let i = row; i < this._saved.length - 1; i++) {
-            $("#SavedTable_name_" + i).val(this._saved[i + 1].name);
+            $("#SavedTable_row_" + i).html(this._saved[i + 1].name);
         }
         const elem_remove = document.getElementById("SavedTable_row_" + (this._saved.length - 1));
         document.getElementById("Saved_Body").removeChild(elem_remove);
         this._saved.splice(row, 1);
-        if (this._saved.length !== 0) {
-            $("#SavedTable_up_0").attr("disabled", "true");
-            $("#SavedTable_down_" + (this._saved.length - 1)).attr("disabled", "true");
-        }
-        else
+        if (this._saved.length === 0)
             document.getElementById("NoSaved").style.display = "";
     }
 
@@ -213,6 +269,7 @@ class Saved {
      * @returns {boolean} 是否导入成功
      */
     static setSaved(newSaved) {
+        this.cancelSelected();
         this._saved = newSaved;
         if (newSaved.length === 0) {
             document.getElementById("NoSaved").style.display = "";
@@ -229,6 +286,16 @@ class Saved {
         storageSetItem("Saved", this._saved);
         return true;
     }
+
+    /**
+     * 取消选择项
+     * @public
+     */
+    static cancelSelected() {
+        let row = this._selectRow;
+        if (row !== -1)
+            this._cancelSelectThisRow(row);
+    }
 }
 
 /**
@@ -237,3 +304,10 @@ class Saved {
  * @private
  */
 Saved._saved = [];
+
+/**
+ * 选中的行数
+ * @type {number}
+ * @private
+ */
+Saved._selectRow = -1;

@@ -108,6 +108,7 @@ function ChangeTab_Anytime() {
     HTML_AllowRankingInput();
     MissionsDetails.print();
     printPlanDetails();
+    Saved.cancelSelected();
 }
 /**更改Tab为Timetable, 包括其他模块 */
 function ChangeTab_Timetable() {
@@ -117,6 +118,7 @@ function ChangeTab_Timetable() {
     HTML_AllowRankingInput();
     MissionsDetails.print();
     printPlanDetails();
+    Saved.cancelSelected();
 }
 
 /**更改为以每小时显示 */

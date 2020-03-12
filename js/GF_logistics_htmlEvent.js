@@ -89,6 +89,7 @@ JQ_selector_GreatSuccessRate.on("input propertychange", function () {
     setQContract(TotalRate);
     MissionsDetails.print();
     printPlanDetails();
+    Saved.cancelSelected();
 });
 JQ_selector_GreatSuccessRate.blur(function () {
     const Rate = Input_getGreatSuccessRate();
@@ -101,6 +102,7 @@ $("#GreatSuccessRateUp").on("click", function () {
     setQContract(TotalRate);
     MissionsDetails.print();
     printPlanDetails();
+    Saved.cancelSelected();
     storageSetItem("Is_GreatSuccessRateUP", is_RateUP);
 });
 
@@ -108,6 +110,7 @@ $("#GreatSuccessRateUp").on("click", function () {
 $("#ChapterLimit").on("change", function () {
     MissionsDetails.print();
     printPlanDetails();
+    Saved.cancelSelected();
     storageSetItem("ChapterLimit", Input_getSelectChapter());
 });
 
@@ -121,6 +124,7 @@ JQ_selector_Time_Anytime_hours.on("input propertychange", function () {
         Input_setAnytimeTotalTime(4320);
     MissionsDetails.print();
     printPlanDetails();
+    Saved.cancelSelected();
 });
 JQ_selector_Time_Anytime_hours.blur(function () {
     Tab_Anytime_changeStorageCustom();
@@ -131,6 +135,7 @@ JQ_selector_Time_Anytime_minutes.on("input propertychange", function () {
         Input_setAnytimeTotalTime(4320);
     MissionsDetails.print();
     printPlanDetails();
+    Saved.cancelSelected();
 });
 JQ_selector_Time_Anytime_minutes.blur(function () {
     Tab_Anytime_changeStorageCustom();
@@ -138,6 +143,7 @@ JQ_selector_Time_Anytime_minutes.blur(function () {
 JQ_selector_Tab_Anytime_MinimumIntervalTime_minutes.on("input propertychange", function () {
     MissionsDetails.print();
     printPlanDetails();
+    Saved.cancelSelected();
 });
 JQ_selector_Tab_Anytime_MinimumIntervalTime_minutes.blur(function () {
     Tab_Anytime_changeStorageCustom();
@@ -184,12 +190,14 @@ $("#Tab_Timetable_range").on("click", "button[id^=Tab_Timetable_range_thumb_]", 
     Tab_Timetable_DeleteThisTimePoint(time);
     MissionsDetails.print();
     printPlanDetails();
+    Saved.cancelSelected();
     Tab_Timetable_changeStorageCustom();
 });
 $("#tab_Timetable_deleteall").on("click", function () {
     Tab_Timetable_DeleteAllTimePoint();
     MissionsDetails.print();
     printPlanDetails();
+    Saved.cancelSelected();
     Tab_Timetable_changeStorageCustom();
 });
 function Tab_Timetable_changeStorageCustom() {
@@ -218,6 +226,7 @@ function Tab_Timetable_AddNew() {
         Tab_Timetable_InputTotalTime_disable();
     MissionsDetails.print();
     printPlanDetails();
+    Saved.cancelSelected();
     Tab_Timetable_changeStorageCustom();
 }
 //End Tab_Timetable
@@ -347,50 +356,47 @@ $("#importSaved_input").on("keyup", function (e) {
 $("#importSaved_importButton").on("click", function () {
     Saved_import();
 });
-let JQ_selector_Saved_Body = $("#Saved_Body");
-JQ_selector_Saved_Body.on("click", "button[id^=SavedTable_apply_]", function () {
-    Saved.apply(parseInt(stringSliceFromLast_(this.id)));
+$("#exportSaved_button").on("click", function () {
+    if ($("#exportSaved_button").attr("aria-expanded") !== "true")
+        Saved.exportSelected();
 });
-JQ_selector_Saved_Body.on("keydown", "input[id^=SavedTable_name_]", function (e) {
-    if (is_KeyIsEnter(e)) {
-        $("#" + this.id).attr("readOnly", true);
-        let row = stringSliceFromLast_(this.id);
-        if (this.value !== Saved.getSaved()[row].name)
-            Saved.rename(this.value, row);
+$("#renameSaved_button").on("click", function () {
+    if ($("#renameSaved_button").attr("aria-expanded") !== "true") {
+        let name = Saved.getSelectedName();
+        const input = $("#renameSaved_input");
+        input.val(name);
+        input.focus();
     }
 });
-JQ_selector_Saved_Body.on("blur", "input[id^=SavedTable_name_]", function () {
-    $("#" + this.id).attr("readOnly", true);
-    let row = stringSliceFromLast_(this.id);
-    if (this.value !== Saved.getSaved()[row].name)
-        Saved.rename(this.value, row);
+$("#renameSaved_input").on("keyup", function (e) {
+    if (is_KeyIsEnter(e))
+        $("#renameSaved_applyButton").click();
 });
-JQ_selector_Saved_Body.on("click", "button[id^=SavedTable_rename_]", function () {
-    const Row = parseInt(stringSliceFromLast_(this.id));
-    const JQ_selector = $("#SavedTable_name_" + Row);
-    JQ_selector.attr("readOnly", false);
-    JQ_selector.focus();
-    JQ_selector.select();
+$("#renameSaved_applyButton").on("click", function () {
+    Saved.renameSelected();
 });
-JQ_selector_Saved_Body.on("click", "button[id^=SavedTable_up_]", function () {
-    Saved.upThisRow(parseInt(stringSliceFromLast_(this.id)));
+$("#moveSaved_up").on("click", function () {
+    Saved.moveSelected_up();
 });
-JQ_selector_Saved_Body.on("click", "button[id^=SavedTable_down_]", function () {
-    Saved.downThisRow(parseInt(stringSliceFromLast_(this.id)));
+$("#moveSaved_down").on("click", function () {
+    Saved.moveSelected_down();
 });
-JQ_selector_Saved_Body.on("click", "button[id^=SavedTable_export_]", function () {
-    let row = parseInt(stringSliceFromLast_(this.id));
-    if ($("#SavedTable_export_" + row).attr("aria-expanded") !== "true")
-        Saved.export(row);
+$("#deleteSaved").on("click", function () {
+    Saved.deleteSelected();
 });
-JQ_selector_Saved_Body.on("click", "button[id^=SavedTable_delete_]", function () {
-    Saved.deleteThisRow(parseInt(stringSliceFromLast_(this.id)));
+let JQ_selector_Saved_Body = $("#Saved_Body");
+JQ_selector_Saved_Body.on("click", "a[id^=SavedTable_row_]", function () {
+    Saved.clickThisRow(parseInt(stringSliceFromLast_(this.id)));
 });
-JQ_selector_Saved_Body.on("shown.bs.dropdown", "div[id^=Saved_export_group_]", function () {
-    let row = parseInt(stringSliceFromLast_(this.id));
-    let exportInput = $("#exportSaved_input_" + row);
-    exportInput.focus();
-    exportInput.select();
+JQ_selector_Saved_Body.on("keydown", "a[id^=SavedTable_row_]", function (e) {
+    if (is_KeyIsEnter(e))
+        Saved.clickThisRow(parseInt(stringSliceFromLast_(this.id)));
+});
+$("#exportSaved_group").on("shown.bs.dropdown", function () {
+    $("#exportSaved_input").focus();
+});
+$("#renameSaved_group").on("shown.bs.dropdown", function () {
+    $("#renameSaved_input").focus();
 });
 function Saved_import() {
     const input_selector = $("#importSaved_input");
@@ -411,11 +417,13 @@ $("th[id^=MissionTable_head_]").on("keyup", function (e) {
 $("#MissionTable_tbody").on("click", "tr[id^=MissionTable_]", function () {
     let row = parseInt(stringSliceFromLast_(this.id));
     MissionsDetails_clickRow(row);
+    Saved.cancelSelected();
 });
 $("#MissionTable_tbody").on("keyup", "tr[id^=MissionTable_]", function (e) {
     if (is_KeyIsEnter(e)) {
         let row = parseInt(stringSliceFromLast_(this.id));
         MissionsDetails_clickRow(row);
+        Saved.cancelSelected();
     }
 });
 //End MissionTable
@@ -461,6 +469,7 @@ $("#Capture").on("click", function () {
     });
 });
 $("#PlanDetails_InputStartTime").on("input propertychange", function () {
+    Saved.cancelSelected();
     if (MissionsDetails.getSelectedMissions(false).length === 0)
         return;
     let selectedMissions = MissionsDetails.getSelectedMissionsDetails();

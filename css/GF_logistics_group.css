@@ -57,3 +57,36 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+
+.list-group-item {
+    border-right-width: 0;
+    border-left-width: 0;
+    border-radius: 0;
+}
+
+.list-group-item:first-child {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.list-group-item:last-child {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-width: 0;
+}
+
+a.list-group-item {
+    cursor: pointer;
+}
+
+.btn-group-regular>.btn {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+}
+
+.list-group-regular>.list-group-item {
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+}
