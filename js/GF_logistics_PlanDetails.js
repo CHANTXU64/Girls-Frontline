@@ -136,6 +136,19 @@ class PlanDetails {
      * @param {number} startTime - 后勤开始时间, 换算成从零点开始的总分钟数
      */
     static printChart(missionsDetails, TotalMinutes, startTime) {
+        //当echarts还未加载时, 显示loading, 每1000ms重试
+        if (this._loadingChart.length !== 0) {
+            clearTimeout(this._loadingChart[0]);
+            this._loadingChart.shift();
+        }
+        if (!window.echarts) {
+            if (!window.chart_loading)
+                document.getElementById("PlanDetails_Chart").innerHTML = '<div class="spinner-border" id="chart_loading" role="status"><span class="sr-only">Loading...</span></div>';
+            let id = setTimeout(function () {PlanDetails.printChart(missionsDetails, TotalMinutes, startTime)}, 1000);
+            this._loadingChart.push(id);
+            return ;
+        }
+
         //若这次参数与上次参数一致, 则可以跳过这次完全一样的打印
         let lastParam = this._chartLastParam;
         if (missionsDetails.length === lastParam.missionsName.length) {
@@ -199,6 +212,10 @@ class PlanDetails {
             xAxis_interval = 240;
         else
             xAxis_interval = 300;
+
+        let animation = false;
+        if (!IsMobile())
+            animation = true;
 
         // Generate mock data
         echarts.util.each(categories, function (category, index) {
@@ -276,7 +293,7 @@ class PlanDetails {
                 },
                 data: data
             }],
-            animation: false,
+            animation: animation,
             backgroundColor: "#FFFFFF"
         };
 
@@ -320,6 +337,7 @@ class PlanDetails {
 /**
  * 用于保存上次打印chart的参数, 若这次参数一致则意味着chart没有改变, 可跳过打印
  * @type {{missionsName: Array.<string>, collectTimetable: Array.<string>, totalTime: number, startTIme: number}}
+ * @private
  */
 PlanDetails._chartLastParam = {
     missionsName: [],
@@ -327,6 +345,13 @@ PlanDetails._chartLastParam = {
     totalTime: -1,
     startTIme: -1
 };
+
+/**
+ * 由于echarts还未加载, 等待加载中的图标的执行函数ID
+ * @type {Array.<number>}
+ * @private
+ */
+PlanDetails._loadingChart = [];
 
 /**绘图Fun */
 function renderItem(params, api) {

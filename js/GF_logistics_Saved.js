@@ -21,6 +21,7 @@ class Saved {
             return ;
         if (name == "")
             name = language.JS.planDefaultName;
+        name = name.slice(0, 50);
 
         let newData = {};
         newData.name = name;
@@ -48,6 +49,10 @@ class Saved {
             document.getElementById("NoSaved").style.display = "none";
         let HTML = this._getSavedRowHTML(row);
         $("#Saved_Body").append(HTML);
+
+        //之前已选中最后一个方案,
+        if (this._selectRow !== -1 && this._selectRow === this._saved.length - 2)
+            $("#moveSaved_down").removeAttr("disabled");
     }
 
     /**
@@ -100,7 +105,8 @@ class Saved {
             $("#SavedTable_row_" + this._selectRow).removeClass("list-group-item-success");
         }
         else {
-            $("#exportSaved_button").removeAttr("disabled");
+            if ((!!window.md5) && (!!window.LZString))
+                $("#exportSaved_button").removeAttr("disabled");
             $("#renameSaved_button").removeAttr("disabled");
             $("#deleteSaved").removeAttr("disabled");
         }
@@ -152,6 +158,19 @@ class Saved {
             throw ("Error Saved get name");
         //End test
         return this._saved[this._selectRow].name;
+    }
+
+    /**
+     * 检查名字是否合法
+     * @param {string} name
+     * @returns {boolean}
+     * @public
+     */
+    static checkNameValid(name) {
+        if (name !== "" && name.length <= 50)
+            return true;
+        else
+            return false;
     }
 
     /**

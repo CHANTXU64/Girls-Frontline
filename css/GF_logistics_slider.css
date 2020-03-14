@@ -8,18 +8,18 @@
 
 .tooltip.top .tooltip-arrow {
     top: 27px;
-    left: 50%;
+    left: 19px;
     margin-left: -5px;
     border-width: 5px 5px 0;
-    border-top-color: rgb(112, 201, 236);
+    border-top-color: #007bff;
 }
 
 .tooltip.bottom .tooltip-arrow {
     top: -5px;
-    left: 50%;
+    left: 19px;
     margin-left: -5px;
     border-width: 0 5px 5px;
-    border-bottom-color: rgb(112, 201, 236);
+    border-bottom-color: #007bff;
 }
 
 .tooltip.right .tooltip-arrow {
@@ -27,7 +27,7 @@
     left: -5px;
     margin-top: -5px;
     border-width: 5px 5px 5px 0;
-    border-right-color: rgb(112, 201, 236);
+    border-right-color: #007bff;
 }
 
 .custom-tooltip {
@@ -38,7 +38,7 @@
 }
 
 .custom-tooltip .tooltip-inner {
-    background: rgb(112, 201, 236);
+    background: #007bff;
     max-width: 40px;
     width: 40px;
     padding: 3px 0px;
@@ -67,7 +67,7 @@
     left: -4px;
     height: 14px;
     border-radius: 10px;
-    background-color: #CCC;
+    background-color: #dee2e6;
     margin: 0 7px;
 }
 
@@ -76,7 +76,7 @@
     right: -12px;
     height: 14px;
     border-radius: 10px;
-    background-color: #CCC;
+    background-color: #dee2e6;
     margin: 0 7px;
 }
 
@@ -217,10 +217,10 @@ div[slider]>input[type=range]::-ms-tooltip {
 
 .slider-button {
     position: absolute;
-    background-color: rgb(221, 155, 155);
+    background-color: rgb(225, 83, 97);
     border: none;
-    color: rgb(0, 0, 0);
-    padding: 0px 0px;
+    color: #000000;
+    padding: 0;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -230,14 +230,24 @@ div[slider]>input[type=range]::-ms-tooltip {
     cursor: pointer;
 }
 
+.slider-button:focus {
+    background-color: #c82333;
+    box-shadow: 0 0 0 0.2rem rgba(225, 83, 97, 0.5);
+    outline:0 none !important;
+}
+
 .slider-Tooltip-bottom {
-    top: 5px;
+    top: 10px;
     margin-left: -15px;
     cursor: default;
 }
 
 .slider-Tooltip-top {
-    top: -38px;
+    top: -43px;
     margin-left: -15px;
     cursor: default;
+}
+
+.slider-button>.glyphicon {
+    top: 0;
 }

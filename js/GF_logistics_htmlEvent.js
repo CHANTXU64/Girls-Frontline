@@ -304,12 +304,22 @@ function TargetChangeStorage() {
 
 //start_ranking
 $("#start_ranking").on("click", function () {
-    start_ranking();
+    ranking_loading_start();
+    setTimeout(start_ranking, 1);
+    setTimeout(ranking_loading_end, 1);
 });
 $("#clear_ranking").on("click", function () {
     delete_rankingResults();
     HTML_AllowRankingInput();
 });
+function ranking_loading_start() {
+    $("#start_ranking").attr("disabled", "true");
+    document.getElementById("ranking_loading").style.display = "";
+}
+function ranking_loading_end() {
+    document.getElementById("ranking_loading").style.display = "none";
+    $("#start_ranking").removeAttr("disabled");
+}
 
 //Result Plan
 //排序结果点击
@@ -360,19 +370,44 @@ $("#exportSaved_button").on("click", function () {
     if ($("#exportSaved_button").attr("aria-expanded") !== "true")
         Saved.exportSelected();
 });
+const JQ_selector_Saved_renameInput = $("#renameSaved_input");
+const JQ_selector_Saved_renameApplyButton = $("#renameSaved_applyButton");
 $("#renameSaved_button").on("click", function () {
     if ($("#renameSaved_button").attr("aria-expanded") !== "true") {
         let name = Saved.getSelectedName();
-        const input = $("#renameSaved_input");
+        const input = JQ_selector_Saved_renameInput;
+        input.removeClass("is-valid is-invalid");
+        if (Saved.checkNameValid(name)) {
+            input.addClass("is-valid");
+            JQ_selector_Saved_renameApplyButton.removeAttr("disabled");
+        }
+        else {
+            input.addClass("is-invalid");
+            JQ_selector_Saved_renameApplyButton.attr("disabled", "true");
+        }
         input.val(name);
         input.focus();
     }
 });
-$("#renameSaved_input").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#renameSaved_applyButton").click();
+JQ_selector_Saved_renameInput.on("keyup", function (e) {
+    const input = JQ_selector_Saved_renameInput;
+    let name = input.val();
+    if (is_KeyIsEnter(e)) {
+        if (Saved.checkNameValid(name))
+            JQ_selector_Saved_renameApplyButton.click();
+        return ;
+    }
+    input.removeClass("is-valid is-invalid");
+    if (Saved.checkNameValid(name)) {
+        input.addClass("is-valid");
+        JQ_selector_Saved_renameApplyButton.removeAttr("disabled");
+    }
+    else {
+        input.addClass("is-invalid");
+        JQ_selector_Saved_renameApplyButton.attr("disabled", "true");
+    }
 });
-$("#renameSaved_applyButton").on("click", function () {
+JQ_selector_Saved_renameApplyButton.on("click", function () {
     Saved.renameSelected();
 });
 $("#moveSaved_up").on("click", function () {
@@ -396,7 +431,7 @@ $("#exportSaved_group").on("shown.bs.dropdown", function () {
     $("#exportSaved_input").focus();
 });
 $("#renameSaved_group").on("shown.bs.dropdown", function () {
-    $("#renameSaved_input").focus();
+    JQ_selector_Saved_renameInput.focus();
 });
 function Saved_import() {
     const input_selector = $("#importSaved_input");

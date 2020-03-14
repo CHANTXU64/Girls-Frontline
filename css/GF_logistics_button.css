@@ -30,6 +30,12 @@ button:disabled:hover {
     background-color: #e9ecef;
 }
 
+.btn-primary:disabled:hover,
+.btn-primary:disabled {
+    color: #343a40;
+    background-color: #e9ecef;
+}
+
 .btn:disabled:hover {
     background-color: #e9ecef;
 }
