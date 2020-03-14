@@ -130,6 +130,19 @@ class PlanDetails {
     }
 
     /**
+     * 清除ChartLastParam
+     * @private
+     */
+    static _clearChartLastParam() {
+        this._chartLastParam = {
+            missionsName: [],
+            collectTimetable: [],
+            totalTime: -1,
+            startTIme: -1
+        };
+    }
+
+    /**
      * 打印关卡完成时间表的图表
      * @param {Array.<Array.<number>>} missionsDetails - 需要打印的关卡们的详情, 0关卡名称-9关卡时间-10关卡完成时间表
      * @param {number} TotalMinutes - 后勤总分钟数
@@ -179,6 +192,7 @@ class PlanDetails {
             if (missionsDetails.length === 0) { //销毁实例
                 Chart.dispose();
                 Chart_elem.style.cssText = "";
+                this._clearChartLastParam();
                 return ;
             }
         }

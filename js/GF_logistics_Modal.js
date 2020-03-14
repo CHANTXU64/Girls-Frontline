@@ -80,6 +80,7 @@ class Modal {
     }
 
     static _alert_main(message, title) {
+        this._blur();
         this._setBody(message);
         this._setTitle(title);
         this._html_cancelButton.addClass("d-none");
@@ -88,6 +89,7 @@ class Modal {
     }
 
     static _fonfirm_main(message, func_ok, func_cancel, title) {
+        this._blur();
         this._setBody(message);
         this._setTitle(title);
         this._html_okButton.on("click", func_ok);
@@ -98,6 +100,7 @@ class Modal {
     }
 
     static _prompt_main(message, title, func_ok, func_cancel, inputType, defaultInput, checkValidFunc, validFeedbackFunc, invalidFeedbackFunc) {
+        this._blur();
         this._setTitle(title);
         let body = '<div class="form-group"><label for="modal_input">' + message;
         body += '</label><input type="' + inputType + '" class="form-control" id="modal_input" value="' + defaultInput;
@@ -141,6 +144,14 @@ class Modal {
         }
         this._lastModal = "prompt";
         this._show();
+    }
+
+    /**
+     * 由于该组件不会阻塞js, 所以需要在显示modal前失去焦点, 避免再操作
+     * @private
+     */
+    static _blur() {
+        document.activeElement.blur();
     }
 
     /**
