@@ -155,7 +155,7 @@ class Plan_Stdzn extends Plan_Original {
         let ContractValue = this._correctContractValue();
         let TargetValue = ResourceValue.concat(ContractValue);
         if ("" + TargetValue === "0,0,0,0,0,0,0,0") {
-            alert(language.JS.TargetValue0_alert);
+            Modal.alert(language.JS.TargetValue0_alert);
             throw "Warning: TargetValue cannot all be 0!";
         }
         return TargetValue;

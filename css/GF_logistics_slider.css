@@ -30,6 +30,10 @@
     border-right-color: #007bff;
 }
 
+[slider] .custom-tooltip {
+    z-index: 100;
+}
+
 .custom-tooltip {
     display: inline-block;
     margin: 10px 20px;

@@ -433,7 +433,7 @@ class Tab_Anytime extends Tab {
         this._totalTime = Input_getAnytimeTotalTime(NeedCorrection);
         if (NeedCorrection) {
             if (this._totalTime === 0) {
-                alert(language.JS.tab_Anytime_alert1);
+                Modal.alert(language.JS.tab_Anytime_alert1);
                 throw "Warning: Total time cannot be 0!";
             }
         }
@@ -778,7 +778,7 @@ class Tab_Timetable extends Tab {
         this._totalTime = Input_getTimetableTotalTime(NeedCorrection);
         if (NeedCorrection) {
             if (this._totalTime === 0) {
-                alert(language.JS.tab_Timetable_alert4);
+                Modal.alert(language.JS.tab_Timetable_alert4);
                 HTML_AllowRankingInput();
                 throw "Warning: Total time cannot be 0!";
             }

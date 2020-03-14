@@ -232,13 +232,18 @@ function setPageByImport(input) {
         return ;
     }
 
-    //当有saved, 询问是否要覆盖当前config
-    let flag = true;
+    //当有saved, 询问是否要覆盖当前config, 否则退出
     if (Saved.getSaved().length !== 0)
-        flag = confirm(language.JS.config_alert);
-    if (flag !== true)
-        return;
+        Modal.confirm(language.JS.config_alert, function () {setPageByImport_ok(input);});
+    else
+        setPageByImport_ok(input);
+}
 
+/**
+ * 确认导入配置
+ * @param {*} input - 导入的数据
+ */
+function setPageByImport_ok(input) {
     try {
         //尝试导入v0版本
         var config = JSON.parse(input);
@@ -264,7 +269,7 @@ function setPageByImport(input) {
             HTML_AllowRankingInput();
         }
         else
-            alert(language.JS.Saved_alert);
+            Modal.alert(language.JS.Saved_alert);
     }
 }
 

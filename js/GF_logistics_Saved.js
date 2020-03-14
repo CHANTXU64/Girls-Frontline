@@ -12,19 +12,20 @@ class Saved {
      */
     static saveThisPlan() {
         if (this._saved.length >= 99) {
-            alert(language.JS.Saved_alert2);
+            Modal.alert(language.JS.Saved_alert2);
             return ;
         }
+        Modal.prompt(language.JS.plzInputPlanName, language.JS.Saved_prompt_title, Saved._saveThisPlan_ok, function () {}, "text", language.JS.planDefaultName, Saved.checkNameValid, function (i) {return "";}, Saved.invalidNameFeedback);
+    }
 
-        let name = prompt(language.JS.plzInputPlanName, language.JS.planDefaultName);
-        if (name == null)
-            return ;
-        if (name == "")
-            name = language.JS.planDefaultName;
-        name = name.slice(0, 50);
-
+    /**
+     * 确认保存方案, 供Modal调用
+     * @param {string} validName
+     * @public
+     */
+    static _saveThisPlan_ok(validName) {
         let newData = {};
-        newData.name = name;
+        newData.name = validName;
         newData.GSRate = Input_getGreatSuccessRate();
         newData.is_UP = IsGreatSuccessRateUp();
         newData.Chapter = Input_getSelectChapter();
@@ -34,9 +35,30 @@ class Saved {
         newData.Missions = MissionsDetails.getSelectedMissions();
         newData.startTime = Input_getStartTime();
 
-        this._saved.push(newData);
-        storageSetItem("Saved", this._saved);
-        this._printLastSaved();
+        Saved._saved.push(newData);
+        storageSetItem("Saved", Saved._saved);
+        Saved._printLastSaved();
+    }
+
+    /**
+     * 检查名字是否合法
+     * @param {string} name
+     * @returns {boolean}
+     * @public
+     */
+    static checkNameValid(name) {
+        if (name !== "" && name.length <= 50)
+            return true;
+        else
+            return false;
+    }
+
+    static invalidNameFeedback(name) {
+        if (name === "")
+            return language.JS.Saved_invalidNameFeedback1;
+        if (name.length >= 50)
+            return language.JS.Saved_invalidNameFeedback2;
+        return "";
     }
 
     /**
@@ -161,19 +183,6 @@ class Saved {
     }
 
     /**
-     * 检查名字是否合法
-     * @param {string} name
-     * @returns {boolean}
-     * @public
-     */
-    static checkNameValid(name) {
-        if (name !== "" && name.length <= 50)
-            return true;
-        else
-            return false;
-    }
-
-    /**
      * 重命名选中行Saved
      * @public
      */
@@ -243,14 +252,18 @@ class Saved {
      * @public
      */
     static deleteSelected() {
-        //如果不确认删除, 跳过
         const row = this._selectRow;
         const name = this._saved[row].name;
         const warning = language.JS.deleteSavedWarning_1 + '"' + name + '"' + language.JS.deleteSavedWarning_2;
-        let flag = confirm(warning);
-        if (!flag)
-            return ;
+        Modal.confirm(warning, function () {Saved._deleteSelected_ok(row)});
+    }
 
+    /**
+     * 确认将Saved选中行删除
+     * @param {number} row
+     * @private
+     */
+    static _deleteSelected_ok(row) {
         this._cancelSelectThisRow(row);
         for (let i = row; i < this._saved.length - 1; i++) {
             $("#SavedTable_row_" + i).html(this._saved[i + 1].name);
@@ -279,7 +292,7 @@ class Saved {
             this._printLastSaved();
         }
         else
-            alert(language.JS.Saved_alert);
+            Modal.alert(language.JS.Saved_alert);
     }
 
     /**

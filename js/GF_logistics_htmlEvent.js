@@ -209,13 +209,13 @@ function Tab_Timetable_AddNew() {
     const TotalTime = Input_getTimetableTotalTime();
     switch (true) {
         case newTime === 0:
-            alert(language.JS.tab_Timetable_alert1);
+            Modal.alert(language.JS.tab_Timetable_alert1);
             break;
         case newTime > TotalTime:
-            alert(language.JS.tab_Timetable_alert2);
+            Modal.alert(language.JS.tab_Timetable_alert2);
             break;
         case newTime === TotalTime || Tab_Timetable_TIMELIST.indexOf(newTime) !== -1:
-            alert(language.JS.tab_Timetable_alert3);
+            Modal.alert(language.JS.tab_Timetable_alert3);
             break;
         default:
             Tab_Timetable_AddNewTimePoint(newTime);

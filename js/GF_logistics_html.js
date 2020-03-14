@@ -62,7 +62,7 @@ function MobilePCDevice() {
         const page_header = $("#page-header");
         page_header.removeClass("mt-4");
         page_header.addClass("mt-3");
-        document.getElementById("container-fluid").style.padding = "0";
+        $("#container-fluid").addClass("p-0");
         document.getElementById("calcTargetValueTool_apply").innerHTML = "<span id=\"calcTargetValueTool_apply_text\">" + language.HTML.calcTargetValueTool_apply_text + "</span> &darr;";
     }
 }

@@ -6,6 +6,8 @@ const language_zh_CN = {
     lang: "zh-Hans",
     title: "少女前线-后勤组合排序器",
     HTML: {
+        Modal_footer_button_ok: "确定",
+        Modal_footer_button_cancel: "取消",
         header: "后勤组合排序器 ",
         Config_text: "全局数据",
         description_text: "计算结果只和资源（或契约）之间的比例有关。计算结果为均值。",
@@ -181,6 +183,7 @@ const language_zh_CN = {
         FineTuning_plus: "增大需求量",
     },
     JS: {
+        alertTitle_warning: "警告",
         chapter_start: "第",
         chapter_end: "战役",
         number(num) {
@@ -254,6 +257,9 @@ const language_zh_CN = {
         deleteSavedWarning_2: "的配置？",
         Saved_alert: "导入的数据有问题！",
         Saved_alert2: "保存的数量过多，不能再添加",
+        Saved_prompt_title: "方案名称",
+        Saved_invalidNameFeedback1: "请填入方案名称。",
+        Saved_invalidNameFeedback2: "方案名称太长了。",
         config_alert: "这将会覆盖现有所有的数据，是否要继续？",
         FailedWindowLoadWarn: "可能由于Web存储数据不正确, 导致网页崩溃. 您可以将下面的数据报告到GitHub或发送邮件到chantxu@outlook.com",
     },
@@ -267,6 +273,8 @@ const language_zh_TW = {
     lang: "zh-Hant",
     title: "少女前線-後勤組合排序器",
     HTML: {
+        Modal_footer_button_ok: "確定",
+        Modal_footer_button_cancel: "取消",
         header: "後勤組合排序器 ",
         Config_text: "全局數據",
         description_text: "計算結果只和資源（或契約）之間的比例有關。計算結果為期望值。",
@@ -442,6 +450,7 @@ const language_zh_TW = {
         FineTuning_plus: "增大需求量",
     },
     JS: {
+        alertTitle_warning: "警告",
         chapter_start: "第",
         chapter_end: "戰役",
         number(num) {
@@ -515,6 +524,9 @@ const language_zh_TW = {
         deleteSavedWarning_2: "的配置？",
         Saved_alert: "導入的數據有問題！",
         Saved_alert2: "保存的數量過多，不能再添加",
+        Saved_prompt_title: "方案名稱",
+        Saved_invalidNameFeedback1: "請填入方案名稱。",
+        Saved_invalidNameFeedback2: "方案名稱太長了。",
         config_alert: "這將會覆蓋現有所有的數據，是否要繼續？",
         FailedWindowLoadWarn: "可能由於Web存儲數據不正確, 導致網頁崩潰. 您可以將下面的數據報告到GitHub或發​​送郵件到chantxu@outlook.com",
     },
@@ -528,6 +540,8 @@ const language_en = {
     lang: "en",
     title: "Girls' Frontline Logistics Combination Calculator",
     HTML: {
+        Modal_footer_button_ok: "OK",
+        Modal_footer_button_cancel: "Cancel",
         header: "Logistics Combination Calculator ",
         Config_text: "All configurations",
         description_text: "The calculation results are only related to the ratio of resources (or contracts). The calculation results are expected value.",
@@ -703,6 +717,7 @@ const language_en = {
         FineTuning_plus: "Increase demand",
     },
     JS: {
+        alertTitle_warning: "Warning",
         chapter_start: "Chapter ",
         chapter_end: "",
         number(num) {return num;},
@@ -745,6 +760,9 @@ const language_en = {
         deleteSavedWarning_2: "?",
         Saved_alert: "There is a problem with the imported data!",
         Saved_alert2: "Too many saved plan, cannot add anymore",
+        Saved_prompt_title: "Plan Name",
+        Saved_invalidNameFeedback1: "Please provide a name.",
+        Saved_invalidNameFeedback2: "The name is too long.",
         config_alert: "This operation will overwrite all configurations. Do you want to continue?",
         FailedWindowLoadWarn: "The webpage may crash due to incorrect web storage. You can report the following data to GitHub or send to chantxu@outlook.com",
     },
