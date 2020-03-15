@@ -28,9 +28,10 @@ class Modal {
      * @param {Function=} func_cancel - 点击cancel或关闭modal触发的函数, 默认为function () {}
      * @param {string=} inputType - 输入框type类型, 默认"text"
      * @param {string=} defaultInput - 输入框默认值, 默认为""
-     * @param {Function=} checkValidFunc - 检查输入有效函数函数, 应返回bool值(valid返回true, 否则false), 默认为undefined
+     * @param {Function=} checkValidFunc - 检查输入有效函数, 应返回bool值(valid返回true, 否则false), 默认为undefined
      * @param {Function=} validFeedbackFunc - 根据有效输入值返回feedback的函数, 必须提供checkValidFunc, 默认为function (input) {return "";}
      * @param {Function=} invalidFeedbackFunc - 根据无效输入值返回feedback的函数, 必须提供checkValidFunc, 默认为function (input) {return "";}
+     * @public
      * @example
      * function extendGreetings(greetings, name) {Modal.alert(greetings + name)};
      * function checkValidFunc(name) {if (name !== "" && name.length <= 50) return true; else return false;};
@@ -79,6 +80,7 @@ class Modal {
         }
     }
 
+    /**@private */
     static _alert_main(message, title) {
         this._blur();
         this._setBody(message);
@@ -88,6 +90,7 @@ class Modal {
         this._show();
     }
 
+    /**@private */
     static _fonfirm_main(message, func_ok, func_cancel, title) {
         this._blur();
         this._setBody(message);
@@ -99,6 +102,7 @@ class Modal {
         this._show();
     }
 
+    /**@private */
     static _prompt_main(message, title, func_ok, func_cancel, inputType, defaultInput, checkValidFunc, validFeedbackFunc, invalidFeedbackFunc) {
         this._blur();
         this._setTitle(title);
@@ -120,10 +124,15 @@ class Modal {
                 $("#modal_feedback").addClass("invalid-feedback");
                 $("#modal_feedback").html(invalidFeedbackFunc(defaultInput));
             }
-            $("#modal_input").on("keyup", function () {
+            $("#modal_input").on("keyup", function (e) {
                 let input_JQ = $("#modal_input");
                 let feedback_JQ = $("#modal_feedback");
                 let input = input_JQ.val();
+                if (e.which == 13) {
+                    if (checkValidFunc(input))
+                        Modal._html_okButton.click();
+                    return ;
+                }
                 if (checkValidFunc(input)) {
                     input_JQ.addClass("is-valid");
                     input_JQ.removeClass("is-invalid");

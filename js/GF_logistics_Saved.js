@@ -11,11 +11,10 @@ class Saved {
      * @public
      */
     static saveThisPlan() {
-        if (this._saved.length >= 99) {
+        if (this._saved.length >= 99)
             Modal.alert(language.JS.Saved_alert2);
-            return ;
-        }
-        Modal.prompt(language.JS.plzInputPlanName, language.JS.Saved_prompt_title, Saved._saveThisPlan_ok, function () {}, "text", language.JS.planDefaultName, Saved.checkNameValid, function (i) {return "";}, Saved.invalidNameFeedback);
+        else
+            Modal.prompt(language.JS.plzInputPlanName, language.JS.Saved_prompt_title, Saved._saveThisPlan_ok, function () {}, "text", language.JS.planDefaultName, Saved.checkNameValid, function (i) {return "";}, Saved.invalidNameFeedback);
     }
 
     /**
@@ -53,10 +52,16 @@ class Saved {
             return false;
     }
 
-    static invalidNameFeedback(name) {
-        if (name === "")
+    /**
+     * 根据无效名字返回feedback
+     * @param {string} invalidName
+     * @returns {string}
+     * @public
+     */
+    static invalidNameFeedback(invalidName) {
+        if (invalidName === "")
             return language.JS.Saved_invalidNameFeedback1;
-        if (name.length >= 50)
+        if (invalidName.length >= 50)
             return language.JS.Saved_invalidNameFeedback2;
         return "";
     }
@@ -159,8 +164,8 @@ class Saved {
         Input_setGreatSuccessUpRate(data.is_UP);
         Input_setSelectChapter(data.Chapter);
         let ShownTab = getTabByName(tabName);
-        ShownTab.applySavedCustom(data.TabCustom);
-        MissionsDetails.setSelectedMissions(data.Missions);
+        ShownTab.applySavedCustom(data.TabCustom.slice());
+        MissionsDetails.setSelectedMissions(data.Missions.slice());
         Input_setStartTime(data.startTime);
 
         delete_rankingResults();
