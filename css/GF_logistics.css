@@ -146,22 +146,11 @@ th {
 
 .disable-selected-text {
     -moz-user-select: none;
-    -o-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
     cursor: default;
-}
-
-.endable-selected-text {
-    cursor: auto;
-    user-select: auto;
-    -ms-user-select: text;
-    -webkit-user-select: auto;
-    -khtml-user-select: auto;
-    -o-user-select: auto;
-    -moz-user-select: text;
 }
 
 /*去除input后面浏览器带的标记*/

@@ -66,6 +66,7 @@ function loadLast() {
     $("#page_loading").remove();
 }
 
+//Backup vendor js !python
 /**
  * 如果使用cdn加载的js还未加载完成, 则使用备用的js
  */
@@ -101,3 +102,4 @@ function loadBackupJS() {
         document.body.appendChild(script);
     }
 }
+//End Backup vendor js !python
