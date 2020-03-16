@@ -126,13 +126,17 @@ class Modal {
             }
             $("#modal_input").on("keyup", function (e) {
                 let input_JQ = $("#modal_input");
-                let feedback_JQ = $("#modal_feedback");
                 let input = input_JQ.val();
                 if (e.which == 13) {
                     if (checkValidFunc(input))
                         Modal._html_okButton.click();
                     return ;
                 }
+            });
+            $("#modal_input").on("input propertychange", function () {
+                let input_JQ = $("#modal_input");
+                let feedback_JQ = $("#modal_feedback");
+                let input = input_JQ.val();
                 if (checkValidFunc(input)) {
                     input_JQ.addClass("is-valid");
                     input_JQ.removeClass("is-invalid");

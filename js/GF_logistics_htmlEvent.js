@@ -40,11 +40,11 @@ function Config_import() {
 //Never Show Again
 $("#neverShowAgain_description").on("click", function () {
     storageSetItem("Description_Display", false);
-    document.getElementById("description").style.display = "none";
+    // document.getElementById("description").style.display = "none";
 });
 $("#neverShowAgain_localstorageWarning").on("click", function () {
     storageSetItem("LocalstorageWarning_Display", false);
-    document.getElementById("localstorageWarning").style.display = "none";
+    // document.getElementById("localstorageWarning").style.display = "none";
 });
 
 //Tab
@@ -397,6 +397,10 @@ JQ_selector_Saved_renameInput.on("keyup", function (e) {
             JQ_selector_Saved_renameApplyButton.click();
         return ;
     }
+});
+JQ_selector_Saved_renameInput.on("input propertychange", function () {
+    const input = JQ_selector_Saved_renameInput;
+    let name = input.val();
     input.removeClass("is-valid is-invalid");
     if (Saved.checkNameValid(name)) {
         input.addClass("is-valid");

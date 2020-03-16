@@ -71,7 +71,7 @@ class FineTuning {
             for (let i = 0; i < 8; i++) {
                 let Target_0 = this._TargetValue_Original[i];
                 let Target = this._TargetValue[i];
-                if (Target_0 === 0 || Target - Target_0 / 50 <= 0 || Target - Target_0 / 50 < Target_0 * 0.9) {
+                if (Target_0 === 0 || Target - Target_0 / 50 <= 0 || Target - Target_0 / 50 < Target_0 * 0.8) {
                     let minus_elem = $("#FineTuning_minus_" + TargetName[i]);
                     if (minus_elem.attr("disabled") !== "disabled")
                         minus_elem.attr("disabled", "disabled");
@@ -81,7 +81,7 @@ class FineTuning {
                     if (minus_elem.attr("disabled") === "disabled")
                         minus_elem.removeAttr("disabled");
                 }
-                if (Target_0 === 0 || Target + Target_0 / 50 >= 1 || Target + Target_0 / 50 > Target_0 * 1.14) {
+                if (Target_0 === 0 || Target + Target_0 / 50 >= 1 || Target + Target_0 / 50 > Target_0 * 1.2) {
                     let plus_elem = $("#FineTuning_plus_" + TargetName[i]);
                     if (plus_elem.attr("disabled") !== "disabled")
                         plus_elem.attr("disabled", "disabled");

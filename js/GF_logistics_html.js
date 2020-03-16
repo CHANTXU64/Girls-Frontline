@@ -81,12 +81,8 @@ function ChangeTab(tabName, isShow = true) {
         return ;
     switch (tabName) {
         case "Anytime":
-            if (isShow) {
+            if (isShow)
                 $("#Tab_Anytime_name").tab("show");
-                // Anytime_JQ_selector.addClass("show");
-                // $("#Tab_Timetable_name").removeClass("active");
-                // $("#Tab_Anytime_name").addClass("active");
-            }
             //用于getShownTab()判断目前显示的Tab, 现在添加class"show"会导致闪烁
             Timetable_JQ_selector.removeClass("active show");
             Anytime_JQ_selector.addClass("active");
@@ -187,7 +183,10 @@ function ChangeTarget(FullID) {
     const ID = stringSliceFromLast_(FullID);
     const IDStart = FullID.indexOf(ID);
     const FullID_2 = FullID.slice(0, IDStart - 1);
-    let changeValue = parseFloat(stringSliceFromLast_(FullID_2));
+    let changeValue_str = stringSliceFromLast_(FullID_2);
+    if (changeValue_str[0] === '0')
+        changeValue_str = '0.' + changeValue_str.slice(1);
+    let changeValue = parseFloat(changeValue_str);
     if (FullID_2.slice(7, 8) === "m")
         changeValue *= -1;
     let id_JQ_selector = $("#" + ID);

@@ -1,4 +1,5 @@
 #需要使用babel-cli, babel-preset-es2015, UglifyJS 3, closure-stylesheets.jar
+#该脚本适用于Linux系统
 
 version=$1
 

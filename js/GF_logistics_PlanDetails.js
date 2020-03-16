@@ -156,7 +156,7 @@ class PlanDetails {
         }
         if (!window.echarts) {
             if (!window.chart_loading)
-                document.getElementById("PlanDetails_Chart").innerHTML = '<div class="spinner-border" id="chart_loading" role="status"><span class="sr-only">Loading...</span></div>';
+                document.getElementById("PlanDetails_Chart").innerHTML = '<div class="spinner-border m-4" id="chart_loading" role="status"><span class="sr-only">Loading...</span></div>';
             let id = setTimeout(function () {PlanDetails.printChart(missionsDetails, TotalMinutes, startTime)}, 1000);
             this._loadingChart.push(id);
             return ;

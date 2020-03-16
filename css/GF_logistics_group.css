@@ -9,7 +9,6 @@
 .input-group-span,
 .input-group-label {
     display: -ms-flexbox;
-    display: flex;
     position: relative;
     z-index: 2;
 }

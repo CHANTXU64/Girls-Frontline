@@ -107,15 +107,19 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-7 float-left">
-    <div class="alert alert-warning" id="description" role="alert" style="color:#000000">
-      <span id="description_text" class="disable-selected-text"></span>
-      <span id="neverShowAgain_description" class="disable-selected-text" style="cursor:pointer;"></span>
+  <div class="col-lg-7 float-left disable-selected-text">
+    <div class="alert alert-warning alert-dismissible fade show" id="description" role="alert">
+      <span id="description_text" style="color:#000000"></span>
+      <button type="button" id="neverShowAgain_description" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
-    <div class="alert alert-danger disable-selected-text" id="localstorageDoesNotWork"></div>
-    <div class="alert alert-warning" id="localstorageWarning" role="alert" style="color: #000000;">
-      <span id="localstorageWarning_text" class="disable-selected-text"></span>
-      <span id="neverShowAgain_localstorageWarning" class="disable-selected-text" style="cursor:pointer;"></span>
+    <div class="alert alert-danger" id="localstorageDoesNotWork" role="alert" style="color: #000000;"></div>
+    <div class="alert alert-warning alert-dismissible fade show" id="localstorageWarning" role="alert">
+      <span id="localstorageWarning_text" style="color:#000000"></span>
+      <button type="button" id="neverShowAgain_localstorageWarning" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
   </div>
   <div class="col-lg-7 float-left">

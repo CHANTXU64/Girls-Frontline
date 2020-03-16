@@ -29,7 +29,7 @@ window.onload = function () {
     document.body.appendChild(script6);
 
     cheackLoadedAndLoadLast();
-    setTimeout(loadBackupJS, 10000);
+    setTimeout(loadBackupJS, 6000);
 }
 
 /**
