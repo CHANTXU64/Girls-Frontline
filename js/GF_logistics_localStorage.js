@@ -1,6 +1,6 @@
 /**
  * 版本
- * 
+ *
  * 注意, 会导致LOCAL_STORAGE_KEY改变,
  * 可能需要修改html中的script(当用js切换nav显示时, 4.4.1bootstrap会在全部东西处理完后开始切换动画, 避免阻塞, 事先切换nav)
  */
@@ -8,7 +8,7 @@ const VERSION = "1.0.3";
 
 /**
  * 用于判断浏览器是否能使用storage
- * 
+ *
  * 在window.onload初始化, 之后将不再改变
  * @type {boolean}
  */
@@ -21,7 +21,7 @@ let CAN_STORAGE_WORK;
 const LOCAL_STORAGE_KEY = "GF_Logistics_v" + VERSION.slice(0, VERSION.indexOf(".")) + ".x.x";
 
 /**
- * 在window.onload使用, 设置CAN_LOCALSTORAGE_WORK, 
+ * 在window.onload使用, 设置CAN_LOCALSTORAGE_WORK,
  * 并且在HTML页面上显示信息
  */
 function checkLocalStorageWork() {
@@ -30,6 +30,7 @@ function checkLocalStorageWork() {
         CAN_STORAGE_WORK = false;
         document.getElementById("localstorageWarning").style.display = "none";
         document.getElementById("neverShowAgain_description").style.display = "none";
+        document.getElementById("description").style.paddingRight = "1.25rem";
     }
     else {
         document.getElementById("localstorageDoesNotWork").style.display = "none";
@@ -98,7 +99,7 @@ function removeStorageAndWarnDueToFailedWindowLoad() {
 }
 
 /**
- * 如果不存在目前版本对应的localstorage, 
+ * 如果不存在目前版本对应的localstorage,
  * 尝试从以前版本的localstorage转换过来
  */
 function updateLocalStorage() {

@@ -1,6 +1,6 @@
 /**
  * 时间表数组, 不包括0和结束时间
- * @type {Array.<number>} 
+ * @type {Array.<number>}
  */
 let Tab_Timetable_TIMELIST = [];
 

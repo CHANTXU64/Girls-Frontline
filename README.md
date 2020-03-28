@@ -19,7 +19,7 @@ Thanks [FatalChapter](https://github.com/hycdes/GFTool)
 **如何发布新版本?**<br>
 1.修改js/GF_logistics_localStorage.js的VERSION<br>
 2.修改html中的footer离线版页脚(链接)<br>
-3.运行release.sh + version (如./release.sh 2.0.0)<br>
+3.运行release.py + version (如./release.py 2.0.0)<br>
 
 测试代码格式: //test[\w|\W]+?//End test
 

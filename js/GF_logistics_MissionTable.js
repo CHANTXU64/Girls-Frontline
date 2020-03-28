@@ -63,11 +63,11 @@ class MissionsDetails {
 
     /**
      * 依据获取方式返回MissionsTable, 获取方式:
-     * 
+     *
      * "default": 返回MissionsTable.slice()
-     * 
+     *
      * "quick": 快速获取, 直接返回, 可能会修改MissionsTable, 不安全
-     * 
+     *
      * "missionSort": 返回按方案名称排序的MissionsTable.slice()
      * @param {string=} method - 获取方式
      * @public
@@ -162,7 +162,7 @@ class MissionsDetails {
     }
 
     /**
-     * 打印方案详情, 第一次打印(或重新打印)必须以关卡排序, 不需要输入排序方式 
+     * 打印方案详情, 第一次打印(或重新打印)必须以关卡排序, 不需要输入排序方式
      * 若输入排序方式, 则不再重新计算MissionsTable
      * @param {string=} sortBy - 排序方式
      * @public

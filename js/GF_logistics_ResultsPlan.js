@@ -15,7 +15,7 @@ class ResultsPlan {
 
     /**
      * 不安全地返回上次的resultsPlan
-     * 
+     *
      * 0Ranking序号-1关卡1-2关卡2-3关卡3-4关卡4-5~12 8种资源契约-自定义内容...
      * @returns {Array.<Array>}
      * @public
@@ -155,7 +155,7 @@ class ResultsPlan {
 
 /**
  * 上次打印时所用的结果方案
- * 
+ *
  * 0Ranking序号-1关卡1-2关卡2-3关卡3-4关卡4-5~12 8种资源契约-自定义内容...
  * @type {Array.<Array.<number|string>>}
  * @private
@@ -168,12 +168,3 @@ ResultsPlan._lastResultsPlan = [];
  * @private
  */
 ResultsPlan._lastSortBy;
-
-/**
- * 是否有排序结果?
- * @returns {boolean}
- */
-function hasResultPlan() {
-    const Plan_Table_innerHTML = document.getElementById("Plan_Table").innerHTML;
-    return Plan_Table_innerHTML !== "" && Plan_Table_innerHTML !== language.JS.NoPlan;
-}

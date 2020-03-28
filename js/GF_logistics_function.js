@@ -55,7 +55,7 @@ function TimeFormat_Day(Minutes) {
 
 /**
  * 判断x是否为非正数(或0)
- * 
+ *
  * 是, 返回false. 否, 返回true
  */
 function is_NonPositiveNumberOrInfinity(x) {

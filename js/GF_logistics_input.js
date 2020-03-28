@@ -74,7 +74,7 @@ function Input_setGreatSuccessUpRate(is_RateUP, NeedCorrectBaseRate = true) {
 }
 
 /**
- * 返回目标值(需求量), NeedCorrection 默认为true 
+ * 返回目标值(需求量), NeedCorrection 默认为true
  * @param {*} Target_JQ_selector - Target的jQuery选择器, 也可以是选择器数组
  */
 function Input_getTarget_Correct(Target_JQ_selector = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QPT"), $("#QRT")],
@@ -97,11 +97,11 @@ function _getValue_Arr(Target_JQ_selector_Arr, NeedCorrection) {
 }
 
 /**
- * 
+ *
  * @param {number|Array.<number>} TargetValue
  * @param {*} Target_JQ_selector - Target的jQuery选择器, 也可以是选择器数组
  */
-function Input_setTarget(TargetValue = [0, 0, 0, 0, 0, 0, 0, 0], 
+function Input_setTarget(TargetValue = [0, 0, 0, 0, 0, 0, 0, 0],
                             Target_JQ_selector = [$("#MT"), $("#AT"), $("#RT"), $("#PT"), $("#TT"), $("#ET"), $("#QPT"), $("#QRT")]) {
     if (Array.isArray(TargetValue))
         _setTarget_arr(TargetValue, Target_JQ_selector);
@@ -110,7 +110,7 @@ function Input_setTarget(TargetValue = [0, 0, 0, 0, 0, 0, 0, 0],
     storageSetItem("TargetValue", Input_getTarget_Correct());
 }
 /**
- * 
+ *
  * @param {Array.<number>} TargetValue_Arr
  * @param {Array} Target_JQ_selector_Arr - jQuery选择器数组
  */

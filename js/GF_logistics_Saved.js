@@ -14,7 +14,12 @@ class Saved {
         if (this._saved.length >= 99)
             Modal.alert(language.JS.Saved_alert2);
         else
-            Modal.prompt(language.JS.plzInputPlanName, language.JS.Saved_prompt_title, Saved._saveThisPlan_ok, function () {}, "text", language.JS.planDefaultName, Saved.checkNameValid, function (i) {return "";}, Saved.invalidNameFeedback);
+            Modal.prompt(language.JS.plzInputPlanName,
+                            language.JS.Saved_prompt_title,
+                            Saved._saveThisPlan_ok, function () {}, "text",
+                            language.JS.planDefaultName, Saved.checkNameValid,
+                            function (i) {return "";},
+                            Saved.invalidNameFeedback);
     }
 
     /**
@@ -285,6 +290,10 @@ class Saved {
      * @param {string} inputText - 导入的数据
      */
     static import(inputText) {
+        if (this._saved.length >= 9) {
+            Modal.alert(language.JS.Saved_alert2);
+            return ;
+        }
         const inputData = LZString.decompressFromEncodedURIComponent(inputText);
         try {
             var saved = JSON.parse(inputData);

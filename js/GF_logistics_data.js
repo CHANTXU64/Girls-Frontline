@@ -1,9 +1,9 @@
 /**
  * 0后勤战役编号-1人力-2弹药-3口粮-4零件-5人形-6装备-7快建-8快修-9时间(minute)
- * 
+ *
  * 0The Logistics Support Number-1Manpower-2Ammunition-3Ratins-4Parts-5T_Doll Production Contract-
  * 6Equipment Development Contract-7Quick Production Contract-8Quick Restoration Contract-9Time(minute)
- * 
+ *
  * 由于契约不同于资源的大成功概率计算. 在Q中, 暂时未填入契约的值, 专门使用setQContract()函数来计算契约值
  * @type {Array.<[string, number, number, number, number, number, number, number, number, number]>}
  */

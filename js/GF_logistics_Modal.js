@@ -40,7 +40,7 @@ class Modal {
      * Modal.prompt("Your name: ", "Input", function(input) {extendGreetings("Hello, ", input)}, function(){}, "text", "", checkValidFunc, validFeedbackFunc, invalidFeedbackFunc);
      */
     static prompt(message = "", title = "", func_ok = function (i) {}, func_cancel = function () {},
-                    inputType = "text", defaultInput = "", checkValidFunc = undefined, 
+                    inputType = "text", defaultInput = "", checkValidFunc = undefined,
                     validFeedbackFunc = function (input) {return "";},
                     invalidFeedbackFunc = function (input) {return "";}) {
         this._insertModalQueue("prompt", [message, title, func_ok, func_cancel, inputType, defaultInput, checkValidFunc, validFeedbackFunc, invalidFeedbackFunc]);

@@ -157,10 +157,10 @@ function LS_setCalcTargetValueTool(TargetValue = storageGetItem("CalcTargetValue
 }
 
 /**
- * @type {{version: string, TabName: string, HourlyOrTotal: string, TabAnytimeCustom: Array.<number>, 
- * TabTimetableCustom: Array.<number>, GreatSuccessRate: number, Is_GreatSuccessRateUp: boolean, 
- * ChapterLimit: number, ContractWeight: number, TargetValue: Array.<number>, Saved: Saved._saved, 
- * CalcTargetValueTool_Target: Array.<number>, CalcTargetValueTool_Current: Array.<number>, 
+ * @type {{version: string, TabName: string, HourlyOrTotal: string, TabAnytimeCustom: Array.<number>,
+ * TabTimetableCustom: Array.<number>, GreatSuccessRate: number, Is_GreatSuccessRateUp: boolean,
+ * ChapterLimit: number, ContractWeight: number, TargetValue: Array.<number>, Saved: Saved._saved,
+ * CalcTargetValueTool_Target: Array.<number>, CalcTargetValueTool_Current: Array.<number>,
  * CalcTargetValueTool_Execution: number}}
  */
 const config_data_type_v_1_x_x = 0;
@@ -275,7 +275,7 @@ function setPageByImport_ok(input) {
 
 /**
  * 从v1.x.x版本的config导入到page
- * @param {config_data_type_v_1_x_x} data 
+ * @param {config_data_type_v_1_x_x} data
  */
 function setPageByImport_main(data) {
     LS_setHTMLtab(data.TabName);

@@ -47,7 +47,7 @@
   </script>
 </head>
 
-<body class="container-fluid" id="container-fluid" style="min-width: 300px; background-color: #FFFFFF;">
+<body class="container-fluid" id="container-fluid">
   <style id="Notransition">
     .btn {
       transition: none;
@@ -72,14 +72,14 @@
     </div>
   </div>
   <!-- end Modal -->
-  <h1 id="page-header" class="col-lg-7 float-left disable-selected-text mb-0 mt-4">
-    <div class="spinner-grow text-success align-middle" role="status" style="height: 0.5rem; width: 0.5rem;">
-      <span class="sr-only">Loading...</span>
-    </div><!-- 必须在这两个标签间加空 !python space-->
+  <div class="spinner-grow text-success align-middle" role="status" style="height: 0.5rem; width: 0.5rem; position: fixed; z-index: 300; right: 0;">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <h2 id="page-header" class="col-lg-7 float-left disable-selected-text header">
     <span id="header"></span>
-    <div class="btn-group"><button type="button" id="lang-zh" disabled class="btn btn-outline-dark dropdown-toggle btn-regular"
+    <div class="btn-group"><button type="button" id="lang-zh" disabled class="btn btn-outline-dark dropdown-toggle btn-regular" data-boundary="window"
         data-toggle="dropdown">中文</button>
-      <ul class="dropdown-menu">
+      <ul class="dropdown-menu" style="min-width: 8rem">
         <a href="#" class="dropdown-item" id="lang-zh-CN">简体中文</a>
         <a href="#" class="dropdown-item" id="lang-zh-TW">繁體中文</a>
       </ul>
@@ -89,9 +89,9 @@
       <span class="sr-only">Loading...</span>
     </div>
     <hr style="margin: 0.5rem 0 1rem 0; width: 100%;" />
-  </h1>
-  <div class="col-lg-5 float-right input-group input-group-regular mb-3"
-    style="max-width: 440px; margin-top: 20px; margin-right: 0; margin-left: auto;">
+  </h2>
+  <div class="col-lg-5 float-right input-group input-group-regular mb-3 config_card"
+    style="max-width: 440px;">
     <span class="input-group-label input-group-text disable-selected-text" id="Config_text"></span>
     <input type="text" class="form-control" style="min-width: 40px;" id="Config_importInput" onclick="this.select();"
       autocomplete="off" disabled>
@@ -101,13 +101,13 @@
       <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" id="Config_export" disabled
         style="border-top-left-radius: 0; border-bottom-left-radius: 0; display: inline-block; font-size: 0.875rem; margin-left: -1px;"><span
           class="glyphicon glyphicon-export"></span></button>
-      <div class="dropdown-menu dropdown-menu-right pr-2 pl-2" style="width: 280px;">
+      <div class="dropdown-menu dropdown-menu-input dropdown-menu-right" style="width: 280px;">
         <input id="Config_exportInput" class="form-control form-control-sm" type="text" readonly
           onclick="this.select();">
       </div>
     </div>
   </div>
-  <div class="col-lg-7 float-left disable-selected-text">
+  <div class="col-lg-7 float-left disable-selected-text alert_card">
     <div class="alert alert-warning alert-dismissible fade show" id="description" role="alert">
       <span id="description_text" style="color:#000000"></span>
       <button type="button" id="neverShowAgain_description" class="close" data-dismiss="alert" aria-label="Close">
@@ -122,7 +122,7 @@
       </button>
     </div>
   </div>
-  <div class="col-lg-7 float-left">
+  <div class="col-lg-7 float-left setting_card">
     <div class="card border-dark mb-3">
       <div class="card-header pt-2 pb-2">
         <span id="setting" class="disable-selected-text" style="padding-top: 2px; padding-bottom: 2px;"></span>
@@ -361,7 +361,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-5 float-right">
+  <div class="col-lg-5 float-right SavedAndMissionTableAndPlanDetailsCard">
     <div class="accordion disable-selected-text" id="SavedAndMissionTableGroupCard">
       <div class="card border-dark">
         <div class="card-header pt-2 pb-2" id="Saved_header">
@@ -378,25 +378,25 @@
               <button type="button" class="input-group-btn btn btn-outline-dark" id="importSaved_importButton" disabled>
                 <span class="glyphicon glyphicon-import"></span></button>
               <div id="exportSaved_group">
-                <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown"
+                <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" data-offset="0,0" data-boundary="viewport"
                   id="exportSaved_button"
                   style="border-top-left-radius: 0; border-bottom-left-radius: 0; font-size: 0.875rem; margin-left: -1px;"
                   disabled><span class="glyphicon glyphicon-export"></span></button>
-                <div class="dropdown-menu dropdown-menu-right pr-2 pl-2" style="width: 280px;">
+                <div class="dropdown-menu dropdown-menu-input" style="width: 280px;">
                   <input id="exportSaved_input" class="form-control form-control-sm" type="text" readonly
                     onfocus="this.select();">
                 </div>
               </div>
             </div>
             <div id="renameSaved_group" class="mr-2 mb-1">
-              <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown"
+              <button type="button" class="btn btn-outline-dark dropdown-toggle" data-toggle="dropdown" data-boundary="window"
                 id="renameSaved_button" style="font-size: 0.875rem;" disabled><span
                   class="glyphicon glyphicon-pencil"></span></button>
-              <div class="dropdown-menu dropdown-menu-right pr-2 pl-2" style="width: 280px;">
+              <div class="dropdown-menu dropdown-menu-input dropdown-menu-right" style="width: 280px;">
                 <div class="input-group">
                   <input id="renameSaved_input" class="form-control form-control-sm" type="text"
                     onfocus="this.select();" required>
-                  <button id="renameSaved_applyButton" class="btn input-group-btn btn-success"><span
+                  <button id="renameSaved_applyButton" class="btn input-group-btn btn-success d-flex"><span
                       class="glyphicon glyphicon-ok"></span></button>
                 </div>
               </div>
@@ -489,7 +489,7 @@
                   <button class="btn btn-outline-dark" type="button" id="savePlan"
                     style="line-height: 30px; width: 99px; height: 30px; padding:0 6px; font-size:13px; border-width: 1px 0 0 0; border-radius: 0; border-bottom-left-radius: 0.25em;"></button>
                   <button class="btn btn-outline-dark" type="button" id="Capture" disabled
-                    style="line-height: 30px; width: 99px; height: 30px; padding:0 6px; font-size:13px; border-bottom-width: 0; border-radius: 0;"></button>
+                    style="line-height: 30px; width: 99px; height: 30px; padding:0 6px; font-size:13px; border-bottom-width: 0; border-radius: 0; z-index: 10;"></button>
                   <label for="PlanDetails_InputStartTime" id="PlanDetails_InputStartTime_label"
                     style="font-size: 13px; border-radius: 0;border-width: 1px 0 0 0; padding: 5px 12px; border-top-color: #000000;"
                     class="input-group-span input-group-text disable-selected-text"></label>
@@ -512,7 +512,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 float-left">
+  <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 float-left result_card">
     <div class="card border-dark mb-3 disable-selected-text">
       <div class="card-header disable-selected-text pt-2 pb-2" id="result"></div>
       <div class="card-body">
@@ -522,7 +522,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-12 row disable-selected-text m-0" style="padding: 5px 15px; font-size: 0.815rem;">
+  <div class="col-lg-12 row disable-selected-text m-0 footer_card">
     <hr style="margin: 0; width: 100%;" />
     <footer class="col-lg-4 p-0">
       GitHub: <a href="https://github.com/CHANTXU64/Girls-Frontline"

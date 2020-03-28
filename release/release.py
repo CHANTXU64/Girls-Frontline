@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-# 该脚本由release.sh调用
+#需要使用babel-cli, babel-preset-es2015, UglifyJS 3, closure-stylesheets.jar
+#该脚本适用于Linux系统
 
 import re
 import sys
@@ -10,11 +11,59 @@ import os
 
 version = sys.argv[1]
 version_word = re.sub('\.', '_', version)
+version_word = re.sub('\-', '_', version_word)
+copyrightInfo = '/** copyright info\n * [GF_logistics]{@link https://github.com/CHANTXU64/Girls-Frontline}\n *\n * @namespace GF_logistics\n * @version ' + version + '\n * @author ChantXu64 [chantxu@outlook.com]\n * @copyright ChantXu64\n * @license MIT\n */\n\n'
 
 def main():
+    os.mkdir('./js', 0o755)
+    os.mkdir('./css', 0o755)
+    os.mkdir('./dependent', 0o755)
+    os.mkdir('./dependent/js', 0o755)
+    os.mkdir('./dependent/css', 0o755)
     MergeCSS()
     MergeJS()
     compressHTML()
+    os.system('java -jar closure-stylesheets.jar ./css.css > ./css/GFLGSTS_v'+version_word+'.css --allowed-unrecognized-property user-select')
+    f = open('./css/GFLGSTS_v'+version_word+'.css', 'r+' , encoding='UTF-8')
+    content = f.read()
+    f.seek(0, 0)
+    f.write(copyrightInfo + content)
+    f.close()
+    os.remove('./css.css')
+    f = open('./.babelrc', 'w+', encoding='UTF-8')
+    f.write('{"presets":["es2015"],"plugins":[]}')
+    f.close()
+    os.system('babel ./GF_logistics.js -o ./js/GF_logistics.js')
+    os.remove('./GF_logistics.js')
+    os.remove('.babelrc')
+    os.system('uglifyjs ./js/GF_logistics.js -c -m -o ./js/GF_logistics.min.js --toplevel --comments /@license/')
+    splitJS()
+    os.remove('./js/GF_logistics.js')
+    os.remove('./js/GF_logistics.min.js')
+    os.system('zip -q -r GF_logistics_v'+version_word+'.zip ./css ./dependent ./js *.html')
+    os.system('rm -rf ./dependent')
+    os.system('rm -rf ./js')
+    os.system('rm -rf ./css')
+    os.system('rm -rf *.html')
+    print('Done!')
+
+
+def splitJS():
+    f = open('./js/GF_logistics.min.js', 'r', encoding='UTF-8')
+    flag = -1
+    f1 = open('./js/GFLGSTS_js1_v' + version_word + '.js', 'w+', encoding='UTF-8')
+    f2 = open('./js/GFLGSTS_js2_v' + version_word + '.js', 'w+', encoding='UTF-8')
+    for line in f.readlines():
+        if line.find('/** copyright info') != -1:
+            flag += 1
+        if flag == -1 or flag == 0:
+            line = re.sub(',\n', '\n', line) #目前版本uglifyjs会在最后加上","
+            f1.write(line)
+        else:
+            f2.write(line)
+    f2.close()
+    f1.close()
+    f.close()
 
 
 def getFilesPathName(file, start_comments, end_comments, search_str):
@@ -77,8 +126,6 @@ def MergeFiles(Files):
         data.write(f.read() + '\n\n')
         f.close()
     return data.getvalue()
-
-copyrightInfo = '/** copyright info\n * [GF_logistics]{@link https://github.com/CHANTXU64/Girls-Frontline}\n *\n * @namespace GF_logistics\n * @version ' + version + '\n * @author ChantXu64 [chantxu@outlook.com]\n * @copyright ChantXu64\n * @license MIT\n */\n\n'
 
 def MergeCSS():
     css_files = getFilesPathName('../pages/GF_logistics.html', '<!-- GF css !python -->', '<!-- end GF css !python -->', 'href=".+?"')

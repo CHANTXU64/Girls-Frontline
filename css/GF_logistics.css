@@ -65,10 +65,6 @@
     transition: left 0.15s ease-out;
 }
 
-#PlanDetails>tr>td {
-    width: 66px;
-}
-
 th,
 td {
     text-align: center;
@@ -80,10 +76,6 @@ td {
 
 th {
     cursor: pointer;
-}
-
-#calcTargetValueTool>tr>td {
-    width: 65px;
 }
 
 /*glyphicon*/
@@ -168,6 +160,7 @@ input[type="number"] {
 
 .calc-target-table td {
     padding: 0.3rem;
+    width: 65px;
 }
 
 .calc-target-table input {
@@ -214,6 +207,20 @@ input[type="number"] {
 .plan-details-table td {
     padding: 0.2rem;
     cursor: auto;
+    width: 66px;
+}
+
+.container-fluid {
+    min-width: 300px;
+    background-color: #FFFFFF;
+}
+
+.alert {
+    font-size: 0.875rem;
+}
+
+.dropdown-menu-input {
+    padding: 0.2rem 0.5rem;
 }
 
 /*分辨率样式*/
@@ -223,14 +230,65 @@ input[type="number"] {
     }
 }
 
+@media (max-width: 1400px) {
+    .container-fluid {
+        padding: 0;
+    }
+}
+
 @media screen and (max-width: 1560px) and (min-width: 992px) {
     .target-btn-hidden {
         display: none;
     }
 }
 
-@media screen and (max-width: 380px) {
+@media screen and (max-width: 318px) {
     .target-btn-hidden {
         display: none;
+    }
+}
+
+.header {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+}
+
+.footer_card {
+    padding: 5px 15px;
+    font-size: 0.815rem;
+}
+
+.config_card {
+    margin-top: 2rem;
+}
+
+@media (max-width: 1055px) {
+    .config_card {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .header {
+        padding: 0 0.25rem;
+        margin-top: 1rem;
+    }
+    .config_card {
+        padding: 0 0.25rem;
+    }
+    .alert_card {
+        padding: 0 0.25rem;
+    }
+    .setting_card {
+        padding: 0;
+    }
+    .SavedAndMissionTableAndPlanDetailsCard {
+        padding: 0;
+    }
+    .result_card {
+        padding: 0;
+    }
+    .footer_card {
+        padding: 0.25rem;
     }
 }

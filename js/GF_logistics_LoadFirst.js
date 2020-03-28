@@ -37,8 +37,10 @@ $("#Tab_Timetable_name").attr("href", "#Tab_Timetable");
 $("#Time_Anytime_hours").removeAttr("disabled");
 $("#Time_Anytime_minutes").removeAttr("disabled");
 $("#Tab_Anytime_MinimumIntervalTime_minutes").removeAttr("disabled");
-$("#Time_Timetable_hours").removeAttr("disabled");
-$("#Time_Timetable_minutes").removeAttr("disabled");
+if (Tab_Timetable_TIMELIST.length === 0) {
+    $("#Time_Timetable_hours").removeAttr("disabled");
+    $("#Time_Timetable_minutes").removeAttr("disabled");
+}
 $("#GreatSuccessRate").removeAttr("disabled");
 $("#ContractWeight").removeAttr("disabled");
 $("#PlanDetails_InputStartTime").removeAttr("disabled");

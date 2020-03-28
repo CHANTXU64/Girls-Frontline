@@ -37,7 +37,7 @@ class Tab {
 
         /**
          * 根据不同的计算方式计算出各个关卡的资源契约值, 同时根据一些条件排除不要的关卡, 加快计算速度
-         * 
+         *
          * 0后勤战役编号-1人力-2弹药-3口粮-4零件-5人形-6装备-7快建-8快修-9时间-10收取后勤时间表
          * @type {Array.<[string, number, number, number, number, number, number, number, number, number, Array.<number>]>}
          * @private
@@ -130,7 +130,7 @@ class Tab {
 
     /**
      * 返回QValid
-     * 
+     *
      * 0后勤战役编号-1人力-2弹药-3口粮-4零件-5人形-6装备-7快建-8快修-9时间-10收取后勤时间表
      * @param {boolean} NeedCorrection - 是否需要修正page中不恰当的输入
      * @public
@@ -153,7 +153,7 @@ class Tab {
     }
 
     /**
-     * 设置各个资源契约的最大值CurrentValue_MAX, 
+     * 设置各个资源契约的最大值CurrentValue_MAX,
      * 在此之前需要先设置QValid
      * @private
      */
@@ -194,7 +194,7 @@ class Tab {
 
     /**
      * 删除价值低的关卡
-     * 
+     *
      * 由于关卡太多导致计算缓慢, 可通过关卡价值删去价值低的关卡, 来提高计算速度
      * @param {number} QValid_MaxLength - 最后剩余的总关卡数
      * @param {Array.<number>} targetValue - 目标值
@@ -516,7 +516,7 @@ class Tab_Anytime extends Tab {
     }
 
     /**
-     * 根据输入的关卡返回8项资源契约的总计值, 若最小间隔时间小于设置的最小间隔时间, 
+     * 根据输入的关卡返回8项资源契约的总计值, 若最小间隔时间小于设置的最小间隔时间,
      * 返回[-1, -1, -1, -1, -1, -1, -1, -1]
      * @param {number} Mission_n1 关卡1
      * @param {number} Mission_n2 关卡2
@@ -545,7 +545,7 @@ class Tab_Anytime extends Tab {
 
     /**
      * 删除价值低的关卡
-     * 
+     *
      * 由于关卡太多导致计算缓慢, 可通过关卡价值删去价值低的关卡, 来提高计算速度
      * @param {number} Qvalid_MaxLength - 最后剩余的总关卡数
      * @param {Array.<number>} targetValue - 目标值
@@ -607,7 +607,7 @@ class Tab_Anytime extends Tab {
     }
 
     /**
-     * 应用已保存的方案中的自定义部分, 
+     * 应用已保存的方案中的自定义部分,
      * 包括后勤总时间与最小间隔时间
      * @param {Array.<number>} Saved_Custom - 已保存的方案中的自定义部分
      * @public
@@ -659,9 +659,9 @@ class Tab_Anytime extends Tab {
 }
 /**
  * 依据四个关卡时间和后勤总时间计算最小时间间隔
- * 
+ *
  * 会改变Time_Arr!!!
- * 
+ *
  * Time_Arr必须从小到大排序!!!
  * @param {Array.<number>} Time_Arr - 四个关卡的时间
  * @param {number} Total_Time - 后勤总时间
@@ -861,7 +861,7 @@ class Tab_Timetable extends Tab {
     }
 
     /**
-     * 应用已保存的方案中的自定义部分, 
+     * 应用已保存的方案中的自定义部分,
      * 包括后勤总时间与时间表时间
      * @param {[number, Array.<number>]} Saved_Custom - 已保存的方案中的自定义部分
      * @public
@@ -878,7 +878,7 @@ class Tab_Timetable extends Tab {
 
 /**
  * 获取当前的Tab
- * 
+ *
  * 不会返回Tab类型, 为保证注释能够符合不同子类, 将父类放入首位
  * @return {Tab|Tab_Anytime|Tab_Timetable}
  */
@@ -893,7 +893,7 @@ function getShownTab() {
 
 /**
  * 由Tab的名称返回Tab类型
- * 
+ *
  * 不会返回{Tab}类型, 为保证注释能够符合不同子类, 将父类放入首位
  * @param {string} tab_name - Tab名称
  * @return {Tab|Tab_Anytime|Tab_Timetable}

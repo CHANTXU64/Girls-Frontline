@@ -131,3 +131,12 @@ function MissionsDetails_clickRow(Row) {
             cancelHighlightingResultsPlan();
     }
 }
+
+/**
+ * 是否有排序结果?
+ * @returns {boolean}
+ */
+function hasResultPlan() {
+    const Plan_Table_innerHTML = document.getElementById("Plan_Table").innerHTML;
+    return Plan_Table_innerHTML !== "" && Plan_Table_innerHTML !== language.JS.NoPlan;
+}

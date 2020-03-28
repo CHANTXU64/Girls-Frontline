@@ -6,7 +6,7 @@ class Plan_Original {
     constructor(ShownTab, list_length) {
         /**
          * 方案列表
-         * @type {Array.<Array.<number>>} 
+         * @type {Array.<Array.<number>>}
          */
         this.List = this._setList(list_length);
         this.List_length = list_length;
@@ -15,7 +15,7 @@ class Plan_Original {
         this.ShownTab = ShownTab;
     }
     /**
-     * @param {number} list_length 
+     * @param {number} list_length
      * @private
      */
     _setList(list_length) {
@@ -126,7 +126,7 @@ class Plan_Stdzn extends Plan_Original {
         this.targetValue = this._correctTargetValue();
         this._norm_target = this._getNorm(this.targetValue);
     }
-    /** 
+    /**
      * 取得页面上的TargetValue, 并防止资源(或契约)之间之比过大(最大5000倍)
      * @returns {Array.<number>}
      */
@@ -182,8 +182,8 @@ class Plan_Stdzn extends Plan_Original {
         return false;
     }
     /**
-     * @param {Array.<number>} Values 
-     * @param {number} CalibrationValue 
+     * @param {Array.<number>} Values
+     * @param {number} CalibrationValue
      */
     _correctValue(Values, CalibrationValue) {
         const CorrectionRate = CalibrationValue / ArrayMax(Values);
