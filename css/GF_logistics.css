@@ -164,6 +164,7 @@ input[type="number"] {
 }
 
 .calc-target-table input {
+    font-size: 0.88rem;
     padding: 3px 6px;
     width: 65px;
     border-radius: 0;
@@ -205,6 +206,7 @@ input[type="number"] {
 
 .plan-details-table th,
 .plan-details-table td {
+    font-size: 14px;
     padding: 0.2rem;
     cursor: auto;
     width: 66px;
