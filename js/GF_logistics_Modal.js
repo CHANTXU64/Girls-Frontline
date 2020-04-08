@@ -82,7 +82,6 @@ class Modal {
 
     /**@private */
     static _alert_main(message, title) {
-        this._blur();
         this._setBody(message);
         this._setTitle(title);
         this._html_cancelButton.addClass("d-none");
@@ -92,7 +91,6 @@ class Modal {
 
     /**@private */
     static _fonfirm_main(message, func_ok, func_cancel, title) {
-        this._blur();
         this._setBody(message);
         this._setTitle(title);
         this._html_okButton.on("click", func_ok);
@@ -104,7 +102,6 @@ class Modal {
 
     /**@private */
     static _prompt_main(message, title, func_ok, func_cancel, inputType, defaultInput, checkValidFunc, validFeedbackFunc, invalidFeedbackFunc) {
-        this._blur();
         this._setTitle(title);
         let body = '<div class="form-group"><label for="modal_input">' + message;
         body += '</label><input type="' + inputType + '" class="form-control" id="modal_input" value="' + defaultInput;
@@ -160,14 +157,6 @@ class Modal {
     }
 
     /**
-     * 由于该组件不会阻塞js, 所以需要在显示modal前失去焦点, 避免再操作
-     * @private
-     */
-    static _blur() {
-        document.activeElement.blur();
-    }
-
-    /**
      * 设置标题
      * @param {string} title - 标题
      * @private
@@ -216,6 +205,12 @@ Modal._html_footer = $("#Modal_footer");
 Modal._html_okButton = $("#Modal_footer_button_ok");
 Modal._html_cancelButton = $("#Modal_footer_button_cancel");
 
+Modal._html_modal.on("show.bs.modal", function () {
+    //由于该组件不会阻塞js, 所以需要在显示modal前失去焦点且禁止滚动, 避免再操作
+    document.activeElement.blur();
+    document.documentElement.style.overflowY="hidden";
+});
+
 Modal._html_modal.on("shown.bs.modal", function () {
     switch (Modal._lastModal) {
         case "alert":
@@ -257,4 +252,6 @@ Modal._html_modal.on("hidden.bs.modal", function () {
             break;
     }
     Modal._runFirstModal();
+    //恢复滚动
+    document.documentElement.style.overflowY="auto";
 })
