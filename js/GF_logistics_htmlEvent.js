@@ -488,7 +488,7 @@ $("#savePlan").on("click", function () {
     Saved.saveThisPlan();
 });
 $("#Capture").on("click", function () {
-    html2canvas(document.getElementById("PlanDetails")).then(function (canvas) {
+    html2canvas(document.getElementById("PlanDetails"), {logging: false}).then(function (canvas) {
         if (window.navigator.msSaveBlob) { // IE
             var bstr = atob(canvas.toDataURL().split(',')[1]);
             var n = bstr.length;

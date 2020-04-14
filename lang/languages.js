@@ -3,6 +3,7 @@
  */
 let language;
 const language_zh_CN = {
+    name: "简体中文",
     lang: "zh-Hans",
     title: "少女前线-后勤组合排序器",
     HTML: {
@@ -80,7 +81,7 @@ const language_zh_CN = {
         PlanDetails_InputExecutionTimes_label: "后勤执行次数",
         Saved_Title: "已保存的",
         NoSaved: "空",
-        start_ranking_html: "点击 <span style=\"color:#165399\">开始排序</span> 按钮，排序前十六的结果将在这里显示",
+        start_ranking_html: "点击 <span style=\"color:#007bff\">开始排序</span> 按钮，排序前十六的结果将在这里显示",
         permanentAddress: "永久地址: ",
         calcTargetValueTool_title: "计算需求量工具",
         calcTargetValueTool_text_ResourceContract: "资源契约",
@@ -270,6 +271,7 @@ const language_zh_CN = {
     }
 };
 const language_zh_TW = {
+    name: "繁體中文",
     lang: "zh-Hant",
     title: "少女前線-後勤組合排序器",
     HTML: {
@@ -347,7 +349,7 @@ const language_zh_TW = {
         PlanDetails_InputExecutionTimes_label: "執行次數",
         Saved_Title: "已保存的",
         NoSaved: "空",
-        start_ranking_html: "點擊 <span style=\"color:#165399\">開始排序</span> 按鈕，排序前十六的結果將在這裡顯示",
+        start_ranking_html: "點擊 <span style=\"color:#007bff\">開始排序</span> 按鈕，排序前十六的結果將在這裡顯示",
         permanentAddress: "永久地址: ",
         calcTargetValueTool_title: "計算需求量工具",
         calcTargetValueTool_text_ResourceContract: "資源契約",
@@ -537,6 +539,7 @@ const language_zh_TW = {
     }
 };
 const language_en = {
+    name: "English",
     lang: "en",
     title: "Girls' Frontline Logistics Combination Calculator",
     HTML: {
@@ -565,8 +568,8 @@ const language_en = {
         h4ChapterLimit: "Unlocked chapter",
         Display_PerHour_text: "Hourly",
         Display_Total_text: "Total",
-        ContractWeight_notImportant: "Contract Weight: 0~100",
-        ContractWeight_Important: "",
+        ContractWeight_notImportant: "Contract Weight:<br>0",
+        ContractWeight_Important: "<br>100",
         start_ranking: "Start Ranking",
         clear_ranking: "Clear Ranking Results",
         result: "Ranking Results",
@@ -614,7 +617,7 @@ const language_en = {
         PlanDetails_InputExecutionTimes_label: "Execution Times",
         Saved_Title: "Saved Plan",
         NoSaved: "No Saved Plan",
-        start_ranking_html: "Click <span style=\"color:#165399\">Start Ranking</span> button, top sixteen results will display here",
+        start_ranking_html: "Click <span style=\"color:#007bff\">Start Ranking</span> button, top sixteen results will display here",
         permanentAddress: "Address: ",
         calcTargetValueTool_title: "Calculate Demand Tool",
         calcTargetValueTool_text_ResourceContract: "Value",

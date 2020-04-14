@@ -15,26 +15,36 @@ function loadHTML_Target() {
     HTML = '';
     const TargetName = ["Manp", "Ammu", "Rati", "Part", "TPro", "Equi", "QPro", "QRes"];
     const Target = ['MT', 'AT', 'RT', 'PT', 'TT', 'ET', 'QPT', 'QRT'];
-    for (let i = 0; i < 4; i++) {
-        HTML += '<div class="input-group input-group-regular" style="margin-bottom: 10px;"><span class="input-group-span input-group-text"style="padding-right:10px;padding-left:10px;"';
-        HTML += 'id=' + TargetName[i] + '>';
-        HTML += '</span><button class="btn btn-outline-dark input-group-btn btn-bolder"type="button"id="Target_minus_100_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
-        HTML += '&minus;</button><button class="btn btn-outline-dark input-group-btn target-btn-hidden"type="button"id="Target_minus_10_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
-        HTML += '&minus;</button><input type="number" min="0"class="form-control"id="';
+    for (let i = 0; i < 8; i++) {
+        HTML += '<div class="input-group input-group-regular" style="margin-bottom: 10px;"><label for="';
         HTML += Target[i];
-        HTML += '"value=0 onfocus="this.select();"style="border-left-width:0"><button class="btn btn-outline-dark input-group-btn target-btn-hidden"type="button"id="Target_plus_10_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
-        HTML += '+</button><button class="btn btn-outline-dark input-group-btn btn-bolder"type="button"id="Target_plus_100_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
-        HTML += '&plus;</button></div>';
-    }
-    for (let i = 4; i < 8; i++) {
-        HTML += '<div class="input-group input-group-regular" style="margin-bottom: 10px;"><span class="input-group-span input-group-text"style="padding-right:10px;padding-left:10px;"';
+        HTML += '" class="input-group-span input-group-text"style="padding-right:10px;padding-left:10px;"';
         HTML += 'id=' + TargetName[i] + '>';
-        HTML += '</span><button class="btn btn-outline-dark input-group-btn btn-bolder"id="Target_minus_1_' + Target[i] + '"type="button"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
-        HTML += '&minus;</button><button class="btn btn-outline-dark input-group-btn target-btn-hidden"type="button"id="Target_minus_01_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
-        HTML += '&minus;</button><input type="number" min="0" step="0.01" class="form-control"id="';
+        HTML += '</label><button class="btn btn-outline-dark input-group-btn btn-bolder"type="button"id="Target_minus_1';
+        if (i < 4)
+            HTML += '00';
+        HTML += '_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '&minus;</button><button class="btn btn-outline-dark input-group-btn target-btn-hidden"type="button"id="Target_minus_';
+        if (i < 4)
+            HTML += '10';
+        else
+            HTML += '01';
+        HTML += '_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '&minus;</button><input type="number" min="0"';
+        if (i >= 4)
+            HTML += 'step="0.01"'
+        HTML += 'class="form-control"id="';
         HTML += Target[i];
-        HTML += '"value=0 onfocus="this.select();"style="border-left-width:0"><button class="btn btn-outline-dark input-group-btn target-btn-hidden"type="button"id="Target_plus_01_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
-        HTML += '+</button><button class="btn btn-outline-dark input-group-btn btn-bolder"type="button"id="Target_plus_1_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '"value=0 onfocus="this.select();"style="border-left-width:0"><button class="btn btn-outline-dark input-group-btn target-btn-hidden"type="button"id="Target_plus_';
+        if (i < 4)
+            HTML += '10';
+        else
+            HTML += '01';
+        HTML += '_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
+        HTML += '+</button><button class="btn btn-outline-dark input-group-btn btn-bolder"type="button"id="Target_plus_1';
+        if (i < 4)
+            HTML += '00';
+        HTML += '_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
         HTML += '&plus;</button></div>';
     }
     document.getElementById("setTargetInput").innerHTML = HTML;
@@ -75,14 +85,18 @@ function loadHTML_language() {
     document.title = language.title;
 
     //normal------------
+    //先判断是否存在元素以防出现bug, 已知bug为alert点击"X"(不再显示)后会将元素删除, 若此时切换语言会导致bug
     for (let i in language_HTML) {
-        document.getElementById(i).innerHTML = language_HTML[i];
+        if (document.getElementById(i) !== null)
+            document.getElementById(i).innerHTML = language_HTML[i];
     }
     for (let i in language_HTMLJS.placeholder) {
-        document.getElementById(i).placeholder = language_HTMLJS.placeholder[i];
+        if (document.getElementById(i) !== null)
+            document.getElementById(i).placeholder = language_HTMLJS.placeholder[i];
     }
     for (let i in language_HTMLJS.title) {
-        document.getElementById(i).title = language_HTMLJS.title[i];
+        if (document.getElementById(i) !== null)
+            document.getElementById(i).title = language_HTMLJS.title[i];
     }
     //------------------
 

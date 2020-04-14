@@ -9,12 +9,6 @@
   <meta name="author" content="ChantXu">
   <meta name="keywords" content="少女前线, 后勤, 计算, Girls' Frontline, Logistics Support, Calculator">
   <title>Girls' Frontline Logistics Combination Calculator</title>
-  <style>
-    @font-face {
-      font-family: 'Glyphicons Halflings';
-      src: url(data:application/font-woff;charset=utf-8;base64,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) format('woff');
-    }
-  </style>
 
   <!-- vendor css bootstrap !python-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
@@ -49,21 +43,17 @@
     html {
       overflow-y: scroll;
     }
-
     :root {
       overflow-y: auto;
       overflow-x: hidden;
     }
-
     :root body {
       position: absolute;
     }
-
     body {
       width: 100vw;
       overflow: hidden;
     }
-
     .container-fluid {
       width: 100vw;
     }
@@ -100,14 +90,15 @@
   </div>
   <h2 id="page-header" class="col-lg-7 float-left disable-selected-text header">
     <span id="header"></span>
-    <div class="btn-group"><button type="button" id="lang-zh" disabled class="btn btn-outline-dark dropdown-toggle btn-regular" data-boundary="window"
-        data-toggle="dropdown">中文</button>
+    <div class="btn-group">
+      <button type="button" id="set_lang" disabled class="btn btn-outline-dark dropdown-toggle btn-regular" data-boundary="window"
+        data-toggle="dropdown">Language</button>
       <ul class="dropdown-menu" style="min-width: 8rem">
-        <a href="#" class="dropdown-item" id="lang-zh-CN">简体中文</a>
-        <a href="#" class="dropdown-item" id="lang-zh-TW">繁體中文</a>
+        <a class="dropdown-item" id="lang-zh-CN">简体中文</a>
+        <a class="dropdown-item" id="lang-zh-TW">繁體中文</a>
+        <a class="dropdown-item" id="lang-en">English</a>
       </ul>
     </div><!-- 必须在这两个标签间加空 !python space-->
-    <button type="button" class="btn btn-outline-dark btn-regular" id="lang-en" disabled>English</button><!-- 必须在这两个标签间加空 !python space-->
     <div class="spinner-border align-middle" id="page_loading" role="status" style="border-width: 0.2rem; height: 1.5rem; width: 1.5rem;">
       <span class="sr-only">Loading...</span>
     </div>
@@ -115,7 +106,7 @@
   </h2>
   <div class="col-lg-5 float-right input-group input-group-regular mb-3 config_card"
     style="max-width: 440px;">
-    <span class="input-group-label input-group-text disable-selected-text" id="Config_text"></span>
+    <label for="Config_importInput" class="input-group-label input-group-text disable-selected-text" id="Config_text"></label>
     <input type="text" class="form-control" style="min-width: 40px;" id="Config_importInput" onclick="this.select();"
       autocomplete="off" disabled>
     <button type="button" class="btn btn-outline-dark input-group-btn" id="Config_importButton" disabled>
@@ -159,8 +150,8 @@
           <span class="switch-selection"></span>
         </div>
       </div>
-      <div class="card-body row" style="padding-left: 5px; padding-right: 5px; margin: 0;">
-        <div class="col-lg-7">
+      <div class="card-body row" style="margin: 0;">
+        <div class="col-lg-7 p-0">
           <ul class="nav nav-tabs nav-justified">
             <li class="nav-item text-nowrap">
               <a class="nav-link active" href="#" id="Tab_Anytime_name"></a>
@@ -211,7 +202,7 @@
                   <div inverse-right style="width:70%;"></div>
                   <div range style="left:0%;right:0%; background-color: #dee2e6;"></div>
                   <span thumb id="Tab_Timetable_range_thumb"
-                    style="left:100%; background-color:rgb(221, 155, 155); cursor:default;"></span>
+                    style="left:100%; background-color:rgb(221, 155, 155); cursor:default; z-index:0;"></span>
                   <div id="Tab_Timetable_range_tooltip" class="tooltip right custom-tooltip"
                     style="right: -69px; top:-9px;">
                     <div class="tooltip-arrow" style="top: 7px;"></div>
@@ -362,7 +353,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-5 disable-selected-text" id="target">
+        <div class="col-lg-5 disable-selected-text Demand p-0" id="target">
           <h5 id="Demand"></h5>
           <div id="setTargetButton"></div>
           <label id="ContractWeight_label" class="btn-toolbar justify-content-between mb-0" for="customRange1">
@@ -372,7 +363,7 @@
           <input type="range" class="custom-range" id="ContractWeight" min="0" max="100" step="2" disabled>
           <div id="setTargetInput"></div>
         </div>
-        <div class="col-lg-12 btn-toolbar">
+        <div class="col-lg-12 btn-toolbar p-0">
           <button type="button" class="btn btn-primary" id="start_ranking" disabled></button>
           <button type="button" class="btn btn-danger" style="display: none;" id="clear_ranking"></button>
           <div class="spinner-border text-primary ml-2" role="status" style="border-width: 0.3rem; display: none;" id="ranking_loading">
@@ -392,7 +383,7 @@
         </div>
         <div id="Saved_card" class="collapse" aria-labelledby="Saved_header"
           data-parent="#SavedAndMissionTableGroupCard">
-          <div class="btn-toolbar pl-1 pt-1 pr-1" role="toolbar">
+          <div class="btn-toolbar pl-3 pt-1 pr-3" role="toolbar">
             <div class="input-group input-group-regular mr-2 mb-1">
               <input type="text" class="form-control" style="min-width: 200px;" id="importSaved_input" disabled
                 onclick="this.select();" autocomplete="off">
@@ -500,7 +491,7 @@
             <tr id="PlanDetails_PerHour"></tr>
             <tr id="PlanDetails_Total"></tr>
             <tr id="PlanDetails_Chart_row">
-              <td colspan=10 id="PlanDetails_Chart"></td>
+              <td colspan=10 id="PlanDetails_Chart" class="pb-1"></td>
             </tr>
           </tbody>
           <tbody class="border-top-0">

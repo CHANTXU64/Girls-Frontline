@@ -28,8 +28,7 @@ MobilePCDevice();
 if (CAN_STORAGE_WORK)
     sessionStorage.setItem("GF_Logistics_windowOnload", "success");
 
-$("#lang-zh").removeAttr("disabled");
-$("#lang-en").removeAttr("disabled");
+$("#set_lang").removeAttr("disabled");
 $("#Tab_Anytime_name").attr("data-toggle", "tab");
 $("#Tab_Anytime_name").attr("href", "#Tab_Anytime");
 $("#Tab_Timetable_name").attr("data-toggle", "tab");

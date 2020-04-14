@@ -196,14 +196,17 @@ def compressHTML():
         line = re.sub('^\s*//.*', '', line) # 不安全地删除js注释
         line = re.sub('^\s+', '', line) # 删除每行前面的空
         line = CompressHTML_style(line) # 删除'style=""'中的最后一个';'
-        line = re.sub('(?<=[:|;"=\(\)\{\}])\s', '', line) # 删除一些符号后面的空
-        line = re.sub('\s(?=[:|;"=\{\}\(\)])', '', line) # 删除一些符号前面的空
+        # line = re.sub('(?<=[:|;"=\(\)\{\}])\s', '', line) # 删除一些符号后面的空
+        # line = re.sub('\s(?=[:|;"=\{\}\(\)])', '', line) # 删除一些符号前面的空
         line = re.sub('(?<!\w)\n', '', line) # 删除不是字母后的换行符
         line = re.sub('space-->', '--> ', line) # 在'space-->'后加上空格
         line = re.sub('<!--[\w|\W]*?-->', '', line) # 删除html注释
         line = re.sub('</td>', '', line) # 删除</td>
         line = re.sub('</tr>', '', line) # 删除</tr>
         line = re.sub('</th>', '', line) # 删除</th>
+        line = re.sub('</thead>', '', line) # 删除</thead>
+        line = re.sub('</tbody>', '', line) # 删除</tbody>
+        line = re.sub('\n', ' ', line)
         if (line != '' and line != '\n'):
             new_html.append(line)
     new_file = open("GF_logistics.html", "w+", encoding="UTF-8")

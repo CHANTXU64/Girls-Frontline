@@ -111,7 +111,7 @@ class ResultsPlan {
     static _getPrintHtml(sorted_result_plan) {
         let tab = "";
         tab += '<div class="table-responsive" id="result_plan_table" style="margin-bottom: 0;">';
-        tab += '<table class="table table-striped table-hover text-nowrap" style="margin-bottom: 0; text-align: center; border: 0; font-size: 14px;">';
+        tab += '<table class="table table-striped table-hover text-nowrap result-table" style="margin-bottom: 0; text-align: center; border: 0; font-size: 14px;">';
         let ShownTab = getShownTab();
         tab += (ShownTab.printPlanTableTitle() + '<tbody>');
 

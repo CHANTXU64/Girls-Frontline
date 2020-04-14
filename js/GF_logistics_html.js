@@ -20,6 +20,7 @@ function setLanguage() {
         language = language_en;
         storageSetItem("Lang", "en");
     }
+    $("#set_lang").html(language.name)
 }
 
 /**
@@ -47,6 +48,7 @@ function changeLanguage(lang) {
             language = language_en;
             break;
     }
+    $("#set_lang").html(language.name)
     loadHTML_language();
 }
 
