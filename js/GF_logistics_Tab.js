@@ -380,6 +380,15 @@ class Tab {
     applySavedCustom(Saved_Custom) {}
 
     /**
+     * 从数据中返回后勤总时间
+     * @param {Array} Saved_Custom - 已保存的方案中的自定义部分
+     * @public
+     */
+    getTotalTimeFromSavedCustom(Saved_Custom) {
+        return Saved_Custom[0];
+    }
+
+    /**
      * 打印方案详情自定义内容的标题
      * @public
      */

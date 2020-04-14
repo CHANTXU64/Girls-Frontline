@@ -129,6 +129,7 @@ function changeCalculateOutput_Hourly() {
     MissionsDetails.print();
     if (hasResultPlan())
         printResultsPlan();
+    Saved.setSaved(Saved._saved);
 }
 /**更改为以总计显示 */
 function changeCalculateOutput_Total() {
@@ -144,6 +145,7 @@ function changeCalculateOutput_Total() {
     MissionsDetails.print();
     if (hasResultPlan())
         printResultsPlan();
+    Saved.setSaved(Saved._saved);
 }
 
 /**

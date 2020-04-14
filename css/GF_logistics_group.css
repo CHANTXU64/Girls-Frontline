@@ -81,7 +81,39 @@
     border-radius: 0.25rem;
 }
 
-.list-group-regular>.list-group-item {
-    padding: 0.6rem 1rem;
+.Saved-List>.list-group-item {
+    padding: 0 1rem;
     font-size: 0.875rem;
+}
+
+.Saved-Name {
+    padding: 0.64rem 0;
+    float: left;
+    display: block;
+    overflow: hidden;
+    word-break: keep-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 160px);
+}
+
+.Saved-Overview {
+    float: right;
+}
+
+.Saved-Overview-Time {
+    padding: 0.64rem 0 0.64rem 0.5rem;
+    float: left;
+}
+
+.Saved-Overview-Resources {
+    padding-left: 1rem;
+    float: right;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.Saved-Overview-Resources>span {
+    padding: 0;
+    text-align: center;
 }

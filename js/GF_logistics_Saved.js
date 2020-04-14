@@ -37,6 +37,14 @@ class Saved {
         newData.TabName = ShownTab.name;
         newData.TabCustom = ShownTab.getSavedCustom();
         newData.Missions = MissionsDetails.getSelectedMissions();
+        let Missions = MissionsDetails.getSelectedMissionsDetails();
+        newData.resources = [0, 0, 0, 0];
+        for (let i = 0; i < Missions.length; ++i) {
+            newData.resources[0] += Missions[i][1];
+            newData.resources[1] += Missions[i][2];
+            newData.resources[2] += Missions[i][3];
+            newData.resources[3] += Missions[i][4];
+        }
         newData.startTime = Input_getStartTime();
 
         Saved._saved.push(newData);
@@ -51,7 +59,7 @@ class Saved {
      * @public
      */
     static checkNameValid(name) {
-        if (name !== "" && name.length <= 50)
+        if (name !== "" && name.length <= 30)
             return true;
         else
             return false;
@@ -66,7 +74,7 @@ class Saved {
     static invalidNameFeedback(invalidName) {
         if (invalidName === "")
             return language.JS.Saved_invalidNameFeedback1;
-        if (invalidName.length >= 50)
+        if (invalidName.length >= 30)
             return language.JS.Saved_invalidNameFeedback2;
         return "";
     }
@@ -94,7 +102,36 @@ class Saved {
      * @private
      */
     static _getSavedRowHTML(row, allSaved = this._saved) {
-        let HTML = '<a class="list-group-item list-group-item-action" tabindex="0" id="SavedTable_row_' + row + '">' + allSaved[row].name + '</a>';
+        let HTML = '<a class="list-group-item list-group-item-action" tabindex="0" id="SavedTable_row_' + row + '">';
+        HTML += this._getSavedRowHTML_main(row, allSaved);
+        HTML += '</a>';
+        return HTML;
+    }
+
+    /**
+     * 获取Saved某行的HTML(main)
+     * @param {number} row - 打印的行数
+     * @param {Saved._saved} allSaved - 所有的Saved数据
+     * @private
+     */
+    static _getSavedRowHTML_main(row, allSaved = this._saved) {
+        let HTML = '<span class="Saved-Name">' + allSaved[row].name + '</span>';
+        HTML += '<div class="Saved-Overview">';
+        let tab = getTabByName(allSaved[row].TabName);
+        let TotalTime = tab.getTotalTimeFromSavedCustom(allSaved[row].TabCustom);
+        HTML += '<div class="Saved-Overview-Time">' + TimeFormat(TotalTime) + '</div>';
+        if (allSaved[row].resources) {
+            HTML += '<div class="Saved-Overview-Resources row row-cols-2">';
+            let resources = allSaved[row].resources;
+            for (let i = 0; i < 4; ++i) {
+                if (is_CalculateByHour())
+                    HTML += '<span class="col">' + parseInt(resources[i] * 60) + '</span>';
+                else
+                    HTML += '<span class="col">' + parseInt(resources[i] * TotalTime) + '</span>';
+            }
+            HTML += '</div>';
+        }
+        HTML += '</div>';
         return HTML;
     }
 
@@ -200,7 +237,7 @@ class Saved {
         const row = this._selectRow;
         const newName = $("#renameSaved_input").val();
         this._saved[row].name = newName;
-        $("#SavedTable_row_" + row).html(newName);
+        $("#SavedTable_row_" + row).html(this._getSavedRowHTML_main(row));
         storageSetItem("Saved", this._saved);
     }
 
@@ -212,8 +249,8 @@ class Saved {
         let row = this._selectRow;
         $("#SavedTable_row_" + row).removeClass("list-group-item-success");
         $("#SavedTable_row_" + (row - 1)).addClass("list-group-item-success");
-        $("#SavedTable_row_" + row).html(this._saved[row - 1].name);
-        $("#SavedTable_row_" + (row - 1)).html(this._saved[row].name);
+        $("#SavedTable_row_" + row).html(this._getSavedRowHTML_main(row - 1));
+        $("#SavedTable_row_" + (row - 1)).html(this._getSavedRowHTML_main(row));
         [this._saved[row], this._saved[row - 1]] = [this._saved[row - 1], this._saved[row]];
         this._selectRow--;
         $("#moveSaved_down").removeAttr("disabled");
@@ -230,8 +267,8 @@ class Saved {
         let row = this._selectRow;
         $("#SavedTable_row_" + row).removeClass("list-group-item-success");
         $("#SavedTable_row_" + (row + 1)).addClass("list-group-item-success");
-        $("#SavedTable_row_" + row).html(this._saved[row + 1].name);
-        $("#SavedTable_row_" + (row + 1)).html(this._saved[row].name);
+        $("#SavedTable_row_" + row).html(this._getSavedRowHTML_main(row + 1));
+        $("#SavedTable_row_" + (row + 1)).html(this._getSavedRowHTML_main(row));
         [this._saved[row], this._saved[row + 1]] = [this._saved[row + 1], this._saved[row]];
         this._selectRow++;
         $("#moveSaved_up").removeAttr("disabled");
