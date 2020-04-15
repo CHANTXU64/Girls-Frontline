@@ -298,7 +298,8 @@ class PlanDetails {
                     x: [1, 2],
                     y: 0
                 },
-                data: data
+                data: data,
+                silent: true
             }],
             animation: animation,
             backgroundColor: "#FFFFFF"
