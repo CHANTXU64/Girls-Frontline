@@ -551,7 +551,7 @@ const language_en = {
         localstorageDoesNotWork: "For some reason, Web storage doesn't work, you need to manually export the configurations.",
         localstorageWarning_text: "The pages use Web storage. Clearing the browser cache will cause all data to be cleared. Please manually export and save your data regularly.",
         setting: "Setting",
-        Tab_Anytime_name: "Continuous Logistics",
+        Tab_Anytime_name: "Continuous",
         Tab_Timetable_name: "Timetable",
         tab_Anytime_time: "Total Logistics Time",
         tab_Anytime_hour: "hr",

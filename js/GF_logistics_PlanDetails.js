@@ -4,15 +4,8 @@ class PlanDetails {
      * @param {string} HTML_TAB - 目前显示的Tab
      */
     static printShownTab(HTML_TAB) {
-        let ShownTab_Name = "";
-        switch (HTML_TAB) {
-            case "Anytime":
-                ShownTab_Name = language.HTML.Tab_Anytime_name;
-                break;
-            case "Timetable":
-                ShownTab_Name = language.HTML.Tab_Timetable_name;
-                break;
-        }
+        let tab = getTabByName(HTML_TAB);
+        let ShownTab_Name = tab.displayName;
         document.getElementById("PlanDetails_ShownTab").innerHTML = language.JS.PlanDetails_calculateMethod + ': ' + ShownTab_Name;
     }
 

@@ -11,6 +11,12 @@ class Tab {
         this.name = "";
 
         /**
+         * Tab的显示名称
+         * @public
+         */
+        this.displayName = "";
+
+        /**
          * 用于getTotalTime()调用, 当计算过TotalTime后将不再计算一遍
          * @private
          */
@@ -413,6 +419,7 @@ class Tab_Anytime extends Tab {
     constructor() {
         super();
         this.name = "Anytime";
+        this.displayName = language.HTML.Tab_Anytime_name;
         this.PlanTableResourceAndContractWidth = "8.88%";
         /**
          * 存储方案用时, 用于计算最小间隔时间时加快寻找速度
@@ -755,6 +762,7 @@ class Tab_Timetable extends Tab {
     constructor() {
         super();
         this.name = "Timetable";
+        this.displayName = language.HTML.Tab_Timetable_name;
         this._QValid = [];
         /**
          * 时间表

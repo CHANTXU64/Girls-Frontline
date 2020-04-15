@@ -119,17 +119,21 @@ class Saved {
         HTML += '<div class="Saved-Overview">';
         let tab = getTabByName(allSaved[row].TabName);
         let TotalTime = tab.getTotalTimeFromSavedCustom(allSaved[row].TabCustom);
-        HTML += '<div class="Saved-Overview-Time">' + TimeFormat(TotalTime) + '</div>';
+        HTML += '<div>' + tab.displayName + '<br>' + TimeFormat(TotalTime) + '</div>';
         if (allSaved[row].resources) {
-            HTML += '<div class="Saved-Overview-Resources row row-cols-2">';
-            let resources = allSaved[row].resources;
-            for (let i = 0; i < 4; ++i) {
-                if (is_CalculateByHour())
-                    HTML += '<span class="col">' + parseInt(resources[i] * 60) + '</span>';
-                else
-                    HTML += '<span class="col">' + parseInt(resources[i] * TotalTime) + '</span>';
+            let resources = allSaved[row].resources.slice();
+            if (is_CalculateByHour()) {
+                for (let i = 0; i < 4; ++i) {
+                    resources[i] *= 60;
+                }
             }
-            HTML += '</div>';
+            else {
+                for (let i = 0; i < 4; ++i) {
+                    resources[i] *= TotalTime;
+                }
+            }
+            HTML += '<div>' + Math.round(resources[0]) + '<br>' + Math.round(resources[2]) + '</div>';
+            HTML += '<div>' + Math.round(resources[1]) + '<br>' + Math.round(resources[3]) + '</div>';
         }
         HTML += '</div>';
         return HTML;
@@ -313,7 +317,7 @@ class Saved {
     static _deleteSelected_ok(row) {
         this._cancelSelectThisRow(row);
         for (let i = row; i < this._saved.length - 1; i++) {
-            $("#SavedTable_row_" + i).html(this._saved[i + 1].name);
+            $("#SavedTable_row_" + i).html(this._getSavedRowHTML_main(i + 1));
         }
         const elem_remove = document.getElementById("SavedTable_row_" + (this._saved.length - 1));
         document.getElementById("Saved_Body").removeChild(elem_remove);

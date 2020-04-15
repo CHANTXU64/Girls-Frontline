@@ -99,21 +99,11 @@
 
 .Saved-Overview {
     float: right;
+    display: flex;
 }
 
-.Saved-Overview-Time {
-    padding: 0.64rem 0 0.64rem 0.5rem;
-    float: left;
-}
-
-.Saved-Overview-Resources {
-    padding-left: 1rem;
-    float: right;
-    margin-right: 0;
-    margin-left: 0;
-}
-
-.Saved-Overview-Resources>span {
-    padding: 0;
+.Saved-Overview>div {
+    display: inline;
     text-align: center;
+    padding-left: 0.8rem;
 }
