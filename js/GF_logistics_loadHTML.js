@@ -131,13 +131,22 @@ function loadHTML_language() {
         $("#Demand").html(language_HTMLJS.Demand_total);
 
     //style-------------
-    document.getElementById("Manp").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("Ammu").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("Rati").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("Part").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("TPro").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("Equi").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("QPro").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("QRes").style.width = language_CSS.TargetValueSpan_Width;
+    let targetSpanWidth = language_CSS.TargetValueSpan_Width;
+    document.getElementById("Manp").style.width = targetSpanWidth;
+    document.getElementById("Ammu").style.width = targetSpanWidth;
+    document.getElementById("Rati").style.width = targetSpanWidth;
+    document.getElementById("Part").style.width = targetSpanWidth;
+    document.getElementById("TPro").style.width = targetSpanWidth;
+    document.getElementById("Equi").style.width = targetSpanWidth;
+    document.getElementById("QPro").style.width = targetSpanWidth;
+    document.getElementById("QRes").style.width = targetSpanWidth;
+    document.getElementById("PC_MT_label").style.width = targetSpanWidth;
+    // document.getElementById("Ammu").style.width = targetSpanWidth;
+    // document.getElementById("Rati").style.width = targetSpanWidth;
+    // document.getElementById("Part").style.width = targetSpanWidth;
+    // document.getElementById("TPro").style.width = targetSpanWidth;
+    // document.getElementById("Equi").style.width = targetSpanWidth;
+    // document.getElementById("QPro").style.width = targetSpanWidth;
+    // document.getElementById("QRes").style.width = targetSpanWidth;
     //------------------
 } //End loadHTML_language()

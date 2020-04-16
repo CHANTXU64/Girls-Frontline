@@ -1,0 +1,9 @@
+#PlanCombination_demand input {
+    min-width: 100px;
+}
+
+@media (max-width: 576px) {
+    .plan_combination_card {
+        padding: 0;
+    }
+}

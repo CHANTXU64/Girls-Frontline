@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="">
+<!-- vim: et ts=2 sts=2 sw=2 tw=120
+-->
 
 <head>
   <meta charset="utf-8">
@@ -21,6 +23,7 @@
   <link href="../css/GF_logistics_button.css" rel="stylesheet">
   <link href="../css/GF_logistics_group.css" rel="stylesheet">
   <link href="../css/GF_logistics.css" rel="stylesheet">
+  <link href="../css/GF_logistics_PlanCombination.css" rel="stylesheet">
   <!-- end GF css !python -->
 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js"
@@ -102,6 +105,10 @@
     <div class="spinner-border align-middle" id="page_loading" role="status" style="border-width: 0.2rem; height: 1.5rem; width: 1.5rem;">
       <span class="sr-only">Loading...</span>
     </div>
+    <div class="custom-control custom-switch float-right">
+      <input type="checkbox" class="custom-control-input" id="PlanCombinationSwitch" autocomplete="off">
+      <label class="custom-control-label" for="PlanCombinationSwitch"></label>
+    </div>
     <hr style="margin: 0.5rem 0 1rem 0; width: 100%;" />
   </h2>
   <div class="col-lg-5 float-right input-group input-group-regular mb-3 config_card"
@@ -134,6 +141,47 @@
       <button type="button" id="neverShowAgain_localstorageWarning" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
+    </div>
+  </div>
+  <div id="plan_combination_card" class="col-lg-12 float-left plan_combination_card disable-selected-text d-none">
+    <div class="card border-dark mb-3">
+      <div class="card-header pt-2 pb-2">
+        方案组合
+      </div>
+      <div class="card-body">
+        <div id="PlanCombination_demand_re" class="form-row">
+          <div class="col-md-2 mb-3 input-group input-group-regular">
+            <label for="PC_MT" class="input-group-label input-group-text"
+              id="PC_MT_label"></label>
+            <input id="PC_MT" type="number" class="form-control" value="0" min="0" autocomplete="off" >
+          </div>
+        </div>
+        <div id="PlanCombination_demand_co" class="form-row">
+          <div class="col-md-2 mb-3 input-group input-group-regular">
+            <label for="PC_TT" class="input-group-label input-group-text"
+              id="PC_TT_label"></label>
+            <input id="PC_TT" type="number" class="form-control">
+          </div>
+        </div>
+        <div class="form-row" style="max-width: 800px;">
+          <div class="col-md-4 mb-3 input-group input-group-regular">
+            <label for="PlanCombination_startDate" class="input-group-label input-group-text"
+              id="PlanCombination_startDate_text"></label>
+            <input id="PlanCombination_startDate" type="date" class="form-control input-group" style="width: auto; max-width: 150px;">
+          </div>
+          <script>document.getElementById("PlanCombination_startDate").valueAsDate = new Date();</script>
+          <div class="col-md-8 mb-3 input-group input-group-regular">
+            <label for="PlanCombination_endDate" class="input-group-label input-group-text"
+              id="PlanCombination_endDate_text"></label>
+            <input id="PlanCombination_endDate" type="date" class="form-control" style="width: auto; max-width: 150px;">
+            <span class="input-group-label input-group-text">OR</span>
+            <label for="PlanCombination_totalDays" class="input-group-label input-group-text"
+              id="PlanCombination_totalDays_text"></label>
+            <input id="PlanCombination_totalDays" type="number" value="7" min="0" onfocus="this.select();" class="form-control" style="max-width: 150px;">
+          </div>
+        </div>
+        <div id="PlanCombination_chart" style="height: 100px; width: auto; margin-left: -10px; margin-right: -10px;"></div>
+      </div>
     </div>
   </div>
   <div class="col-lg-7 float-left setting_card">
@@ -599,6 +647,7 @@
   <script src="../js/GF_logistics_calcTargetValueTool.js"></script>
   <script src="../js/GF_logistics_LoadLast.js"></script>
   <script src="../js/GF_logistics_LoadSecond.js"></script>
+  <script src="../js/GF_logistics_PlanCombination_Charts.js"></script>
   <!-- end GF js_2 !python -->
 </body>
 
