@@ -1,4 +1,12 @@
 class PlanCombinationCharts {
+    static resize_Timetable() {
+        let Chart_elem = document.getElementById("PlanCombination_chart");
+        if (Chart_elem.getAttribute("_echarts_instance_") === null || !document.getElementById("PlanCombinationSwitch").checked)
+            return ;
+        let Chart = echarts.getInstanceByDom(Chart_elem);
+        Chart.resize();
+    }
+
     static printChart_Timetable() {
         let Chart_elem = document.getElementById("PlanCombination_chart");
         let Chart; //图表实例
@@ -7,7 +15,12 @@ class PlanCombinationCharts {
         else
             Chart = echarts.getInstanceByDom(Chart_elem);
 
-        var data = [[10, 18, 3, 'A', 0], [10, 22, 1, 'B', 12], [18, 26, 12, 'C', 0], [26, 32, 22, 'D', 0], [32, 56, 7, 'E', 0], [56, 62, 17, 'F', 0]];
+        // var data = [[10, 18, 3, 'A', 0], [10, 22, 1, 'B', 12], [18, 26, 12, 'C', 0], [26, 32, 22, 'D', 0], [32, 56, 7, 'E', 0], [56, 62, 17, 'F', 0]];
+        var data = [[0,5,15,'A',0], [0,7,8,'B',15], [5, 7, 15, 'C',0]];
+
+        let animation = false;
+        if (!IsMobile())
+            animation = true;
 
         data = echarts.util.map(data, function (item, index) {
             return {
@@ -52,10 +65,10 @@ class PlanCombinationCharts {
                         return addDate(Input_getPC_startDate(true), val).slice(5);
                     },
                 },
-                max: Input_getPC_totalDays(true),
+                max: calcDaysBetween2Dates(Input_getPC_startDate(true), Input_getPC_endDate(true)),
             },
             yAxis: {
-                max: 24,
+                max: 28,
                 interval: 24,
                 axisLine: {
                     show: true,
@@ -78,7 +91,8 @@ class PlanCombinationCharts {
                     itemName: 3
                 },
                 data: data
-            }]
+            }],
+            animation: animation,
         };
 
         Chart.setOption(option);
@@ -88,5 +102,5 @@ class PlanCombinationCharts {
 PlanCombinationCharts.colorList = [
     "#D98880", "#F1948A", "#C39BD3", "#A569BD", "#7FB3D5", "#85C1E9", "#76D7C4",
     "#73C6B6", "#A9DFBF", "#2ECC71", "#F7DC6F", "#F8C471", "#F0B27A", "#BFC9CA",
-    "#B2BABB", "#85929E" 
+    "#B2BABB", "#85929E"
 ];

@@ -2,6 +2,12 @@ function is_KeyIsEnter(e) {
     return e.which == 13;
 }
 
+$(function () {
+    window.onresize = function () {
+        PlanCombinationCharts.resize_Timetable();
+    }
+})
+
 //language
 $("#lang-zh-CN").on("click", function () {
     changeLanguage("zh-CN");
@@ -527,94 +533,3 @@ $("#PlanDetails_InputExecutionTimes").on("input propertychange", function () {
     }
 });
 //End Plan Details
-
-//calcTargetValueTool
-$("input[id^=calcTargetValueTool_Target_]").on("focus", function () {
-    this.select();
-});
-$("input[id^=calcTargetValueTool_Current_]").on("focus", function () {
-    this.select();
-});
-$("#calcTargetValueTool_clear").on("click", function () {
-    calcTargetValueTool_Clear();
-});
-$("#calcTargetValueTool_startCalc").on("click", function () {
-    calcTargetValueTool_startCalc();
-});
-$("#calcTargetValueTool_apply").on("click", function () {
-    calcTargetValueTool_apply();
-});
-$("input[id^=calcTargetValueTool_Target_]").on("blur", function () {
-    storageSetItem("CalcTargetValueTool_Target", Input_getCalcTargetValueTool_Target());
-});
-$("input[id^=calcTargetValueTool_Current_]").on("blur", function () {
-    storageSetItem("CalcTargetValueTool_Current", Input_getCalcTargetValueTool_Current());
-});
-$("#calcTargetValueTool_InputExecutionTimes").on("blur", function () {
-    storageSetItem("CalcTargetValueTool_ExecutionTimes", Input_getCalcTargetValueTool_InputExecutionTimes());
-});
-$("#calcTargetValueTool_Target_Manp").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Target_Ammu").focus();
-});
-$("#calcTargetValueTool_Target_Ammu").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Target_Rati").focus();
-});
-$("#calcTargetValueTool_Target_Rati").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Target_Part").focus();
-});
-$("#calcTargetValueTool_Target_Part").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Target_TPro").focus();
-});
-$("#calcTargetValueTool_Target_TPro").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Target_Equi").focus();
-});
-$("#calcTargetValueTool_Target_Equi").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Target_QPro").focus();
-});
-$("#calcTargetValueTool_Target_QPro").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Target_QRes").focus();
-});
-$("#calcTargetValueTool_Target_QRes").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Current_Manp").focus();
-});
-$("#calcTargetValueTool_Current_Manp").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Current_Ammu").focus();
-});
-$("#calcTargetValueTool_Current_Ammu").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Current_Rati").focus();
-});
-$("#calcTargetValueTool_Current_Rati").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Current_Part").focus();
-});
-$("#calcTargetValueTool_Current_Part").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Current_TPro").focus();
-});
-$("#calcTargetValueTool_Current_TPro").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Current_Equi").focus();
-});
-$("#calcTargetValueTool_Current_Equi").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Current_QPro").focus();
-});
-$("#calcTargetValueTool_Current_QPro").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_Current_QRes").focus();
-});
-$("#calcTargetValueTool_Current_QRes").on("keyup", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#calcTargetValueTool_InputExecutionTimes").focus();
-});
-//End calcTargetValueTool

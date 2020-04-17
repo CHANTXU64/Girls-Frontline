@@ -141,12 +141,12 @@ function loadHTML_language() {
     document.getElementById("QPro").style.width = targetSpanWidth;
     document.getElementById("QRes").style.width = targetSpanWidth;
     document.getElementById("PC_MT_label").style.width = targetSpanWidth;
-    // document.getElementById("Ammu").style.width = targetSpanWidth;
-    // document.getElementById("Rati").style.width = targetSpanWidth;
-    // document.getElementById("Part").style.width = targetSpanWidth;
-    // document.getElementById("TPro").style.width = targetSpanWidth;
-    // document.getElementById("Equi").style.width = targetSpanWidth;
-    // document.getElementById("QPro").style.width = targetSpanWidth;
-    // document.getElementById("QRes").style.width = targetSpanWidth;
+    document.getElementById("PC_AT_label").style.width = targetSpanWidth;
+    document.getElementById("PC_RT_label").style.width = targetSpanWidth;
+    document.getElementById("PC_PT_label").style.width = targetSpanWidth;
+    document.getElementById("PC_TT_label").style.width = targetSpanWidth;
+    document.getElementById("PC_ET_label").style.width = targetSpanWidth;
+    document.getElementById("PC_QPT_label").style.width = targetSpanWidth;
+    document.getElementById("PC_QRT_label").style.width = targetSpanWidth;
     //------------------
 } //End loadHTML_language()

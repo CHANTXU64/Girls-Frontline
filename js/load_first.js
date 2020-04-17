@@ -5,6 +5,7 @@ setLanguage();
 
 loadHTML_Target();
 loadHTML_ChapterLimit();
+plan_combination_load_demand();
 
 setPageByLocalStorage();
 

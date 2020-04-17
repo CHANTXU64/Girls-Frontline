@@ -149,38 +149,25 @@
         方案组合
       </div>
       <div class="card-body">
-        <div id="PlanCombination_demand_re" class="form-row">
-          <div class="col-md-2 mb-3 input-group input-group-regular">
-            <label for="PC_MT" class="input-group-label input-group-text"
-              id="PC_MT_label"></label>
-            <input id="PC_MT" type="number" class="form-control" value="0" min="0" autocomplete="off" >
-          </div>
-        </div>
-        <div id="PlanCombination_demand_co" class="form-row">
-          <div class="col-md-2 mb-3 input-group input-group-regular">
-            <label for="PC_TT" class="input-group-label input-group-text"
-              id="PC_TT_label"></label>
-            <input id="PC_TT" type="number" class="form-control">
-          </div>
-        </div>
+        <div id="PlanCombination_demand_re" class="form-row"></div>
+        <div id="PlanCombination_demand_co" class="form-row"></div>
         <div class="form-row" style="max-width: 800px;">
           <div class="col-md-4 mb-3 input-group input-group-regular">
             <label for="PlanCombination_startDate" class="input-group-label input-group-text"
               id="PlanCombination_startDate_text"></label>
             <input id="PlanCombination_startDate" type="date" class="form-control input-group" style="width: auto; max-width: 150px;">
           </div>
-          <script>document.getElementById("PlanCombination_startDate").valueAsDate = new Date();</script>
-          <div class="col-md-8 mb-3 input-group input-group-regular">
+          <div class="col-md-4 mb-3 input-group input-group-regular">
             <label for="PlanCombination_endDate" class="input-group-label input-group-text"
               id="PlanCombination_endDate_text"></label>
             <input id="PlanCombination_endDate" type="date" class="form-control" style="width: auto; max-width: 150px;">
-            <span class="input-group-label input-group-text">OR</span>
-            <label for="PlanCombination_totalDays" class="input-group-label input-group-text"
-              id="PlanCombination_totalDays_text"></label>
-            <input id="PlanCombination_totalDays" type="number" value="7" min="0" onfocus="this.select();" class="form-control" style="max-width: 150px;">
           </div>
         </div>
-        <div id="PlanCombination_chart" style="height: 100px; width: auto; margin-left: -10px; margin-right: -10px;"></div>
+        <div id="PlanCombination_chart" style="height: 100px; width: auto; margin: 0 -10px 1rem -10px"></div>
+        <button type="button" class="btn btn-primary" id="PC_startRanking">start</button>
+        <button type="button" class="btn btn-danger" id="PC_deleteAllPlans">delete All</button>
+        <button type="button" class="btn btn-danger" id="PC_deletePlan" disabled>delete</button>
+        <button type="button" class="btn btn-info" id="PC_saveAll">Save</button>
       </div>
     </div>
   </div>
@@ -292,114 +279,6 @@
             <label class="input-group-text input-group-label" id="h4ChapterLimit" for="ChapterLimit"></label>
             <select class="custom-select" id="ChapterLimit" autocomplete="off"></select>
           </div>
-          <div class="card mb-2" style="max-width: 587px;">
-            <div class="card-header pt-2 pb-2 border-bottom-0">
-              <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"
-                data-target="#calcTargetValueTool_card" aria-expanded="false" aria-controls="calcTargetValueTool_card"
-                id="calcTargetValueTool_title">
-              </button>
-            </div>
-            <div id="calcTargetValueTool_card" class="collapse">
-              <div class="table-responsive calc-target-table">
-                <table class="table text-nowrap mb-0">
-                  <tbody id="calcTargetValueTool">
-                    <tr class="disable-selected-text">
-                      <td id="calcTargetValueTool_text_ResourceContract" style="border-right: 1px solid #ddd;"></td>
-                      <td id="calcTargetValueTool_Manp_text"></td>
-                      <td id="calcTargetValueTool_Ammu_text"></td>
-                      <td id="calcTargetValueTool_Rati_text"></td>
-                      <td id="calcTargetValueTool_Part_text"></td>
-                      <td id="calcTargetValueTool_TPro_text"></td>
-                      <td id="calcTargetValueTool_Equi_text"></td>
-                      <td id="calcTargetValueTool_QPro_text"></td>
-                      <td id="calcTargetValueTool_QRes_text"></td>
-                    </tr>
-                    <tr>
-                      <td id="calcTargetValueTool_text_target" class="disable-selected-text"></td>
-                      <td colspan="8" class="p-0 border-0">
-                        <div class="input-group">
-                          <input type="number" id="calcTargetValueTool_Target_Manp" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_Ammu" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_Rati" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_Part" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_TPro" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_Equi" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_QPro" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_QRes" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td id="calcTargetValueTool_text_current" class="disable-selected-text"></td>
-                      <td colspan="8" class="p-0 border-0">
-                        <div class="input-group">
-                          <input type="number" id="calcTargetValueTool_Current_Manp" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_Ammu" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_Rati" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_Part" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_TPro" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_Equi" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_QPro" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_QRes" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td id="calcTargetValueTool_text_result" class="disable-selected-text"
-                        style="border-right: 1px solid #ddd;"></td>
-                      <td id="calcTargetValueTool_Result_Manp_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_Ammu_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_Rati_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_Part_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_TPro_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_Equi_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_QPro_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_QRes_value" style="cursor: auto"></td>
-                    </tr>
-                    <tr>
-                      <td colspan="7" class="p-0 mt-0">
-                        <div class="input-group">
-                          <label for="calcTargetValueTool_InputExecutionTimes"
-                            id="calcTargetValueTool_InputExecutionTimes_label"
-                            class="input-group-label input-group-text disable-selected-text"
-                            style="font-size: 0.82rem; border-radius: 0; border-width: 0 1px 0 0;"></label>
-                          <input type="number" min="1" max="999" step="1" id="calcTargetValueTool_InputExecutionTimes"
-                            class="form-control" onfocus="this.select();" value="1"
-                            style="padding:3px 6px; border-radius: 0; border-width: 0 1px;"
-                            autocomplete="off">
-                          <button class="btn btn-danger" type="button" id="calcTargetValueTool_clear" disabled
-                            style="border-radius: 0; padding:3px 20px;font-size:13px; border-width: 0 1px;"></button>
-                          <button class="btn btn-primary" type="button" id="calcTargetValueTool_startCalc" disabled
-                            style="border-radius: 0; padding:3px 20px;font-size:13px; border-width: 0 1px;"></button>
-                          <button class="btn btn-success" type="button" id="calcTargetValueTool_apply" disabled
-                            style="border-radius: 0; padding:0 20px;font-size:13px; border-width: 0 1px; line-height: 30px;">
-                            <span id="calcTargetValueTool_apply_text"></span>
-                            &rarr;
-                          </button>
-                        </td>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="col-lg-5 disable-selected-text Demand p-0" id="target">
           <h5 id="Demand"></h5>
@@ -411,9 +290,27 @@
           <input type="range" class="custom-range" id="ContractWeight" min="0" max="100" step="2" disabled>
           <div id="setTargetInput"></div>
         </div>
-        <div class="col-lg-12 btn-toolbar p-0">
+        <div class="col-lg-5 disable-selected-text Demand p-0 d-none" id="PlanCombination_addPlan">
+          <h5 id="DateTimePeriod">该方案时间段</h5>
+          <ul id="PC_DateTimePeriod_body" class="list-group list-group-regular mb-2" style="max-height: 300px;
+            overflow-y: auto;"></ul>
+          <div class="mb-3 input-group input-group-regular">
+            <label for="PlanCombination_planStartDate" class="input-group-label input-group-text"
+                                                   id="PlanCombination_planStartDate_label"></label>
+            <input id="PlanCombination_planStartDate" type="date" class="form-control input-group" style="width: auto; max-width: 150px;">
+          </div>
+          <div class="mb-3 input-group input-group-regular">
+            <label for="PlanCombination_planEndDate" class="input-group-label input-group-text"
+                                                 id="PlanCombination_planEndDate_label"></label>
+            <input id="PlanCombination_planEndDate" type="date" class="form-control" style="width: auto; max-width: 150px;">
+          </div>
+          <button type="button" class="btn btn-primary btn-regular" id="addNewTimePeriod">add</button>
+          <button type="button" class="btn btn-danger btn-regular" id="deleteAllTimePeriod">clear</button>
+        </div>
+        <div id="ranking_toolbar" class="col-lg-12 btn-toolbar p-0 mt-2">
           <button type="button" class="btn btn-primary" id="start_ranking" disabled></button>
           <button type="button" class="btn btn-danger" style="display: none;" id="clear_ranking"></button>
+          <button type="button" class="btn btn-info d-none" id="PC_addPlan">add</button>
           <div class="spinner-border text-primary ml-2" role="status" style="border-width: 0.3rem; display: none;" id="ranking_loading">
             <span class="sr-only">Loading...</span>
           </div>
@@ -572,7 +469,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 float-left result_card">
+  <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 float-left result_card" id="result_card">
     <div class="card border-dark mb-3 disable-selected-text">
       <div class="card-header disable-selected-text pt-2 pb-2" id="result"></div>
       <div class="card-body">
@@ -629,6 +526,7 @@
   <script src="../js/input.js"></script>
   <script src="../js/tab.js"></script>
   <script src="../js/load_html.js"></script>
+  <script src="../js/plan_combination_load.js"></script>
   <script src="../js/plan_details.js"></script>
   <script src="../js/mission_table.js"></script>
   <script src="../js/result_and_details_event.js"></script>
@@ -644,9 +542,10 @@
   <script src="../js/fine_tuning.js"></script>
   <script src="../js/plan.js"></script>
   <script src="../js/ranking_main.js"></script>
-  <script src="../js/calc_target_value.js"></script>
   <script src="../js/plan_combination_function.js"></script>
   <script src="../js/plan_combination_input.js"></script>
+  <script src="../js/plan_combination_time_period.js"></script>
+  <script src="../js/plan_combination_plans.js"></script>
   <script src="../js/plan_combination_charts.js"></script>
   <script src="../js/plan_combination_html.js"></script>
   <script src="../js/plan_combination_html_event.js"></script>

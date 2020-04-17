@@ -278,45 +278,6 @@ function Input_getExecutionTimes(NeedCorrection = false) {
     return Times;
 }
 
-//calcTargetValueTool-------
-function Input_getCalcTargetValueTool_Target(NeedCorrection = false) {
-    const Target_JQ_selector = [$("#calcTargetValueTool_Target_Manp"),
-        $("#calcTargetValueTool_Target_Ammu"), $("#calcTargetValueTool_Target_Rati"),
-        $("#calcTargetValueTool_Target_Part"), $("#calcTargetValueTool_Target_TPro"),
-        $("#calcTargetValueTool_Target_Equi"), $("#calcTargetValueTool_Target_QPro"), $("#calcTargetValueTool_Target_QRes")
-    ];
-    return _getValue_Arr(Target_JQ_selector, NeedCorrection);
-}
-
-function Input_setCalcTargetValueTool_Target(TargetValue = [0, 0, 0, 0, 0, 0, 0, 0]) {
-    const Target_JQ_selector = [$("#calcTargetValueTool_Target_Manp"),
-        $("#calcTargetValueTool_Target_Ammu"), $("#calcTargetValueTool_Target_Rati"),
-        $("#calcTargetValueTool_Target_Part"), $("#calcTargetValueTool_Target_TPro"),
-        $("#calcTargetValueTool_Target_Equi"), $("#calcTargetValueTool_Target_QPro"), $("#calcTargetValueTool_Target_QRes")
-    ];
-    _setTarget_arr(TargetValue, Target_JQ_selector);
-    storageSetItem("CalcTargetValueTool_Target", Input_getCalcTargetValueTool_Target());
-}
-
-function Input_getCalcTargetValueTool_Current(NeedCorrection = false) {
-    const Current_JQ_selector = [$("#calcTargetValueTool_Current_Manp"),
-        $("#calcTargetValueTool_Current_Ammu"), $("#calcTargetValueTool_Current_Rati"),
-        $("#calcTargetValueTool_Current_Part"), $("#calcTargetValueTool_Current_TPro"),
-        $("#calcTargetValueTool_Current_Equi"), $("#calcTargetValueTool_Current_QPro"), $("#calcTargetValueTool_Current_QRes")
-    ];
-    return _getValue_Arr(Current_JQ_selector, NeedCorrection);
-}
-
-function Input_setCalcTargetValueTool_Current(CurrentValue = [0, 0, 0, 0, 0, 0, 0, 0]) {
-    const Current_JQ_selector = [$("#calcTargetValueTool_Current_Manp"),
-        $("#calcTargetValueTool_Current_Ammu"), $("#calcTargetValueTool_Current_Rati"),
-        $("#calcTargetValueTool_Current_Part"), $("#calcTargetValueTool_Current_TPro"),
-        $("#calcTargetValueTool_Current_Equi"), $("#calcTargetValueTool_Current_QPro"), $("#calcTargetValueTool_Current_QRes")
-    ];
-    _setTarget_arr(CurrentValue, Current_JQ_selector);
-    storageSetItem("CalcTargetValueTool_Current", Input_getCalcTargetValueTool_Current());
-}
-
 /** @returns {number} Number of executions */
 function Input_getCalcTargetValueTool_InputExecutionTimes(NeedCorrection = false) {
     const Times_elem = $("#calcTargetValueTool_InputExecutionTimes");

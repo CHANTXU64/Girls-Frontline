@@ -3,6 +3,10 @@
     padding-right: 17px;
 }
 
+code {
+    color: #000000;
+}
+
 a {
     cursor: pointer;
 }
@@ -165,29 +169,6 @@ input::-webkit-inner-spin-button {
 }
 input[type="number"] {
     -moz-appearance: textfield;
-}
-
-.calc-target-table>table {
-    font-size: 0.82rem;
-    table-layout: fixed;
-}
-
-.calc-target-table td {
-    padding: 0.3rem;
-    width: 65px;
-}
-
-.calc-target-table input {
-    font-size: 0.88rem;
-    padding: 3px 6px;
-    width: 65px;
-    border-radius: 0;
-    height: 28px;
-    border-bottom: 0;
-}
-
-.calc-target-table input:last-child {
-    border-right-width: 0;
 }
 
 .mission-table {
