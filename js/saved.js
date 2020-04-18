@@ -37,14 +37,6 @@ class Saved {
         newData.TabName = ShownTab.name;
         newData.TabCustom = ShownTab.getSavedCustom();
         newData.Missions = MissionsDetails.getSelectedMissions();
-        let Missions = MissionsDetails.getSelectedMissionsDetails();
-        newData.resources = [0, 0, 0, 0];
-        for (let i = 0; i < Missions.length; ++i) {
-            newData.resources[0] += Missions[i][1];
-            newData.resources[1] += Missions[i][2];
-            newData.resources[2] += Missions[i][3];
-            newData.resources[3] += Missions[i][4];
-        }
         newData.startTime = Input_getStartTime();
 
         Saved._saved.push(newData);
@@ -120,23 +112,46 @@ class Saved {
         let tab = getTabByName(allSaved[row].TabName);
         let TotalTime = tab.getTotalTimeFromSavedCustom(allSaved[row].TabCustom);
         HTML += '<div>' + tab.displayName + '<br>' + TimeFormat(TotalTime) + '</div>';
-        if (allSaved[row].resources) {
-            let resources = allSaved[row].resources.slice();
-            if (is_CalculateByHour()) {
-                for (let i = 0; i < 4; ++i) {
-                    resources[i] *= 60;
-                }
+        let resources = this._getResourcesBySaved(allSaved[row]);
+        if (is_CalculateByHour()) {
+            for (let i = 0; i < 4; ++i) {
+                resources[i] *= 60;
             }
-            else {
-                for (let i = 0; i < 4; ++i) {
-                    resources[i] *= TotalTime;
-                }
-            }
-            HTML += '<div>' + Math.round(resources[0]) + '<br>' + Math.round(resources[2]) + '</div>';
-            HTML += '<div>' + Math.round(resources[1]) + '<br>' + Math.round(resources[3]) + '</div>';
         }
+        else {
+            for (let i = 0; i < 4; ++i) {
+                resources[i] *= TotalTime;
+            }
+        }
+        HTML += '<div>' + Math.round(resources[0]) + '<br>' + Math.round(resources[2]) + '</div>';
+        HTML += '<div>' + Math.round(resources[1]) + '<br>' + Math.round(resources[3]) + '</div>';
         HTML += '</div>';
         return HTML;
+    }
+
+    static _getResourcesBySaved(savedDate) {
+        let tab = this.creatTabBySaved(savedDate);
+        let QValid = tab.getQValid(false);
+        quick_sort_expand_ascending_missionName(QValid, 0);
+        let resources = [0, 0, 0, 0];
+        let QValid_length = QValid.length;
+        let selectMission = savedDate.Missions;
+        for (let i = 0; i < QValid_length; ++i) {
+            if (selectMission.indexOf(QValid[i][0]) !== -1) {
+                resources[0] += QValid[i][1];
+                resources[1] += QValid[i][2];
+                resources[2] += QValid[i][3];
+                resources[3] += QValid[i][4];
+            }
+        }
+        return resources;
+    }
+
+    static creatTabBySaved(savedDate) {
+        let tabName = savedDate.TabName;
+        let BaseDate = [savedDate.Chapter, savedDate.GSRate, savedDate.is_UP, savedDate.TabCustom.slice()];
+        let tab = getTabByName(tabName, BaseDate);
+        return tab;
     }
 
     /**

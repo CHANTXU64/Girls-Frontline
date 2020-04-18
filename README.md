@@ -14,7 +14,7 @@ Picture archive https://imgur.com/XY6kEqh
 Thanks [FatalChapter](https://github.com/hycdes/GFTool)
 
 **该如何维护更新后勤战役?**<br>
-只需要修改js/data.js, 修改Q数组和setQContract()函数即可.<br>
+只需要修改js/data.js, 修改Q数组即可.<br>
 
 **如何发布新版本?**<br>
 1.修改js/local_storage.js的VERSION<br>

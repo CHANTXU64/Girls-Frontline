@@ -91,8 +91,6 @@ JQ_selector_GreatSuccessRate.on("input propertychange", function () {
     const Rate = Input_getGreatSuccessRate();
     const is_RateUP = IsGreatSuccessRateUp();
     Input_setGreatSuccessUpRate(is_RateUP, false);
-    const TotalRate = Rate + Input_getGreatSuccessUpRate(Rate);
-    setQContract(TotalRate);
     MissionsDetails.print();
     printPlanDetails();
     Saved.cancelSelected();
@@ -104,8 +102,6 @@ JQ_selector_GreatSuccessRate.blur(function () {
 $("#GreatSuccessRateUp").on("click", function () {
     const is_RateUP = IsGreatSuccessRateUp();
     Input_setGreatSuccessUpRate(is_RateUP);
-    const TotalRate = Input_getTotalGreatSuccessRate(true);
-    setQContract(TotalRate);
     MissionsDetails.print();
     printPlanDetails();
     Saved.cancelSelected();

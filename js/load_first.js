@@ -9,14 +9,11 @@ plan_combination_load_demand();
 
 setPageByLocalStorage();
 
-//设置契约值(必要)
-let TotalGreatSuccessRate = Input_getTotalGreatSuccessRate(true);
-setQContract(TotalGreatSuccessRate);
-
 MissionsDetails.print();
 let ShownTab = getShownTab();
 PlanDetails.printShownTab(ShownTab.name);
 PlanDetails.printTotalTime(ShownTab.getTotalTime(false));
+let TotalGreatSuccessRate = Input_getTotalGreatSuccessRate(true);
 PlanDetails.printGreatSuccessRate(TotalGreatSuccessRate);
 PlanDetails.printExecutionTimes(Input_getExecutionTimes());
 

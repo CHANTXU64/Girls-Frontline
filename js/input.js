@@ -20,7 +20,6 @@ function Input_getGreatSuccessRate(NeedCorrection = false) {
 /** @param {number} Rate - 大成功基础概率 */
 function Input_setGreatSuccessRate(Rate) {
     $("#GreatSuccessRate").val(Rate);
-    setQContract(Input_getTotalGreatSuccessRate());
     storageSetItem("GreatSuccessRate", Rate);
 }
 
@@ -40,8 +39,8 @@ function _getGreatSuccessUpRate(Index_BaseRate) {
 }
 
 /** @param {number} GreatSuccessRate - 大成功基础概率 */
-function Input_getGreatSuccessUpRate(GreatSuccessRate) {
-    if (IsGreatSuccessRateUp())
+function Input_getGreatSuccessUpRate(GreatSuccessRate, IsUP = IsGreatSuccessRateUp()) {
+    if (IsUP)
         return parseInt(_getGreatSuccessUpRate(GreatSuccessRate).substr(0, 2));
     else
         return 0;
@@ -69,7 +68,6 @@ function Input_setGreatSuccessUpRate(is_RateUP, NeedCorrectBaseRate = true) {
         const BaseRate = Input_getGreatSuccessRate(NeedCorrectBaseRate);
         UpRateText_elem.innerHTML = "+" + _getGreatSuccessUpRate(BaseRate);
     }
-    setQContract(Input_getTotalGreatSuccessRate());
     storageSetItem("Is_GreatSuccessRateUP", is_RateUP);
 }
 

@@ -126,9 +126,6 @@ function updateLocalStorage() {
 //TargetValue - 需求值
 //Saved - 已保存的方案
 //IsSavedPanelShow - "已保存"是否展开
-//CalcTargetValueTool_Target
-//CalcTargetValueTool_Current
-//CalcTargetValueTool_ExecutionTimes
 
 /**
  * 从v0.x.x版本localstorage转换为v1.x.x版本, 并删除原来的存储数据
@@ -161,9 +158,6 @@ function _updateLSFrom_v_0_x_x_To_v_1_x_x() {
     newData.TargetValue = LS_data.TargetValue;
     newData.Saved = _savedData_v_0_x_x_To_v_1_x_x(LS_data.SAVED);
     newData.IsSavedPanelShow = LS_data.IsSavedShow;
-    newData.CalcTargetValueTool_Target = LS_data.CalcTargetValueTool_Target;
-    newData.CalcTargetValueTool_Current = LS_data.CalcTargetValueTool_Current;
-    newData.CalcTargetValueTool_ExecutionTimes = LS_data.CalcTargetValueTool_ExecutionTimes;
     let storageValue = JSON.stringify(newData)
 
     localStorage.setItem("GF_Logistics_v1.x.x", storageValue);
