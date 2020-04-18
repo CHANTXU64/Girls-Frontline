@@ -44,6 +44,10 @@ class Saved {
         Saved._printLastSaved();
     }
 
+    static getSavedDataFromPage(savedName) {
+        // let 
+    }
+
     /**
      * 检查名字是否合法
      * @param {string} name
@@ -129,13 +133,13 @@ class Saved {
         return HTML;
     }
 
-    static _getResourcesBySaved(savedDate) {
-        let tab = this.creatTabBySaved(savedDate);
+    static _getResourcesBySaved(savedData) {
+        let tab = this.creatTabBySaved(savedData);
         let QValid = tab.getQValid(false);
         quick_sort_expand_ascending_missionName(QValid, 0);
         let resources = [0, 0, 0, 0];
         let QValid_length = QValid.length;
-        let selectMission = savedDate.Missions;
+        let selectMission = savedData.Missions;
         for (let i = 0; i < QValid_length; ++i) {
             if (selectMission.indexOf(QValid[i][0]) !== -1) {
                 resources[0] += QValid[i][1];
@@ -147,10 +151,10 @@ class Saved {
         return resources;
     }
 
-    static creatTabBySaved(savedDate) {
-        let tabName = savedDate.TabName;
-        let BaseDate = [savedDate.Chapter, savedDate.GSRate, savedDate.is_UP, savedDate.TabCustom.slice()];
-        let tab = getTabByName(tabName, BaseDate);
+    static creatTabBySaved(savedData) {
+        let tabName = savedData.TabName;
+        let BaseData = [savedData.Chapter, savedData.GSRate, savedData.is_UP, savedData.TabCustom.slice()];
+        let tab = getTabByName(tabName, BaseData);
         return tab;
     }
 

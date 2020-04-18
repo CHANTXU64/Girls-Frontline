@@ -169,7 +169,7 @@ function _updateLSFrom_v_0_x_x_To_v_1_x_x() {
  * @returns {Saved._saved} v1.x.x版本的saved数据
  */
 function _savedData_v_0_x_x_To_v_1_x_x(v_0_x_x_savedData = []) {
-    let v_1_x_x_savedDate = [];
+    let v_1_x_x_savedData = [];
     for (let i = 0; i < v_0_x_x_savedData.length; i++) {
         let data = v_0_x_x_savedData[i].data;
         let newData = {};
@@ -182,9 +182,9 @@ function _savedData_v_0_x_x_To_v_1_x_x(v_0_x_x_savedData = []) {
         newData.Missions = data[6];
         newData.startTime = data[7];
 
-        v_1_x_x_savedDate.push(newData);
+        v_1_x_x_savedData.push(newData);
     }
-    return v_1_x_x_savedDate;
+    return v_1_x_x_savedData;
 }
 
 /**

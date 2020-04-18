@@ -1,9 +1,9 @@
 class Tab {
     /**
-     * @param {Array} BaseDate - Tab计算需要的数据，通过这些数据就能不获取其他数据（从HTML中获取）完成所有函数。例如，在当前版本（2020-04-17），saved需要显示该方案的资源值，就可以在不点击方案的情况下直接传入BaseDate来计算。
-     * BaseDate: [Chapter,GSRate,is_UP,TabCustom]
+     * @param {Array=} BaseData - Tab计算需要的数据，通过这些数据就能不获取其他数据（从HTML中获取）完成所有函数。例如，在当前版本（2020-04-17），saved需要显示该方案的资源值，就可以在不点击方案的情况下直接传入BaseData来计算。
+     * BaseData: [Chapter,GSRate,is_UP,TabCustom]
      */
-    constructor(BaseDate) {
+    constructor(BaseData) {
         this._title = '<thead class="disable-selected-text"><tr style="cursor:pointer;"><th style="width:20%;" colspan="4" tabindex="0" id="resultPlan_Mission">' + language.JS.Mission + '</th>';
         this._titleEnd = '</tr></thead>';
         this._totalTime = 0;
@@ -41,9 +41,9 @@ class Tab {
         /**
          * @private
          */
-        this._baseDate = undefined;
-        if (BaseDate)
-            this._baseDate = BaseDate.slice();
+        this._baseData = undefined;
+        if (BaseData)
+            this._baseData = BaseData.slice();
 
         /**
          * 方案(4个关卡)的8项资源契约最大值, 用于归一化
@@ -93,9 +93,9 @@ class Tab {
 
     _calcTotalGSRate(NeedCorrection) {
         let totalGreatSuccessRate;
-        if (this._baseDate) {
-            let UPRate = Input_getGreatSuccessUpRate(this._baseDate[1], this._baseDate[2]);
-            totalGreatSuccessRate = this._baseDate[1] + UPRate;
+        if (this._baseData) {
+            let UPRate = Input_getGreatSuccessUpRate(this._baseData[1], this._baseData[2]);
+            totalGreatSuccessRate = this._baseData[1] + UPRate;
         }
         else
             totalGreatSuccessRate = Input_getTotalGreatSuccessRate(NeedCorrection);
@@ -128,8 +128,8 @@ class Tab {
      */
     _setUnableLogistic() {
         let ChapterLimit;
-        if (this._baseDate)
-            ChapterLimit = this._baseDate[0];
+        if (this._baseData)
+            ChapterLimit = this._baseData[0];
         else
             ChapterLimit= Input_getSelectChapter();
         //test
@@ -442,8 +442,8 @@ class Tab {
  * @extends Tab
  */
 class Tab_Anytime extends Tab {
-    constructor(BaseDate) {
-        super(BaseDate);
+    constructor(BaseData) {
+        super(BaseData);
         this.name = "Anytime";
         this.displayName = language.HTML.Tab_Anytime_name;
         this.PlanTableResourceAndContractWidth = "8.88%";
@@ -472,8 +472,8 @@ class Tab_Anytime extends Tab {
     _setTime(NeedCorrection) {
         if (this._setTimeFlag === true)
             return ;
-        if (this._baseDate)
-            this._totalTime = this._baseDate[3][0];
+        if (this._baseData)
+            this._totalTime = this._baseData[3][0];
         else
             this._totalTime = Input_getAnytimeTotalTime(NeedCorrection);
         if (NeedCorrection) {
@@ -482,8 +482,8 @@ class Tab_Anytime extends Tab {
                 throw "Warning: Total time cannot be 0!";
             }
         }
-        if (this._baseDate)
-            this.MinimumIntervalTime = this._baseDate[3][1];
+        if (this._baseData)
+            this.MinimumIntervalTime = this._baseData[3][1];
         else
             this.MinimumIntervalTime = Input_getAnytimeMinimumIntervalTime(NeedCorrection);
         this._setTimeFlag = true;
@@ -647,17 +647,17 @@ class Tab_Anytime extends Tab {
      * @public
      */
     getSavedCustom() {
-        //this._baseDate 中也使用了该格式的数据
+        //this._baseData 中也使用了该格式的数据
         let Saved_Custom = [];
         let TotalTime;
-        if (this._baseDate)
-            TotalTime = this._baseDate[3][0];
+        if (this._baseData)
+            TotalTime = this._baseData[3][0];
         else
             TotalTime = Input_getAnytimeTotalTime();
         Saved_Custom.push(TotalTime);
         let MinimumIntervalTime;
-        if (this._baseDate)
-            MinimumIntervalTime = this._baseDate[3][1];
+        if (this._baseData)
+            MinimumIntervalTime = this._baseData[3][1];
         else
             MinimumIntervalTime = Input_getAnytimeMinimumIntervalTime();
         Saved_Custom.push(MinimumIntervalTime);
@@ -801,8 +801,8 @@ function calculateIntervalTimeMin(Time_Arr, Total_Time) {
  * @extends Tab
  */
 class Tab_Timetable extends Tab {
-    constructor(BaseDate) {
-        super(BaseDate);
+    constructor(BaseData) {
+        super(BaseData);
         this.name = "Timetable";
         this.displayName = language.HTML.Tab_Timetable_name;
         this._QValid = [];
@@ -832,13 +832,13 @@ class Tab_Timetable extends Tab {
     _setTime(NeedCorrection) {
         if (this._setTimeFlag === true)
             return ;
-        if (this._baseDate)
-            this.TimeList = this._baseDate[3][1].slice();
+        if (this._baseData)
+            this.TimeList = this._baseData[3][1].slice();
         else
             this.TimeList = Tab_Timetable_TIMELIST.slice().sort(sortNumber);
         this.TimeList.unshift(0);
-        if (this._baseDate)
-            this._totalTime = this._baseDate[3][0];
+        if (this._baseData)
+            this._totalTime = this._baseData[3][0];
         else
             this._totalTime = Input_getTimetableTotalTime(NeedCorrection);
         if (NeedCorrection) {
@@ -918,17 +918,17 @@ class Tab_Timetable extends Tab {
      * @public
      */
     getSavedCustom() {
-        //this._baseDate 中也使用了该格式的数据
+        //this._baseData 中也使用了该格式的数据
         let Saved_Custom = [];
         let TotalTime;
-        if (this._baseDate)
-            TotalTime = this._baseDate[3][0];
+        if (this._baseData)
+            TotalTime = this._baseData[3][0];
         else
             TotalTime = Input_getTimetableTotalTime();
         Saved_Custom.push(TotalTime);
         let Timetable;
-        if (this._baseDate)
-            Timetable = this._baseDate[3][1].slice();
+        if (this._baseData)
+            Timetable = this._baseData[3][1].slice();
         else
             Timetable = Tab_Timetable_TIMELIST.slice();
         Saved_Custom.push(Timetable);
@@ -971,17 +971,17 @@ function getShownTab() {
  *
  * 不会返回{Tab}类型, 为保证注释能够符合不同子类, 将父类放入首位
  * @param {string} tab_name - Tab名称
- * @param {Array} BaseDate
+ * @param {Array=} BaseData
  * @return {Tab|Tab_Anytime|Tab_Timetable}
  */
-function getTabByName(tab_name, BaseDate) {
+function getTabByName(tab_name, BaseData) {
     let tab;
     switch (tab_name) {
         case "Anytime":
-            tab = new Tab_Anytime(BaseDate);
+            tab = new Tab_Anytime(BaseData);
             break;
         case "Timetable":
-            tab = new Tab_Timetable(BaseDate);
+            tab = new Tab_Timetable(BaseData);
             break;
     }
     return tab;
