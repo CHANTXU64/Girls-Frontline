@@ -38,6 +38,11 @@ function Input_getPC_planStartDate(NeedCorrection = false) {
     return startDate;
 }
 
+function Input_resetPC_planStartDate() {
+    let startDate_elem = document.getElementById("PlanCombination_planStartDate");
+    startDate_elem.value = "";
+}
+
 function Input_getPC_planEndDate(NeedCorrection = false) {
     let endDate_elem = document.getElementById("PlanCombination_planEndDate");
     let endDate = endDate_elem.value;
@@ -49,4 +54,9 @@ function Input_getPC_planEndDate(NeedCorrection = false) {
         return "error";
     }
     return endDate;
+}
+
+function Input_resetPC_planEndDate() {
+    let endDate_elem = document.getElementById("PlanCombination_planEndDate");
+    endDate_elem.value = "";
 }

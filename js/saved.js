@@ -28,8 +28,15 @@ class Saved {
      * @public
      */
     static _saveThisPlan_ok(validName) {
+        let newData = Saved.getSavedDataFromPage(validName);
+        Saved._saved.push(newData);
+        storageSetItem("Saved", Saved._saved);
+        Saved._printLastSaved();
+    }
+
+    static getSavedDataFromPage(savedName) {
         let newData = {};
-        newData.name = validName;
+        newData.name = savedName;
         newData.GSRate = Input_getGreatSuccessRate();
         newData.is_UP = IsGreatSuccessRateUp();
         newData.Chapter = Input_getSelectChapter();
@@ -38,14 +45,7 @@ class Saved {
         newData.TabCustom = ShownTab.getSavedCustom();
         newData.Missions = MissionsDetails.getSelectedMissions();
         newData.startTime = Input_getStartTime();
-
-        Saved._saved.push(newData);
-        storageSetItem("Saved", Saved._saved);
-        Saved._printLastSaved();
-    }
-
-    static getSavedDataFromPage(savedName) {
-        // let 
+        return newData;
     }
 
     /**
@@ -213,16 +213,14 @@ class Saved {
             $("#moveSaved_down").removeAttr("disabled");
         else
             $("#moveSaved_down").attr("disabled", "true");
-        this._apply(row);
+        this.apply(this._saved[row]);
     }
 
     /**
-     * 应用某行的方案
-     * @param {number} row
-     * @private
+     * 应用SavedData
+     * @public
      */
-    static _apply(row) {
-        const data = this._saved[row];
+    static apply(data) {
         const tabName = data.TabName;
         ChangeTab(tabName);
         Input_setGreatSuccessRate(data.GSRate);

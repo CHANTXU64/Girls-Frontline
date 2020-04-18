@@ -1,5 +1,5 @@
 class PlanCombinationTimePeriod {
-    static setMaxAndMinDate(totalTimePeriod_min, totalTimePeriod_max) {
+    static setMaxAndMinDate(totalTimePeriod_min = Input_getPC_startDate(), totalTimePeriod_max = Input_getPC_endDate()) {
         let startDate_elem = document.getElementById("PlanCombination_planStartDate");
         let endDate_elem = document.getElementById("PlanCombination_planEndDate");
         startDate_elem.setAttribute("min", totalTimePeriod_min);
@@ -35,7 +35,18 @@ class PlanCombinationTimePeriod {
         let timeperiod = this._timePeriod;
         this._timePeriod = [];
         $("#PC_DateTimePeriod_body").html("");
+        Input_resetPC_planStartDate();
+        Input_resetPC_planEndDate();
         return timeperiod;
+    }
+
+    static getTimePeriod() {
+        let timePeriod = [];
+        let length = this._timePeriod.length;
+        for (let i = 0; i < length; ++i) {
+            timePeriod.push(this._timePeriod[i].slice());
+        }
+        return timePeriod.slice();
     }
 }
 

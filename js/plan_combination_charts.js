@@ -7,7 +7,7 @@ class PlanCombinationCharts {
         Chart.resize();
     }
 
-    static printChart_Timetable() {
+    static printChart_Timetable(plansTimeData) {
         let Chart_elem = document.getElementById("PlanCombination_chart");
         let Chart; //图表实例
         if (Chart_elem.getAttribute("_echarts_instance_") === null)
@@ -15,8 +15,8 @@ class PlanCombinationCharts {
         else
             Chart = echarts.getInstanceByDom(Chart_elem);
 
-        // var data = [[10, 18, 3, 'A', 0], [10, 22, 1, 'B', 12], [18, 26, 12, 'C', 0], [26, 32, 22, 'D', 0], [32, 56, 7, 'E', 0], [56, 62, 17, 'F', 0]];
-        var data = [[0,5,15,'A',0], [0,7,8,'B',15], [5, 7, 15, 'C',0]];
+        let data = this.plansTimeDataToChartData(plansTimeData);
+        // var data = [[0,5,15,'A',0], [0,7,8,'B',15], [5, 7, 15, 'C',0]];
 
         let animation = false;
         if (!IsMobile())
@@ -96,6 +96,12 @@ class PlanCombinationCharts {
         };
 
         Chart.setOption(option);
+    }
+
+    static plansTimeDataToChartData(plansTimeData) {
+        let data = [];
+
+        return data;
     }
 }
 
