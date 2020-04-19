@@ -15,6 +15,7 @@ class PlanCombinationPlans {
         this._startDate = "";
         this._endDate = "";
         this._plans = [];
+        this._plansNumber = 0;
         this._totalDays = 0;
         this._totalTimePerDay = [];
     }
@@ -55,6 +56,7 @@ class PlanCombinationPlans {
         newPlan.timePeriod = timePeriod;
         newPlan.saved = savedData;
         newPlan.time = planTime;
+        newPlan.number = this._plansNumber++;
         this._plans.push(newPlan);
 
         PlanCombinationTimePeriod.clear();
@@ -69,6 +71,7 @@ class PlanCombinationPlans {
             let newData = {};
             newData.time = this._plans[i].time;
             newData.timePeriod = [];
+            newData.number = this._plans[i].number;
             let timePeriod_length = this._plans[i].timePeriod.length;
             for (let ii = 0; ii < timePeriod_length; ++ii) {
                 newData.timePeriod.push(this._plans[i].timePeriod[ii].slice());
@@ -80,6 +83,7 @@ class PlanCombinationPlans {
 }
 
 PlanCombinationPlans._plans = [];
+PlanCombinationPlans._plansNumber = 0;
 PlanCombinationPlans._startDate = "";
 PlanCombinationPlans._endDate = "";
 PlanCombinationPlans._totalDays = 0;
