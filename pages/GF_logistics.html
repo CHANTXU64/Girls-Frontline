@@ -149,8 +149,6 @@
         方案组合
       </div>
       <div class="card-body">
-        <div id="PlanCombination_demand_re" class="form-row"></div>
-        <div id="PlanCombination_demand_co" class="form-row"></div>
         <div class="form-row" style="max-width: 800px;">
           <div class="col-md-4 mb-3 input-group input-group-regular">
             <label for="PlanCombination_startDate" class="input-group-label input-group-text"
@@ -163,11 +161,38 @@
             <input id="PlanCombination_endDate" type="date" class="form-control" style="width: auto; max-width: 150px;">
           </div>
         </div>
-        <div id="PlanCombination_chart" style="height: 100px; width: auto; margin: 0 -10px 1rem -10px"></div>
+        <div class="box-wrap">
+          <span class="box-title">现有量</span>
+          <div id="PlanCombination_current_re" class="form-row" style="max-width: 980px;"></div>
+          <div id="PlanCombination_current_co" class="form-row" style="max-width: 980px;"></div>
+        </div>
+        <div id="PlanCombination_chart" style="height: 250px; width: auto; margin: 0 -10px 1rem -10px"></div>
         <div class="mb-2">
           <button type="button" class="btn btn-danger" id="PC_deleteAllPlans">delete All</button>
           <button type="button" class="btn btn-danger" id="PC_deletePlan" disabled>delete</button>
           <button type="button" class="btn btn-info" id="PC_saveAll">Save</button>
+        </div>
+        <div class="box-wrap">
+          <span class="box-title">需求量</span>
+          <div class="card mb-2">	
+            <div class="card-header pt-2 pb-2 border-bottom-0">	
+              <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"	
+                data-target="#calcTargetValueTool_card" aria-expanded="false" aria-controls="calcTargetValueTool_card"	
+                id="calcTargetValueTool_title">123
+              </button>	
+            </div>	
+            <div id="calcTargetValueTool_card" class="collapse">	
+              <div class="card-body">
+                <div class="box-wrap">
+                  <span class="box-title">目标量</span>
+                  <div id="PlanCombination_target_re" class="form-row" style="max-width: 980px;"></div>
+                  <div id="PlanCombination_target_co" class="form-row" style="max-width: 980px;"></div>
+                </div>
+              </div>
+            </div>	
+          </div>
+          <div id="PlanCombination_demand_re" class="form-row" style="max-width: 980px;"></div>
+          <div id="PlanCombination_demand_co" class="form-row" style="max-width: 980px;"></div>
         </div>
         <div class="row">
           <div class="col-auto">
@@ -398,14 +423,14 @@
               <thead class="disable-selected-text">
                 <tr>
                   <th id="MissionTable_head_Mission" tabindex="0"></th>
-                  <th id="MissionTable_head_Manp" tabindex="0"></th>
-                  <th id="MissionTable_head_Ammu" tabindex="0"></th>
-                  <th id="MissionTable_head_Rati" tabindex="0"></th>
-                  <th id="MissionTable_head_Part" tabindex="0"></th>
-                  <th id="MissionTable_head_TPro" tabindex="0"></th>
-                  <th id="MissionTable_head_Equi" tabindex="0"></th>
-                  <th id="MissionTable_head_QPro" tabindex="0"></th>
-                  <th id="MissionTable_head_QRes" tabindex="0"></th>
+                  <th id="MissionTable_head_Manp" class="Manp" tabindex="0"></th>
+                  <th id="MissionTable_head_Ammu" class="Ammu" tabindex="0"></th>
+                  <th id="MissionTable_head_Rati" class="Rati" tabindex="0"></th>
+                  <th id="MissionTable_head_Part" class="Part" tabindex="0"></th>
+                  <th id="MissionTable_head_TPro" class="TPro" tabindex="0"></th>
+                  <th id="MissionTable_head_Equi" class="Equi" tabindex="0"></th>
+                  <th id="MissionTable_head_QPro" class="QPro" tabindex="0"></th>
+                  <th id="MissionTable_head_QRes" class="QRes" tabindex="0"></th>
                   <th id="MissionTable_head_Time" tabindex="0"></th>
                 </tr>
               </thead>
@@ -431,14 +456,14 @@
             </tr>
             <tr>
               <td id="PlanDetails_Mission"></td>
-              <td id="PlanDetails_Manp"></td>
-              <td id="PlanDetails_Ammu"></td>
-              <td id="PlanDetails_Rati"></td>
-              <td id="PlanDetails_Part"></td>
-              <td id="PlanDetails_TPro"></td>
-              <td id="PlanDetails_Equi"></td>
-              <td id="PlanDetails_QPro"></td>
-              <td id="PlanDetails_QRes"></td>
+              <td id="PlanDetails_Manp" class="Manp"></td>
+              <td id="PlanDetails_Ammu" class="Ammu"></td>
+              <td id="PlanDetails_Rati" class="Rati"></td>
+              <td id="PlanDetails_Part" class="Part"></td>
+              <td id="PlanDetails_TPro" class="TPro"></td>
+              <td id="PlanDetails_Equi" class="Equi"></td>
+              <td id="PlanDetails_QPro" class="QPro"></td>
+              <td id="PlanDetails_QRes" class="QRes"></td>
               <td id="PlanDetails_Time"></td>
             </tr>
             <tr id="PlanDetails_Mission_1" style="background-color: #C5D8FF;"></tr>

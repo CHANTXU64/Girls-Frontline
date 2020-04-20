@@ -309,3 +309,22 @@ input[type="number"] {
         padding: 0.25rem;
     }
 }
+
+.box-wrap {
+    border: 1px solid #000000;
+    border-radius: 0.5rem;
+    position: relative;
+    margin: 1rem -0.5rem;
+    padding: 0.8rem 0.4rem 0 0.4rem;
+    width: fit-content;
+}
+
+.box-title {
+    position: absolute;
+    top: -1rem;
+    background-color: #ffffff;
+    padding: 0 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.2;
+}
