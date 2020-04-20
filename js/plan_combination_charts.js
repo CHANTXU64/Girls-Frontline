@@ -15,7 +15,10 @@ class PlanCombinationCharts {
         else
             Chart = echarts.getInstanceByDom(Chart_elem);
 
-        let totalDays = calcDaysBetween2Dates(Input_getPC_startDate(true), Input_getPC_endDate(true));
+        let startDate = Input_getPC_startDate();
+        let endDate = Input_getPC_endDate();
+        let is_sameYear = startDate.slice(0, 4) === endDate.slice(0, 4);
+        let totalDays = calcDaysBetween2Dates(startDate, endDate);
         let data = this.plansTimeDataToChartData(plansTimeData, totalDays);
         this._data = data;
 
@@ -25,10 +28,10 @@ class PlanCombinationCharts {
 
         let option = {
             grid: {
-                left: 20,
-                right: 20,
+                left: 30,
+                right: 30,
                 top: 5,
-                bottom: 25,
+                bottom: 40,
                 height: 'auto'
             },
             xAxis: {
@@ -36,7 +39,14 @@ class PlanCombinationCharts {
                 scale: true,
                 axisLabel: {
                     formatter: function (val) {
-                        return addDate(Input_getPC_startDate(true), val).slice(5);
+                        let date = addDate(startDate, val);
+                        let shortDate = date.slice(5);
+                        if (is_sameYear)
+                            return shortDate;
+                        else {
+                            let year = date.slice(0, 4);
+                            return shortDate + '\n' + year;
+                        }
                     },
                 },
                 max: totalDays,
@@ -49,11 +59,11 @@ class PlanCombinationCharts {
                     step: 1440,
                 },
                 axisLabel: {
-                    // show: false,
+                    show: false,
                 },
                 axisTick: {
-                    // show: false,
-                    // alignWithLabel: true,
+                    show: false,
+                    alignWithLabel: true,
                 }
             },
             series: [{

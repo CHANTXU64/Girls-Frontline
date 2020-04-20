@@ -6,9 +6,11 @@ class PlanCombinationPlans {
         this._startDate = startDate;
         this._endDate = endDate;
         let days = calcDaysBetween2Dates(startDate, endDate);
-        this._totalDays = days;
-        this._totalTimePerDay = new Array(days);
-        this._totalTimePerDay.fill(0);
+        if (days > 0) {
+            this._totalDays = days;
+            this._totalTimePerDay = new Array(days);
+            this._totalTimePerDay.fill(0);
+        }
     }
 
     static clear() {
@@ -61,6 +63,16 @@ class PlanCombinationPlans {
 
         PlanCombinationTimePeriod.clear();
         PlanCombination_disabledDate();
+        this._plansHasChanged();
+    }
+
+    static deleteAll() {
+        this.clear();
+        PlanCombination_enabledDate();
+        this._plansHasChanged();
+    }
+
+    static _plansHasChanged() {
         this._printChart();
     }
 

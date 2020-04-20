@@ -241,6 +241,10 @@ input[type="number"] {
     .Demand {
         padding-left: 1.25rem!important;
     }
+
+    .PC-addTimePeriod  {
+        padding-left: 1.25rem!important;
+    }
 }
 
 @media (max-width: 1400px) {

@@ -39,7 +39,7 @@
     //backup vendor bootstrap !python
     //如果修改了引入的bootstrap的js或css文件, 还需要修改.release.py中compressHTML()的内容
     //由于自己的css覆盖了bootstrap的css, 所以在重新加载bootstrap后还需再重新加载自己的css
-    window.bootstrap || document.write('<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"><link href="../css/GF_logistics_slider.css" rel="stylesheet"><link href="../css/GF_logistics_button.css" rel="stylesheet"><link href="../css/GF_logistics_group.css" rel="stylesheet"><link href="../css/GF_logistics.css" rel="stylesheet"><script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"><\/script>');
+    window.bootstrap || document.write('<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"><link href="../css/slider.css" rel="stylesheet"><link href="../css/button.css" rel="stylesheet"><link href="../css/group.css" rel="stylesheet"><link href="../css/main.css" rel="stylesheet"><link href="../css/plan_combination.css" rel="stylesheet"><script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"><\/script>');
     //end backup vendor bootstrap !python
   </script>
   <style>
@@ -164,10 +164,22 @@
           </div>
         </div>
         <div id="PlanCombination_chart" style="height: 100px; width: auto; margin: 0 -10px 1rem -10px"></div>
-        <button type="button" class="btn btn-primary" id="PC_startRanking">start</button>
-        <button type="button" class="btn btn-danger" id="PC_deleteAllPlans">delete All</button>
-        <button type="button" class="btn btn-danger" id="PC_deletePlan" disabled>delete</button>
-        <button type="button" class="btn btn-info" id="PC_saveAll">Save</button>
+        <div class="mb-2">
+          <button type="button" class="btn btn-danger" id="PC_deleteAllPlans">delete All</button>
+          <button type="button" class="btn btn-danger" id="PC_deletePlan" disabled>delete</button>
+          <button type="button" class="btn btn-info" id="PC_saveAll">Save</button>
+        </div>
+        <div class="row">
+          <div class="col-auto">
+            <button type="button" class="btn btn-primary" id="PC_startRanking">start</button>
+          </div>
+          <div class="col-md-9" style="padding-top: 9px;">
+            <div class="progress" style="height: 20px; max-width: 400px;">
+              <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
+                                                                                                  aria-valuemax="100"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -186,7 +198,7 @@
         </div>
       </div>
       <div class="card-body row" style="margin: 0;">
-        <div class="col-lg-7 p-0">
+        <div class="col-lg-7 p-0" id="plan_setting">
           <ul class="nav nav-tabs nav-justified">
             <li class="nav-item text-nowrap">
               <a class="nav-link active" href="#" id="Tab_Anytime_name"></a>
@@ -290,7 +302,7 @@
           <input type="range" class="custom-range" id="ContractWeight" min="0" max="100" step="2" disabled>
           <div id="setTargetInput"></div>
         </div>
-        <div class="col-lg-5 disable-selected-text Demand p-0 d-none" id="PlanCombination_addPlan">
+        <div class="col-lg-5 disable-selected-text PC-addTimePeriod p-0 d-none" id="PlanCombination_addTimePeriod">
           <h5 id="DateTimePeriod">该方案时间段</h5>
           <ul id="PC_DateTimePeriod_body" class="list-group list-group-regular mb-2" style="max-height: 300px;
             overflow-y: auto;"></ul>
