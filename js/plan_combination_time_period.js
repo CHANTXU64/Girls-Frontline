@@ -37,6 +37,8 @@ class PlanCombinationTimePeriod {
         $("#PC_DateTimePeriod_body").html("");
         Input_resetPC_planStartDate();
         Input_resetPC_planEndDate();
+        Input_setPC_planStartDate_MAXMIN();
+        Input_setPC_planEndDate_MAXMIN();
         return timeperiod;
     }
 
