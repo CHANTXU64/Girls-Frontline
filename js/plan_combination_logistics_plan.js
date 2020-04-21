@@ -1,4 +1,4 @@
-class PlanCombinationPlans {
+class PC_LogisticsPlan {
     static init() {
         let startDate = Input_getPC_startDate();
         let endDate = Input_getPC_endDate();
@@ -94,9 +94,9 @@ class PlanCombinationPlans {
     }
 }
 
-PlanCombinationPlans._plans = [];
-PlanCombinationPlans._plansNumber = 0;
-PlanCombinationPlans._startDate = "";
-PlanCombinationPlans._endDate = "";
-PlanCombinationPlans._totalDays = 0;
-PlanCombinationPlans._totalTimePerDay = [];
+PC_LogisticsPlan._plans = [];
+PC_LogisticsPlan._plansNumber = 0;
+PC_LogisticsPlan._startDate = "";
+PC_LogisticsPlan._endDate = "";
+PC_LogisticsPlan._totalDays = 0;
+PC_LogisticsPlan._totalTimePerDay = [];

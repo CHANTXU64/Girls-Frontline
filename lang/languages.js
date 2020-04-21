@@ -77,14 +77,6 @@ const language_zh_CN = {
             Tab_Timetable_new_hours: "新时间点小时数",
             Tab_Timetable_new_minutes: "新时间点分钟数",
             GreatSuccessRate: "大成功基础概率",
-            MT: "人力需求量",
-            AT: "弹药需求量",
-            RT: "口粮需求量",
-            PT: "零件需求量",
-            TT: "人形需求量",
-            ET: "装备需求量",
-            QPT: "快建需求量",
-            QRT: "快修需求量",
             importSaved_input: "需要导入的方案",
             exportSaved_input: "导出的方案",
             renameSaved_input: "新的名称",
@@ -232,7 +224,7 @@ const language_zh_CN = {
         FineTuningSpan_Width: "40%",
         FineTuningButton_Width: "30%",
     },
-    span_class: {
+    html_class: {
         Manp: "人力",
         Ammu: "弹药",
         Rati: "口粮",
@@ -241,7 +233,17 @@ const language_zh_CN = {
         Equi: "装备",
         QPro: "快建",
         QRes: "快修",
-    }
+    },
+    placeholder_class: {
+        Manp_placeholder: "人力",
+        Ammu_placeholder: "弹药",
+        Rati_placeholder: "口粮",
+        Part_placeholder: "零件",
+        TPro_placeholder: "人形",
+        Equi_placeholder: "装备",
+        QPro_placeholder: "快建",
+        QRes_placeholder: "快修",
+    },
 };
 const language_zh_TW = {
     name: "繁體中文",

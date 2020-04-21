@@ -7,3 +7,14 @@
         padding: 0;
     }
 }
+
+.consumption-table {
+}
+
+.consumption-table th,
+.consumption-table td {
+    padding: 4.8px;
+    width: 10%;
+    font-size: 0.875rem;
+    cursor: default;
+}

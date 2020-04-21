@@ -100,6 +100,24 @@ function getPositiveValueFromHTML(JQ_selector, NeedCorrection = false) {
     return Value;
 }
 
+function is_NonNumberOrInfinity(x) {
+    if (x === "" || isNaN(x) || x === "Infinity")
+        return true;
+    else
+        return false;
+}
+
+function getNumberFromHTML(JQ_selector, NeedCorrection = false) {
+    let number;
+    if (is_NonNumberOrInfinity(JQ_selector.val()))
+        number = 0;
+    else
+        number = parseFloat(JQ_selector.val());
+    if (NeedCorrection)
+        JQ_selector.val(number);
+    return number;
+}
+
 //移除数组中值为val的所有元素
 Array.prototype.remove = function (val) {
     let i = 0;

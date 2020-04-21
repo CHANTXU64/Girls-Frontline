@@ -33,7 +33,7 @@ function loadHTML_Target() {
         HTML += '&minus;</button><input type="number" min="0"';
         if (i >= 4)
             HTML += 'step="0.01"'
-        HTML += 'class="form-control"id="';
+        HTML += 'class="form-control ' + TargetName[i] + '_placeholder" id="';
         HTML += Target[i];
         HTML += '"value=0 onfocus="this.select();"style="border-left-width:0"><button class="btn btn-outline-dark input-group-btn target-btn-hidden"type="button"id="Target_plus_';
         if (i < 4)
@@ -151,8 +151,12 @@ function loadHTML_language() {
     //------------------
     
     //class
-    let language_class = language.span_class;
-    for (let class_name in language_class) {
-        $("." + class_name).html(language_class[class_name]);
+    let language_htmlclass = language.html_class;
+    for (let class_name in language_htmlclass) {
+        $("." + class_name).html(language_htmlclass[class_name]);
+    }
+    let language_placeholderclass = language.placeholder_class;
+    for (let class_name in language_placeholderclass) {
+        $("." + class_name).attr("placeholder", language_placeholderclass[class_name]);
     }
 } //End loadHTML_language()

@@ -16,7 +16,7 @@ JQ_selector_PC_startDate.on("input propertychange", function () {
 JQ_selector_PC_startDate.on("blur", function () {
     Input_getPC_startDate(true);
     PlanCombinationCharts.printChart_Timetable();
-    PlanCombinationPlans.init();
+    PC_LogisticsPlan.init();
 });
 
 const JQ_selector_PC_endDate = $("#PlanCombination_endDate");
@@ -28,7 +28,7 @@ JQ_selector_PC_endDate.on("input propertychange", function () {
 JQ_selector_PC_endDate.on("blur", function () {
     Input_getPC_endDate(true);
     PlanCombinationCharts.printChart_Timetable();
-    PlanCombinationPlans.init();
+    PC_LogisticsPlan.init();
 });
 
 const JQ_selector_PC_addTimePeriodStartDate = $("#PlanCombination_planStartDate");
@@ -46,7 +46,11 @@ JQ_selector_PC_addTimePeriodEndDate.on("blur", function () {
 })
 
 $("#PC_deleteAllPlans").on("click", function () {
-    PlanCombinationPlans.deleteAll();
+    PC_LogisticsPlan.deleteAll();
+});
+
+$("#LogisticsConsumptionPlanSwitch").on("click", function () {
+    LogisticsConsumptionPlanSwitch();
 });
 
 $("#addNewTimePeriod").on("click", function () {
@@ -57,6 +61,26 @@ $("#deleteAllTimePeriod").on("click", function () {
     PlanCombinationTimePeriod.clear();
 });
 
-$("#PC_addPlan").on("click", function () {
-    PlanCombinationPlans.add();
+$("#PC_addLogisticsPlan").on("click", function () {
+    PC_LogisticsPlan.add();
+});
+
+$("#PC_addConsumptionPlan").on("click", function () {
+    PC_ConsumptionPlan.add();
+});
+
+$("#Consumption_add").on("click", function () {
+    PC_ConsumptionPlan.table_add();
+});
+
+$("#Consumption_reset").on("click", function () {
+    Input_setPC_Consumption_reAndco();
+    Input_setPC_Consumption_times();
+    // PC_ConsumptionPlan.
+});
+
+$("#Consumption_tbody").on("click", "button[id^=Consumption_table_close_row_]", function () {
+    let row = stringSliceFromLast_(this.id);
+    let tr_id = "Consumption_table_row_" + row;
+    PC_ConsumptionPlan._table_deleteThisRow(tr_id);
 });

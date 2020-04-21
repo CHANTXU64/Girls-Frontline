@@ -174,14 +174,14 @@
         </div>
         <div class="box-wrap">
           <span class="box-title">需求量</span>
-          <div class="card mb-2">	
-            <div class="card-header pt-2 pb-2 border-bottom-0">	
-              <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"	
-                data-target="#calcTargetValueTool_card" aria-expanded="false" aria-controls="calcTargetValueTool_card"	
+          <div class="card mb-2">
+            <div class="card-header pt-2 pb-2 border-bottom-0">
+              <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"
+                data-target="#calcTargetValueTool_card" aria-expanded="false" aria-controls="calcTargetValueTool_card"
                 id="calcTargetValueTool_title">123
-              </button>	
-            </div>	
-            <div id="calcTargetValueTool_card" class="collapse">	
+              </button>
+            </div>
+            <div id="calcTargetValueTool_card" class="collapse">
               <div class="card-body">
                 <div class="box-wrap">
                   <span class="box-title">目标量</span>
@@ -189,7 +189,7 @@
                   <div id="PlanCombination_target_co" class="form-row" style="max-width: 980px;"></div>
                 </div>
               </div>
-            </div>	
+            </div>
           </div>
           <div id="PlanCombination_demand_re" class="form-row" style="max-width: 980px;"></div>
           <div id="PlanCombination_demand_co" class="form-row" style="max-width: 980px;"></div>
@@ -317,6 +317,49 @@
             <select class="custom-select" id="ChapterLimit" autocomplete="off"></select>
           </div>
         </div>
+        <div class="col-lg-7 p-0 d-none disable-selected-text" id="ConsumptionPlan_setting">
+          <div class="form-row">
+            <div class="col-sm-8 input-group-regular mb-2">
+              <select class="custom-select" id="Consumption_select" autocomplete="off"></select>
+            </div>
+            <div class="col-sm-4 mb-2">
+              <button type="button" class="btn btn-outline-dark btn-regular" id="Consumption_reset">reset</button>
+            </div>
+          </div>
+          <div class="form-row" id="Consumption_re"></div>
+          <div class="form-row" id="Consumption_co"></div>
+          <div class="form-row">
+            <div class="col-sm-8 input-group input-group-regular mb-2">
+              <label class="input-group-text input-group-label" id="Consumption_times_label" for="Consumption_times">次数</label>
+              <input type="number" class="form-control" id="Consumption_times" autocomplete="off">
+            </div>
+            <div class="col-sm-4 mb-2">
+              <button type="button" class="btn btn-outline-dark btn-regular" id="Consumption_add">add</button>
+            </div>
+          </div>
+          <div class="table-responsive consumption-table">
+            <table class="table text-nowrap">
+              <thead>
+                <tr>
+                  <th class="Manp"></th>
+                  <th class="Ammu"></th>
+                  <th class="Rati"></th>
+                  <th class="Part"></th>
+                  <th class="TPro"></th>
+                  <th class="Equi"></th>
+                  <th class="QPro"></th>
+                  <th class="QRes"></th>
+                  <th>times</th>
+                  <th>delete</th>
+                </tr>
+              </thead>
+              <tbody id="Consumption_tbody">
+              </tbody>
+              <tbody id="Consumption_total">
+              </tbody>
+            </table>
+          </div>
+        </div>
         <div class="col-lg-5 disable-selected-text Demand p-0" id="target">
           <h5 id="Demand"></h5>
           <div id="setTargetButton"></div>
@@ -328,6 +371,10 @@
           <div id="setTargetInput"></div>
         </div>
         <div class="col-lg-5 disable-selected-text PC-addTimePeriod p-0 d-none" id="PlanCombination_addTimePeriod">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="LogisticsConsumptionPlanSwitch" autocomplete="off">
+            <label class="custom-control-label" for="LogisticsConsumptionPlanSwitch"></label>
+          </div>
           <h5 id="DateTimePeriod">该方案时间段</h5>
           <ul id="PC_DateTimePeriod_body" class="list-group list-group-regular mb-2" style="max-height: 300px;
             overflow-y: auto;"></ul>
@@ -347,7 +394,8 @@
         <div id="ranking_toolbar" class="col-lg-12 btn-toolbar p-0 mt-2">
           <button type="button" class="btn btn-primary" id="start_ranking" disabled></button>
           <button type="button" class="btn btn-danger" style="display: none;" id="clear_ranking"></button>
-          <button type="button" class="btn btn-info d-none" id="PC_addPlan">add</button>
+          <button type="button" class="btn btn-info d-none" id="PC_addLogisticsPlan">addL</button>
+          <button type="button" class="btn btn-info d-none" id="PC_addConsumptionPlan">addC</button>
           <div class="spinner-border text-primary ml-2" role="status" style="border-width: 0.3rem; display: none;" id="ranking_loading">
             <span class="sr-only">Loading...</span>
           </div>
@@ -582,7 +630,8 @@
   <script src="../js/plan_combination_function.js"></script>
   <script src="../js/plan_combination_input.js"></script>
   <script src="../js/plan_combination_time_period.js"></script>
-  <script src="../js/plan_combination_plans.js"></script>
+  <script src="../js/plan_combination_consumption_plan.js"></script>
+  <script src="../js/plan_combination_logistics_plan.js"></script>
   <script src="../js/plan_combination_charts.js"></script>
   <script src="../js/plan_combination_html.js"></script>
   <script src="../js/plan_combination_html_event.js"></script>
