@@ -108,10 +108,19 @@ class PC_ConsumptionPlan {
             }
         }
 
+        //格式[height, (xindex, yindex, width,) (xindex......]
+        let TimetableData = [240];
+        for (let i = 0; i < timePeriod_length; ++i) {
+            TimetableData.push(timePeriod[i][0]);
+            TimetableData.push(1680);
+            TimetableData.push(timePeriod[i][1] - timePeriod[i][0]);
+        }
+
         let newPlan = {};
         newPlan.timePeriod = timePeriod;
         newPlan.number = this._plansNumber++;
         newPlan.reAndco = this._tableData[0].slice();
+        newPlan.TimetableData = TimetableData;
         this._plans.push(newPlan);
 
         PlanCombinationTimePeriod.clear();
@@ -120,24 +129,11 @@ class PC_ConsumptionPlan {
     }
 
     static _plansHasChanged() {
-        this._printChart();
+        PlanCombinationChart.printFromConsumptionPlan(this._plans);
     }
 
-    static _printChart() {
-        let data = [];
-        let plan_length = this._plans.length;
-        for (let i = 0; i < plan_length; ++i) {
-            let newData = {};
-            newData.time = 240;
-            newData.timePeriod = [];
-            newData.number = this._plans[i].number;
-            let timePeriod_length = this._plans[i].timePeriod.length;
-            for (let ii = 0; ii < timePeriod_length; ++ii) {
-                newData.timePeriod.push(this._plans[i].timePeriod[ii].slice());
-            }
-            data.push(newData);
-        }
-        PlanCombinationCharts.printChart_Timetable(data);
+    static chartGetPlans() {
+        return this._plans;
     }
 }
 

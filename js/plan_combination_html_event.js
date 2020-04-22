@@ -15,7 +15,7 @@ JQ_selector_PC_startDate.on("input propertychange", function () {
 
 JQ_selector_PC_startDate.on("blur", function () {
     Input_getPC_startDate(true);
-    PlanCombinationCharts.printChart_Timetable();
+    PlanCombinationChart.print();
     PC_LogisticsPlan.init();
 });
 
@@ -27,7 +27,7 @@ JQ_selector_PC_endDate.on("input propertychange", function () {
 
 JQ_selector_PC_endDate.on("blur", function () {
     Input_getPC_endDate(true);
-    PlanCombinationCharts.printChart_Timetable();
+    PlanCombinationChart.print();
     PC_LogisticsPlan.init();
 });
 

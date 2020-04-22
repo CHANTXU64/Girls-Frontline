@@ -4,7 +4,7 @@ function is_KeyIsEnter(e) {
 
 $(function () {
     window.onresize = function () {
-        PlanCombinationCharts.resize_Timetable();
+        PlanCombinationChart.resize_Timetable();
     }
 })
 

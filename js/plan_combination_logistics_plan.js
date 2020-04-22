@@ -59,6 +59,8 @@ class PC_LogisticsPlan {
         newPlan.saved = savedData;
         newPlan.time = planTime;
         newPlan.number = this._plansNumber++;
+        const is_calcByHour = false;
+        newPlan.reAndco = Saved.getReAndCoBySaved(newPlan.saved, is_calcByHour);
         this._plans.push(newPlan);
 
         PlanCombinationTimePeriod.clear();
@@ -84,13 +86,18 @@ class PC_LogisticsPlan {
             newData.time = this._plans[i].time;
             newData.timePeriod = [];
             newData.number = this._plans[i].number;
+            newData.reAndco = this._plans[i].reAndco;
             let timePeriod_length = this._plans[i].timePeriod.length;
             for (let ii = 0; ii < timePeriod_length; ++ii) {
                 newData.timePeriod.push(this._plans[i].timePeriod[ii].slice());
             }
             data.push(newData);
         }
-        PlanCombinationCharts.printChart_Timetable(data);
+        PlanCombinationChart.printFromLogisticsPlan(data);
+    }
+
+    static chartGetPlans() {
+        return this._plans;
     }
 }
 

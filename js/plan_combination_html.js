@@ -5,7 +5,7 @@ function switchPlanCombination() {
     else {
         PlanCombination_off();
     }
-    PlanCombinationCharts.resize_Timetable();
+    PlanCombinationChart.resize_Timetable();
 }
 
 function PlanCombination_on() {
@@ -18,7 +18,7 @@ function PlanCombination_on() {
     $("#target").addClass("d-none");
     $("#start_ranking").addClass("d-none");
     $("#result_card").addClass("d-none");
-    PlanCombinationCharts.printChart_Timetable();
+    PlanCombinationChart.print();
     PC_LogisticsPlan.init();
     PC_ConsumptionPlan.init();
     Input_setPC_planStartDate_MAXMIN();

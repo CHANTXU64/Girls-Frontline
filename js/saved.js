@@ -116,39 +116,36 @@ class Saved {
         let tab = getTabByName(allSaved[row].TabName);
         let TotalTime = tab.getTotalTimeFromSavedCustom(allSaved[row].TabCustom);
         HTML += '<div>' + tab.displayName + '<br>' + TimeFormat(TotalTime) + '</div>';
-        let resources = this._getResourcesBySaved(allSaved[row]);
-        if (is_CalculateByHour()) {
-            for (let i = 0; i < 4; ++i) {
-                resources[i] *= 60;
-            }
-        }
-        else {
-            for (let i = 0; i < 4; ++i) {
-                resources[i] *= TotalTime;
-            }
-        }
+        let resources = this.getReAndCoBySaved(allSaved[row], is_CalculateByHour()).slice(0, 4);
         HTML += '<div>' + Math.round(resources[0]) + '<br>' + Math.round(resources[2]) + '</div>';
         HTML += '<div>' + Math.round(resources[1]) + '<br>' + Math.round(resources[3]) + '</div>';
         HTML += '</div>';
         return HTML;
     }
 
-    static _getResourcesBySaved(savedData) {
+    static getReAndCoBySaved(savedData, is_hourly) {
         let tab = this.creatTabBySaved(savedData);
         let QValid = tab.getQValid(false);
+        let time = tab.getTotalTime(false);
+        if (is_hourly)
+            time = 60;
         quick_sort_expand_ascending_missionName(QValid, 0);
-        let resources = [0, 0, 0, 0];
+        let reAndco = [0, 0, 0, 0, 0, 0, 0, 0];
         let QValid_length = QValid.length;
         let selectMission = savedData.Missions;
         for (let i = 0; i < QValid_length; ++i) {
             if (selectMission.indexOf(QValid[i][0]) !== -1) {
-                resources[0] += QValid[i][1];
-                resources[1] += QValid[i][2];
-                resources[2] += QValid[i][3];
-                resources[3] += QValid[i][4];
+                reAndco[0] += QValid[i][1] * time;
+                reAndco[1] += QValid[i][2] * time;
+                reAndco[2] += QValid[i][3] * time;
+                reAndco[3] += QValid[i][4] * time;
+                reAndco[4] += QValid[i][5] * time;
+                reAndco[5] += QValid[i][6] * time;
+                reAndco[6] += QValid[i][7] * time;
+                reAndco[7] += QValid[i][8] * time;
             }
         }
-        return resources;
+        return reAndco;
     }
 
     static creatTabBySaved(savedData) {
