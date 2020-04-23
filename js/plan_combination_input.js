@@ -136,3 +136,12 @@ function Input_getPC_Consumption_times() {
 function Input_setPC_Consumption_times(times = "") {
     $("#Consumption_times").val(times);
 }
+
+function Input_getPC_demand(NeedCorrection) {
+    const class_name = ['Manp', 'Ammu', 'Rati', 'Part', 'TPro', 'Equi', 'QPro', 'QRes'];
+    let demand = [];
+    for (let i = 0; i < 8; ++i) {
+        demand.push(getPositiveValueFromHTML($("#PC_demand_" + class_name[i]), NeedCorrection));
+    }
+    return demand;
+}

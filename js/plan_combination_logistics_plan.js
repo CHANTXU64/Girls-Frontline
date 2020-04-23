@@ -99,6 +99,10 @@ class PC_LogisticsPlan {
     static chartGetPlans() {
         return this._plans;
     }
+
+    static rankingGetPlans() {
+        return this._plans;
+    }
 }
 
 PC_LogisticsPlan._plans = [];

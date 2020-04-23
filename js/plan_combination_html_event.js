@@ -84,3 +84,7 @@ $("#Consumption_tbody").on("click", "button[id^=Consumption_table_close_row_]", 
     let tr_id = "Consumption_table_row_" + row;
     PC_ConsumptionPlan._table_deleteThisRow(tr_id);
 });
+
+$("#PC_startRanking").on("click", function () {
+    setTimeout(PC_start_ranking, 1);
+})

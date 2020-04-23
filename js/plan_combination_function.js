@@ -28,3 +28,17 @@ function calcDaysBetween2Dates(startDate, endDate) {
     let days = (endTime - startTime) / (1000 * 60 * 60 * 24);
     return days;
 }
+
+function ArrayMaxIndex(Arr) {
+    let max = Arr[0];
+    let Index = 0;
+    let Arr_length = Arr.length;
+    for (let i = 0; i < Arr_length; i++) {
+        if (max < Arr[i]) {
+            max = Arr[i];
+            Index = i;
+        }
+    }
+    return Index;
+}
+

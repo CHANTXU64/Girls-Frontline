@@ -146,6 +146,7 @@ class PlanCombinationChart {
             for (let i = 1; i < totalDays; ++i) {
                 newData[i] += newData[i - 1];
             }
+            newData.unshift(0);
             data.push(newData);
         }
         return data;
