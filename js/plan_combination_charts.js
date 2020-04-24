@@ -41,10 +41,15 @@ class PlanCombinationChart {
     static _print_main(LogisticsPlanData = [{timePeriod: [0, 0], time: 0, number: -1, reAndco: []}], ConsumptionPlanData = [{timePeriod: [0, 0], TimetableData: [0], number: -1, reAndco: []}]) {
         let Chart_elem = document.getElementById("PlanCombination_chart");
         let Chart; //图表实例
-        if (Chart_elem.getAttribute("_echarts_instance_") === null)
+        if (Chart_elem.getAttribute("_echarts_instance_") === null || Chart_elem.getAttribute("_echarts_instance_") === "")
             Chart = echarts.init(Chart_elem);
-        else
+        else {
             Chart = echarts.getInstanceByDom(Chart_elem);
+            Chart.off("click");
+            Chart.clear();
+            // Chart.dispose();
+            // Chart = echarts.init(Chart_elem);
+        }
 
         let startDate = Input_getPC_startDate();
         let endDate = Input_getPC_endDate();
@@ -52,10 +57,33 @@ class PlanCombinationChart {
 
         this._LogisticsTimetableData = this._LogisticsPlanDataToTimetableData(LogisticsPlanData, totalDays);
         this._ConsumptionTimetableData = this._ConsumptionPlanDataToTimetableData(ConsumptionPlanData, totalDays);
-        this._reAndcoData = this._calcReAndCoData(LogisticsPlanData, ConsumptionPlanData, totalDays);
+        let currentValue = Input_getPC_current(true);
+        this._reAndcoData = this._calcReAndCoData(currentValue, LogisticsPlanData, ConsumptionPlanData, totalDays);
 
         let option = plan_combination_getChartOption(startDate, endDate);
         Chart.setOption(option);
+
+        Chart.on("click", {seriesIndex: 8}, function (params) {
+            let plan_number = params.data.name;
+            PC_LogisticsPlan.apply(plan_number);
+            $("#PC_deletePlan").removeAttr("disabled");
+            $("#PC_deletePlan").off();
+            $("#PC_deletePlan").on("click", function () {
+                PC_LogisticsPlan.deleteThis(plan_number);
+                $("#PC_deletePlan").attr("disabled", "true");
+            });
+            Saved.cancelSelected();
+        });
+
+        Chart.on("click", {seriesIndex: 9}, function (params) {
+            let plan_number = params.data.name;
+            $("#PC_deletePlan").removeAttr("disabled");
+            $("#PC_deletePlan").off();
+            $("#PC_deletePlan").on("click", function () {
+                PC_ConsumptionPlan.deleteThis(plan_number);
+                $("#PC_deletePlan").attr("disabled", "true");
+            });
+        });
     }
 
     static _LogisticsPlanDataToTimetableData(LogisticsPlanData, totalDays) {
@@ -113,11 +141,12 @@ class PlanCombinationChart {
         return data;
     }
 
-    static _calcReAndCoData(LogisticsPlanData, ConsumptionPlanData, totalDays) {
+    static _calcReAndCoData(currentValue, LogisticsPlanData, ConsumptionPlanData, totalDays) {
         let data = [];
         for (let i = 0; i < 8; ++i) {
             let newData = new Array(totalDays);
             newData.fill(0);
+            newData[0] = currentValue[i];
             let L_plans_length = LogisticsPlanData.length;
             for (let ii = 0; ii < L_plans_length; ++ii) {
                 let reORco = LogisticsPlanData[ii].reAndco[i];
@@ -143,10 +172,18 @@ class PlanCombinationChart {
                 }
             }
 
-            for (let i = 1; i < totalDays; ++i) {
-                newData[i] += newData[i - 1];
+            if (i < 4)
+                newData[0] = Math.min(Math.round(newData[0]), 300000);
+            else
+                newData[0] = Math.round(newData[0]);
+            for (let ii = 1; ii < totalDays; ++ii) {
+                let value = Math.round(newData[ii] + newData[ii - 1]);
+                if (i < 4)
+                    newData[ii] = value < 300000 ? value : 300000;
+                else
+                    newData[ii] = value;
             }
-            newData.unshift(0);
+            newData.unshift(Math.round(currentValue[i]));
             data.push(newData);
         }
         return data;

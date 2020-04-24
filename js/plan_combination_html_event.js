@@ -61,6 +61,12 @@ $("#deleteAllTimePeriod").on("click", function () {
     PlanCombinationTimePeriod.clear();
 });
 
+$("#PC_DateTimePeriod_body").on("click", "button[id^=PC_TimePeriod_close_]", function () {
+    let row = stringSliceFromLast_(this.id);
+    let tr_id = "PC_TimePeriod_" + row;
+    PlanCombinationTimePeriod.deleteThisRow(tr_id);
+});
+
 $("#PC_addLogisticsPlan").on("click", function () {
     PC_LogisticsPlan.add();
 });
@@ -86,5 +92,25 @@ $("#Consumption_tbody").on("click", "button[id^=Consumption_table_close_row_]", 
 });
 
 $("#PC_startRanking").on("click", function () {
+    PC_ranking_start();
     setTimeout(PC_start_ranking, 1);
+    setTimeout(PC_ranking_end, 1);
 })
+function PC_ranking_start() {
+    html_waiting();
+}
+function PC_ranking_end() {
+    html_waiting_cancel();
+}
+
+$("#PlanCombination_current_box").on("blur", "input[id^=PC_current_]", function () {
+    PlanCombinationChart.print(PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans());
+});
+
+$("#PC_calcDemand").on("click", function () {
+    PC_calcDemand();
+});
+
+$("#PC_saveAll").on("click", function () {
+    PC_saveAll();
+});

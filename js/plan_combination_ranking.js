@@ -16,45 +16,6 @@ const PC_QValidMaxLength_secondCalc = 38;
 function PC_start_ranking() {
     let a = new PC_ranking(PC_LogisticsPlan.rankingGetPlans(), Input_getPC_demand(true));
     a.ranking();
-    //let LogisticsPlanData = PC_LogisticsPlan.rankingGetPlans();
-    //let plans_number = LogisticsPlanData.length;
-    //// let demandValue = [2, 2, 2, 1, 0, 0, 0, 0];
-    //let demandValue = [600, 600, 600, 300, 1, 0, 1, 0];
-    //for (let i = 0; i < plans_number; ++i) {
-    //    // if (LogisticsPlanData[i].saved.Missions.length !== 0)
-    //    //     continue;
-    //    let tab = Saved.creatTabBySaved(LogisticsPlanData[i].saved);
-
-    //    //plan计算需要已经设置好的Qvalid的ShownTab
-    //    tab.setQValid();
-
-    //    let plan_Stdzn = new Plan_Stdzn(tab, 8, PC_QValidMaxLength_firstCalc, PC_QValidMaxLength_secondCalc, demandValue);
-    //    plan_Stdzn.ranking();
-
-    //    let targetValue_Stdzn = plan_Stdzn.getStdznTargetValue();
-    //    let targetValue_StdznAndNorm = new Array(8);
-    //    let currentValueMax = tab.getCurrentValueMax();
-    //    for (let i = 0; i < 8; i++) {
-    //        targetValue_StdznAndNorm[i] = Math.min(1, targetValue_Stdzn[i] / currentValueMax[i]);
-    //        targetValue_StdznAndNorm[i] = Math.max(targetValue_StdznAndNorm[i], 0);
-    //    }
-    //    tab.normalizedQValid();
-
-    //    let plan = new Plan(tab, 3, targetValue_StdznAndNorm);
-    //    plan.ranking();
-    //    let result = plan.getResult();
-    //    if (result.length !== 0) {
-    //        let Missions = result[0].slice(1, 5);
-    //        LogisticsPlanData[i].saved.Missions = Missions;
-    //        let totalTime = tab.getTotalTime(false);
-    //        let reAndco = [];
-    //        for (let i = 0; i < 8; ++i) {
-    //            reAndco.push(result[0][i + 5] * totalTime);
-    //        }
-    //        LogisticsPlanData[i].reAndco = reAndco;
-    //    }
-    //}
-    //PC_LogisticsPlan._plansHasChanged();
 }
 
 class PC_ranking {
@@ -105,11 +66,9 @@ class PC_ranking {
             }
             let proportion = planValue_sum / planValue_total;
             let maxIndex = ArrayMaxIndex(reAndcoValue_Norm_sum);
-            // let a = reAndcoValue_Norm_sum[maxIndex] / proportion;
             let a = reAndcoValue_sum[maxIndex] / proportion;
             for (let ii = 0; ii < 8; ++ii) {
                 demandValue[ii] = this.original_demandValue[ii] * a;
-                // demandValue[ii] -= reAndcoValue_Norm_sum[ii];
                 demandValue[ii] -= reAndcoValue_sum[ii];
                 if (demandValue[ii] < 0)
                     demandValue[ii] = 0;
@@ -119,7 +78,6 @@ class PC_ranking {
         //第三次
         let demandValue_0 = this.original_demandValue.slice();
         let maxIndex = ArrayMaxIndex(reAndcoValue_Norm_sum);
-        // let a = reAndcoValue_Norm_sum[maxIndex] / demandValue_0[maxIndex];
         let a = reAndcoValue_sum[maxIndex] / demandValue_0[maxIndex];
         for (let i = 0; i < 8; ++i) {
             if (demandValue_0[i] !== 0)
@@ -144,11 +102,9 @@ class PC_ranking {
             }
             let proportion = planValue_sum / planValue_total;
             let maxIndex = ArrayMaxIndex(reAndcoValue_Norm_sum);
-            // let a = reAndcoValue_Norm_sum[maxIndex] / proportion;
             let a = reAndcoValue_sum[maxIndex] / proportion;
             for (let ii = 0; ii < 8; ++ii) {
                 demandValue[ii] = this.original_demandValue[ii] * a;
-                // demandValue[ii] -= reAndcoValue_Norm_sum[ii];
                 demandValue[ii] -= reAndcoValue_sum[ii];
                 if (demandValue[ii] < 0)
                     demandValue[ii] = 0;

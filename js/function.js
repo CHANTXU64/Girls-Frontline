@@ -320,3 +320,15 @@ if (!Array.prototype.fill) {
         }
     });
 }
+
+function html_waiting() {
+    document.body.style.pointerEvents = "none";
+    //bug
+    $(".custom-control-input").attr("disabled", "true");
+}
+
+function html_waiting_cancel() {
+    document.body.style.pointerEvents = "";
+    //bug
+    $(".custom-control-input").removeAttr("disabled");
+}

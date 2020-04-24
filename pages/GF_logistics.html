@@ -87,7 +87,7 @@
       </div>
     </div>
   </div>
-  <!-- end Modal -->
+  <!-- head -->
   <div class="spinner-grow text-success align-middle" role="status" style="height: 0.5rem; width: 0.5rem; position: fixed; z-index: 300; right: 0;">
     <span class="sr-only">Loading...</span>
   </div>
@@ -111,6 +111,7 @@
     </div>
     <hr style="margin: 0.5rem 0 1rem 0; width: 100%;" />
   </h2>
+  <!-- config -->
   <div class="col-lg-5 float-right input-group input-group-regular mb-3 config_card"
     style="max-width: 440px;">
     <label for="Config_importInput" class="input-group-label input-group-text disable-selected-text" id="Config_text"></label>
@@ -128,6 +129,7 @@
       </div>
     </div>
   </div>
+  <!-- alert -->
   <div class="col-lg-7 float-left disable-selected-text alert_card">
     <div class="alert alert-warning alert-dismissible fade show" id="description" role="alert">
       <span id="description_text" style="color:#000000"></span>
@@ -143,6 +145,7 @@
       </button>
     </div>
   </div>
+  <!-- plan Combination -->
   <div id="plan_combination_card" class="col-lg-12 float-left plan_combination_card disable-selected-text d-none">
     <div class="card border-dark mb-3">
       <div class="card-header pt-2 pb-2">
@@ -150,64 +153,64 @@
       </div>
       <div class="card-body">
         <div class="form-row" style="max-width: 800px;">
-          <div class="col-md-4 mb-3 input-group input-group-regular">
+          <div class="col-md-4 mb-2 input-group input-group-regular">
             <label for="PlanCombination_startDate" class="input-group-label input-group-text"
               id="PlanCombination_startDate_text"></label>
             <input id="PlanCombination_startDate" type="date" class="form-control input-group" style="width: auto; max-width: 150px;">
           </div>
-          <div class="col-md-4 mb-3 input-group input-group-regular">
+          <div class="col-md-4 mb-2 input-group input-group-regular">
             <label for="PlanCombination_endDate" class="input-group-label input-group-text"
               id="PlanCombination_endDate_text"></label>
             <input id="PlanCombination_endDate" type="date" class="form-control" style="width: auto; max-width: 150px;">
           </div>
         </div>
-        <div class="box-wrap">
+        <div id="PlanCombination_current_box" class="box-wrap">
           <span class="box-title">现有量</span>
           <div id="PlanCombination_current_re" class="form-row" style="max-width: 980px;"></div>
           <div id="PlanCombination_current_co" class="form-row" style="max-width: 980px;"></div>
         </div>
-        <div id="PlanCombination_chart" style="height: 250px; width: auto; margin: 0 -10px 1rem -10px"></div>
-        <div class="mb-2">
+        <div id="PlanCombination_chart" style="height: 270px; width: auto; margin: 0 -10px 1rem -10px"></div>
+        <div class="mb-3">
           <button type="button" class="btn btn-danger" id="PC_deleteAllPlans">delete All</button>
           <button type="button" class="btn btn-danger" id="PC_deletePlan" disabled>delete</button>
-          <button type="button" class="btn btn-info" id="PC_saveAll">Save</button>
+          <button type="button" class="btn btn-info" id="PC_saveAll">Save all</button>
         </div>
-        <div class="box-wrap">
-          <span class="box-title">需求量</span>
-          <div class="card mb-2">
-            <div class="card-header pt-2 pb-2 border-bottom-0">
-              <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"
-                data-target="#calcTargetValueTool_card" aria-expanded="false" aria-controls="calcTargetValueTool_card"
-                id="calcTargetValueTool_title">123
-              </button>
-            </div>
-            <div id="calcTargetValueTool_card" class="collapse">
-              <div class="card-body">
-                <div class="box-wrap">
-                  <span class="box-title">目标量</span>
-                  <div id="PlanCombination_target_re" class="form-row" style="max-width: 980px;"></div>
-                  <div id="PlanCombination_target_co" class="form-row" style="max-width: 980px;"></div>
+        <div class="card">
+          <div class="card-header pt-2 pb-2 border-bottom-0">
+            <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"
+                    data-target="#PC_Ranking_card" aria-expanded="false" aria-controls="PC_Ranking_card"
+                    id="PC_Ranking_card_title">123</button>
+          </div>
+          <div id="PC_Ranking_card" class="collapse">
+            <div class="card-body p-2">
+              <div class="card mb-2">
+                <div class="card-header pt-2 pb-2 border-bottom-0">
+                  <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"
+                          data-target="#calcTargetValueTool_card" aria-expanded="false" aria-controls="calcTargetValueTool_card"
+                          id="calcTargetValueTool_title">123
+                  </button>
+                </div>
+                <div id="calcTargetValueTool_card" class="collapse">
+                  <div class="card-body p-2">
+                    <h5>目标量</h5>
+                    <div id="PlanCombination_target_re" class="form-row" style="max-width: 980px;"></div>
+                    <div id="PlanCombination_target_co" class="form-row" style="max-width: 980px;"></div>
+                    <button type="button" class="btn btn-primary" id="PC_calcDemand">calc</button>
+                  </div>
                 </div>
               </div>
+              <h5>需求量</h5>
+              <div id="PlanCombination_demand_re" class="form-row" style="max-width: 980px;"></div>
+              <div id="PlanCombination_demand_co" class="form-row" style="max-width: 980px;"></div>
+              <button type="button" class="btn btn-primary" id="PC_startRanking">start</button>
             </div>
           </div>
-          <div id="PlanCombination_demand_re" class="form-row" style="max-width: 980px;"></div>
-          <div id="PlanCombination_demand_co" class="form-row" style="max-width: 980px;"></div>
         </div>
-        <div class="row">
-          <div class="col-auto">
-            <button type="button" class="btn btn-primary" id="PC_startRanking">start</button>
-          </div>
-          <div class="col-md-9" style="padding-top: 9px;">
-            <div class="progress" style="height: 20px; max-width: 400px;">
-              <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
-                                                                                                  aria-valuemax="100"></div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   </div>
+  <!-- setting -->
   <div class="col-lg-7 float-left setting_card">
     <div class="card border-dark mb-3">
       <div class="card-header pt-2 pb-2">
@@ -223,6 +226,7 @@
         </div>
       </div>
       <div class="card-body row" style="margin: 0;">
+        <!-- setting Logistics -->
         <div class="col-lg-7 p-0" id="plan_setting">
           <ul class="nav nav-tabs nav-justified">
             <li class="nav-item text-nowrap">
@@ -317,6 +321,7 @@
             <select class="custom-select" id="ChapterLimit" autocomplete="off"></select>
           </div>
         </div>
+        <!-- setting consumption -->
         <div class="col-lg-7 p-0 d-none disable-selected-text" id="ConsumptionPlan_setting">
           <div class="form-row">
             <div class="col-sm-8 input-group-regular mb-2">
@@ -331,7 +336,7 @@
           <div class="form-row">
             <div class="col-sm-8 input-group input-group-regular mb-2">
               <label class="input-group-text input-group-label" id="Consumption_times_label" for="Consumption_times">次数</label>
-              <input type="number" class="form-control" id="Consumption_times" autocomplete="off">
+              <input type="number" class="form-control" value="1" id="Consumption_times" autocomplete="off">
             </div>
             <div class="col-sm-4 mb-2">
               <button type="button" class="btn btn-outline-dark btn-regular" id="Consumption_add">add</button>
@@ -350,7 +355,6 @@
                   <th class="QPro"></th>
                   <th class="QRes"></th>
                   <th>times</th>
-                  <th>delete</th>
                 </tr>
               </thead>
               <tbody id="Consumption_tbody">
@@ -360,6 +364,7 @@
             </table>
           </div>
         </div>
+        <!-- setting demand -->
         <div class="col-lg-5 disable-selected-text Demand p-0" id="target">
           <h5 id="Demand"></h5>
           <div id="setTargetButton"></div>
@@ -370,6 +375,7 @@
           <input type="range" class="custom-range" id="ContractWeight" min="0" max="100" step="2" disabled>
           <div id="setTargetInput"></div>
         </div>
+        <!-- setting time period -->
         <div class="col-lg-5 disable-selected-text PC-addTimePeriod p-0 d-none" id="PlanCombination_addTimePeriod">
           <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="LogisticsConsumptionPlanSwitch" autocomplete="off">
@@ -378,19 +384,20 @@
           <h5 id="DateTimePeriod">该方案时间段</h5>
           <ul id="PC_DateTimePeriod_body" class="list-group list-group-regular mb-2" style="max-height: 300px;
             overflow-y: auto;"></ul>
-          <div class="mb-3 input-group input-group-regular">
+          <div class="mb-2 input-group input-group-regular">
             <label for="PlanCombination_planStartDate" class="input-group-label input-group-text"
                                                    id="PlanCombination_planStartDate_label"></label>
             <input id="PlanCombination_planStartDate" type="date" class="form-control input-group" style="width: auto; max-width: 150px;">
           </div>
-          <div class="mb-3 input-group input-group-regular">
+          <div class="mb-2 input-group input-group-regular">
             <label for="PlanCombination_planEndDate" class="input-group-label input-group-text"
                                                  id="PlanCombination_planEndDate_label"></label>
             <input id="PlanCombination_planEndDate" type="date" class="form-control" style="width: auto; max-width: 150px;">
           </div>
-          <button type="button" class="btn btn-primary btn-regular" id="addNewTimePeriod">add</button>
-          <button type="button" class="btn btn-danger btn-regular" id="deleteAllTimePeriod">clear</button>
+          <button type="button" class="btn btn-primary btn-regular mb-2" id="addNewTimePeriod">add</button>
+          <button type="button" class="btn btn-danger btn-regular mb-2" id="deleteAllTimePeriod">clear</button>
         </div>
+        <!-- setting button bar -->
         <div id="ranking_toolbar" class="col-lg-12 btn-toolbar p-0 mt-2">
           <button type="button" class="btn btn-primary" id="start_ranking" disabled></button>
           <button type="button" class="btn btn-danger" style="display: none;" id="clear_ranking"></button>
@@ -405,6 +412,7 @@
   </div>
   <div class="col-lg-5 float-right SavedAndMissionTableAndPlanDetailsCard">
     <div class="accordion disable-selected-text" id="SavedAndMissionTableGroupCard">
+      <!-- Saved -->
       <div class="card border-dark">
         <div class="card-header pt-2 pb-2" id="Saved_header">
           <button class="btn btn-link p-0 collapsed" id="Saved_Title" type="button" data-toggle="collapse"
@@ -458,6 +466,7 @@
           <ul id="Saved_Body" class="list-group list-group-regular Saved-List" style="max-height: 287px; overflow-y: auto;"></ul>
         </div>
       </div>
+      <!-- missions -->
       <div class="card border-dark mb-3">
         <div class="card-header pt-2 pb-2" id="MissionTable_header">
           <button class="btn btn-link p-0" id="MissionTable_Title" type="button" data-toggle="collapse"
@@ -488,6 +497,7 @@
         </div>
       </div>
     </div>
+    <!-- plan details -->
     <div class="card border-dark mb-3" style="max-width: 663px;">
       <div class="card-header disable-selected-text pt-2 pb-2 border-bottom-0" id="PlanDetailsTitle"></div>
       <div class="table-responsive plan-details-table"
@@ -554,6 +564,7 @@
       </div>
     </div>
   </div>
+  <!-- result -->
   <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 float-left result_card" id="result_card">
     <div class="card border-dark mb-3 disable-selected-text">
       <div class="card-header disable-selected-text pt-2 pb-2" id="result"></div>
@@ -564,6 +575,7 @@
       </div>
     </div>
   </div>
+  <!-- footer -->
   <div class="col-lg-12 row disable-selected-text m-0 footer_card">
     <hr style="margin: 0; width: 100%;" />
     <footer class="col-lg-4 p-0">

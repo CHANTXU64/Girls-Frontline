@@ -3,6 +3,18 @@
     padding-right: 17px;
 }
 
+html {
+    cursor: wait;
+}
+
+body {
+    cursor: default;
+}
+
+body .wait {
+    pointer-events: none;
+}
+
 code {
     color: #000000;
 }

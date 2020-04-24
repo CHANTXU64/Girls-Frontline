@@ -94,3 +94,28 @@ function getResourceSoftcap(CommanderLevel) {
     else
         return ResourceSoftcap_List[index];
 }
+
+function PC_calcDemand() {
+    let currentValue = Input_getPC_current(true);
+    let startDate = Input_getPC_startDate();
+    let endDate = Input_getPC_endDate();
+    let totalDays = calcDaysBetween2Dates(startDate, endDate);
+    let data = PlanCombinationChart._calcReAndCoData(currentValue, PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans(), totalDays);
+    let demandValue = [];
+    let data_lastIndex = data.length - 1;
+    let targetValue = Input_getPC_target(true);
+    for (let i = 0; i < 8; ++i) {
+        let a = data[i][data_lastIndex];
+        a = Math.max(0, targetValue[i] - a);
+        demandValue.push(a);
+    }
+    Input_setPC_demand(demandValue);
+}
+
+function PC_saveAll() {
+    let plans_length = PC_LogisticsPlan._plans.length;
+    for (let i = 0; i < plans_length; ++i) {
+        Saved._saved.push(PC_LogisticsPlan._plans[i].saved);
+        Saved._printLastSaved();
+    }
+}

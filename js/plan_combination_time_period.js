@@ -10,7 +10,7 @@ class PlanCombinationTimePeriod {
 
             return ;
         }
-        let HTML = this._getATimePeriodHTML(startDate, endDate, 0);
+        let HTML = this._getATimePeriodHTML(startDate, endDate, this._number++);
         this._timePeriod.push([startDate, endDate]);
         $("#PC_DateTimePeriod_body").append(HTML);
     }
@@ -18,13 +18,28 @@ class PlanCombinationTimePeriod {
     static _getATimePeriodHTML(startDate, endDate, row) {
         let HTML = '';
         HTML += '<code class="list-group-item p-2" id="PC_TimePeriod_' + row + '">';
-        HTML += startDate + ' ~ ' + endDate + '</code>';
+        HTML += startDate + ' ~ ' + endDate + '<button class="close" id="PC_TimePeriod_close_' + row + '">×</button></code>';
         return HTML;
+    }
+
+    static deleteThisRow(id) {
+        let tr_elem = document.getElementById(id);
+        let row = 0;
+        while(1) {
+            if ($("#PC_DateTimePeriod_body").children()[row].id === id) {
+                document.getElementById("PC_DateTimePeriod_body").removeChild(tr_elem);
+                break;
+            }
+            else
+                ++row;
+        }
+        this._timePeriod.splice(row, 1);
     }
 
     static clear() {
         let timeperiod = this._timePeriod;
         this._timePeriod = [];
+        this._number = 0;
         $("#PC_DateTimePeriod_body").html("");
         Input_resetPC_planStartDate();
         Input_resetPC_planEndDate();
@@ -41,6 +56,20 @@ class PlanCombinationTimePeriod {
         }
         return timePeriod.slice();
     }
+
+    static setTimePeriod(TimePeriod) {
+        this.clear();
+        let length = TimePeriod.length;
+        let date = Input_getPC_startDate();
+        for (let i = 0; i < length; ++i) {
+            let startDate = addDate(date, TimePeriod[i][0]);
+            let endDate = addDate(date, TimePeriod[i][1]);
+            this._timePeriod.push([startDate, endDate]);
+            let HTML = this._getATimePeriodHTML(startDate, endDate, this._number++);
+            $("#PC_DateTimePeriod_body").append(HTML);
+        }
+    }
 }
 
 PlanCombinationTimePeriod._timePeriod = [];
+PlanCombinationTimePeriod._number = 0;

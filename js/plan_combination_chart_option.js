@@ -2,6 +2,8 @@ function plan_combination_getChartOption(startDate, endDate) {
     let totalDays = calcDaysBetween2Dates(startDate, endDate);
     let xAxisData = new Array(totalDays + 1).fill(0);
     let is_sameYear = startDate.slice(0, 4) === endDate.slice(0, 4);
+    let lang = language.JS;
+    let reAndco_name = [lang.Manp, lang.Ammu, lang.Rati, lang.Part, lang.TPro, lang.Equi, lang.QPro, lang.QRes]
     let animation = false;
     if (!IsMobile())
         animation = true;
@@ -9,20 +11,46 @@ function plan_combination_getChartOption(startDate, endDate) {
     let option = {
         grid: [
             {
-                left: 50,
-                right: 15,
-                top: 10,
-                height: 125
+                left: 60,
+                right: 45,
+                top: 30,
+                height: 125,
             },
             {
-                left: 50,
-                right: 15,
+                left: 60,
+                right: 45,
                 bottom: 45,
                 height: 70
             }
         ],
         tooltip: {
-            trigger: 'axis'
+            trigger: 'axis',
+            axisPointer: {
+                // type: 'cross'
+                type: 'line'
+            },
+            backgroundColor: 'rgba(245, 245, 245, 0.8)',
+            borderWidth: 1,
+            borderColor: '#ccc',
+            padding: 10,
+            textStyle: {
+                color: '#000'
+            },
+            position: function (pos, params, el, elRect, size) {
+                var obj = {top: 10};
+                obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
+                return obj;
+            },
+            extraCssText: 'width: 170px'
+        },
+        toolbox: {
+            right: 30,
+            feature: {
+                saveAsImage: {
+                    name: 'GF',
+                    title: 'Capture',
+                }
+            }
         },
         dataZoom: [
             {
@@ -55,11 +83,16 @@ function plan_combination_getChartOption(startDate, endDate) {
                 labelFormatter: ''
             }
         ],
+        legend: {
+            data: reAndco_name,
+            left: 30
+        },
         xAxis: [
             {
                 max: totalDays,
                 data: xAxisData,
                 axisTick: {show: false},
+                scale: true,
                 axisLabel: {
                     show: false,
                 },
@@ -91,7 +124,21 @@ function plan_combination_getChartOption(startDate, endDate) {
         yAxis: [
             {
                 type: 'value',
-                gridIndex: 0
+                scale: true,
+                gridIndex: 0,
+                splitLine: {
+                    show: false
+                },
+                minInterval: 1
+            },
+            {
+                type: 'value',
+                scale: true,
+                gridIndex: 0,
+                splitLine: {
+                    show: false
+                },
+                minInterval: 1
             },
             {
                 max: 1680,
@@ -112,52 +159,140 @@ function plan_combination_getChartOption(startDate, endDate) {
         ],
         series: [
             {
+                name: language.JS.Manp,
                 data: PlanCombinationChart._reAndcoData[0],
                 type: 'line',
                 xAxisIndex: 0,
                 yAxisIndex: 0,
+                markLine: {
+                    silent: true,
+                    label: {show: false},
+                    data: [{
+                        yAxis: 0
+                    }, {
+                        yAxis: 300000
+                    }],
+                    symbol: 'none',
+                    precision: 0,
+                }
             },
             {
+                name: language.JS.Ammu,
                 data: PlanCombinationChart._reAndcoData[1],
                 type: 'line',
                 xAxisIndex: 0,
                 yAxisIndex: 0,
+                markLine: {
+                    silent: true,
+                    label: {show: false},
+                    data: [{
+                        yAxis: 0
+                    }, {
+                        yAxis: 300000
+                    }],
+                    symbol: 'none',
+                    precision: 0,
+                }
             },
             {
+                name: language.JS.Rati,
                 data: PlanCombinationChart._reAndcoData[2],
                 type: 'line',
                 xAxisIndex: 0,
                 yAxisIndex: 0,
+                markLine: {
+                    silent: true,
+                    label: {show: false},
+                    data: [{
+                        yAxis: 0
+                    }, {
+                        yAxis: 300000
+                    }],
+                    symbol: 'none',
+                    precision: 0,
+                }
             },
             {
+                name: language.JS.Part,
                 data: PlanCombinationChart._reAndcoData[3],
                 type: 'line',
                 xAxisIndex: 0,
                 yAxisIndex: 0,
+                markLine: {
+                    silent: true,
+                    label: {show: false},
+                    data: [{
+                        yAxis: 0
+                    }, {
+                        yAxis: 300000
+                    }],
+                    symbol: 'none',
+                    precision: 0,
+                }
             },
             {
+                name: language.JS.TPro,
                 data: PlanCombinationChart._reAndcoData[4],
                 type: 'line',
                 xAxisIndex: 0,
-                yAxisIndex: 0,
+                yAxisIndex: 1,
+                markLine: {
+                    silent: true,
+                    label: {show: false},
+                    data: {
+                        yAxis: 0
+                    },
+                    symbol: 'none',
+                    precision: 0,
+                }
             },
             {
+                name: language.JS.Equi,
                 data: PlanCombinationChart._reAndcoData[5],
                 type: 'line',
                 xAxisIndex: 0,
-                yAxisIndex: 0,
+                yAxisIndex: 1,
+                markLine: {
+                    silent: true,
+                    label: {show: false},
+                    data: {
+                        yAxis: 0
+                    },
+                    symbol: 'none',
+                    precision: 0,
+                }
             },
             {
+                name: language.JS.QPro,
                 data: PlanCombinationChart._reAndcoData[6],
                 type: 'line',
                 xAxisIndex: 0,
-                yAxisIndex: 0,
+                yAxisIndex: 1,
+                markLine: {
+                    silent: true,
+                    label: {show: false},
+                    data: {
+                        yAxis: 0
+                    },
+                    symbol: 'none',
+                    precision: 0,
+                }
             },
             {
+                name: language.JS.QRes,
                 data: PlanCombinationChart._reAndcoData[7],
                 type: 'line',
                 xAxisIndex: 0,
-                yAxisIndex: 0,
+                yAxisIndex: 1,
+                markLine: {
+                    silent: true,
+                    label: {show: false},
+                    data: {
+                        yAxis: 0
+                    },
+                    symbol: 'none',
+                    precision: 0,
+                }
             },
             {
                 type: 'custom',
@@ -170,7 +305,7 @@ function plan_combination_getChartOption(startDate, endDate) {
                 data: PlanCombinationChart._LogisticsTimetableData ,
                 clip: true,
                 xAxisIndex: 1,
-                yAxisIndex: 1,
+                yAxisIndex: 2,
             },
             {
                 type: 'custom',
@@ -178,10 +313,10 @@ function plan_combination_getChartOption(startDate, endDate) {
                 data: PlanCombinationChart._ConsumptionTimetableData,
                 clip: true,
                 xAxisIndex: 1,
-                yAxisIndex: 1,
+                yAxisIndex: 2,
             }
         ],
-        // animation: animation,
+        animation: animation,
     };
     return option;
 }

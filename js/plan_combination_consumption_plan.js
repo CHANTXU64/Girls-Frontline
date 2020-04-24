@@ -44,8 +44,8 @@ class PC_ConsumptionPlan {
         for (let i = 0; i < 8; ++i) {
             html += '<td>' + consumption[i] + '</td>';
         }
-        html += '<td>' + times + '</td>';
-        html += '<td><button id="Consumption_table_close_row_' + row + '" class="close">×</button></td>';
+        html += '<td>' + times;
+        html += '<button id="Consumption_table_close_row_' + row + '" class="close">×</button></td>';
         return html;
     }
 
@@ -126,6 +126,33 @@ class PC_ConsumptionPlan {
         PlanCombinationTimePeriod.clear();
         PlanCombination_disabledDate();
         this._plansHasChanged();
+    }
+
+    static deleteAll() {
+        this.clear();
+        PlanCombination_enabledDate();
+        this._plansHasChanged();
+    }
+
+    static deleteThis(plan_number) {
+        let index = 0;
+        while(1) {
+            if (this._plans[index].number === plan_number)
+                break;
+            ++index;
+        }
+        let timePeriod_length = this._plans[index].timePeriod.length;
+        for (let i = 0; i < timePeriod_length; ++i) {
+            let startDate = this._plans[index].timePeriod[i][0];
+            let endDate = this._plans[index].timePeriod[i][1];
+            for (let ii = startDate; ii < endDate; ++ii) {
+                this._planFlag[ii] = 0;
+            }
+        }
+        this._plans.splice(index, 1);
+        this._plansHasChanged();
+        if (this._plans.length === 0 && PC_LogisticsPlan._plans.length === 0)
+            PlanCombination_enabledDate();
     }
 
     static _plansHasChanged() {

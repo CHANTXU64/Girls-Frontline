@@ -9,6 +9,8 @@
 }
 
 .consumption-table {
+    overflow-y: auto;
+    max-height: 340px;
 }
 
 .consumption-table th,
