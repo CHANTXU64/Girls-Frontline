@@ -26,7 +26,7 @@ class PC_LogisticsPlan {
         let timePeriod = PlanCombinationTimePeriod.getTimePeriod();
         let timePeriod_length = timePeriod.length;
         if (timePeriod_length === 0) {
-
+            Modal.alert(language.JS.PC_L_alert1);
             return ;
         }
         let PlanName = "";
@@ -47,7 +47,8 @@ class PC_LogisticsPlan {
                 this._totalTimePerDay[ii] += planTime;
                 if (this._totalTimePerDay[ii] > 1440) {
                     this._totalTimePerDay = totalTimePerDay_backup;
-
+                    let date = addDate(this._startDate, ii);
+                    Modal.alert(language.JS.PC_L_alert2_1 + date + language.JS.PC_L_alert2_2);
                     return ;
                 }
             }

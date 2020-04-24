@@ -3,11 +3,11 @@ class PlanCombinationTimePeriod {
         let startDate = Input_getPC_planStartDate(true);
         let endDate = Input_getPC_planEndDate(true);
         if (startDate === "" || endDate === "") {
-
+            Modal.alert(language.JS.PCTimeAlert1);
             return ;
         }
         if (startDate === "error" || endDate === "error") {
-
+            Modal.alert(language.JS.PCTimeAlert2);
             return ;
         }
         let HTML = this._getATimePeriodHTML(startDate, endDate, this._number++);

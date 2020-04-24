@@ -88,7 +88,7 @@ class PC_ConsumptionPlan {
         let timePeriod = PlanCombinationTimePeriod.getTimePeriod();
         let timePeriod_length = timePeriod.length;
         if (timePeriod_length === 0) {
-
+            Modal.alert(language.JS.PC_L_alert1);
             return ;
         }
 
@@ -102,7 +102,8 @@ class PC_ConsumptionPlan {
                 ++this._planFlag[ii];
                 if (this._planFlag[ii] > 1) {
                     this._planFlag = planFlag_backup;
-
+                    let date = addDate(this._startDate, ii);
+                    Modal.alert(language.JS.PC_C_alert2_1 + date + language.JS.PC_C_alert2_2);
                     return ;
                 }
             }

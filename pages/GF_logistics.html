@@ -148,38 +148,34 @@
   <!-- plan Combination -->
   <div id="plan_combination_card" class="col-lg-12 float-left plan_combination_card disable-selected-text d-none">
     <div class="card border-dark mb-3">
-      <div class="card-header pt-2 pb-2">
-        方案组合
-      </div>
+      <div id="Plan_Combination_title" class="card-header pt-2 pb-2"></div>
       <div class="card-body">
         <div class="form-row" style="max-width: 800px;">
           <div class="col-md-4 mb-2 input-group input-group-regular">
             <label for="PlanCombination_startDate" class="input-group-label input-group-text"
-              id="PlanCombination_startDate_text"></label>
+              id="PlanCombination_startDate_label"></label>
             <input id="PlanCombination_startDate" type="date" class="form-control input-group" style="width: auto; max-width: 150px;">
           </div>
           <div class="col-md-4 mb-2 input-group input-group-regular">
             <label for="PlanCombination_endDate" class="input-group-label input-group-text"
-              id="PlanCombination_endDate_text"></label>
+              id="PlanCombination_endDate_label"></label>
             <input id="PlanCombination_endDate" type="date" class="form-control" style="width: auto; max-width: 150px;">
           </div>
         </div>
         <div id="PlanCombination_current_box" class="box-wrap">
-          <span class="box-title">现有量</span>
+          <span class="box-title" id="PC_current_title"></span>
           <div id="PlanCombination_current_re" class="form-row" style="max-width: 980px;"></div>
           <div id="PlanCombination_current_co" class="form-row" style="max-width: 980px;"></div>
         </div>
+        <button type="button" class="btn btn-danger mb-2" id="PC_deleteAllPlans"></button>
+        <button type="button" class="btn btn-info mb-2" id="PC_saveAll"></button>
+        <button type="button" class="btn btn-danger mb-2" id="PC_deletePlan" disabled></button>
         <div id="PlanCombination_chart" style="height: 270px; width: auto; margin: 0 -10px 1rem -10px"></div>
-        <div class="mb-3">
-          <button type="button" class="btn btn-danger" id="PC_deleteAllPlans">delete All</button>
-          <button type="button" class="btn btn-danger" id="PC_deletePlan" disabled>delete</button>
-          <button type="button" class="btn btn-info" id="PC_saveAll">Save all</button>
-        </div>
         <div class="card">
           <div class="card-header pt-2 pb-2 border-bottom-0">
             <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"
                     data-target="#PC_Ranking_card" aria-expanded="false" aria-controls="PC_Ranking_card"
-                    id="PC_Ranking_card_title">123</button>
+                    id="PC_Ranking_card_title"></button>
           </div>
           <div id="PC_Ranking_card" class="collapse">
             <div class="card-body p-2">
@@ -187,22 +183,21 @@
                 <div class="card-header pt-2 pb-2 border-bottom-0">
                   <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"
                           data-target="#calcTargetValueTool_card" aria-expanded="false" aria-controls="calcTargetValueTool_card"
-                          id="calcTargetValueTool_title">123
-                  </button>
+                          id="calcTargetValueTool_title"></button>
                 </div>
                 <div id="calcTargetValueTool_card" class="collapse">
                   <div class="card-body p-2">
-                    <h5>目标量</h5>
+                    <h5 id="PC_targetValue_h5"></h5>
                     <div id="PlanCombination_target_re" class="form-row" style="max-width: 980px;"></div>
                     <div id="PlanCombination_target_co" class="form-row" style="max-width: 980px;"></div>
-                    <button type="button" class="btn btn-primary" id="PC_calcDemand">calc</button>
+                    <button type="button" class="btn btn-primary" id="PC_calcDemand"></button>
                   </div>
                 </div>
               </div>
-              <h5>需求量</h5>
+              <h5 id="PC_demandValue_h5"></h5>
               <div id="PlanCombination_demand_re" class="form-row" style="max-width: 980px;"></div>
               <div id="PlanCombination_demand_co" class="form-row" style="max-width: 980px;"></div>
-              <button type="button" class="btn btn-primary" id="PC_startRanking">start</button>
+              <button type="button" class="btn btn-primary" id="PC_startRanking"></button>
             </div>
           </div>
         </div>
@@ -328,18 +323,18 @@
               <select class="custom-select" id="Consumption_select" autocomplete="off"></select>
             </div>
             <div class="col-sm-4 mb-2">
-              <button type="button" class="btn btn-outline-dark btn-regular" id="Consumption_reset">reset</button>
+              <button type="button" class="btn btn-outline-dark btn-regular" id="Consumption_reset"></button>
             </div>
           </div>
           <div class="form-row" id="Consumption_re"></div>
           <div class="form-row" id="Consumption_co"></div>
           <div class="form-row">
             <div class="col-sm-8 input-group input-group-regular mb-2">
-              <label class="input-group-text input-group-label" id="Consumption_times_label" for="Consumption_times">次数</label>
+              <label class="input-group-text input-group-label" id="Consumption_times_label" for="Consumption_times"></label>
               <input type="number" class="form-control" value="1" id="Consumption_times" autocomplete="off">
             </div>
             <div class="col-sm-4 mb-2">
-              <button type="button" class="btn btn-outline-dark btn-regular" id="Consumption_add">add</button>
+              <button type="button" class="btn btn-outline-dark btn-regular" id="Consumption_add"></button>
             </div>
           </div>
           <div class="table-responsive consumption-table">
@@ -354,7 +349,7 @@
                   <th class="Equi"></th>
                   <th class="QPro"></th>
                   <th class="QRes"></th>
-                  <th>times</th>
+                  <th id="consumption_times_th"></th>
                 </tr>
               </thead>
               <tbody id="Consumption_tbody">
@@ -381,7 +376,7 @@
             <input type="checkbox" class="custom-control-input" id="LogisticsConsumptionPlanSwitch" autocomplete="off">
             <label class="custom-control-label" for="LogisticsConsumptionPlanSwitch"></label>
           </div>
-          <h5 id="DateTimePeriod">该方案时间段</h5>
+          <h5 id="DateTimePeriod"></h5>
           <ul id="PC_DateTimePeriod_body" class="list-group list-group-regular mb-2" style="max-height: 300px;
             overflow-y: auto;"></ul>
           <div class="mb-2 input-group input-group-regular">
@@ -394,15 +389,15 @@
                                                  id="PlanCombination_planEndDate_label"></label>
             <input id="PlanCombination_planEndDate" type="date" class="form-control" style="width: auto; max-width: 150px;">
           </div>
-          <button type="button" class="btn btn-primary btn-regular mb-2" id="addNewTimePeriod">add</button>
-          <button type="button" class="btn btn-danger btn-regular mb-2" id="deleteAllTimePeriod">clear</button>
+          <button type="button" class="btn btn-primary btn-regular mb-2" id="addNewTimePeriod"></button>
+          <button type="button" class="btn btn-danger btn-regular mb-2" id="deleteAllTimePeriod"></button>
         </div>
         <!-- setting button bar -->
         <div id="ranking_toolbar" class="col-lg-12 btn-toolbar p-0 mt-2">
           <button type="button" class="btn btn-primary" id="start_ranking" disabled></button>
           <button type="button" class="btn btn-danger" style="display: none;" id="clear_ranking"></button>
-          <button type="button" class="btn btn-info d-none" id="PC_addLogisticsPlan">addL</button>
-          <button type="button" class="btn btn-info d-none" id="PC_addConsumptionPlan">addC</button>
+          <button type="button" class="btn btn-info d-none" id="PC_addLogisticsPlan"></button>
+          <button type="button" class="btn btn-info d-none" id="PC_addConsumptionPlan"></button>
           <div class="spinner-border text-primary ml-2" role="status" style="border-width: 0.3rem; display: none;" id="ranking_loading">
             <span class="sr-only">Loading...</span>
           </div>

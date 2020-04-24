@@ -130,6 +130,8 @@ function loadHTML_language() {
     else
         $("#Demand").html(language_HTMLJS.Demand_total);
 
+    // PlanCombinationChart.print(PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans());
+
     //style-------------
     let targetSpanWidth = language_CSS.TargetValueSpan_Width;
     document.getElementById("Manp").style.width = targetSpanWidth;

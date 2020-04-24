@@ -46,7 +46,9 @@ JQ_selector_PC_addTimePeriodEndDate.on("blur", function () {
 })
 
 $("#PC_deleteAllPlans").on("click", function () {
-    PC_LogisticsPlan.deleteAll();
+    Modal.confirm(language.JS.PC_deleteAll_confirm, function () {
+        PC_LogisticsPlan.deleteAll();
+    });
 });
 
 $("#LogisticsConsumptionPlanSwitch").on("click", function () {
@@ -112,5 +114,7 @@ $("#PC_calcDemand").on("click", function () {
 });
 
 $("#PC_saveAll").on("click", function () {
-    PC_saveAll();
+    Modal.confirm(language.JS.PC_saveAll_confirm, function () {
+        PC_saveAll();
+    });
 });
