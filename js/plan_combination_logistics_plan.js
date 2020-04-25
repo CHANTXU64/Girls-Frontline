@@ -1,25 +1,61 @@
 class PC_LogisticsPlan {
-    static init() {
+    static init(data) {
+        if (data !== "noStorage" && data !== undefined) {
+            this._startDate = data.startDate;
+            this._endDate = data.endDate;
+            this._totalDays = data.totalDays;
+            this._totalTimePerDay = data.totalTimePerDay;
+            this._plans = data.plans;
+            this._plansNumber = data.plansNumber;
+            if (this._plans.length !== 0)
+                PlanCombination_disabledDate();
+        }
+        else {
+            let startDate = Input_getPC_startDate();
+            let endDate = Input_getPC_endDate();
+            this._startDate = startDate;
+            this._endDate = endDate;
+            let days = calcDaysBetween2Dates(startDate, endDate);
+            if (days > 0) {
+                this._totalDays = days;
+                this._totalTimePerDay = new Array(days);
+                this._totalTimePerDay.fill(0);
+            }
+            this._plans = [];
+            this._plansNumber = 0;
+        }
+    }
+
+    static reset() {
         let startDate = Input_getPC_startDate();
         let endDate = Input_getPC_endDate();
-        this.clear();
         this._startDate = startDate;
         this._endDate = endDate;
+        this._plans = [];
+        this._plansNumber = 0;
         let days = calcDaysBetween2Dates(startDate, endDate);
         if (days > 0) {
             this._totalDays = days;
             this._totalTimePerDay = new Array(days);
             this._totalTimePerDay.fill(0);
         }
+        this.setStorage();
     }
 
-    static clear() {
-        this._startDate = "";
-        this._endDate = "";
-        this._plans = [];
-        this._plansNumber = 0;
-        this._totalDays = 0;
-        this._totalTimePerDay = [];
+    static setStorage() {
+        let data = this.exportData();
+        PC_storageSetItem("LogisticsPlan", data);
+    }
+
+    static exportData() {
+        let data = {};
+        data.startDate = this._startDate;
+        data.endDate = this._endDate;
+        data.totalDays = this._totalDays;
+        data.totalTimePerDay = this._totalTimePerDay;
+        data.plans = this._plans;
+        data.plansNumber = this._plansNumber;
+        return data;
     }
 
     static add() {
@@ -81,7 +117,7 @@ class PC_LogisticsPlan {
     }
 
     static deleteAll() {
-        this.clear();
+        this.reset();
         PlanCombination_enabledDate();
         this._plansHasChanged();
     }
@@ -109,25 +145,8 @@ class PC_LogisticsPlan {
     }
 
     static _plansHasChanged() {
-        this._printChart();
-    }
-
-    static _printChart() {
-        let data = [];
-        let plan_length = this._plans.length;
-        for (let i = 0; i < plan_length; ++i) {
-            let newData = {};
-            newData.time = this._plans[i].time;
-            newData.timePeriod = [];
-            newData.number = this._plans[i].number;
-            newData.reAndco = this._plans[i].reAndco;
-            let timePeriod_length = this._plans[i].timePeriod.length;
-            for (let ii = 0; ii < timePeriod_length; ++ii) {
-                newData.timePeriod.push(this._plans[i].timePeriod[ii].slice());
-            }
-            data.push(newData);
-        }
-        PlanCombinationChart.printFromLogisticsPlan(data);
+        PlanCombinationChart.printFromLogisticsPlan(this._plans);
+        this.setStorage();
     }
 
     static chartGetPlans() {

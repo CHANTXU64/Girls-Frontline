@@ -171,6 +171,7 @@ function config_export() {
     data.ContractWeight = Input_getContractWeight();
     data.TargetValue = Input_getTarget_Correct();
     data.Saved = Saved.getSaved();
+    data.PlanCombination = plan_combination_getConfigData();
 
     let SHA1 = sha1(JSON.stringify(data));
     let config = {
@@ -196,11 +197,14 @@ function setPageByImport(input) {
             sessionStorage.removeItem("GF_Logistics_console");
         return ;
     }
-    if (input === "clearSTORAGE" && CAN_STORAGE_WORK) {
+    if ((input === "clearSTORAGE" || input === "clear") && CAN_STORAGE_WORK) {
         sessionStorage.removeItem("GF_Logistics_console");
         sessionStorage.removeItem("GF_Logistics_windowOnload");
         localStorage.removeItem("GF_Logistics");
         localStorage.removeItem("GF_Logistics_v1.x.x");
+        localStorage.removeItem("GF_Logistics_PC_v1.x.x");
+        localStorage.removeItem("GF_Logistics_vDevelop.x.x");
+        localStorage.removeItem("GF_Logistics_PC_vDvelop.x.x");
         return ;
     }
     if (input === "runERROR") {
@@ -272,6 +276,8 @@ function setPageByImport_main(data) {
     MissionsDetails.setSelectedMissions([]);
     MissionsDetails.print();
     printPlanDetails();
+
+    plan_combination_init(data.PlanCombination);
 }
 
 /**

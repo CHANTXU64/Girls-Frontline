@@ -1,6 +1,9 @@
 function plan_combination_getChartOption(startDate, endDate) {
     let totalDays = calcDaysBetween2Dates(startDate, endDate);
-    let xAxisData = new Array(totalDays + 1).fill(0);
+    let xAxisData = new Array(totalDays + 1);
+    for (let i = 0; i < totalDays + 1; ++i) {
+        xAxisData[i] = addDate(startDate, i);
+    }
     let is_sameYear = startDate.slice(0, 4) === endDate.slice(0, 4);
     let lang = language.JS;
     let reAndco_name = [lang.Manp, lang.Ammu, lang.Rati, lang.Part, lang.TPro, lang.Equi, lang.QPro, lang.QRes]
@@ -19,7 +22,7 @@ function plan_combination_getChartOption(startDate, endDate) {
             {
                 left: 60,
                 right: 45,
-                bottom: 45,
+                bottom: 55,
                 height: 70
             }
         ],
@@ -58,7 +61,6 @@ function plan_combination_getChartOption(startDate, endDate) {
                 xAxisIndex: [0, 1],
                 minValueSpan: 7,
                 filterMode: 'none'
-                // filterMode: 'weakFilter'
             },
             {
                 show: true,
@@ -67,7 +69,6 @@ function plan_combination_getChartOption(startDate, endDate) {
                 showDataShadow: false,
                 bottom: 9,
                 height: 10,
-                // filterMode: 'weakFilter',
                 filterMode: 'none',
                 borderColor: 'transparent',
                 backgroundColor: '#e2e2e2',
@@ -89,6 +90,7 @@ function plan_combination_getChartOption(startDate, endDate) {
         },
         xAxis: [
             {
+                type: 'category',
                 max: totalDays,
                 data: xAxisData,
                 axisTick: {show: false},
@@ -97,27 +99,28 @@ function plan_combination_getChartOption(startDate, endDate) {
                     show: false,
                 },
                 boundaryGap: false,
-                gridIndex: 0
+                gridIndex: 0,
+                axisLine: {onZero: false},
             },
             {
+                // type: 'category',
                 min: 0,
-                // type: 'time',
                 scale: true,
                 // boundaryGap: false,
                 // data: xAxisData,
                 axisLabel: {
-                    formatter: function (val) {
-                        let date = addDate(startDate, val);
-                        let shortDate = date.slice(5);
-                        if (is_sameYear)
-                            return shortDate;
-                        else {
-                            let year = date.slice(0, 4);
-                            return shortDate + '\n' + year;
-                        }
-                    },
+                    // formatter: function (val) {
+                    //     let shortDate = val.slice(5);
+                    //     if (is_sameYear)
+                    //         return shortDate;
+                    //     else {
+                    //         let year = val.slice(0, 4);
+                    //         return shortDate + '\n' + year;
+                    //     }
+                    // },
                 },
                 max: totalDays,
+                axisLine: {onZero: false},
                 gridIndex: 1
             }
         ],

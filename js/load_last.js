@@ -64,6 +64,8 @@ function loadLast() {
     $("#importSaved_importButton").removeAttr("disabled");
     $("#Capture").removeAttr("disabled");
     $("#page_loading").remove();
+    $("#PlanCombinationSwitch").removeAttr("disabled");
+    plan_combination_init("LocalStorage");
 }
 
 //Backup vendor js !python

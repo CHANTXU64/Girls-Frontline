@@ -36,10 +36,10 @@ class Plan_Original {
         const n2_max = Q_Valid_length - 2;
         const n3_max = Q_Valid_length - 1;
         const n4_max = Q_Valid_length;
-        for (let n1 = 0; n1 < n1_max; n1++) {
-            for (let n2 = n1 + 1; n2 < n2_max; n2++) {
-                for (let n3 = n2 + 1; n3 < n3_max; n3++) {
-                    for (let n4 = n3 + 1; n4 < n4_max; n4++) {
+        for (let n1 = 0; n1 < n1_max; ++n1) {
+            for (let n2 = n1 + 1; n2 < n2_max; ++n2) {
+                for (let n3 = n2 + 1; n3 < n3_max; ++n3) {
+                    for (let n4 = n3 + 1; n4 < n4_max; ++n4) {
                         this._calculateAndPushIntoList(n1, n2, n3, n4);
                     }
                 }

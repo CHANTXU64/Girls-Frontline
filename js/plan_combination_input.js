@@ -2,8 +2,6 @@ const G_ELEM_addTimePeriod_startDate = document.getElementById("PlanCombination_
 const G_ELEM_addTimePeriod_endDate = document.getElementById("PlanCombination_planEndDate");
 const G_ELEM_totalTimePeriod_startDate = document.getElementById("PlanCombination_startDate");
 const G_ELEM_totalTimePeriod_endDate = document.getElementById("PlanCombination_endDate");
-const G_DateTimePeriod_MIN = addDate(new Date().toISOString().slice(0, 10), -60);
-const G_DateTimePeriod_MAX = addDate(new Date().toISOString().slice(0, 10), 365);
 
 function Input_getPC_startDate(NeedCorrection = false) {
     let start_elem = G_ELEM_totalTimePeriod_startDate;
@@ -21,11 +19,12 @@ function Input_getPC_startDate(NeedCorrection = false) {
 function Input_setPC_startDate(startDate) {
     let start_elem = G_ELEM_totalTimePeriod_startDate;
     start_elem.value = startDate;
+    let endDate = Input_getPC_endDate();
+    PC_storageSetItem("Date", {start: startDate, end: endDate});
 }
 
 function Input_setPC_startDate_MAXMIN() {
     let start_elem = G_ELEM_totalTimePeriod_startDate;
-    start_elem.setAttribute("min", G_DateTimePeriod_MIN);
     let max = addDate(Input_getPC_endDate(), -1);
     start_elem.setAttribute("max", max);
 }
@@ -43,9 +42,15 @@ function Input_getPC_endDate(NeedCorrection = false) {
     return endDate;
 }
 
+function Input_setPC_endDate(endDate) {
+    let end_elem = G_ELEM_totalTimePeriod_endDate;
+    end_elem.value = endDate;
+    let startDate = Input_getPC_startDate();
+    PC_storageSetItem("Date", {start: startDate, end: endDate});
+}
+
 function Input_setPC_endDate_MAXMIN() {
     let end_elem = G_ELEM_totalTimePeriod_endDate;
-    end_elem.setAttribute("max", G_DateTimePeriod_MAX);
     let min = addDate(Input_getPC_startDate(), 1);
     end_elem.setAttribute("min", min);
 }
@@ -151,6 +156,7 @@ function Input_setPC_demand(demandValue) {
     for (let i = 0; i < 8; ++i) {
         $("#PC_demand_" + class_name[i]).val(demandValue[i]);
     }
+    PC_storageSetItem("demand", demandValue);
 }
 
 function Input_getPC_current(NeedCorrection = false) {
@@ -169,6 +175,14 @@ function Input_getPC_current(NeedCorrection = false) {
     return current;
 }
 
+function Input_setPC_current(currentValue) {
+    const class_name = ['Manp', 'Ammu', 'Rati', 'Part', 'TPro', 'Equi', 'QPro', 'QRes'];
+    for (let i = 0; i < 8; ++i) {
+        $("#PC_current_" + class_name[i]).val(currentValue[i]);
+    }
+    PC_storageSetItem("current", currentValue);
+}
+
 function Input_getPC_target(NeedCorrection = false) {
     const class_name = ['Manp', 'Ammu', 'Rati', 'Part', 'TPro', 'Equi', 'QPro', 'QRes'];
     let target = [];
@@ -183,4 +197,12 @@ function Input_getPC_target(NeedCorrection = false) {
         }
     }
     return target;
+}
+
+function Input_setPC_target(targetValue) {
+    const class_name = ['Manp', 'Ammu', 'Rati', 'Part', 'TPro', 'Equi', 'QPro', 'QRes'];
+    for (let i = 0; i < 8; ++i) {
+        $("#PC_target_" + class_name[i]).val(targetValue[i]);
+    }
+    PC_storageSetItem("target", targetValue);
 }

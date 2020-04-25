@@ -1,7 +1,7 @@
-Input_setPC_startDate_MAXMIN();
-Input_setPC_endDate_MAXMIN();
-Input_getPC_startDate(true);
-Input_getPC_endDate(true);
+// Input_setPC_startDate_MAXMIN();
+// Input_setPC_endDate_MAXMIN();
+// Input_getPC_startDate(true);
+// Input_getPC_endDate(true);
 
 $("#PlanCombinationSwitch").on("click", function () {
     switchPlanCombination();
@@ -14,9 +14,12 @@ JQ_selector_PC_startDate.on("input propertychange", function () {
 });
 
 JQ_selector_PC_startDate.on("blur", function () {
-    Input_getPC_startDate(true);
+    let startDate = Input_getPC_startDate(true);
+    let endDate = Input_getPC_endDate();
+    PC_storageSetItem("Date", {start: startDate, end: endDate});
+    PC_LogisticsPlan.reset();
+    PC_ConsumptionPlan.reset();
     PlanCombinationChart.print();
-    PC_LogisticsPlan.init();
 });
 
 const JQ_selector_PC_endDate = $("#PlanCombination_endDate");
@@ -26,9 +29,12 @@ JQ_selector_PC_endDate.on("input propertychange", function () {
 });
 
 JQ_selector_PC_endDate.on("blur", function () {
-    Input_getPC_endDate(true);
+    let endDate = Input_getPC_endDate(true);
+    let startDate = Input_getPC_startDate();
+    PC_storageSetItem("Date", {start: startDate, end: endDate});
+    PC_LogisticsPlan.reset();
+    PC_ConsumptionPlan.reset();
     PlanCombinationChart.print();
-    PC_LogisticsPlan.init();
 });
 
 const JQ_selector_PC_addTimePeriodStartDate = $("#PlanCombination_planStartDate");
@@ -48,6 +54,7 @@ JQ_selector_PC_addTimePeriodEndDate.on("blur", function () {
 $("#PC_deleteAllPlans").on("click", function () {
     Modal.confirm(language.JS.PC_deleteAll_confirm, function () {
         PC_LogisticsPlan.deleteAll();
+        PC_ConsumptionPlan.deleteAll();
     });
 });
 
@@ -107,6 +114,15 @@ function PC_ranking_end() {
 
 $("#PlanCombination_current_box").on("blur", "input[id^=PC_current_]", function () {
     PlanCombinationChart.print(PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans());
+    PC_storageSetItem("current", Input_getPC_current());
+});
+
+$("#PlanCombination_demand_card").on("blur", "input[id^=PC_target_]", function () {
+    PC_storageSetItem("target", Input_getPC_target());
+});
+
+$("#PlanCombination_demand_card").on("blur", "input[id^=PC_demand_]", function () {
+    PC_storageSetItem("demand", Input_getPC_demand());
 });
 
 $("#PC_calcDemand").on("click", function () {

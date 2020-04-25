@@ -1,7 +1,7 @@
 class PlanCombinationChart {
     static resize_Timetable() {
         let Chart_elem = document.getElementById("PlanCombination_chart");
-        if (Chart_elem.getAttribute("_echarts_instance_") === null || !document.getElementById("PlanCombinationSwitch").checked)
+        if (Chart_elem.getAttribute("_echarts_instance_") === null || !document.getElementById("PlanCombinationSwitch").checked || Chart_elem.getAttribute("_echarts_instance_") === "")
             return ;
         let Chart = echarts.getInstanceByDom(Chart_elem);
         Chart.resize();

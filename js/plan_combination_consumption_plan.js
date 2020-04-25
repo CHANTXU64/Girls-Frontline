@@ -1,11 +1,41 @@
 class PC_ConsumptionPlan {
-    static init() {
+    static init(data) {
+        this._table_clear();
+        if (data !== "noStorage" && data !== undefined) {
+            this._startDate = data.startDate;
+            this._endDate = data.endDate;
+            this._totalDays = data.totalDays;
+            this._planFlag = data.planFlag;
+            this._plans = data.plans;
+            this._plansNumber = data.plansNumber;
+            if (this._plans.length !== 0)
+                PlanCombination_disabledDate();
+        }
+        else {
+            let startDate = Input_getPC_startDate();
+            let endDate = Input_getPC_endDate();
+            this._startDate = startDate;
+            this._endDate = endDate;
+            let days = calcDaysBetween2Dates(startDate, endDate);
+            if (days > 0) {
+                this._totalDays = days;
+                this._planFlag = new Array(days);
+                this._planFlag.fill(0);
+            }
+            this._plans = [];
+            this._plansNumber = 0;
+        }
+    }
+
+    static reset() {
         let startDate = Input_getPC_startDate();
         let endDate = Input_getPC_endDate();
-        this.clear();
-        this._table_clear();
         this._startDate = startDate;
         this._endDate = endDate;
+        this._plans = [];
+        this._table_clear();
+        this._plansNumber = 0;
+        this._tableNumber = 0;
         let days = calcDaysBetween2Dates(startDate, endDate);
         if (days > 0) {
             this._totalDays = days;
@@ -14,14 +44,20 @@ class PC_ConsumptionPlan {
         }
     }
 
-    static clear() {
-        this._startDate = "";
-        this._endDate = "";
-        this._plans = [];
-        this._plansNumber = 0;
-        this._tableNumber = 0;
-        this._totalDays = 0;
-        this._planFlag = [];
+    static setStorage() {
+        let data = this.exportData();
+        PC_storageSetItem("ConsumptionPlan", data);
+    }
+
+    static exportData() {
+        let data = {};
+        data.startDate = this._startDate;
+        data.endDate = this._endDate;
+        data.totalDays = this._totalDays;
+        data.planFlag = this._planFlag;
+        data.plans = this._plans;
+        data.plansNumber = this._plansNumber;
+        return data;
     }
 
     static table_add() {
@@ -130,7 +166,7 @@ class PC_ConsumptionPlan {
     }
 
     static deleteAll() {
-        this.clear();
+        this.reset();
         PlanCombination_enabledDate();
         this._plansHasChanged();
     }
@@ -158,6 +194,7 @@ class PC_ConsumptionPlan {
 
     static _plansHasChanged() {
         PlanCombinationChart.printFromConsumptionPlan(this._plans);
+        this.setStorage();
     }
 
     static chartGetPlans() {
@@ -167,9 +204,9 @@ class PC_ConsumptionPlan {
 
 PC_ConsumptionPlan._plans = [];
 PC_ConsumptionPlan._plansNumber = 0;
-PC_ConsumptionPlan._tableNumber = 0;
 PC_ConsumptionPlan._startDate = "";
 PC_ConsumptionPlan._endDate = "";
 PC_ConsumptionPlan._totalDays = 0;
 PC_ConsumptionPlan._planFlag = [];
+PC_ConsumptionPlan._tableNumber = 0;
 PC_ConsumptionPlan._tableData = [[0, 0, 0, 0, 0, 0, 0, 0]];

@@ -10,6 +10,7 @@ function switchPlanCombination() {
 
 function PlanCombination_on() {
     Input_setStartTime();
+    Saved.cancelSelected();
     delete_rankingResults();
     HTML_AllowRankingInput();
     $("#plan_combination_card").removeClass("d-none");
@@ -18,11 +19,6 @@ function PlanCombination_on() {
     $("#target").addClass("d-none");
     $("#start_ranking").addClass("d-none");
     $("#result_card").addClass("d-none");
-    PlanCombinationChart.print();
-    PC_LogisticsPlan.init();
-    PC_ConsumptionPlan.init();
-    Input_setPC_planStartDate_MAXMIN();
-    Input_setPC_planEndDate_MAXMIN();
 }
 
 function PlanCombination_off() {
@@ -102,7 +98,7 @@ function PC_calcDemand() {
     let totalDays = calcDaysBetween2Dates(startDate, endDate);
     let data = PlanCombinationChart._calcReAndCoData(currentValue, PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans(), totalDays);
     let demandValue = [];
-    let data_lastIndex = data.length - 1;
+    let data_lastIndex = data[0].length - 1;
     let targetValue = Input_getPC_target(true);
     for (let i = 0; i < 8; ++i) {
         let a = data[i][data_lastIndex];
@@ -118,4 +114,60 @@ function PC_saveAll() {
         Saved._saved.push(PC_LogisticsPlan._plans[i].saved);
         Saved._printLastSaved();
     }
+}
+
+function plan_combination_init(data) {
+    if (data === "LocalStorage") {
+        let date = PC_storageGetItem("Date");
+        if (date === "noStorage") {
+            Input_setPC_startDate(new Date().toISOString().slice(0, 10));
+            Input_setPC_endDate(addDate(new Date().toISOString().slice(0, 10), 7));
+        }
+        else {
+            Input_setPC_startDate(date.start);
+            Input_setPC_endDate(date.end);
+        }
+        let current = PC_storageGetItem("current");
+        if (current !== "noStorage")
+            Input_setPC_current(current);
+        let target = PC_storageGetItem("target");
+        if (target !== "noStorage")
+            Input_setPC_target(target);
+        let demand = PC_storageGetItem("demand");
+        if (demand !== "noStorage")
+            Input_setPC_demand(demand);
+        PC_LogisticsPlan.init(PC_storageGetItem("LogisticsPlan"));
+        PC_ConsumptionPlan.init(PC_storageGetItem("ConsumptionPlan"));
+    }
+    else {
+        let date = data.date;
+        Input_setPC_startDate(date.start);
+        Input_setPC_endDate(date.end);
+        let current = data.current;
+        Input_setPC_current(current);
+        let target = data.target;
+        Input_setPC_target(target);
+        let demand = data.demand;
+        Input_setPC_demand(demand);
+        PC_LogisticsPlan.init(data.LogisticsData);
+        PC_ConsumptionPlan.init(data.ConsumptionData);
+    }
+    Input_setPC_startDate_MAXMIN();
+    Input_setPC_endDate_MAXMIN();
+    Input_setPC_planStartDate_MAXMIN();
+    Input_setPC_planEndDate_MAXMIN();
+    PlanCombinationChart.print(PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans());
+}
+
+function plan_combination_getConfigData() {
+    let data = {};
+    data.date = {};
+    data.date.start = Input_getPC_startDate();
+    data.date.end = Input_getPC_endDate();
+    data.current = Input_getPC_current();
+    data.target = Input_getPC_target();
+    data.demand = Input_getPC_demand();
+    data.LogisticsData = PC_LogisticsPlan.exportData();
+    data.ConsumptionData = PC_ConsumptionPlan.exportData();
+    return data;
 }

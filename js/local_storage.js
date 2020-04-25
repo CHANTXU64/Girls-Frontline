@@ -4,7 +4,7 @@
  * 注意, 会导致LOCAL_STORAGE_KEY改变,
  * 可能需要修改html中的script(当用js切换nav显示时, 4.4.1bootstrap会在全部东西处理完后开始切换动画, 避免阻塞, 事先切换nav)
  */
-const VERSION = "1.1.0-rc";
+const VERSION = "Develop.x.x";
 
 /**
  * 用于判断浏览器是否能使用storage
