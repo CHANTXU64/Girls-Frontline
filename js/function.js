@@ -1,4 +1,23 @@
 /**
+ * 根据概率计算单次后勤获得的契约值
+ * @param {number} BaseValue - 在0%大成功概率时获取该契约的概率(单位 %, 0~100)
+ * @param {number} SumValue - 该后勤能获得的所有契约的BaseValue之和(单位 %, 0~100)
+ * @param {number} TotalRate - 目前的总大成功概率(0~100)
+ * @return {number} 进行一次后勤获得的契约数量
+ * @example calculateContractValue(50, 100, 0.6)
+ */
+function calcContractValue(BaseValue, SumValue, TotalRate) {
+    //test
+    if (SumValue > 100)
+        throw "Error";
+    //End test
+    if (BaseValue === 0)
+        return 0;
+    else
+        return BaseValue / 100 + (BaseValue / SumValue - BaseValue / 100) * TotalRate / 100;
+}
+
+/**
  * 返回字符串最后一个"_"字符后面的内容
  * @param {string} str - 字符串
  * @param {number=} end - End index
@@ -79,6 +98,24 @@ function getPositiveValueFromHTML(JQ_selector, NeedCorrection = false) {
     if (NeedCorrection)
         JQ_selector.val(Value);
     return Value;
+}
+
+function is_NonNumberOrInfinity(x) {
+    if (x === "" || isNaN(x) || x === "Infinity")
+        return true;
+    else
+        return false;
+}
+
+function getNumberFromHTML(JQ_selector, NeedCorrection = false) {
+    let number;
+    if (is_NonNumberOrInfinity(JQ_selector.val()))
+        number = 0;
+    else
+        number = parseFloat(JQ_selector.val());
+    if (NeedCorrection)
+        JQ_selector.val(number);
+    return number;
 }
 
 //移除数组中值为val的所有元素
@@ -282,4 +319,16 @@ if (!Array.prototype.fill) {
             return O;
         }
     });
+}
+
+function html_waiting() {
+    document.body.style.pointerEvents = "none";
+    //bug
+    $(".custom-control-input").attr("disabled", "true");
+}
+
+function html_waiting_cancel() {
+    document.body.style.pointerEvents = "";
+    //bug
+    $(".custom-control-input").removeAttr("disabled");
 }

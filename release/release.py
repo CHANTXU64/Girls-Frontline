@@ -149,6 +149,7 @@ def MergeJS():
     os.remove('./js.js')
 
     js_str = re.sub('//test[\w|\W]+?//End test', '', js_str)
+    js_str = re.sub('//VERSION !python[\w|\W]+?//End VERSION !python', 'const VERSION = "' + version  + '";', js_str)
 
     f = open('./GF_logistics.js', 'w', encoding="UTF-8")
     f.write(js_str)

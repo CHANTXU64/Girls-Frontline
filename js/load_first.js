@@ -5,17 +5,16 @@ setLanguage();
 
 loadHTML_Target();
 loadHTML_ChapterLimit();
+plan_combination_load();
+Consumption_load();
 
 setPageByLocalStorage();
-
-//设置契约值(必要)
-let TotalGreatSuccessRate = Input_getTotalGreatSuccessRate(true);
-setQContract(TotalGreatSuccessRate);
 
 MissionsDetails.print();
 let ShownTab = getShownTab();
 PlanDetails.printShownTab(ShownTab.name);
 PlanDetails.printTotalTime(ShownTab.getTotalTime(false));
+let TotalGreatSuccessRate = Input_getTotalGreatSuccessRate(true);
 PlanDetails.printGreatSuccessRate(TotalGreatSuccessRate);
 PlanDetails.printExecutionTimes(Input_getExecutionTimes());
 
@@ -29,6 +28,8 @@ if (CAN_STORAGE_WORK)
     sessionStorage.setItem("GF_Logistics_windowOnload", "success");
 
 $("#set_lang").removeAttr("disabled");
+$("#neverShowAgain_description").removeAttr("disabled");
+$("#neverShowAgain_localstorageWarning").removeAttr("disabled");
 $("#Tab_Anytime_name").attr("data-toggle", "tab");
 $("#Tab_Anytime_name").attr("href", "#Tab_Anytime");
 $("#Tab_Timetable_name").attr("data-toggle", "tab");
@@ -41,6 +42,7 @@ if (Tab_Timetable_TIMELIST.length === 0) {
     $("#Time_Timetable_minutes").removeAttr("disabled");
 }
 $("#GreatSuccessRate").removeAttr("disabled");
+$("#GreatSuccessRateUp_btn").removeClass("disabled");
 $("#ContractWeight").removeAttr("disabled");
 $("#PlanDetails_InputStartTime").removeAttr("disabled");
 $("#PlanDetails_InputExecutionTimes").removeAttr("disabled");

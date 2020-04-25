@@ -14,11 +14,10 @@ Picture archive https://imgur.com/XY6kEqh
 Thanks [FatalChapter](https://github.com/hycdes/GFTool)
 
 **该如何维护更新后勤战役?**<br>
-只需要修改js/GF_logistics_data.js, 修改Q数组和setQContract()函数即可.<br>
+只需要修改js/data.js, 修改Q数组即可.<br>
 
 **如何发布新版本?**<br>
-1.修改js/GF_logistics_localStorage.js的VERSION<br>
-2.运行release.py + version (如./release.py 2.0.0)<br>
+1.运行release.py + version (如./release.py 2.0.0)<br>
 
 测试代码格式: //test[\w|\W]+?//End test
 

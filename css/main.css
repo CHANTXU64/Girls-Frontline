@@ -3,6 +3,22 @@
     padding-right: 17px;
 }
 
+html {
+    cursor: wait;
+}
+
+body {
+    cursor: default;
+}
+
+body .wait {
+    pointer-events: none;
+}
+
+code {
+    color: #000000;
+}
+
 a {
     cursor: pointer;
 }
@@ -167,29 +183,6 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
-.calc-target-table>table {
-    font-size: 0.82rem;
-    table-layout: fixed;
-}
-
-.calc-target-table td {
-    padding: 0.3rem;
-    width: 65px;
-}
-
-.calc-target-table input {
-    font-size: 0.88rem;
-    padding: 3px 6px;
-    width: 65px;
-    border-radius: 0;
-    height: 28px;
-    border-bottom: 0;
-}
-
-.calc-target-table input:last-child {
-    border-right-width: 0;
-}
-
 .mission-table {
     max-height: 510px;
     overflow-y: auto;
@@ -260,6 +253,10 @@ input[type="number"] {
     .Demand {
         padding-left: 1.25rem!important;
     }
+
+    .PC-addTimePeriod  {
+        padding-left: 1.25rem!important;
+    }
 }
 
 @media (max-width: 1400px) {
@@ -323,4 +320,41 @@ input[type="number"] {
     .footer_card {
         padding: 0.25rem;
     }
+}
+
+.box-wrap {
+    border: 1px solid #000000;
+    border-radius: 0.5rem;
+    position: relative;
+    margin: 0.75rem -0.5rem;
+    padding: 0.8rem 0.4rem 0 0.4rem;
+    width: fit-content;
+}
+
+.box-title {
+    position: absolute;
+    top: -1rem;
+    background-color: #ffffff;
+    padding: 0 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+html {
+    overflow-y: scroll;
+}
+:root {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+:root body {
+    position: absolute;
+}
+body {
+    width: 100vw;
+    overflow: hidden;
+}
+.container-fluid {
+    width: 100vw;
 }

@@ -1,0 +1,212 @@
+class PC_ConsumptionPlan {
+    static init(data) {
+        this._table_clear();
+        if (data !== "noStorage" && data !== undefined) {
+            this._startDate = data.startDate;
+            this._endDate = data.endDate;
+            this._totalDays = data.totalDays;
+            this._planFlag = data.planFlag;
+            this._plans = data.plans;
+            this._plansNumber = data.plansNumber;
+            if (this._plans.length !== 0)
+                PlanCombination_disabledDate();
+        }
+        else {
+            let startDate = Input_getPC_startDate();
+            let endDate = Input_getPC_endDate();
+            this._startDate = startDate;
+            this._endDate = endDate;
+            let days = calcDaysBetween2Dates(startDate, endDate);
+            if (days > 0) {
+                this._totalDays = days;
+                this._planFlag = new Array(days);
+                this._planFlag.fill(0);
+            }
+            this._plans = [];
+            this._plansNumber = 0;
+        }
+    }
+
+    static reset() {
+        let startDate = Input_getPC_startDate();
+        let endDate = Input_getPC_endDate();
+        this._startDate = startDate;
+        this._endDate = endDate;
+        this._plans = [];
+        this._table_clear();
+        this._plansNumber = 0;
+        this._tableNumber = 0;
+        let days = calcDaysBetween2Dates(startDate, endDate);
+        if (days > 0) {
+            this._totalDays = days;
+            this._planFlag = new Array(days);
+            this._planFlag.fill(0);
+        }
+    }
+
+    static setStorage() {
+        let data = this.exportData();
+        PC_storageSetItem("ConsumptionPlan", data);
+    }
+
+    static exportData() {
+        let data = {};
+        data.startDate = this._startDate;
+        data.endDate = this._endDate;
+        data.totalDays = this._totalDays;
+        data.planFlag = this._planFlag;
+        data.plans = this._plans;
+        data.plansNumber = this._plansNumber;
+        return data;
+    }
+
+    static table_add() {
+        let consumption = Input_getPC_Consumption_reAndco();
+        let times = Input_getPC_Consumption_times();
+        let html = this._table_getHTML(consumption, times);
+        $("#Consumption_tbody").append(html);
+        let tableData = this._tableData;
+        for (let i = 0; i < 8; ++i) {
+            consumption[i] *= times;
+            tableData[0][i] += consumption[i];
+        }
+        tableData.push(consumption);
+        this._table_printTotal(this._tableData[0]);
+    }
+
+    static _table_getHTML(consumption, times) {
+        let row = this._tableNumber++;
+        let html = '<tr id="Consumption_table_row_' + row + '">';
+        for (let i = 0; i < 8; ++i) {
+            html += '<td>' + consumption[i] + '</td>';
+        }
+        html += '<td>' + times;
+        html += '<button id="Consumption_table_close_row_' + row + '" class="close">×</button></td>';
+        return html;
+    }
+
+    static _table_deleteThisRow(id) {
+        let tr_elem = document.getElementById(id);
+        let row = 0;
+        while(1) {
+            if ($("#Consumption_tbody").children()[row].id === id) {
+                document.getElementById("Consumption_tbody").removeChild(tr_elem);
+                break;
+            }
+            else
+                ++row;
+        }
+        let consumption = this._tableData[row + 1];
+        for (let i = 0; i < 8; ++i) {
+            this._tableData[0][i] -= consumption[i];
+        }
+        this._table_printTotal(this._tableData[0]);
+        this._tableData.splice(row + 1, 1);
+    }
+
+    static _table_clear() {
+        this._tableData = [[0, 0, 0, 0, 0, 0, 0, 0]];
+        this._tableNumber = 0;
+        document.getElementById("Consumption_tbody").innerHTML = "";
+        this._table_printTotal(this._tableData[0]);
+    }
+
+    static _table_printTotal(totalData) {
+        let html = '<tr>';
+        for (let i = 0; i < 8; ++i) {
+            html += '<td>' + totalData[i] + '</td>';
+        }
+        html += '</tr>';
+        document.getElementById("Consumption_total").innerHTML = html;
+    }
+
+    static add() {
+        let timePeriod = PlanCombinationTimePeriod.getTimePeriod();
+        let timePeriod_length = timePeriod.length;
+        if (timePeriod_length === 0) {
+            Modal.alert(language.JS.PC_L_alert1);
+            return ;
+        }
+
+        let planFlag_backup = this._planFlag.slice();
+        for (let i = 0; i < timePeriod_length; ++i) {
+            timePeriod[i][0] = calcDaysBetween2Dates(this._startDate, timePeriod[i][0]);
+            timePeriod[i][1] = calcDaysBetween2Dates(this._startDate, timePeriod[i][1]);
+            let start = timePeriod[i][0];
+            let end = timePeriod[i][1];
+            for (let ii = start; ii < end; ++ii) {
+                ++this._planFlag[ii];
+                if (this._planFlag[ii] > 1) {
+                    this._planFlag = planFlag_backup;
+                    let date = addDate(this._startDate, ii);
+                    Modal.alert(language.JS.PC_C_alert2_1 + date + language.JS.PC_C_alert2_2);
+                    return ;
+                }
+            }
+        }
+
+        //格式[height, (xindex, yindex, width,) (xindex......]
+        let TimetableData = [240];
+        for (let i = 0; i < timePeriod_length; ++i) {
+            TimetableData.push(timePeriod[i][0]);
+            TimetableData.push(1680);
+            TimetableData.push(timePeriod[i][1] - timePeriod[i][0]);
+        }
+
+        let newPlan = {};
+        newPlan.timePeriod = timePeriod;
+        newPlan.number = this._plansNumber++;
+        newPlan.reAndco = this._tableData[0].slice();
+        newPlan.TimetableData = TimetableData;
+        this._plans.push(newPlan);
+
+        PlanCombinationTimePeriod.clear();
+        PlanCombination_disabledDate();
+        this._plansHasChanged();
+    }
+
+    static deleteAll() {
+        this.reset();
+        PlanCombination_enabledDate();
+        this._plansHasChanged();
+    }
+
+    static deleteThis(plan_number) {
+        let index = 0;
+        while(1) {
+            if (this._plans[index].number === plan_number)
+                break;
+            ++index;
+        }
+        let timePeriod_length = this._plans[index].timePeriod.length;
+        for (let i = 0; i < timePeriod_length; ++i) {
+            let startDate = this._plans[index].timePeriod[i][0];
+            let endDate = this._plans[index].timePeriod[i][1];
+            for (let ii = startDate; ii < endDate; ++ii) {
+                this._planFlag[ii] = 0;
+            }
+        }
+        this._plans.splice(index, 1);
+        this._plansHasChanged();
+        if (this._plans.length === 0 && PC_LogisticsPlan._plans.length === 0)
+            PlanCombination_enabledDate();
+    }
+
+    static _plansHasChanged() {
+        PlanCombinationChart.printFromConsumptionPlan(this._plans);
+        this.setStorage();
+    }
+
+    static chartGetPlans() {
+        return this._plans;
+    }
+}
+
+PC_ConsumptionPlan._plans = [];
+PC_ConsumptionPlan._plansNumber = 0;
+PC_ConsumptionPlan._startDate = "";
+PC_ConsumptionPlan._endDate = "";
+PC_ConsumptionPlan._totalDays = 0;
+PC_ConsumptionPlan._planFlag = [];
+PC_ConsumptionPlan._tableNumber = 0;
+PC_ConsumptionPlan._tableData = [[0, 0, 0, 0, 0, 0, 0, 0]];

@@ -121,11 +121,11 @@ button:disabled:hover {
     box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
 }
 
-/* .btn-checkbox.disabled,
+.btn-checkbox.disabled,
 .btn-checkbox:disabled {
     color: #28a745;
     background-color: transparent;
-} */
+}
 
 .btn-checkbox:not(:disabled):active,
 .btn-checkbox:not(:disabled).active {

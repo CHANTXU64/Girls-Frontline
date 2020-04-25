@@ -57,11 +57,9 @@ function MobilePCDevice() {
     if (IsMobile()) {
         document.getElementById("Saved_card").style.transition = "none";
         document.getElementById("MissionTable_card").style.transition = "none";
-        document.getElementById("calcTargetValueTool_card").style.transition = "none";
         if (storageGetItem("IsSavedPanelShow") === "noStorage") {
             $("#MissionTable_card").collapse("hide");
         }
-        document.getElementById("calcTargetValueTool_apply").innerHTML = "<span id=\"calcTargetValueTool_apply_text\">" + language.HTML.calcTargetValueTool_apply_text + "</span> &darr;";
     }
 }
 
@@ -211,7 +209,6 @@ function HTML_DisableRankingInput() {
     $("#GreatSuccessRateUp_btn").attr("disabled", "true");
     $("#GreatSuccessRateUp_btn").addClass("disabled");
     $("#ChapterLimit").attr("disabled", "true");
-    $("#calcTargetValueTool_apply").attr("disabled", "true");
     $("#ContractWeight").attr("disabled", "true");
     $("button[id^=setTarget_]").attr("disabled", "true");
     $("#MT").attr("disabled", "true");
@@ -247,7 +244,6 @@ function HTML_AllowRankingInput() {
     $("#GreatSuccessRateUp_btn").removeAttr("disabled");
     $("#GreatSuccessRateUp_btn").removeClass("disabled");
     $("#ChapterLimit").removeAttr("disabled");
-    $("#calcTargetValueTool_apply").removeAttr("disabled");
     $("#ContractWeight").removeAttr("disabled");
     $("button[id^=setTarget_]").removeAttr("disabled");
     $("#MT").removeAttr("disabled");

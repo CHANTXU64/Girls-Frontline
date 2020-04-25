@@ -20,7 +20,6 @@ function Input_getGreatSuccessRate(NeedCorrection = false) {
 /** @param {number} Rate - 大成功基础概率 */
 function Input_setGreatSuccessRate(Rate) {
     $("#GreatSuccessRate").val(Rate);
-    setQContract(Input_getTotalGreatSuccessRate());
     storageSetItem("GreatSuccessRate", Rate);
 }
 
@@ -40,8 +39,8 @@ function _getGreatSuccessUpRate(Index_BaseRate) {
 }
 
 /** @param {number} GreatSuccessRate - 大成功基础概率 */
-function Input_getGreatSuccessUpRate(GreatSuccessRate) {
-    if (IsGreatSuccessRateUp())
+function Input_getGreatSuccessUpRate(GreatSuccessRate, IsUP = IsGreatSuccessRateUp()) {
+    if (IsUP)
         return parseInt(_getGreatSuccessUpRate(GreatSuccessRate).substr(0, 2));
     else
         return 0;
@@ -69,7 +68,6 @@ function Input_setGreatSuccessUpRate(is_RateUP, NeedCorrectBaseRate = true) {
         const BaseRate = Input_getGreatSuccessRate(NeedCorrectBaseRate);
         UpRateText_elem.innerHTML = "+" + _getGreatSuccessUpRate(BaseRate);
     }
-    setQContract(Input_getTotalGreatSuccessRate());
     storageSetItem("Is_GreatSuccessRateUP", is_RateUP);
 }
 
@@ -276,45 +274,6 @@ function Input_getExecutionTimes(NeedCorrection = false) {
     if (NeedCorrection)
         Times_elem.val(Times);
     return Times;
-}
-
-//calcTargetValueTool-------
-function Input_getCalcTargetValueTool_Target(NeedCorrection = false) {
-    const Target_JQ_selector = [$("#calcTargetValueTool_Target_Manp"),
-        $("#calcTargetValueTool_Target_Ammu"), $("#calcTargetValueTool_Target_Rati"),
-        $("#calcTargetValueTool_Target_Part"), $("#calcTargetValueTool_Target_TPro"),
-        $("#calcTargetValueTool_Target_Equi"), $("#calcTargetValueTool_Target_QPro"), $("#calcTargetValueTool_Target_QRes")
-    ];
-    return _getValue_Arr(Target_JQ_selector, NeedCorrection);
-}
-
-function Input_setCalcTargetValueTool_Target(TargetValue = [0, 0, 0, 0, 0, 0, 0, 0]) {
-    const Target_JQ_selector = [$("#calcTargetValueTool_Target_Manp"),
-        $("#calcTargetValueTool_Target_Ammu"), $("#calcTargetValueTool_Target_Rati"),
-        $("#calcTargetValueTool_Target_Part"), $("#calcTargetValueTool_Target_TPro"),
-        $("#calcTargetValueTool_Target_Equi"), $("#calcTargetValueTool_Target_QPro"), $("#calcTargetValueTool_Target_QRes")
-    ];
-    _setTarget_arr(TargetValue, Target_JQ_selector);
-    storageSetItem("CalcTargetValueTool_Target", Input_getCalcTargetValueTool_Target());
-}
-
-function Input_getCalcTargetValueTool_Current(NeedCorrection = false) {
-    const Current_JQ_selector = [$("#calcTargetValueTool_Current_Manp"),
-        $("#calcTargetValueTool_Current_Ammu"), $("#calcTargetValueTool_Current_Rati"),
-        $("#calcTargetValueTool_Current_Part"), $("#calcTargetValueTool_Current_TPro"),
-        $("#calcTargetValueTool_Current_Equi"), $("#calcTargetValueTool_Current_QPro"), $("#calcTargetValueTool_Current_QRes")
-    ];
-    return _getValue_Arr(Current_JQ_selector, NeedCorrection);
-}
-
-function Input_setCalcTargetValueTool_Current(CurrentValue = [0, 0, 0, 0, 0, 0, 0, 0]) {
-    const Current_JQ_selector = [$("#calcTargetValueTool_Current_Manp"),
-        $("#calcTargetValueTool_Current_Ammu"), $("#calcTargetValueTool_Current_Rati"),
-        $("#calcTargetValueTool_Current_Part"), $("#calcTargetValueTool_Current_TPro"),
-        $("#calcTargetValueTool_Current_Equi"), $("#calcTargetValueTool_Current_QPro"), $("#calcTargetValueTool_Current_QRes")
-    ];
-    _setTarget_arr(CurrentValue, Current_JQ_selector);
-    storageSetItem("CalcTargetValueTool_Current", Input_getCalcTargetValueTool_Current());
 }
 
 /** @returns {number} Number of executions */
