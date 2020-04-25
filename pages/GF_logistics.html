@@ -19,6 +19,7 @@
 
   <!-- GF css !python -->
   <!-- 如果修改这些内容还需要修改下面script中重新加载的css文件名 -->
+  <link href="../lang/languages.css" rel="stylesheet">
   <link href="../css/slider.css" rel="stylesheet">
   <link href="../css/button.css" rel="stylesheet">
   <link href="../css/group.css" rel="stylesheet">
@@ -39,7 +40,7 @@
     //backup vendor bootstrap !python
     //如果修改了引入的bootstrap的js或css文件, 还需要修改.release.py中compressHTML()的内容
     //由于自己的css覆盖了bootstrap的css, 所以在重新加载bootstrap后还需再重新加载自己的css
-    window.bootstrap || document.write('<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"><link href="../css/slider.css" rel="stylesheet"><link href="../css/button.css" rel="stylesheet"><link href="../css/group.css" rel="stylesheet"><link href="../css/main.css" rel="stylesheet"><link href="../css/plan_combination.css" rel="stylesheet"><script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"><\/script>');
+    window.bootstrap || document.write('<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"><link href="../lang/languages.css" rel="stylesheet"><link href="../css/slider.css" rel="stylesheet"><link href="../css/button.css" rel="stylesheet"><link href="../css/group.css" rel="stylesheet"><link href="../css/main.css" rel="stylesheet"><link href="../css/plan_combination.css" rel="stylesheet"><script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"><\/script>');
     //end backup vendor bootstrap !python
   </script>
   <style>

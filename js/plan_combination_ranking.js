@@ -14,7 +14,12 @@ const PC_QValidMaxLength_firstCalc = 48;
 const PC_QValidMaxLength_secondCalc = 38;
 
 function PC_start_ranking() {
-    let a = new PC_ranking(PC_LogisticsPlan.rankingGetPlans(), Input_getPC_demand(true));
+    let demandValue = Input_getPC_demand(true);
+    if ("" + demandValue === "0,0,0,0,0,0,0,0") {
+        Modal.alert(language.JS.TargetValue0_alert);
+        throw "Warning: TargetValue cannot all be 0!";
+    }
+    let a = new PC_ranking(PC_LogisticsPlan.rankingGetPlans(), demandValue);
     a.ranking();
 }
 

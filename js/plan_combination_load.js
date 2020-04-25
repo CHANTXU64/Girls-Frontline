@@ -1,3 +1,5 @@
+let PLAN_COMBINATION_READY = false;
+
 function plan_combination_load() {
     const class_name = ['Manp', 'Ammu', 'Rati', 'Part', 'TPro', 'Equi', 'QPro', 'QRes'];
     const name = ['current_', 'demand_', 'target_'];
@@ -11,7 +13,7 @@ function plan_combination_load_main(name, class_name) {
     let html = '';
     for (let i = 0; i < 4; ++i) {
         html += '<div class="col-sm-3 col-6 mb-2 input-group input-group-regular">';
-        html += '<label for="PC_' + name + class_name[i] + '" class="' + class_name[i] + ' input-group-label input-group-text"';
+        html += '<label for="PC_' + name + class_name[i] + '" class="reAndco-label ' + class_name[i] + ' input-group-label input-group-text"';
         html += 'id="PC_' + name + class_name[i] + '_label"></label>';
         html += '<input id="PC_' + name + class_name[i] + '" type="number" class="form-control ' + class_name[i] + '_placeholder" value="0" min="0" autocomplete="off"></div>';
     }

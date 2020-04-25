@@ -66,6 +66,7 @@ function loadLast() {
     $("#page_loading").remove();
     $("#PlanCombinationSwitch").removeAttr("disabled");
     plan_combination_init("LocalStorage");
+    PLAN_COMBINATION_READY = true;
 }
 
 //Backup vendor js !python
