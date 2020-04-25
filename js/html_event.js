@@ -250,51 +250,23 @@ JQ_selector_target.on("click", "button[id^=Target_plus_]", function () {
 JQ_selector_target.on("blur", "#MT", function () {
     TargetChangeStorage();
 });
-JQ_selector_target.on("keyup", "#MT", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#AT").focus();
-});
 JQ_selector_target.on("blur", "#AT", function () {
     TargetChangeStorage();
-});
-JQ_selector_target.on("keyup", "#AT", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#RT").focus();
 });
 JQ_selector_target.on("blur", "#RT", function () {
     TargetChangeStorage();
 });
-JQ_selector_target.on("keyup", "#RT", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#PT").focus();
-});
 JQ_selector_target.on("blur", "#PT", function () {
     TargetChangeStorage();
-});
-JQ_selector_target.on("keyup", "#PT", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#TT").focus();
 });
 JQ_selector_target.on("blur", "#TT", function () {
     TargetChangeStorage();
 });
-JQ_selector_target.on("keyup", "#TT", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#ET").focus();
-});
 JQ_selector_target.on("blur", "#ET", function () {
     TargetChangeStorage();
 });
-JQ_selector_target.on("keyup", "#ET", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#QPT").focus();
-});
 JQ_selector_target.on("blur", "#QPT", function () {
     TargetChangeStorage();
-});
-JQ_selector_target.on("keyup", "#QPT", function (e) {
-    if (is_KeyIsEnter(e))
-        $("#QRT").focus();
 });
 JQ_selector_target.on("blur", "#QRT", function () {
     TargetChangeStorage();
@@ -531,3 +503,21 @@ $("#PlanDetails_InputExecutionTimes").on("input propertychange", function () {
     }
 });
 //End Plan Details
+
+//按enter自动切换下一个input
+$(".autoEnter").on("keyup", function (e) {
+    if (is_KeyIsEnter(e)) {
+        if (this.className.indexOf("autoEnterEnd") !== -1)
+            return ;
+        let autoEnterArray = $(".autoEnter");
+        let length = autoEnterArray.length - 1;
+        let index;
+        for (let i = 0; i < length; ++i) {
+            if (autoEnterArray[i] == this) {
+                index = i;
+                break;
+            }
+        }
+        autoEnterArray[index + 1].focus();
+    }
+});

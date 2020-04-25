@@ -111,14 +111,21 @@ class Saved {
      * @private
      */
     static _getSavedRowHTML_main(row, allSaved = this._saved) {
-        let HTML = '<span class="Saved-Name">' + allSaved[row].name + '</span>';
+        let HTML = '<span class="Saved-Name" title="' + allSaved[row].name + '">' + allSaved[row].name + '</span>';
         HTML += '<div class="Saved-Overview">';
         let tab = getTabByName(allSaved[row].TabName);
         let TotalTime = tab.getTotalTimeFromSavedCustom(allSaved[row].TabCustom);
         HTML += '<div>' + tab.displayName + '<br>' + TimeFormat(TotalTime) + '</div>';
+        let Missions = allSaved[row].Missions.slice();
+        for (let i = 0; i < 4; ++i) {
+            if (Missions[i] === undefined)
+                Missions[i] = "";
+        }
+        HTML += '<div>' + Missions[0] + '<br>' + Missions[1] + '</div>';
+        HTML += '<div>' + Missions[2] + '<br>' + Missions[3] + '</div>';
         let resources = this.getReAndCoBySaved(allSaved[row], is_CalculateByHour()).slice(0, 4);
-        HTML += '<div>' + Math.round(resources[0]) + '<br>' + Math.round(resources[2]) + '</div>';
-        HTML += '<div>' + Math.round(resources[1]) + '<br>' + Math.round(resources[3]) + '</div>';
+        HTML += '<div class="Saved-Overview-resources">' + Math.round(resources[0]) + '<br>' + Math.round(resources[2]) + '</div>';
+        HTML += '<div class="Saved-Overview-resources">' + Math.round(resources[1]) + '<br>' + Math.round(resources[3]) + '</div>';
         HTML += '</div>';
         return HTML;
     }

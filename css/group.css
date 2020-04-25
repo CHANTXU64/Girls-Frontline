@@ -97,7 +97,7 @@
     word-break: keep-all;
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-width: calc(100% - 160px);
+    max-width: calc(100% - 270px);
 }
 
 .Saved-Overview {
@@ -109,4 +109,13 @@
     display: inline;
     text-align: center;
     padding-left: 0.8rem;
+}
+
+@media (max-width: 576px) {
+    .Saved-Overview>div.Saved-Overview-resources {
+        display: none;
+    }
+    .Saved-Name {
+        max-width: calc(100% - 170px);
+    }
 }

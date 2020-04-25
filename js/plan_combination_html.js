@@ -96,7 +96,8 @@ function PC_calcDemand() {
     let startDate = Input_getPC_startDate();
     let endDate = Input_getPC_endDate();
     let totalDays = calcDaysBetween2Dates(startDate, endDate);
-    let data = PlanCombinationChart._calcReAndCoData(currentValue, PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans(), totalDays);
+    // let data = PlanCombinationChart._calcReAndCoData(currentValue, PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans(), totalDays);
+    let data = PlanCombinationChart._calcReAndCoData(currentValue, [], PC_ConsumptionPlan.chartGetPlans(), totalDays);
     let demandValue = [];
     let data_lastIndex = data[0].length - 1;
     let targetValue = Input_getPC_target(true);

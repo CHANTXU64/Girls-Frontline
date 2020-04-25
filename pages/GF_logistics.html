@@ -43,25 +43,6 @@
     window.bootstrap || document.write('<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"><link href="../lang/languages.css" rel="stylesheet"><link href="../css/slider.css" rel="stylesheet"><link href="../css/button.css" rel="stylesheet"><link href="../css/group.css" rel="stylesheet"><link href="../css/main.css" rel="stylesheet"><link href="../css/plan_combination.css" rel="stylesheet"><script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"><\/script>');
     //end backup vendor bootstrap !python
   </script>
-  <style>
-    html {
-      overflow-y: scroll;
-    }
-    :root {
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
-    :root body {
-      position: absolute;
-    }
-    body {
-      width: 100vw;
-      overflow: hidden;
-    }
-    .container-fluid {
-      width: 100vw;
-    }
-  </style>
 </head>
 
 <body class="container-fluid" id="container-fluid">
@@ -134,14 +115,14 @@
   <div class="col-lg-7 float-left disable-selected-text alert_card">
     <div class="alert alert-warning alert-dismissible fade show" id="description" role="alert">
       <span id="description_text" style="color:#000000"></span>
-      <button type="button" id="neverShowAgain_description" class="close" data-dismiss="alert" aria-label="Close">
+      <button type="button" id="neverShowAgain_description" disabled class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="alert alert-danger" id="localstorageDoesNotWork" role="alert" style="color: #000000;"></div>
     <div class="alert alert-warning alert-dismissible fade show" id="localstorageWarning" role="alert">
       <span id="localstorageWarning_text" style="color:#000000"></span>
-      <button type="button" id="neverShowAgain_localstorageWarning" class="close" data-dismiss="alert" aria-label="Close">
+      <button type="button" id="neverShowAgain_localstorageWarning" disabled class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -306,7 +287,7 @@
             <label for="GreatSuccessRate" class="input-group-label input-group-text" id="Display_UPRate"></label>
             <label for="GreatSuccessRate" class="input-group-label input-group-text">%</label>
             <div class="input-group-append btn-group-toggle ml-0" data-toggle="buttons">
-              <label id="GreatSuccessRateUp_btn" class="btn btn-checkbox"
+              <label id="GreatSuccessRateUp_btn" class="btn btn-checkbox disabled"
                 style="padding: 0.3rem 0.7rem; font-size: 0.875rem;">
                 <input type="checkbox" id="GreatSuccessRateUp">UP
               </label>

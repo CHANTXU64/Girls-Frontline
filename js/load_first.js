@@ -28,6 +28,8 @@ if (CAN_STORAGE_WORK)
     sessionStorage.setItem("GF_Logistics_windowOnload", "success");
 
 $("#set_lang").removeAttr("disabled");
+$("#neverShowAgain_description").removeAttr("disabled");
+$("#neverShowAgain_localstorageWarning").removeAttr("disabled");
 $("#Tab_Anytime_name").attr("data-toggle", "tab");
 $("#Tab_Anytime_name").attr("href", "#Tab_Anytime");
 $("#Tab_Timetable_name").attr("data-toggle", "tab");
@@ -40,6 +42,7 @@ if (Tab_Timetable_TIMELIST.length === 0) {
     $("#Time_Timetable_minutes").removeAttr("disabled");
 }
 $("#GreatSuccessRate").removeAttr("disabled");
+$("#GreatSuccessRateUp_btn").removeClass("disabled");
 $("#ContractWeight").removeAttr("disabled");
 $("#PlanDetails_InputStartTime").removeAttr("disabled");
 $("#PlanDetails_InputExecutionTimes").removeAttr("disabled");

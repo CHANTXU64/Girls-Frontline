@@ -33,7 +33,7 @@ function loadHTML_Target() {
         HTML += '&minus;</button><input type="number" min="0"';
         if (i >= 4)
             HTML += 'step="0.01"'
-        HTML += 'class="form-control ' + TargetName[i] + '_placeholder" id="';
+        HTML += 'class="form-control autoEnter ' + TargetName[i] + '_placeholder" id="';
         HTML += Target[i];
         HTML += '"value=0 onfocus="this.select();"style="border-left-width:0"><button class="btn btn-outline-dark input-group-btn target-btn-hidden"type="button"id="Target_plus_';
         if (i < 4)

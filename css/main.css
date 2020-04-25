@@ -340,3 +340,21 @@ input[type="number"] {
     font-weight: 400;
     line-height: 1.2;
 }
+
+html {
+    overflow-y: scroll;
+}
+:root {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+:root body {
+    position: absolute;
+}
+body {
+    width: 100vw;
+    overflow: hidden;
+}
+.container-fluid {
+    width: 100vw;
+}

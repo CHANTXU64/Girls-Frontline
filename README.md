@@ -17,8 +17,7 @@ Thanks [FatalChapter](https://github.com/hycdes/GFTool)
 只需要修改js/data.js, 修改Q数组即可.<br>
 
 **如何发布新版本?**<br>
-1.修改js/local_storage.js的VERSION<br>
-2.运行release.py + version (如./release.py 2.0.0)<br>
+1.运行release.py + version (如./release.py 2.0.0)<br>
 
 测试代码格式: //test[\w|\W]+?//End test
 

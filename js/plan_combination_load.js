@@ -15,7 +15,10 @@ function plan_combination_load_main(name, class_name) {
         html += '<div class="col-sm-3 col-6 mb-2 input-group input-group-regular">';
         html += '<label for="PC_' + name + class_name[i] + '" class="reAndco-label ' + class_name[i] + ' input-group-label input-group-text"';
         html += 'id="PC_' + name + class_name[i] + '_label"></label>';
-        html += '<input id="PC_' + name + class_name[i] + '" type="number" class="form-control ' + class_name[i] + '_placeholder" value="0" min="0" autocomplete="off"></div>';
+        html += '<input id="PC_' + name + class_name[i] + '" type="number" class="autoEnter ';
+        if (class_name[i] === 'QRes')
+            html += 'autoEnterEnd';
+        html += ' form-control ' + class_name[i] + '_placeholder" value="0" min="0" autocomplete="off"></div>';
     }
     return html;
 }
