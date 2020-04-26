@@ -113,9 +113,11 @@ $("#PC_startRanking").on("click", function () {
 })
 function PC_ranking_start() {
     html_waiting();
+    $("#PC_ranking_loading").removeClass("d-none");
 }
 function PC_ranking_end() {
     html_waiting_cancel();
+    $("#PC_ranking_loading").addClass("d-none");
 }
 
 $("#PlanCombination_current_box").on("blur", "input[id^=PC_current_]", function () {

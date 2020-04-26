@@ -360,7 +360,10 @@ function plan_combination_getChartOption(startDate, endDate) {
                         const class_name = ['Manp', 'Ammu', 'Rati', 'Part', 'TPro', 'Equi', 'QPro', 'QRes'];
                         for (let i = 0; i < 8; ++i) {
                             text += language.JS[class_name[i]];
-                            text += ': ' + reAndco[i] + '<br>';
+                            text += ': ';
+                            if (reAndco[i] > 0)
+                                text += '+';
+                            text += NumberAutoExact(reAndco[i]) + '<br>';
                         }
                         return text;
                     }

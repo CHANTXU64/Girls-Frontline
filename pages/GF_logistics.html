@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="">
-<!-- vim: et ts=2 sts=2 sw=2 tw=120
--->
 
 <head>
   <meta charset="utf-8">
@@ -154,8 +152,8 @@
           <div id="PlanCombination_current_re" class="form-row" style="max-width: 980px;"></div>
           <div id="PlanCombination_current_co" class="form-row" style="max-width: 980px;"></div>
         </div>
-        <button type="button" class="btn btn-danger mb-2" id="PC_deleteAllPlans"></button>
-        <button type="button" class="btn btn-info mb-2" id="PC_saveAll"></button>
+        <button type="button" class="btn btn-danger mb-2" id="PC_deleteAllPlans"></button><!-- 必须在这两个标签间加空 !python space-->
+        <button type="button" class="btn btn-info mb-2" id="PC_saveAll"></button><!-- 必须在这两个标签间加空 !python space-->
         <button type="button" class="btn btn-danger mb-2" id="PC_deletePlan" disabled></button>
         <div id="PlanCombination_chart" style="height: 300px; width: auto; margin: 0 -10px 1rem -10px"></div>
         <div class="card">
@@ -186,7 +184,12 @@
               <div id="PC_demand_description" class="mb-2"></div>
               <div id="PlanCombination_demand_re" class="form-row" style="max-width: 980px;"></div>
               <div id="PlanCombination_demand_co" class="form-row" style="max-width: 980px;"></div>
-              <button type="button" class="btn btn-primary" id="PC_startRanking"></button>
+              <div class="col-lg-12 btn-toolbar p-0 mt-2">
+                <button type="button" class="btn btn-primary" id="PC_startRanking"></button>
+                <div class="spinner-border text-primary ml-2 d-none" role="status" style="border-width: 0.3rem;" id="PC_ranking_loading">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -381,7 +384,7 @@
                                                  id="PlanCombination_planEndDate_label"></label>
             <input id="PlanCombination_planEndDate" type="date" class="form-control" style="width: auto; max-width: 150px;">
           </div>
-          <button type="button" class="btn btn-primary btn-regular mb-2" id="addNewTimePeriod"></button>
+          <button type="button" class="btn btn-primary btn-regular mb-2" id="addNewTimePeriod"></button><!-- 必须在这两个标签间加空 !python space-->
           <button type="button" class="btn btn-danger btn-regular mb-2" id="deleteAllTimePeriod"></button>
         </div>
         <!-- setting button bar -->

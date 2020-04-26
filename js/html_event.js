@@ -19,6 +19,11 @@ $("#lang-en").on("click", function () {
     changeLanguage("en");
 });
 
+$("#help").on("click", function () {
+    let help_wiki = language.help_wiki;
+    window.open(help_wiki, "_blank");
+});
+
 //Config
 $("#Config_export").on("click", function () {
     if ($("#Config_export").attr("aria-expanded") !== "true")

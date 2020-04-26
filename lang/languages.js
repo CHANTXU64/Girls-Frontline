@@ -8,6 +8,7 @@ const language_zh_CN = {
     title: "少女前线-后勤组合排序器",
     cssClass: "zh-Hans",
     otherLangCssClass: ["zh-Hant", "en"],
+    help_wiki: "https://github.com/CHANTXU64/Girls-Frontline/wiki/%E4%BD%BF%E7%94%A8%E5%B8%AE%E5%8A%A9",
     HTML: {
         Modal_footer_button_ok: "确定",
         Modal_footer_button_cancel: "取消",
@@ -113,6 +114,7 @@ const language_zh_CN = {
             CommanderLevel: "指挥官等级",
         },
         title: {
+            help: "帮助",
             Config_importButton: "导入全局数据",
             Config_export: "导出全局数据",
             neverShowAgain_description: "关闭，不再显示",
@@ -258,6 +260,7 @@ const language_zh_CN = {
         PC_C_alert2_2: "，已添加过其他收支方案。添加失败。",
         PC_deleteAll_confirm: "是否要删除所有方案？",
         PC_saveAll_confirm: "是否要保存所有后勤方案？",
+        PC_ranking_add_alert: "请先添加后勤方案再开始排序。",
         PC_ranking_done: "排序完成！",
         resource: "资源量",
         contract: "契约量",
@@ -310,6 +313,7 @@ const language_zh_TW = {
     title: "少女前線-後勤組合排序器",
     cssClass: "zh-Hant",
     otherLangCssClass: ["zh-Hans", "en"],
+    help_wiki: "https://github.com/CHANTXU64/Girls-Frontline/wiki/%E4%BD%BF%E7%94%A8%E5%B9%AB%E5%8A%A9",
     HTML: {
         Modal_footer_button_ok: "確定",
         Modal_footer_button_cancel: "取消",
@@ -415,6 +419,7 @@ const language_zh_TW = {
             CommanderLevel: "指揮官等級",
         },
         title: {
+            help: "幫助",
             Config_importButton: "導入全局數據",
             Config_export: "導出全局數據",
             neverShowAgain_description: "關閉，不再顯示",
@@ -560,6 +565,7 @@ const language_zh_TW = {
         PC_C_alert2_2: "，已添加過其他收支方案。添加失敗。",
         PC_deleteAll_confirm: "是否要刪除所有方案？",
         PC_saveAll_confirm: "是否要保存所有後勤方案？",
+        PC_ranking_add_alert: "請先添加後勤方案再開始排序。",
         PC_ranking_done: "排序完成！",
         resource: "資源量",
         contract: "契約量",
@@ -612,6 +618,7 @@ const language_en = {
     title: "Girls' Frontline Logistics Combination Calculator",
     cssClass: "en",
     otherLangCssClass: ["zh-Hans", "zh-Hant"],
+    help_wiki: "https://github.com/CHANTXU64/Girls-Frontline/wiki/Help",
     HTML: {
         Modal_footer_button_ok: "OK",
         Modal_footer_button_cancel: "Cancel",
@@ -717,6 +724,7 @@ const language_en = {
             CommanderLevel: "Commander Level",
         },
         title: {
+            help: "help",
             Config_importButton: "Import configurations",
             Config_export: "Export configurations",
             neverShowAgain_description: "close, never show again",
@@ -831,6 +839,7 @@ const language_en = {
         PC_C_alert2_2: ", ohter revenue and expenditure plan have been added. Failed to add.",
         PC_deleteAll_confirm: "Do you want to delete all plans?",
         PC_saveAll_confirm: "Do you want to save all the logistics plans?",
+        PC_ranking_add_alert: "Please add a logistics plan before start ranking.",
         PC_ranking_done: "Ranking done!",
         resource: "Resources",
         contract: "Contracts",

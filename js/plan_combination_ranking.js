@@ -20,6 +20,10 @@ function PC_start_ranking() {
         return ;
     }
     let a = new PC_ranking(PC_LogisticsPlan.rankingGetPlans(), demandValue);
+    if (a.allPlan.length === 0) {
+        Modal.alert(language.JS.PC_ranking_add_alert);
+        return ;
+    }
     a.ranking();
     Modal.alert(language.JS.PC_ranking_done);
 }
@@ -181,11 +185,12 @@ class _PC_ranking_planData {
             for (let i = 0; i < 8; ++i) {
                 reAndco.push(result[0][i + 5] * totalTime);
             }
+            this.missions = result[0].slice(1, 5);
         }
         else {
             reAndco = [0, 0, 0, 0, 0, 0, 0, 0];
+            this.missions = [];
         }
-        this.missions = result[0].slice(1, 5);
         this.reAndcoValue = reAndco;
         this.reAndcoValue_Norm = this.normReAndCo(this.reAndcoValue);
         this.planValue = this.calcPlanValue(this.reAndcoValue_Norm);
