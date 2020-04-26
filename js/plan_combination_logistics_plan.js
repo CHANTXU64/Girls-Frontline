@@ -65,6 +65,11 @@ class PC_LogisticsPlan {
             Modal.alert(language.JS.PC_L_alert1);
             return ;
         }
+        if (this._plans.length >= 32) {
+            Modal.alert(language.JS.PC_L_alert3);
+            return ;
+        }
+
         let PlanName = "";
         for (let i = 0; i < timePeriod_length; ++i) {
             PlanName += timePeriod[i][0].slice(5) + '~' + timePeriod[i][1].slice(5) + ', ';

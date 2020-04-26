@@ -84,12 +84,13 @@
         <a class="dropdown-item" id="lang-en">English</a>
       </ul>
     </div><!-- 必须在这两个标签间加空 !python space-->
+    <button type="button" class="btn btn-outline-dark btn-regular" id="help">?</button><!-- 必须在这两个标签间加空 !python space-->
     <div class="spinner-border align-middle" id="page_loading" role="status" style="border-width: 0.2rem; height: 1.5rem; width: 1.5rem;">
       <span class="sr-only">Loading...</span>
     </div>
     <div class="custom-control custom-switch float-right">
       <input type="checkbox" class="custom-control-input" id="PlanCombinationSwitch" autocomplete="off" disabled>
-      <label class="custom-control-label" for="PlanCombinationSwitch"></label>
+      <label class="custom-control-label" style="font-size: 16px;" for="PlanCombinationSwitch" id="PlanCombinationSwitch_label"></label>
     </div>
     <hr style="margin: 0.5rem 0 1rem 0; width: 100%;" />
   </h2>
@@ -144,6 +145,10 @@
             <input id="PlanCombination_endDate" type="date" class="form-control" style="width: auto; max-width: 150px;">
           </div>
         </div>
+        <div class="form-group input-group-regular mb-3">
+          <input type="number" min="1" max="999" style="max-width: 300px;" class="form-control" id="CommanderLevel" onfocus="this.select();" autocomplete="off">
+          <small id="CommanderLevel_text" class="form-text text-muted"></small>
+        </div>
         <div id="PlanCombination_current_box" class="box-wrap">
           <span class="box-title" id="PC_current_title"></span>
           <div id="PlanCombination_current_re" class="form-row" style="max-width: 980px;"></div>
@@ -152,7 +157,7 @@
         <button type="button" class="btn btn-danger mb-2" id="PC_deleteAllPlans"></button>
         <button type="button" class="btn btn-info mb-2" id="PC_saveAll"></button>
         <button type="button" class="btn btn-danger mb-2" id="PC_deletePlan" disabled></button>
-        <div id="PlanCombination_chart" style="height: 280px; width: auto; margin: 0 -10px 1rem -10px"></div>
+        <div id="PlanCombination_chart" style="height: 300px; width: auto; margin: 0 -10px 1rem -10px"></div>
         <div class="card">
           <div class="card-header pt-2 pb-2 border-bottom-0">
             <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"
@@ -169,6 +174,7 @@
                 </div>
                 <div id="calcTargetValueTool_card" class="collapse">
                   <div class="card-body p-2">
+                    <div id="PC_calcDemand_description" class="mb-2"></div>
                     <h5 id="PC_targetValue_h5"></h5>
                     <div id="PlanCombination_target_re" class="form-row" style="max-width: 980px;"></div>
                     <div id="PlanCombination_target_co" class="form-row" style="max-width: 980px;"></div>
@@ -177,6 +183,7 @@
                 </div>
               </div>
               <h5 id="PC_demandValue_h5"></h5>
+              <div id="PC_demand_description" class="mb-2"></div>
               <div id="PlanCombination_demand_re" class="form-row" style="max-width: 980px;"></div>
               <div id="PlanCombination_demand_co" class="form-row" style="max-width: 980px;"></div>
               <button type="button" class="btn btn-primary" id="PC_startRanking"></button>
@@ -205,6 +212,7 @@
       <div class="card-body row" style="margin: 0;">
         <!-- setting Logistics -->
         <div class="col-lg-7 p-0" id="plan_setting">
+          <h5 id="Logistics_setting_title" class="d-none"></h5>
           <ul class="nav nav-tabs nav-justified">
             <li class="nav-item text-nowrap">
               <a class="nav-link active" href="#" id="Tab_Anytime_name"></a>
@@ -215,7 +223,7 @@
           </ul>
           <div class="tab-content disable-selected-text">
             <div class="tab-pane fade active show" id="Tab_Anytime">
-              <h5 id="tab_Anytime_time" class="mt-2"></h5>
+              <h6 id="tab_Anytime_time" class="mt-2"></h6>
               <div class="input-group input-group-regular mb-2">
                 <input type="number" min="0" max="72" class="form-control" id="Time_Anytime_hours" value=16
                   onfocus="this.select();" autocomplete="off" disabled>
@@ -226,7 +234,7 @@
                 <label for="Time_Anytime_minutes" class="input-group-label input-group-text"
                   id="tab_Anytime_minute"></label>
               </div>
-              <h5 id="tab_Anytime_MinimumIntervalTime"></h5>
+              <h6 id="tab_Anytime_MinimumIntervalTime"></h6>
               <div class="input-group input-group-regular mb-2">
                 <input type="number" min="0" max="60" class="form-control" id="Tab_Anytime_MinimumIntervalTime_minutes"
                   value=0 onfocus="this.select();" autocomplete="off" disabled>
@@ -236,7 +244,7 @@
               </div>
             </div>
             <div class="tab-pane fade" id="Tab_Timetable">
-              <h5 id="tab_Timetable_time" class="mt-2"></h5>
+              <h6 id="tab_Timetable_time" class="mt-2"></h6>
               <div class="input-group input-group-regular mb-1" style="width: 100%;">
                 <input type="number" min="0" max="72" class="form-control" id="Time_Timetable_hours" value=5
                   onfocus="this.select();" autocomplete="off" disabled>
@@ -280,7 +288,7 @@
               </div>
             </div>
           </div>
-          <h5 id="h4GreatSuccessRate" class="disable-selected-text"></h5>
+          <h6 id="h4GreatSuccessRate" class="disable-selected-text"></h6>
           <div class="input-group input-group-regular disable-selected-text mb-2">
             <input type="number" min="15" max="69" class="form-control" id="GreatSuccessRate" value=60
               onfocus="this.select();" autocomplete="off" disabled>
@@ -300,6 +308,7 @@
         </div>
         <!-- setting consumption -->
         <div class="col-lg-7 p-0 d-none disable-selected-text" id="ConsumptionPlan_setting">
+          <h5 id="Consumption_setting_title"></h5>
           <div class="form-row">
             <div class="col-sm-8 input-group-regular mb-2">
               <select class="custom-select" id="Consumption_select" autocomplete="off"></select>
@@ -356,7 +365,8 @@
         <div class="col-lg-5 disable-selected-text PC-addTimePeriod p-0 d-none" id="PlanCombination_addTimePeriod">
           <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="LogisticsConsumptionPlanSwitch" autocomplete="off">
-            <label class="custom-control-label" for="LogisticsConsumptionPlanSwitch"></label>
+            <label class="custom-control-label" for="LogisticsConsumptionPlanSwitch"
+              id="LogisticsConsumptionPlanSwitch_label"></label>
           </div>
           <h5 id="DateTimePeriod"></h5>
           <ul id="PC_DateTimePeriod_body" class="list-group list-group-regular mb-2" style="max-height: 300px;
@@ -559,9 +569,12 @@
       GitHub: <a href="https://github.com/CHANTXU64/Girls-Frontline"
         target="_blank">https://github.com/CHANTXU64/Girls-Frontline</a>
     </footer>
-    <footer class="col-lg-4 p-0">
-      <span id="permanentAddress"></span><a href="https://chantxu64.github.io/GF_logistics.html"
-        target="_blank">https://chantxu64.github.io/GF_logistics.html</a>
+    <footer class="col-lg-3 p-0">
+      <span id="permanentAddress"></span><a href="https://chantxu64.github.io/gf"
+        target="_blank">https://chantxu64.github.io/gf</a>
+    </footer>
+    <footer class="col p-0">
+      <a href="https://github.com/CHANTXU64/Girls-Frontline/wiki" target="_blank">wiki</a>
     </footer>
     <footer class="col p-0">
       <a id="OfflineVersion" href="https://chantxu64.github.io/GF_logistics_offline.zip"

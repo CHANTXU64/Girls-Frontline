@@ -19,6 +19,7 @@ function PlanCombination_on() {
     $("#target").addClass("d-none");
     $("#start_ranking").addClass("d-none");
     $("#result_card").addClass("d-none");
+    $("#Logistics_setting_title").removeClass("d-none");
 }
 
 function PlanCombination_off() {
@@ -30,6 +31,7 @@ function PlanCombination_off() {
     $("#target").removeClass("d-none");
     $("#start_ranking").removeClass("d-none");
     $("#result_card").removeClass("d-none");
+    $("#Logistics_setting_title").addClass("d-none");
 }
 
 function PlanCombination_disabledDate() {
@@ -137,6 +139,9 @@ function plan_combination_init(data) {
         let demand = PC_storageGetItem("demand");
         if (demand !== "noStorage")
             Input_setPC_demand(demand);
+        let level = PC_storageGetItem("level");
+        if (level !== "noStorage")
+            Input_setPC_CommanderLevel(level);
         PC_LogisticsPlan.init(PC_storageGetItem("LogisticsPlan"));
         PC_ConsumptionPlan.init(PC_storageGetItem("ConsumptionPlan"));
     }
@@ -150,6 +155,8 @@ function plan_combination_init(data) {
         Input_setPC_target(target);
         let demand = data.demand;
         Input_setPC_demand(demand);
+        let level = data.level;
+        Input_setPC_CommanderLevel(level);
         PC_LogisticsPlan.init(data.LogisticsData);
         PC_ConsumptionPlan.init(data.ConsumptionData);
     }
@@ -170,5 +177,6 @@ function plan_combination_getConfigData() {
     data.demand = Input_getPC_demand();
     data.LogisticsData = PC_LogisticsPlan.exportData();
     data.ConsumptionData = PC_ConsumptionPlan.exportData();
+    data.level = Input_getPC_CommanderLevel();
     return data;
 }

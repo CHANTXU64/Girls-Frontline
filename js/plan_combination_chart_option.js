@@ -6,8 +6,17 @@ function plan_combination_getChartOption(startDate, endDate) {
     }
     let is_sameYear = startDate.slice(0, 4) === endDate.slice(0, 4);
     let lang = language.JS;
-    let reAndco_name = [lang.Manp, lang.Ammu, lang.Rati, lang.Part, lang.TPro, lang.Equi, lang.QPro, lang.QRes]
     let animation = false;
+    let level = Input_getPC_CommanderLevel();
+    let softcap = getResourceSoftcap(level);
+    let is_regen = (level !== -1);
+    let resourceMarkLine;
+    if (is_regen) {
+        resourceMarkLine = [{yAxis: 0}, {yAxis: softcap}, {yAxis: 300000}];
+    }
+    else {
+        resourceMarkLine = [{yAxis: 0},{yAxis: 300000}];
+    }
     if (!IsMobile())
         animation = true;
 
@@ -16,22 +25,27 @@ function plan_combination_getChartOption(startDate, endDate) {
             {
                 left: 60,
                 right: 45,
-                top: 30,
+                top: 50,
                 height: 125,
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'line'
+                    },
+                }
             },
             {
                 left: 60,
                 right: 45,
                 bottom: 55,
-                height: 70
+                height: 70,
+                tooltip: {
+                    type: 'item',
+                }
             }
         ],
         tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                // type: 'cross'
-                type: 'line'
-            },
+            trigger: 'item',
             backgroundColor: 'rgba(245, 245, 245, 0.8)',
             borderWidth: 1,
             borderColor: '#ccc',
@@ -51,7 +65,7 @@ function plan_combination_getChartOption(startDate, endDate) {
             feature: {
                 saveAsImage: {
                     name: 'GF',
-                    title: 'Capture',
+                    title: ' ',
                 }
             }
         },
@@ -85,8 +99,7 @@ function plan_combination_getChartOption(startDate, endDate) {
             }
         ],
         legend: {
-            data: reAndco_name,
-            left: 30
+            left: 0
         },
         xAxis: [
             {
@@ -104,28 +117,34 @@ function plan_combination_getChartOption(startDate, endDate) {
             },
             {
                 // type: 'category',
+                type: 'time',
                 min: 0,
                 scale: true,
                 // boundaryGap: false,
                 // data: xAxisData,
+                minInterval: 1,
+                // interval: 1,
                 axisLabel: {
-                    // formatter: function (val) {
-                    //     let shortDate = val.slice(5);
-                    //     if (is_sameYear)
-                    //         return shortDate;
-                    //     else {
-                    //         let year = val.slice(0, 4);
-                    //         return shortDate + '\n' + year;
-                    //     }
-                    // },
+                    formatter: function (val) {
+                        let date = addDate(startDate, val);
+                        let shortDate = date.slice(5);
+                        if (is_sameYear)
+                            return shortDate;
+                        else {
+                            let year = date.slice(0, 4);
+                            return shortDate + '\n' + year;
+                        }
+                    },
                 },
                 max: totalDays,
-                axisLine: {onZero: false},
+                // axisLine: {onZero: false},
                 gridIndex: 1
             }
         ],
         yAxis: [
             {
+                name: language.JS.resource,
+                nameGap: 9,
                 type: 'value',
                 scale: true,
                 gridIndex: 0,
@@ -135,6 +154,8 @@ function plan_combination_getChartOption(startDate, endDate) {
                 minInterval: 1
             },
             {
+                name: language.JS.contract,
+                nameGap: 9,
                 type: 'value',
                 scale: true,
                 gridIndex: 0,
@@ -170,11 +191,7 @@ function plan_combination_getChartOption(startDate, endDate) {
                 markLine: {
                     silent: true,
                     label: {show: false},
-                    data: [{
-                        yAxis: 0
-                    }, {
-                        yAxis: 300000
-                    }],
+                    data: resourceMarkLine,
                     symbol: 'none',
                     precision: 0,
                 }
@@ -188,11 +205,7 @@ function plan_combination_getChartOption(startDate, endDate) {
                 markLine: {
                     silent: true,
                     label: {show: false},
-                    data: [{
-                        yAxis: 0
-                    }, {
-                        yAxis: 300000
-                    }],
+                    data: resourceMarkLine,
                     symbol: 'none',
                     precision: 0,
                 }
@@ -206,11 +219,7 @@ function plan_combination_getChartOption(startDate, endDate) {
                 markLine: {
                     silent: true,
                     label: {show: false},
-                    data: [{
-                        yAxis: 0
-                    }, {
-                        yAxis: 300000
-                    }],
+                    data: resourceMarkLine,
                     symbol: 'none',
                     precision: 0,
                 }
@@ -224,11 +233,7 @@ function plan_combination_getChartOption(startDate, endDate) {
                 markLine: {
                     silent: true,
                     label: {show: false},
-                    data: [{
-                        yAxis: 0
-                    }, {
-                        yAxis: 300000
-                    }],
+                    data: resourceMarkLine,
                     symbol: 'none',
                     precision: 0,
                 }
@@ -309,6 +314,28 @@ function plan_combination_getChartOption(startDate, endDate) {
                 clip: true,
                 xAxisIndex: 1,
                 yAxisIndex: 2,
+                tooltip: {
+                    formatter: language.JS.chartTooltip_L + '<br/>' + language.JS.Mission,
+                    formatter: function (params) {
+                        let index = params.dataIndex;
+                        let name = language.JS.chartTooltip_L;
+                        let LogisticsPlanData = PlanCombinationChart._LogisticsTimetableOriginalData[index];
+                        let Missions = LogisticsPlanData.saved.Missions;
+                        let text = name + '<br>';
+                        text += language.JS.Mission + ': <br>';
+                        for (let i = 0; i < Missions.length; ++i) {
+                            text += Missions[i] + '<br>';
+                        }
+                        return text;
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        borderColor: '#000',
+                        borderWidth: 1,
+                        borderType: 'solid'
+                    }
+                }
             },
             {
                 type: 'custom',
@@ -317,6 +344,34 @@ function plan_combination_getChartOption(startDate, endDate) {
                 clip: true,
                 xAxisIndex: 1,
                 yAxisIndex: 2,
+                tooltip: {
+                    formatter: function (params) {
+                        let index = params.dataIndex;
+                        let name = language.JS.chartTooltip_C;
+                        let consumptionData = PlanCombinationChart._ConsumptionTimetableOriginalData[index];
+                        let reAndco = consumptionData.reAndco;
+                        let text = name + '<br>';
+                        // for (let i = 0; i < consumptionData.timePeriod.length; ++i) {
+                        //     text += addDate(PC_ConsumptionPlan._startDate, consumptionData.timePeriod[i][0]);
+                        //     text += ' ~ ';
+                        //     text += addDate(PC_ConsumptionPlan._startDate, consumptionData.timePeriod[i][1]);
+                        //     text += ', ';
+                        // }
+                        const class_name = ['Manp', 'Ammu', 'Rati', 'Part', 'TPro', 'Equi', 'QPro', 'QRes'];
+                        for (let i = 0; i < 8; ++i) {
+                            text += language.JS[class_name[i]];
+                            text += ': ' + reAndco[i] + '<br>';
+                        }
+                        return text;
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        borderColor: '#000',
+                        borderWidth: 1,
+                        borderType: 'solid'
+                    }
+                }
             }
         ],
         animation: animation,

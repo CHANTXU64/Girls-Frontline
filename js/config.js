@@ -204,7 +204,7 @@ function setPageByImport(input) {
         localStorage.removeItem("GF_Logistics_v1.x.x");
         localStorage.removeItem("GF_Logistics_PC_v1.x.x");
         localStorage.removeItem("GF_Logistics_vDevelop.x.x");
-        localStorage.removeItem("GF_Logistics_PC_vDvelop.x.x");
+        localStorage.removeItem("GF_Logistics_PC_vDevelop.x.x");
         return ;
     }
     if (input === "runERROR") {

@@ -78,7 +78,10 @@ class PC_ConsumptionPlan {
         let row = this._tableNumber++;
         let html = '<tr id="Consumption_table_row_' + row + '">';
         for (let i = 0; i < 8; ++i) {
-            html += '<td>' + consumption[i] + '</td>';
+            html += '<td>';
+            if (consumption[i] > 0)
+                html += '+'
+            html += NumberAutoExact(consumption[i]) + '</td>';
         }
         html += '<td>' + times;
         html += '<button id="Consumption_table_close_row_' + row + '" class="close">×</button></td>';
@@ -114,7 +117,10 @@ class PC_ConsumptionPlan {
     static _table_printTotal(totalData) {
         let html = '<tr>';
         for (let i = 0; i < 8; ++i) {
-            html += '<td>' + totalData[i] + '</td>';
+            html += '<td>';
+            if (totalData[i] > 0)
+                html += '+';
+            html += NumberAutoExact(totalData[i]) + '</td>';
         }
         html += '</tr>';
         document.getElementById("Consumption_total").innerHTML = html;
@@ -125,6 +131,10 @@ class PC_ConsumptionPlan {
         let timePeriod_length = timePeriod.length;
         if (timePeriod_length === 0) {
             Modal.alert(language.JS.PC_L_alert1);
+            return ;
+        }
+        if (this._plans.length >= 32) {
+            Modal.alert(language.JS.PC_L_alert3);
             return ;
         }
 
