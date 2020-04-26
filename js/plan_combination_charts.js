@@ -62,6 +62,7 @@ class PlanCombinationChart {
         let currentValue = Input_getPC_current(true);
         this._reAndcoData = this._calcReAndCoData(currentValue, LogisticsPlanData, ConsumptionPlanData, totalDays);
         this._reAndcoData = this._resourceRegen(totalDays);
+        this._reAndcoData = this._reAndcoDataToChartData(totalDays);
 
         let option = plan_combination_getChartOption(startDate, endDate);
         Chart.setOption(option);
@@ -215,6 +216,19 @@ class PlanCombinationChart {
             }
         }
         return this._reAndcoData;
+    }
+
+    static _reAndcoDataToChartData(totalDays) {
+        let data = [];
+        for (let i = 0; i < 8; ++i) {
+            let newData = [];
+            let original_data = this._reAndcoData[i];
+            for (let ii = 0; ii <= totalDays; ++ii) {
+                newData.push([ii, original_data[ii]]);
+            }
+            data.push(newData);
+        }
+        return data;
     }
 }
 

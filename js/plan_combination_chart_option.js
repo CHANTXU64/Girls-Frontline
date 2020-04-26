@@ -30,7 +30,7 @@ function plan_combination_getChartOption(startDate, endDate) {
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {
-                        type: 'line'
+                        type: 'line',
                     },
                 }
             },
@@ -57,6 +57,14 @@ function plan_combination_getChartOption(startDate, endDate) {
                 var obj = {top: 10};
                 obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
                 return obj;
+            },
+            formatter: function (params) {
+                let text = "";
+                for (let i = 0; i < 8; ++i) {
+                    text += params[i].marker + params[i].seriesName + ': ';
+                    text += params[i].data[1] + '<br>';
+                }
+                return text;
             },
             extraCssText: 'width: 170px'
         },
@@ -103,9 +111,11 @@ function plan_combination_getChartOption(startDate, endDate) {
         },
         xAxis: [
             {
-                type: 'category',
+                // type: 'category',
+                type: 'value',
+                min: 0,
                 max: totalDays,
-                data: xAxisData,
+                // data: xAxisData,
                 axisTick: {show: false},
                 scale: true,
                 axisLabel: {
@@ -117,7 +127,7 @@ function plan_combination_getChartOption(startDate, endDate) {
             },
             {
                 // type: 'category',
-                type: 'time',
+                type: 'value',
                 min: 0,
                 scale: true,
                 // boundaryGap: false,
@@ -315,15 +325,18 @@ function plan_combination_getChartOption(startDate, endDate) {
                 xAxisIndex: 1,
                 yAxisIndex: 2,
                 tooltip: {
-                    formatter: language.JS.chartTooltip_L + '<br/>' + language.JS.Mission,
                     formatter: function (params) {
                         let index = params.dataIndex;
                         let name = language.JS.chartTooltip_L;
                         let LogisticsPlanData = PlanCombinationChart._LogisticsTimetableOriginalData[index];
                         let Missions = LogisticsPlanData.saved.Missions;
+                        let color = ['#A1C0FF', '#FF8C8A', '#75d874', '#FFDA93'];
+                        let marker1 = "<span style='display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:";
+                        let marker2 = ";'></span>";
                         let text = name + '<br>';
                         text += language.JS.Mission + ': <br>';
                         for (let i = 0; i < Missions.length; ++i) {
+                            text += marker1 + color[i] + marker2;
                             text += Missions[i] + '<br>';
                         }
                         return text;
@@ -351,14 +364,12 @@ function plan_combination_getChartOption(startDate, endDate) {
                         let consumptionData = PlanCombinationChart._ConsumptionTimetableOriginalData[index];
                         let reAndco = consumptionData.reAndco;
                         let text = name + '<br>';
-                        // for (let i = 0; i < consumptionData.timePeriod.length; ++i) {
-                        //     text += addDate(PC_ConsumptionPlan._startDate, consumptionData.timePeriod[i][0]);
-                        //     text += ' ~ ';
-                        //     text += addDate(PC_ConsumptionPlan._startDate, consumptionData.timePeriod[i][1]);
-                        //     text += ', ';
-                        // }
+                        let color = ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a'];
+                        let marker1 = "<span style='display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:";
+                        let marker2 = ";'></span>";
                         const class_name = ['Manp', 'Ammu', 'Rati', 'Part', 'TPro', 'Equi', 'QPro', 'QRes'];
                         for (let i = 0; i < 8; ++i) {
+                            text += marker1 + color[i] + marker2;
                             text += language.JS[class_name[i]];
                             text += ': ';
                             if (reAndco[i] > 0)
