@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="">
+<!-- vim: et ts=2 sts=2 sw=2 tw=120
+-->
 
 <head>
   <meta charset="utf-8">
@@ -17,10 +19,12 @@
 
   <!-- GF css !python -->
   <!-- 如果修改这些内容还需要修改下面script中重新加载的css文件名 -->
-  <link href="../css/GF_logistics_slider.css" rel="stylesheet">
-  <link href="../css/GF_logistics_button.css" rel="stylesheet">
-  <link href="../css/GF_logistics_group.css" rel="stylesheet">
-  <link href="../css/GF_logistics.css" rel="stylesheet">
+  <link href="../lang/languages.css" rel="stylesheet">
+  <link href="../css/slider.css" rel="stylesheet">
+  <link href="../css/button.css" rel="stylesheet">
+  <link href="../css/group.css" rel="stylesheet">
+  <link href="../css/main.css" rel="stylesheet">
+  <link href="../css/plan_combination.css" rel="stylesheet">
   <!-- end GF css !python -->
 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js"
@@ -36,28 +40,9 @@
     //backup vendor bootstrap !python
     //如果修改了引入的bootstrap的js或css文件, 还需要修改.release.py中compressHTML()的内容
     //由于自己的css覆盖了bootstrap的css, 所以在重新加载bootstrap后还需再重新加载自己的css
-    window.bootstrap || document.write('<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"><link href="../css/GF_logistics_slider.css" rel="stylesheet"><link href="../css/GF_logistics_button.css" rel="stylesheet"><link href="../css/GF_logistics_group.css" rel="stylesheet"><link href="../css/GF_logistics.css" rel="stylesheet"><script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"><\/script>');
+    window.bootstrap || document.write('<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"><link href="../lang/languages.css" rel="stylesheet"><link href="../css/slider.css" rel="stylesheet"><link href="../css/button.css" rel="stylesheet"><link href="../css/group.css" rel="stylesheet"><link href="../css/main.css" rel="stylesheet"><link href="../css/plan_combination.css" rel="stylesheet"><script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"><\/script>');
     //end backup vendor bootstrap !python
   </script>
-  <style>
-    html {
-      overflow-y: scroll;
-    }
-    :root {
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
-    :root body {
-      position: absolute;
-    }
-    body {
-      width: 100vw;
-      overflow: hidden;
-    }
-    .container-fluid {
-      width: 100vw;
-    }
-  </style>
 </head>
 
 <body class="container-fluid" id="container-fluid">
@@ -84,7 +69,7 @@
       </div>
     </div>
   </div>
-  <!-- end Modal -->
+  <!-- head -->
   <div class="spinner-grow text-success align-middle" role="status" style="height: 0.5rem; width: 0.5rem; position: fixed; z-index: 300; right: 0;">
     <span class="sr-only">Loading...</span>
   </div>
@@ -102,8 +87,13 @@
     <div class="spinner-border align-middle" id="page_loading" role="status" style="border-width: 0.2rem; height: 1.5rem; width: 1.5rem;">
       <span class="sr-only">Loading...</span>
     </div>
+    <div class="custom-control custom-switch float-right">
+      <input type="checkbox" class="custom-control-input" id="PlanCombinationSwitch" autocomplete="off" disabled>
+      <label class="custom-control-label" for="PlanCombinationSwitch"></label>
+    </div>
     <hr style="margin: 0.5rem 0 1rem 0; width: 100%;" />
   </h2>
+  <!-- config -->
   <div class="col-lg-5 float-right input-group input-group-regular mb-3 config_card"
     style="max-width: 440px;">
     <label for="Config_importInput" class="input-group-label input-group-text disable-selected-text" id="Config_text"></label>
@@ -121,21 +111,83 @@
       </div>
     </div>
   </div>
+  <!-- alert -->
   <div class="col-lg-7 float-left disable-selected-text alert_card">
     <div class="alert alert-warning alert-dismissible fade show" id="description" role="alert">
       <span id="description_text" style="color:#000000"></span>
-      <button type="button" id="neverShowAgain_description" class="close" data-dismiss="alert" aria-label="Close">
+      <button type="button" id="neverShowAgain_description" disabled class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="alert alert-danger" id="localstorageDoesNotWork" role="alert" style="color: #000000;"></div>
     <div class="alert alert-warning alert-dismissible fade show" id="localstorageWarning" role="alert">
       <span id="localstorageWarning_text" style="color:#000000"></span>
-      <button type="button" id="neverShowAgain_localstorageWarning" class="close" data-dismiss="alert" aria-label="Close">
+      <button type="button" id="neverShowAgain_localstorageWarning" disabled class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
   </div>
+  <!-- plan Combination -->
+  <div id="plan_combination_card" class="col-lg-12 float-left plan_combination_card disable-selected-text d-none">
+    <div class="card border-dark mb-3">
+      <div id="Plan_Combination_title" class="card-header pt-2 pb-2"></div>
+      <div class="card-body">
+        <div class="form-row" style="max-width: 800px;">
+          <div class="col-md-4 mb-2 input-group input-group-regular">
+            <label for="PlanCombination_startDate" class="input-group-label input-group-text"
+              id="PlanCombination_startDate_label"></label>
+            <input id="PlanCombination_startDate" type="date" class="form-control input-group" style="width: auto; max-width: 150px;">
+          </div>
+          <div class="col-md-4 mb-2 input-group input-group-regular">
+            <label for="PlanCombination_endDate" class="input-group-label input-group-text"
+              id="PlanCombination_endDate_label"></label>
+            <input id="PlanCombination_endDate" type="date" class="form-control" style="width: auto; max-width: 150px;">
+          </div>
+        </div>
+        <div id="PlanCombination_current_box" class="box-wrap">
+          <span class="box-title" id="PC_current_title"></span>
+          <div id="PlanCombination_current_re" class="form-row" style="max-width: 980px;"></div>
+          <div id="PlanCombination_current_co" class="form-row" style="max-width: 980px;"></div>
+        </div>
+        <button type="button" class="btn btn-danger mb-2" id="PC_deleteAllPlans"></button>
+        <button type="button" class="btn btn-info mb-2" id="PC_saveAll"></button>
+        <button type="button" class="btn btn-danger mb-2" id="PC_deletePlan" disabled></button>
+        <div id="PlanCombination_chart" style="height: 280px; width: auto; margin: 0 -10px 1rem -10px"></div>
+        <div class="card">
+          <div class="card-header pt-2 pb-2 border-bottom-0">
+            <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"
+                    data-target="#PC_Ranking_card" aria-expanded="false" aria-controls="PC_Ranking_card"
+                    id="PC_Ranking_card_title"></button>
+          </div>
+          <div id="PC_Ranking_card" class="collapse">
+            <div class="card-body p-2" id="PlanCombination_demand_card">
+              <div class="card mb-2">
+                <div class="card-header pt-2 pb-2 border-bottom-0">
+                  <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"
+                          data-target="#calcTargetValueTool_card" aria-expanded="false" aria-controls="calcTargetValueTool_card"
+                          id="calcTargetValueTool_title"></button>
+                </div>
+                <div id="calcTargetValueTool_card" class="collapse">
+                  <div class="card-body p-2">
+                    <h5 id="PC_targetValue_h5"></h5>
+                    <div id="PlanCombination_target_re" class="form-row" style="max-width: 980px;"></div>
+                    <div id="PlanCombination_target_co" class="form-row" style="max-width: 980px;"></div>
+                    <button type="button" class="btn btn-primary" id="PC_calcDemand"></button>
+                  </div>
+                </div>
+              </div>
+              <h5 id="PC_demandValue_h5"></h5>
+              <div id="PlanCombination_demand_re" class="form-row" style="max-width: 980px;"></div>
+              <div id="PlanCombination_demand_co" class="form-row" style="max-width: 980px;"></div>
+              <button type="button" class="btn btn-primary" id="PC_startRanking"></button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- setting -->
   <div class="col-lg-7 float-left setting_card">
     <div class="card border-dark mb-3">
       <div class="card-header pt-2 pb-2">
@@ -151,7 +203,8 @@
         </div>
       </div>
       <div class="card-body row" style="margin: 0;">
-        <div class="col-lg-7 p-0">
+        <!-- setting Logistics -->
+        <div class="col-lg-7 p-0" id="plan_setting">
           <ul class="nav nav-tabs nav-justified">
             <li class="nav-item text-nowrap">
               <a class="nav-link active" href="#" id="Tab_Anytime_name"></a>
@@ -234,7 +287,7 @@
             <label for="GreatSuccessRate" class="input-group-label input-group-text" id="Display_UPRate"></label>
             <label for="GreatSuccessRate" class="input-group-label input-group-text">%</label>
             <div class="input-group-append btn-group-toggle ml-0" data-toggle="buttons">
-              <label id="GreatSuccessRateUp_btn" class="btn btn-checkbox"
+              <label id="GreatSuccessRateUp_btn" class="btn btn-checkbox disabled"
                 style="padding: 0.3rem 0.7rem; font-size: 0.875rem;">
                 <input type="checkbox" id="GreatSuccessRateUp">UP
               </label>
@@ -244,115 +297,51 @@
             <label class="input-group-text input-group-label" id="h4ChapterLimit" for="ChapterLimit"></label>
             <select class="custom-select" id="ChapterLimit" autocomplete="off"></select>
           </div>
-          <div class="card mb-2" style="max-width: 587px;">
-            <div class="card-header pt-2 pb-2 border-bottom-0">
-              <button class="btn btn-link p-0 collapsed" type="button" data-toggle="collapse"
-                data-target="#calcTargetValueTool_card" aria-expanded="false" aria-controls="calcTargetValueTool_card"
-                id="calcTargetValueTool_title">
-              </button>
+        </div>
+        <!-- setting consumption -->
+        <div class="col-lg-7 p-0 d-none disable-selected-text" id="ConsumptionPlan_setting">
+          <div class="form-row">
+            <div class="col-sm-8 input-group-regular mb-2">
+              <select class="custom-select" id="Consumption_select" autocomplete="off"></select>
             </div>
-            <div id="calcTargetValueTool_card" class="collapse">
-              <div class="table-responsive calc-target-table">
-                <table class="table text-nowrap mb-0">
-                  <tbody id="calcTargetValueTool">
-                    <tr class="disable-selected-text">
-                      <td id="calcTargetValueTool_text_ResourceContract" style="border-right: 1px solid #ddd;"></td>
-                      <td id="calcTargetValueTool_Manp_text"></td>
-                      <td id="calcTargetValueTool_Ammu_text"></td>
-                      <td id="calcTargetValueTool_Rati_text"></td>
-                      <td id="calcTargetValueTool_Part_text"></td>
-                      <td id="calcTargetValueTool_TPro_text"></td>
-                      <td id="calcTargetValueTool_Equi_text"></td>
-                      <td id="calcTargetValueTool_QPro_text"></td>
-                      <td id="calcTargetValueTool_QRes_text"></td>
-                    </tr>
-                    <tr>
-                      <td id="calcTargetValueTool_text_target" class="disable-selected-text"></td>
-                      <td colspan="8" class="p-0 border-0">
-                        <div class="input-group">
-                          <input type="number" id="calcTargetValueTool_Target_Manp" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_Ammu" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_Rati" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_Part" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_TPro" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_Equi" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_QPro" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Target_QRes" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td id="calcTargetValueTool_text_current" class="disable-selected-text"></td>
-                      <td colspan="8" class="p-0 border-0">
-                        <div class="input-group">
-                          <input type="number" id="calcTargetValueTool_Current_Manp" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_Ammu" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_Rati" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_Part" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_TPro" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_Equi" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_QPro" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                          <input type="number" id="calcTargetValueTool_Current_QRes" min="0" value="0"
-                            class="form-control" autocomplete="off">
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td id="calcTargetValueTool_text_result" class="disable-selected-text"
-                        style="border-right: 1px solid #ddd;"></td>
-                      <td id="calcTargetValueTool_Result_Manp_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_Ammu_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_Rati_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_Part_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_TPro_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_Equi_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_QPro_value" style="cursor: auto"></td>
-                      <td id="calcTargetValueTool_Result_QRes_value" style="cursor: auto"></td>
-                    </tr>
-                    <tr>
-                      <td colspan="7" class="p-0 mt-0">
-                        <div class="input-group">
-                          <label for="calcTargetValueTool_InputExecutionTimes"
-                            id="calcTargetValueTool_InputExecutionTimes_label"
-                            class="input-group-label input-group-text disable-selected-text"
-                            style="font-size: 0.82rem; border-radius: 0; border-width: 0 1px 0 0;"></label>
-                          <input type="number" min="1" max="999" step="1" id="calcTargetValueTool_InputExecutionTimes"
-                            class="form-control" onfocus="this.select();" value="1"
-                            style="padding:3px 6px; border-radius: 0; border-width: 0 1px;"
-                            autocomplete="off">
-                          <button class="btn btn-danger" type="button" id="calcTargetValueTool_clear" disabled
-                            style="border-radius: 0; padding:3px 20px;font-size:13px; border-width: 0 1px;"></button>
-                          <button class="btn btn-primary" type="button" id="calcTargetValueTool_startCalc" disabled
-                            style="border-radius: 0; padding:3px 20px;font-size:13px; border-width: 0 1px;"></button>
-                          <button class="btn btn-success" type="button" id="calcTargetValueTool_apply" disabled
-                            style="border-radius: 0; padding:0 20px;font-size:13px; border-width: 0 1px; line-height: 30px;">
-                            <span id="calcTargetValueTool_apply_text"></span>
-                            &rarr;
-                          </button>
-                        </td>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div class="col-sm-4 mb-2">
+              <button type="button" class="btn btn-outline-dark btn-regular" id="Consumption_reset"></button>
             </div>
           </div>
+          <div class="form-row" id="Consumption_re"></div>
+          <div class="form-row" id="Consumption_co"></div>
+          <div class="form-row">
+            <div class="col-sm-8 input-group input-group-regular mb-2">
+              <label class="input-group-text input-group-label" id="Consumption_times_label" for="Consumption_times"></label>
+              <input type="number" class="form-control" value="1" id="Consumption_times" autocomplete="off">
+            </div>
+            <div class="col-sm-4 mb-2">
+              <button type="button" class="btn btn-outline-dark btn-regular" id="Consumption_add"></button>
+            </div>
+          </div>
+          <div class="table-responsive consumption-table">
+            <table class="table text-nowrap">
+              <thead>
+                <tr>
+                  <th class="Manp"></th>
+                  <th class="Ammu"></th>
+                  <th class="Rati"></th>
+                  <th class="Part"></th>
+                  <th class="TPro"></th>
+                  <th class="Equi"></th>
+                  <th class="QPro"></th>
+                  <th class="QRes"></th>
+                  <th id="consumption_times_th"></th>
+                </tr>
+              </thead>
+              <tbody id="Consumption_tbody">
+              </tbody>
+              <tbody id="Consumption_total">
+              </tbody>
+            </table>
+          </div>
         </div>
+        <!-- setting demand -->
         <div class="col-lg-5 disable-selected-text Demand p-0" id="target">
           <h5 id="Demand"></h5>
           <div id="setTargetButton"></div>
@@ -363,9 +352,34 @@
           <input type="range" class="custom-range" id="ContractWeight" min="0" max="100" step="2" disabled>
           <div id="setTargetInput"></div>
         </div>
-        <div class="col-lg-12 btn-toolbar p-0">
+        <!-- setting time period -->
+        <div class="col-lg-5 disable-selected-text PC-addTimePeriod p-0 d-none" id="PlanCombination_addTimePeriod">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="LogisticsConsumptionPlanSwitch" autocomplete="off">
+            <label class="custom-control-label" for="LogisticsConsumptionPlanSwitch"></label>
+          </div>
+          <h5 id="DateTimePeriod"></h5>
+          <ul id="PC_DateTimePeriod_body" class="list-group list-group-regular mb-2" style="max-height: 300px;
+            overflow-y: auto;"></ul>
+          <div class="mb-2 input-group input-group-regular">
+            <label for="PlanCombination_planStartDate" class="input-group-label input-group-text"
+                                                   id="PlanCombination_planStartDate_label"></label>
+            <input id="PlanCombination_planStartDate" type="date" class="form-control input-group" style="width: auto; max-width: 150px;">
+          </div>
+          <div class="mb-2 input-group input-group-regular">
+            <label for="PlanCombination_planEndDate" class="input-group-label input-group-text"
+                                                 id="PlanCombination_planEndDate_label"></label>
+            <input id="PlanCombination_planEndDate" type="date" class="form-control" style="width: auto; max-width: 150px;">
+          </div>
+          <button type="button" class="btn btn-primary btn-regular mb-2" id="addNewTimePeriod"></button>
+          <button type="button" class="btn btn-danger btn-regular mb-2" id="deleteAllTimePeriod"></button>
+        </div>
+        <!-- setting button bar -->
+        <div id="ranking_toolbar" class="col-lg-12 btn-toolbar p-0 mt-2">
           <button type="button" class="btn btn-primary" id="start_ranking" disabled></button>
           <button type="button" class="btn btn-danger" style="display: none;" id="clear_ranking"></button>
+          <button type="button" class="btn btn-info d-none" id="PC_addLogisticsPlan"></button>
+          <button type="button" class="btn btn-info d-none" id="PC_addConsumptionPlan"></button>
           <div class="spinner-border text-primary ml-2" role="status" style="border-width: 0.3rem; display: none;" id="ranking_loading">
             <span class="sr-only">Loading...</span>
           </div>
@@ -375,6 +389,7 @@
   </div>
   <div class="col-lg-5 float-right SavedAndMissionTableAndPlanDetailsCard">
     <div class="accordion disable-selected-text" id="SavedAndMissionTableGroupCard">
+      <!-- Saved -->
       <div class="card border-dark">
         <div class="card-header pt-2 pb-2" id="Saved_header">
           <button class="btn btn-link p-0 collapsed" id="Saved_Title" type="button" data-toggle="collapse"
@@ -428,6 +443,7 @@
           <ul id="Saved_Body" class="list-group list-group-regular Saved-List" style="max-height: 287px; overflow-y: auto;"></ul>
         </div>
       </div>
+      <!-- missions -->
       <div class="card border-dark mb-3">
         <div class="card-header pt-2 pb-2" id="MissionTable_header">
           <button class="btn btn-link p-0" id="MissionTable_Title" type="button" data-toggle="collapse"
@@ -441,14 +457,14 @@
               <thead class="disable-selected-text">
                 <tr>
                   <th id="MissionTable_head_Mission" tabindex="0"></th>
-                  <th id="MissionTable_head_Manp" tabindex="0"></th>
-                  <th id="MissionTable_head_Ammu" tabindex="0"></th>
-                  <th id="MissionTable_head_Rati" tabindex="0"></th>
-                  <th id="MissionTable_head_Part" tabindex="0"></th>
-                  <th id="MissionTable_head_TPro" tabindex="0"></th>
-                  <th id="MissionTable_head_Equi" tabindex="0"></th>
-                  <th id="MissionTable_head_QPro" tabindex="0"></th>
-                  <th id="MissionTable_head_QRes" tabindex="0"></th>
+                  <th id="MissionTable_head_Manp" class="Manp" tabindex="0"></th>
+                  <th id="MissionTable_head_Ammu" class="Ammu" tabindex="0"></th>
+                  <th id="MissionTable_head_Rati" class="Rati" tabindex="0"></th>
+                  <th id="MissionTable_head_Part" class="Part" tabindex="0"></th>
+                  <th id="MissionTable_head_TPro" class="TPro" tabindex="0"></th>
+                  <th id="MissionTable_head_Equi" class="Equi" tabindex="0"></th>
+                  <th id="MissionTable_head_QPro" class="QPro" tabindex="0"></th>
+                  <th id="MissionTable_head_QRes" class="QRes" tabindex="0"></th>
                   <th id="MissionTable_head_Time" tabindex="0"></th>
                 </tr>
               </thead>
@@ -458,6 +474,7 @@
         </div>
       </div>
     </div>
+    <!-- plan details -->
     <div class="card border-dark mb-3" style="max-width: 663px;">
       <div class="card-header disable-selected-text pt-2 pb-2 border-bottom-0" id="PlanDetailsTitle"></div>
       <div class="table-responsive plan-details-table"
@@ -474,14 +491,14 @@
             </tr>
             <tr>
               <td id="PlanDetails_Mission"></td>
-              <td id="PlanDetails_Manp"></td>
-              <td id="PlanDetails_Ammu"></td>
-              <td id="PlanDetails_Rati"></td>
-              <td id="PlanDetails_Part"></td>
-              <td id="PlanDetails_TPro"></td>
-              <td id="PlanDetails_Equi"></td>
-              <td id="PlanDetails_QPro"></td>
-              <td id="PlanDetails_QRes"></td>
+              <td id="PlanDetails_Manp" class="Manp"></td>
+              <td id="PlanDetails_Ammu" class="Ammu"></td>
+              <td id="PlanDetails_Rati" class="Rati"></td>
+              <td id="PlanDetails_Part" class="Part"></td>
+              <td id="PlanDetails_TPro" class="TPro"></td>
+              <td id="PlanDetails_Equi" class="Equi"></td>
+              <td id="PlanDetails_QPro" class="QPro"></td>
+              <td id="PlanDetails_QRes" class="QRes"></td>
               <td id="PlanDetails_Time"></td>
             </tr>
             <tr id="PlanDetails_Mission_1" style="background-color: #C5D8FF;"></tr>
@@ -524,7 +541,8 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 float-left result_card">
+  <!-- result -->
+  <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 float-left result_card" id="result_card">
     <div class="card border-dark mb-3 disable-selected-text">
       <div class="card-header disable-selected-text pt-2 pb-2" id="result"></div>
       <div class="card-body">
@@ -534,6 +552,7 @@
       </div>
     </div>
   </div>
+  <!-- footer -->
   <div class="col-lg-12 row disable-selected-text m-0 footer_card">
     <hr style="margin: 0; width: 100%;" />
     <footer class="col-lg-4 p-0">
@@ -555,7 +574,12 @@
     //当用js切换nav显示时, 4.4.1bootstrap会在全部东西处理完后开始切换动画, 避免阻塞, 事先切换nav
     var HTMLSCRIPT_ShownTab = "Anytime";
     try {
-      HTMLSCRIPT_ShownTab = JSON.parse(localStorage.getItem("GF_Logistics_v1.x.x")).TabName;
+      let storage = localStorage.getItem("GF_Logistics_v1.x.x");
+      if (storage === null)
+        storage = localStorage.getItem("GF_Logistics");
+      if (storage === null)
+        storage = localStorage.getItem("GF_Logistics_vDevelop.x.x");
+      HTMLSCRIPT_ShownTab = JSON.parse(storage).TabName;
     } catch (ex) { }
     switch (HTMLSCRIPT_ShownTab) {
       case "Anytime":
@@ -570,35 +594,46 @@
   </script>
 
   <!-- GF js_1 !python -->
-  <script src="../js/GF_logistics_debug.js" crossorigin></script>
+  <script src="../js/debug.js" crossorigin></script>
   <script src="../lang/languages.js"></script>
-  <script src="../js/Quick_Sort.js"></script>
-  <script src="../js/GF_logistics_function.js"></script>
-  <script src="../js/GF_logistics_data.js"></script>
-  <script src="../js/GF_logistics_Modal.js"></script>
-  <script src="../js/GF_logistics_localStorage.js"></script>
-  <script src="../js/GF_logistics_TimetableSlider.js"></script>
-  <script src="../js/GF_logistics_input.js"></script>
-  <script src="../js/GF_logistics_Tab.js"></script>
-  <script src="../js/GF_logistics_loadHTML.js"></script>
-  <script src="../js/GF_logistics_PlanDetails.js"></script>
-  <script src="../js/GF_logistics_MissionTable.js"></script>
-  <script src="../js/GF_logistics_ResultAndDetailsEvent.js"></script>
-  <script src="../js/GF_logistics_html.js"></script>
-  <script src="../js/GF_logistics_Saved.js"></script>
-  <script src="../js/GF_logistics_config.js"></script>
-  <script src="../js/GF_logistics_LoadFirst.js"></script>
-  <script src="../js/GF_logistics_htmlEvent.js"></script>
+  <script src="../js/quick_sort.js"></script>
+  <script src="../js/function.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/modal.js"></script>
+  <script src="../js/local_storage.js"></script>
+  <script src="../js/timetable_slider.js"></script>
+  <script src="../js/input.js"></script>
+  <script src="../js/tab.js"></script>
+  <script src="../js/load_html.js"></script>
+  <script src="../js/plan_combination_load.js"></script>
+  <script src="../js/plan_details.js"></script>
+  <script src="../js/mission_table.js"></script>
+  <script src="../js/result_and_details_event.js"></script>
+  <script src="../js/html.js"></script>
+  <script src="../js/saved.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/load_first.js"></script>
+  <script src="../js/html_event.js"></script>
   <!-- end GF js_1 !python -->
 
   <!-- GF js_2 !python -->
-  <script src="../js/GF_logistics_ResultsPlan.js"></script>
-  <script src="../js/GF_logistics_FineTuning.js"></script>
-  <script src="../js/GF_logistics_Plan.js"></script>
-  <script src="../js/GF_logistics_main.js"></script>
-  <script src="../js/GF_logistics_calcTargetValueTool.js"></script>
-  <script src="../js/GF_logistics_LoadLast.js"></script>
-  <script src="../js/GF_logistics_LoadSecond.js"></script>
+  <script src="../js/results_plan.js"></script>
+  <script src="../js/fine_tuning.js"></script>
+  <script src="../js/plan.js"></script>
+  <script src="../js/ranking_main.js"></script>
+  <script src="../js/plan_combination_function.js"></script>
+  <script src="../js/plan_combination_localstorage.js"></script>
+  <script src="../js/plan_combination_input.js"></script>
+  <script src="../js/plan_combination_time_period.js"></script>
+  <script src="../js/plan_combination_consumption_plan.js"></script>
+  <script src="../js/plan_combination_logistics_plan.js"></script>
+  <script src="../js/plan_combination_chart_option.js"></script>
+  <script src="../js/plan_combination_charts.js"></script>
+  <script src="../js/plan_combination_ranking.js"></script>
+  <script src="../js/plan_combination_html.js"></script>
+  <script src="../js/plan_combination_html_event.js"></script>
+  <script src="../js/load_last.js"></script>
+  <script src="../js/load_second.js"></script>
   <!-- end GF js_2 !python -->
 </body>
 

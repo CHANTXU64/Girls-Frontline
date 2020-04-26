@@ -111,14 +111,14 @@ class FineTuning {
             if (i === 4)
                 HTML += '</div> <div class="col-lg-6 col-md-6 col-sm-6" style="padding-left: 5px; padding-right: 5px;">';
             HTML += '<div class="input-group" style="margin-bottom: 10px; width: 100%;">';
-            HTML += '<span class="input-group-text input-group-span" style="font-size: 14px; width:' + language.CSS.FineTuningSpan_Width + ';" id="FineTuningTool_' + TargetName[i] + '">' + TargetHTMLText[i] + '</span>';
-            HTML += '<button class="btn btn-outline-dark input-group-btn btn-bolder" style="display:block; width: ' + language.CSS.FineTuningButton_Width + ';" type="button" id="FineTuning_minus_' + TargetName[i] + '"';
+            HTML += '<span class="input-group-text input-group-span FineTuning-span" style="font-size: 14px;" id="FineTuningTool_' + TargetName[i] + '">' + TargetHTMLText[i] + '</span>';
+            HTML += '<button class="btn btn-outline-dark input-group-btn btn-bolder FineTuning-button" style="display:block;" type="button" id="FineTuning_minus_' + TargetName[i] + '"';
             let Target_0 = this._TargetValue_Original[i];
             let Target = this._TargetValue[i];
             if (Target_0 === 0 || Target - Target_0 / 50 <= 0 || Target - Target_0 / 50 < Target_0 * 0.9)
                 HTML += 'disabled="disabled"';
             HTML += 'title="' + language.HTMLJS.FineTuning_minus + '">-</button>';
-            HTML += '<button class="btn btn-outline-dark input-group-btn btn-bolder" style="display: block; width: ' + language.CSS.FineTuningButton_Width + ';" type="button" id="FineTuning_plus_' + TargetName[i] + '"';
+            HTML += '<button class="btn btn-outline-dark input-group-btn btn-bolder FineTuning-button" style="display: block;" type="button" id="FineTuning_plus_' + TargetName[i] + '"';
             if (Target_0 === 0 || Target + Target_0 / 50 >= 1 || Target + Target_0 / 50 > Target_0 * 1.14)
                 HTML += 'disabled="disabled"';
             HTML += 'title="' + language.HTMLJS.FineTuning_plus + '">+</button>';

@@ -28,8 +28,15 @@ class Saved {
      * @public
      */
     static _saveThisPlan_ok(validName) {
+        let newData = Saved.getSavedDataFromPage(validName);
+        Saved._saved.push(newData);
+        storageSetItem("Saved", Saved._saved);
+        Saved._printLastSaved();
+    }
+
+    static getSavedDataFromPage(savedName) {
         let newData = {};
-        newData.name = validName;
+        newData.name = savedName;
         newData.GSRate = Input_getGreatSuccessRate();
         newData.is_UP = IsGreatSuccessRateUp();
         newData.Chapter = Input_getSelectChapter();
@@ -37,19 +44,8 @@ class Saved {
         newData.TabName = ShownTab.name;
         newData.TabCustom = ShownTab.getSavedCustom();
         newData.Missions = MissionsDetails.getSelectedMissions();
-        let Missions = MissionsDetails.getSelectedMissionsDetails();
-        newData.resources = [0, 0, 0, 0];
-        for (let i = 0; i < Missions.length; ++i) {
-            newData.resources[0] += Missions[i][1];
-            newData.resources[1] += Missions[i][2];
-            newData.resources[2] += Missions[i][3];
-            newData.resources[3] += Missions[i][4];
-        }
         newData.startTime = Input_getStartTime();
-
-        Saved._saved.push(newData);
-        storageSetItem("Saved", Saved._saved);
-        Saved._printLastSaved();
+        return newData;
     }
 
     /**
@@ -115,28 +111,55 @@ class Saved {
      * @private
      */
     static _getSavedRowHTML_main(row, allSaved = this._saved) {
-        let HTML = '<span class="Saved-Name">' + allSaved[row].name + '</span>';
+        let HTML = '<span class="Saved-Name" title="' + allSaved[row].name + '">' + allSaved[row].name + '</span>';
         HTML += '<div class="Saved-Overview">';
         let tab = getTabByName(allSaved[row].TabName);
         let TotalTime = tab.getTotalTimeFromSavedCustom(allSaved[row].TabCustom);
         HTML += '<div>' + tab.displayName + '<br>' + TimeFormat(TotalTime) + '</div>';
-        if (allSaved[row].resources) {
-            let resources = allSaved[row].resources.slice();
-            if (is_CalculateByHour()) {
-                for (let i = 0; i < 4; ++i) {
-                    resources[i] *= 60;
-                }
-            }
-            else {
-                for (let i = 0; i < 4; ++i) {
-                    resources[i] *= TotalTime;
-                }
-            }
-            HTML += '<div>' + Math.round(resources[0]) + '<br>' + Math.round(resources[2]) + '</div>';
-            HTML += '<div>' + Math.round(resources[1]) + '<br>' + Math.round(resources[3]) + '</div>';
+        let Missions = allSaved[row].Missions.slice();
+        for (let i = 0; i < 4; ++i) {
+            if (Missions[i] === undefined)
+                Missions[i] = "";
         }
+        HTML += '<div>' + Missions[0] + '<br>' + Missions[1] + '</div>';
+        HTML += '<div>' + Missions[2] + '<br>' + Missions[3] + '</div>';
+        let resources = this.getReAndCoBySaved(allSaved[row], is_CalculateByHour()).slice(0, 4);
+        HTML += '<div class="Saved-Overview-resources">' + Math.round(resources[0]) + '<br>' + Math.round(resources[2]) + '</div>';
+        HTML += '<div class="Saved-Overview-resources">' + Math.round(resources[1]) + '<br>' + Math.round(resources[3]) + '</div>';
         HTML += '</div>';
         return HTML;
+    }
+
+    static getReAndCoBySaved(savedData, is_hourly) {
+        let tab = this.creatTabBySaved(savedData);
+        let QValid = tab.getQValid(false);
+        let time = tab.getTotalTime(false);
+        if (is_hourly)
+            time = 60;
+        quick_sort_expand_ascending_missionName(QValid, 0);
+        let reAndco = [0, 0, 0, 0, 0, 0, 0, 0];
+        let QValid_length = QValid.length;
+        let selectMission = savedData.Missions;
+        for (let i = 0; i < QValid_length; ++i) {
+            if (selectMission.indexOf(QValid[i][0]) !== -1) {
+                reAndco[0] += QValid[i][1] * time;
+                reAndco[1] += QValid[i][2] * time;
+                reAndco[2] += QValid[i][3] * time;
+                reAndco[3] += QValid[i][4] * time;
+                reAndco[4] += QValid[i][5] * time;
+                reAndco[5] += QValid[i][6] * time;
+                reAndco[6] += QValid[i][7] * time;
+                reAndco[7] += QValid[i][8] * time;
+            }
+        }
+        return reAndco;
+    }
+
+    static creatTabBySaved(savedData) {
+        let tabName = savedData.TabName;
+        let BaseData = [savedData.Chapter, savedData.GSRate, savedData.is_UP, savedData.TabCustom.slice()];
+        let tab = getTabByName(tabName, BaseData);
+        return tab;
     }
 
     /**
@@ -194,16 +217,14 @@ class Saved {
             $("#moveSaved_down").removeAttr("disabled");
         else
             $("#moveSaved_down").attr("disabled", "true");
-        this._apply(row);
+        this.apply(this._saved[row]);
     }
 
     /**
-     * 应用某行的方案
-     * @param {number} row
-     * @private
+     * 应用SavedData
+     * @public
      */
-    static _apply(row) {
-        const data = this._saved[row];
+    static apply(data) {
         const tabName = data.TabName;
         ChangeTab(tabName);
         Input_setGreatSuccessRate(data.GSRate);

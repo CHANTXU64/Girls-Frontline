@@ -288,7 +288,7 @@ class PlanDetails {
             },
             series: [{
                 type: 'custom',
-                renderItem: renderItem,
+                renderItem: plan_details_renderItem,
                 itemStyle: {
                     normal: {
                         opacity: 0.8
@@ -362,7 +362,7 @@ PlanDetails._chartLastParam = {
 PlanDetails._loadingChart = [];
 
 /**绘图Fun */
-function renderItem(params, api) {
+function plan_details_renderItem(params, api) {
     let categoryIndex = api.value(0);
     let start = api.coord([api.value(1), categoryIndex]);
     let end = api.coord([api.value(2), categoryIndex]);

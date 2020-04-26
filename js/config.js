@@ -15,7 +15,6 @@ function setPageByLocalStorage() {
     LS_setTarget();
     LS_setSaved();
     LS_setSavedOrMissionsShow();
-    LS_setCalcTargetValueTool();
 }
 
 /**
@@ -143,25 +142,9 @@ function LS_setSavedOrMissionsShow(IsSavedPanelShow = storageGetItem("IsSavedPan
 }
 
 /**
- * @param {Array.<number>} TargetValue
- * @param {Array.<number>} CurrentValue
- * @param {number} ExecutionTimes
- */
-function LS_setCalcTargetValueTool(TargetValue = storageGetItem("CalcTargetValueTool_Target"), CurrentValue = storageGetItem("CalcTargetValueTool_Current"), ExecutionTimes = storageGetItem("CalcTargetValueTool_ExecutionTimes")) {
-    if (TargetValue !== "noStorage")
-        Input_setCalcTargetValueTool_Target(TargetValue);
-    if (CurrentValue !== "noStorage")
-        Input_setCalcTargetValueTool_Current(CurrentValue);
-    if (ExecutionTimes !== "noStorage")
-        Input_setCalcTargetValueTool_InputExecutionTimes(ExecutionTimes);
-}
-
-/**
  * @type {{version: string, TabName: string, HourlyOrTotal: string, TabAnytimeCustom: Array.<number>,
  * TabTimetableCustom: Array.<number>, GreatSuccessRate: number, Is_GreatSuccessRateUp: boolean,
- * ChapterLimit: number, ContractWeight: number, TargetValue: Array.<number>, Saved: Saved._saved,
- * CalcTargetValueTool_Target: Array.<number>, CalcTargetValueTool_Current: Array.<number>,
- * CalcTargetValueTool_Execution: number}}
+ * ChapterLimit: number, ContractWeight: number, TargetValue: Array.<number>, Saved: Saved._saved}}
  */
 const config_data_type_v_1_x_x = 0;
 
@@ -188,9 +171,7 @@ function config_export() {
     data.ContractWeight = Input_getContractWeight();
     data.TargetValue = Input_getTarget_Correct();
     data.Saved = Saved.getSaved();
-    data.CalcTargetValueTool_Target = Input_getCalcTargetValueTool_Target();
-    data.CalcTargetValueTool_Current = Input_getCalcTargetValueTool_Current();
-    data.CalcTargetValueTool_Execution = Input_getCalcTargetValueTool_InputExecutionTimes();
+    data.PlanCombination = plan_combination_getConfigData();
 
     let SHA1 = sha1(JSON.stringify(data));
     let config = {
@@ -216,11 +197,14 @@ function setPageByImport(input) {
             sessionStorage.removeItem("GF_Logistics_console");
         return ;
     }
-    if (input === "clearSTORAGE" && CAN_STORAGE_WORK) {
+    if ((input === "clearSTORAGE" || input === "clear") && CAN_STORAGE_WORK) {
         sessionStorage.removeItem("GF_Logistics_console");
         sessionStorage.removeItem("GF_Logistics_windowOnload");
         localStorage.removeItem("GF_Logistics");
         localStorage.removeItem("GF_Logistics_v1.x.x");
+        localStorage.removeItem("GF_Logistics_PC_v1.x.x");
+        localStorage.removeItem("GF_Logistics_vDevelop.x.x");
+        localStorage.removeItem("GF_Logistics_PC_vDvelop.x.x");
         return ;
     }
     if (input === "runERROR") {
@@ -288,11 +272,12 @@ function setPageByImport_main(data) {
     LS_setContractWeight(data.ContractWeight);
     LS_setTarget(data.TargetValue);
     LS_setSaved(data.Saved);
-    LS_setCalcTargetValueTool(data.CalcTargetValueTool_Target, data.CalcTargetValueTool_Current, data.CalcTargetValueTool_Execution);
 
     MissionsDetails.setSelectedMissions([]);
     MissionsDetails.print();
     printPlanDetails();
+
+    plan_combination_init(data.PlanCombination);
 }
 
 /**
@@ -313,9 +298,6 @@ function setPageByImport_main_v_0_x_x(data) {
     data_v_1_x_x.ContractWeight = data[7];
     data_v_1_x_x.TargetValue = data[8];
     data_v_1_x_x.Saved = _savedData_v_0_x_x_To_v_1_x_x(data[9]);
-    data_v_1_x_x.CalcTargetValueTool_Target = data[10];
-    data_v_1_x_x.CalcTargetValueTool_Current = data[11];
-    data_v_1_x_x.CalcTargetValueTool_Execution = data[12];
 
     setPageByImport_main(data_v_1_x_x);
 }

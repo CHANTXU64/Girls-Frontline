@@ -1,0 +1,38 @@
+/*zh-Hans ************************/
+body.zh-Hans .reAndco-label {
+    width: 60px;
+}
+
+body.zh-Hans .FineTuning-span {
+    width: 40%;
+}
+
+body.zh-Hans .FineTuning-button {
+    width: 30%;
+}
+
+/*zh-Hant ************************/
+body.zh-Hant .reAndco-label {
+    width: 60px;
+}
+
+body.zh-Hant .FineTuning-span {
+    width: 40%;
+}
+
+body.zh-Hant .FineTuning-button {
+    width: 30%;
+}
+
+/*en ************************/
+body.en .reAndco-label {
+    width: 70px;
+}
+
+body.en .FineTuning-span {
+    width: 60%;
+}
+
+body.en .FineTuning-button {
+    width: 20%;
+}

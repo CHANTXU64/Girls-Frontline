@@ -1,0 +1,22 @@
+#PlanCombination_demand input {
+    min-width: 100px;
+}
+
+@media (max-width: 576px) {
+    .plan_combination_card {
+        padding: 0;
+    }
+}
+
+.consumption-table {
+    overflow-y: auto;
+    max-height: 340px;
+}
+
+.consumption-table th,
+.consumption-table td {
+    padding: 4.8px;
+    width: 10%;
+    font-size: 0.875rem;
+    cursor: default;
+}

@@ -18,7 +18,7 @@ function loadHTML_Target() {
     for (let i = 0; i < 8; i++) {
         HTML += '<div class="input-group input-group-regular" style="margin-bottom: 10px;"><label for="';
         HTML += Target[i];
-        HTML += '" class="input-group-span input-group-text"style="padding-right:10px;padding-left:10px;"';
+        HTML += '" class="reAndco-label ' + TargetName[i] + ' input-group-span input-group-text"style="padding-right:10px;padding-left:10px;"';
         HTML += 'id=' + TargetName[i] + '>';
         HTML += '</label><button class="btn btn-outline-dark input-group-btn btn-bolder"type="button"id="Target_minus_1';
         if (i < 4)
@@ -33,7 +33,7 @@ function loadHTML_Target() {
         HTML += '&minus;</button><input type="number" min="0"';
         if (i >= 4)
             HTML += 'step="0.01"'
-        HTML += 'class="form-control"id="';
+        HTML += 'class="form-control autoEnter ' + TargetName[i] + '_placeholder" id="';
         HTML += Target[i];
         HTML += '"value=0 onfocus="this.select();"style="border-left-width:0"><button class="btn btn-outline-dark input-group-btn target-btn-hidden"type="button"id="Target_plus_';
         if (i < 4)
@@ -131,13 +131,22 @@ function loadHTML_language() {
         $("#Demand").html(language_HTMLJS.Demand_total);
 
     //style-------------
-    document.getElementById("Manp").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("Ammu").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("Rati").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("Part").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("TPro").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("Equi").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("QPro").style.width = language_CSS.TargetValueSpan_Width;
-    document.getElementById("QRes").style.width = language_CSS.TargetValueSpan_Width;
-    //------------------
+    for (let i in language.otherLangCssClass) {
+        $("body").removeClass(language.otherLangCssClass[i]);
+    }
+    $("body").addClass(language.cssClass);
+
+    //class
+    let language_htmlclass = language.html_class;
+    for (let class_name in language_htmlclass) {
+        $("." + class_name).html(language_htmlclass[class_name]);
+    }
+    let language_placeholderclass = language.placeholder_class;
+    for (let class_name in language_placeholderclass) {
+        $("." + class_name).attr("placeholder", language_placeholderclass[class_name]);
+    }
+
+    //plan combination chart
+    if (PLAN_COMBINATION_READY)
+        PlanCombinationChart.print(PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans());
 } //End loadHTML_language()
