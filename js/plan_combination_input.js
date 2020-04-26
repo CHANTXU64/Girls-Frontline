@@ -206,3 +206,23 @@ function Input_setPC_target(targetValue) {
     }
     PC_storageSetItem("target", targetValue);
 }
+
+function Input_getPC_CommanderLevel(NeedCorrection) {
+    if ($("#CommanderLevel").val() === "")
+        return -1;
+    let level = getPositiveIntegerFromHTML($("#CommanderLevel"));
+    level = Math.max(1, level);
+    if (NeedCorrection) {
+        if (level != $("#CommanderLevel").val()) {
+            $("#CommanderLevel").val(level);
+        }
+    }
+    return level;
+}
+
+function Input_setPC_CommanderLevel(level) {
+    if (level === -1)
+        $("#CommanderLevel").val("");
+    else
+        $("#CommanderLevel").val(level);
+}

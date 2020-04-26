@@ -149,10 +149,10 @@ function Input_setSelectChapter(ChapterValue = Q.length / 4 - 1) {
 
 //Anytime---------
 function Input_getAnytimeHours(NeedCorrection = false) {
-    return getPositiveValueFromHTML($("#Time_Anytime_hours"), NeedCorrection);
+    return getPositiveIntegerFromHTML($("#Time_Anytime_hours"), NeedCorrection);
 }
 function Input_getAnytimeMinutes(NeedCorrection = false) {
-    return getPositiveValueFromHTML($("#Time_Anytime_minutes"), NeedCorrection);
+    return getPositiveIntegerFromHTML($("#Time_Anytime_minutes"), NeedCorrection);
 }
 function Input_getAnytimeTotalTime(NeedCorrection = false) {
     const hours = Input_getAnytimeHours(NeedCorrection);
@@ -174,7 +174,7 @@ function Input_setAnytimeTotalTime(TotalMinutes = 960) {
 }
 
 function Input_getAnytimeMinimumIntervalTime(NeedCorrection = false) {
-    return getPositiveValueFromHTML($("#Tab_Anytime_MinimumIntervalTime_minutes"), NeedCorrection);
+    return getPositiveIntegerFromHTML($("#Tab_Anytime_MinimumIntervalTime_minutes"), NeedCorrection);
 }
 
 function Input_setAnytimeMinimumIntervalTime(MinimumIntervalTime = 0) {
@@ -184,10 +184,10 @@ function Input_setAnytimeMinimumIntervalTime(MinimumIntervalTime = 0) {
 
 //Timetable-------
 function Input_getTimetableHours(NeedCorrection = false) {
-    return getPositiveValueFromHTML($("#Time_Timetable_hours"), NeedCorrection);
+    return getPositiveIntegerFromHTML($("#Time_Timetable_hours"), NeedCorrection);
 }
 function Input_getTimetableMinutes(NeedCorrection = false) {
-    return getPositiveValueFromHTML($("#Time_Timetable_minutes"), NeedCorrection);
+    return getPositiveIntegerFromHTML($("#Time_Timetable_minutes"), NeedCorrection);
 }
 function Input_getTimetableTotalTime(NeedCorrection = false) {
     const hours = Input_getTimetableHours(NeedCorrection);
@@ -212,14 +212,14 @@ function Input_setTimetableTotalTime(TotalMinutes = 300, NeedDrawing = true) {
 
 /**NeedCorrection 默认为true */
 function Input_getTimetableNewHours_Correct(NeedCorrection = true) {
-    const hours = getPositiveValueFromHTML($("#Tab_Timetable_new_hours"), NeedCorrection);
+    const hours = getPositiveIntegerFromHTML($("#Tab_Timetable_new_hours"), NeedCorrection);
     if (NeedCorrection)
         $("#Tab_Timetable_new_hours").val("");
     return hours;
 }
 /**NeedCorrection 默认为true */
 function Input_getTimetableNewMinutes_Correct(NeedCorrection = true) {
-    const minutes = getPositiveValueFromHTML($("#Tab_Timetable_new_minutes"), NeedCorrection);
+    const minutes = getPositiveIntegerFromHTML($("#Tab_Timetable_new_minutes"), NeedCorrection);
     if (NeedCorrection)
         $("#Tab_Timetable_new_minutes").val("");
     return minutes;

@@ -37,6 +37,11 @@ JQ_selector_PC_endDate.on("blur", function () {
     PlanCombinationChart.print();
 });
 
+$("#CommanderLevel").on("blur", function () {
+    PC_storageSetItem("level", Input_getPC_CommanderLevel());
+    PlanCombinationChart.print(PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans());
+})
+
 const JQ_selector_PC_addTimePeriodStartDate = $("#PlanCombination_planStartDate");
 
 JQ_selector_PC_addTimePeriodStartDate.on("blur", function () {
@@ -89,6 +94,7 @@ $("#Consumption_add").on("click", function () {
 });
 
 $("#Consumption_reset").on("click", function () {
+    $("#Consumption_select").val(0);
     Input_setPC_Consumption_reAndco();
     Input_setPC_Consumption_times();
     // PC_ConsumptionPlan.
@@ -146,3 +152,12 @@ $("#PC_saveAll").on("click", function () {
         PC_saveAll();
     });
 });
+
+$("#Consumption_select").on("change", function () {
+    let value = consumption_preset[this.selectedIndex - 1];
+    Input_setPC_Consumption_reAndco(value);
+});
+
+$("input[id^=Consumption_]").on("focus", function () {
+    this.select();
+})

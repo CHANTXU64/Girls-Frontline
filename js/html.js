@@ -57,6 +57,8 @@ function MobilePCDevice() {
     if (IsMobile()) {
         document.getElementById("Saved_card").style.transition = "none";
         document.getElementById("MissionTable_card").style.transition = "none";
+        document.getElementById("PC_Ranking_card").style.transition = "none";
+        document.getElementById("calcTargetValueTool_card").style.transition = "none";
         if (storageGetItem("IsSavedPanelShow") === "noStorage") {
             $("#MissionTable_card").collapse("hide");
         }

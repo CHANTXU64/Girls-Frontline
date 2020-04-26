@@ -149,4 +149,7 @@ function loadHTML_language() {
     //plan combination chart
     if (PLAN_COMBINATION_READY)
         PlanCombinationChart.print(PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans());
+
+    //comsumption preset
+    Consumption_load_preset_select_lang();
 } //End loadHTML_language()

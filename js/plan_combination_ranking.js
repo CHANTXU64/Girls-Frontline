@@ -17,10 +17,11 @@ function PC_start_ranking() {
     let demandValue = Input_getPC_demand(true);
     if ("" + demandValue === "0,0,0,0,0,0,0,0") {
         Modal.alert(language.JS.TargetValue0_alert);
-        throw "Warning: TargetValue cannot all be 0!";
+        return ;
     }
     let a = new PC_ranking(PC_LogisticsPlan.rankingGetPlans(), demandValue);
     a.ranking();
+    Modal.alert(language.JS.PC_ranking_done);
 }
 
 class PC_ranking {
