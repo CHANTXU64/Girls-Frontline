@@ -18,7 +18,7 @@ class PlanCombinationTimePeriod {
     static _getATimePeriodHTML(startDate, endDate, row) {
         let HTML = '';
         HTML += '<code class="list-group-item p-2" id="PC_TimePeriod_' + row + '">';
-        HTML += startDate + ' ~ ' + endDate + '<button class="close" id="PC_TimePeriod_close_' + row + '">×</button></code>';
+        HTML += startDate + ' ~ ' + endDate + '<button class="close" title="' + language.JS.delete_ + '" id="PC_TimePeriod_close_' + row + '">×</button></code>';
         return HTML;
     }
 

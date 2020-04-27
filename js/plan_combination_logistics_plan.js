@@ -24,6 +24,7 @@ class PC_LogisticsPlan {
             this._plans = [];
             this._plansNumber = 0;
         }
+        this.setStorage();
     }
 
     static reset() {
@@ -111,6 +112,8 @@ class PC_LogisticsPlan {
     }
 
     static apply(plan_number) {
+        document.getElementById("LogisticsConsumptionPlanSwitch").checked = false;
+        switchLogisticsSetting();
         let index = 0;
         while(1) {
             if (this._plans[index].number === plan_number)

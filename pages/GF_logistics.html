@@ -87,8 +87,8 @@
       <span class="sr-only">Loading...</span>
     </div>
     <div class="custom-control custom-switch float-right">
-      <input type="checkbox" class="custom-control-input" id="PlanCombinationSwitch" autocomplete="off" disabled>
-      <label class="custom-control-label" style="font-size: 16px;" for="PlanCombinationSwitch" id="PlanCombinationSwitch_label"></label>
+      <input type="checkbox" class="custom-control-input" style="cursor: pointer;" id="PlanCombinationSwitch" autocomplete="off" disabled>
+      <label class="custom-control-label" style="font-size: 16px; cursor: pointer;" for="PlanCombinationSwitch" id="PlanCombinationSwitch_label"></label>
     </div>
     <hr style="margin: 0.5rem 0 1rem 0; width: 100%;" />
   </h2>
@@ -143,7 +143,7 @@
             <input id="PlanCombination_endDate" type="date" class="form-control" style="width: auto; max-width: 150px;">
           </div>
         </div>
-        <div class="form-group input-group-regular mb-3">
+        <div class="form-group input-group-regular mb-4">
           <input type="number" min="1" max="999" style="max-width: 300px;" class="form-control" id="CommanderLevel" onfocus="this.select();" autocomplete="off">
           <small id="CommanderLevel_text" class="form-text text-muted"></small>
         </div>
@@ -367,8 +367,8 @@
         <!-- setting time period -->
         <div class="col-lg-5 disable-selected-text PC-addTimePeriod p-0 d-none" id="PlanCombination_addTimePeriod">
           <div class="custom-control custom-switch mb-2">
-            <input type="checkbox" class="custom-control-input" id="LogisticsConsumptionPlanSwitch" autocomplete="off">
-            <label class="custom-control-label" for="LogisticsConsumptionPlanSwitch"
+            <input type="checkbox" style="cursor: pointer;" class="custom-control-input" id="LogisticsConsumptionPlanSwitch" autocomplete="off">
+            <label class="custom-control-label" style="cursor: pointer;" for="LogisticsConsumptionPlanSwitch"
               id="LogisticsConsumptionPlanSwitch_label"></label>
           </div>
           <h5 id="DateTimePeriod"></h5>

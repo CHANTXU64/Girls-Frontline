@@ -4,6 +4,10 @@
 参考 [星光下的彩虹](https://pan.baidu.com/s/1c3iS9Ks#list/path=/Girls%20Frontline)<br>
 Reference from [星光下的彩虹](https://pan.baidu.com/s/1c3iS9Ks#list/path=/Girls%20Frontline)
 
+感谢MCorMC在开发1.2.0版本时提出的建议。
+
+资源收支参考 [左牵黄右擒苍](https://bbs.nga.cn/read.php?tid=19751517&_fp=18)<br>
+
 Contract reference from https://bbs.nga.cn/read.php?tid=13814613 <br>
 Picture archive https://imgur.com/XY6kEqh
 

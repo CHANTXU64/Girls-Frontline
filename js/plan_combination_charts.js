@@ -47,8 +47,6 @@ class PlanCombinationChart {
             Chart = echarts.getInstanceByDom(Chart_elem);
             Chart.off("click");
             Chart.clear();
-            // Chart.dispose();
-            // Chart = echarts.init(Chart_elem);
         }
 
         let startDate = Input_getPC_startDate();
@@ -68,26 +66,14 @@ class PlanCombinationChart {
         Chart.setOption(option);
 
         Chart.on("click", {seriesIndex: 8}, function (params) {
-            let plan_number = params.data.name;
-            PC_LogisticsPlan.apply(plan_number);
-            $("#PC_deletePlan").removeAttr("disabled");
-            $("#PC_deletePlan").off();
-            $("#PC_deletePlan").on("click", function () {
-                PC_LogisticsPlan.deleteThis(plan_number);
-                $("#PC_deletePlan").attr("disabled", "true");
-            });
-            Saved.cancelSelected();
+            Chart_plan_click_event(params);
+        });
+        Chart.on("click", {seriesIndex: 9}, function (params) {
+            Chart_plan_click_event(params);
         });
 
-        Chart.on("click", {seriesIndex: 9}, function (params) {
-            let plan_number = params.data.name;
-            $("#PC_deletePlan").removeAttr("disabled");
-            $("#PC_deletePlan").off();
-            $("#PC_deletePlan").on("click", function () {
-                PC_ConsumptionPlan.deleteThis(plan_number);
-                $("#PC_deletePlan").attr("disabled", "true");
-            });
-        });
+        $("#PC_deletePlan").off();
+        $("#PC_deletePlan").attr("disabled", "true");
     }
 
     static _LogisticsPlanDataToTimetableData(LogisticsPlanData, totalDays) {
@@ -289,4 +275,32 @@ function PC_renderItem_Consumption(params, api) {
         type: 'group',
         children: groupChildren,
    };
+}
+
+function Chart_plan_click_event(params) {
+    let seriesIndex = params.seriesIndex;
+    let plan_number = params.data.name;
+    if (seriesIndex === 8)
+        PC_LogisticsPlan.apply(plan_number);
+    else
+        PC_ConsumptionPlan.apply(plan_number);
+    $("#PC_deletePlan").removeAttr("disabled");
+    $("#PC_deletePlan").off();
+    $("#PC_deletePlan").on("click", function () {
+        if (seriesIndex === 8)
+            PC_LogisticsPlan.deleteThis(plan_number);
+        else
+            PC_ConsumptionPlan.deleteThis(plan_number);
+        $("#PC_deletePlan").attr("disabled", "true");
+    });
+    if (seriesIndex === 8)
+        Saved.cancelSelected();
+    let Chart_elem = document.getElementById("PlanCombination_chart");
+    if (Chart_elem.getAttribute("_echarts_instance_") === null || Chart_elem.getAttribute("_echarts_instance_") === "")
+        return ;
+    else {
+        let Chart = echarts.getInstanceByDom(Chart_elem);
+        Chart.dispatchAction({type: 'downplay', seriesIndex: [8, 9]});
+        Chart.dispatchAction({type: 'highlight', seriesIndex: seriesIndex, dataIndex: params.dataIndex});
+    }
 }

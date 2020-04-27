@@ -25,6 +25,7 @@ class PC_ConsumptionPlan {
             this._plans = [];
             this._plansNumber = 0;
         }
+        this.setStorage();
     }
 
     static reset() {
@@ -70,6 +71,7 @@ class PC_ConsumptionPlan {
             consumption[i] *= times;
             tableData[0][i] += consumption[i];
         }
+        consumption.push(times);
         tableData.push(consumption);
         this._table_printTotal(this._tableData[0]);
     }
@@ -84,7 +86,7 @@ class PC_ConsumptionPlan {
             html += NumberAutoExact(consumption[i]) + '</td>';
         }
         html += '<td>' + times;
-        html += '<button id="Consumption_table_close_row_' + row + '" class="close">×</button></td>';
+        html += '<button id="Consumption_table_close_row_' + row + '" class="close" title="' + language.JS.delete_ + '">×</button></td>';
         return html;
     }
 
@@ -168,11 +170,43 @@ class PC_ConsumptionPlan {
         newPlan.number = this._plansNumber++;
         newPlan.reAndco = this._tableData[0].slice();
         newPlan.TimetableData = TimetableData;
+        newPlan.tableData = this._tableData.slice();
         this._plans.push(newPlan);
 
         PlanCombinationTimePeriod.clear();
         PlanCombination_disabledDate();
         this._plansHasChanged();
+    }
+
+    static apply(plan_number) {
+        document.getElementById("LogisticsConsumptionPlanSwitch").checked = true;
+        switchConsumptionSetting();
+        this._table_clear();
+        let index = 0;
+        while(1) {
+            if (this._plans[index].number === plan_number)
+                break;
+            ++index;
+        }
+        PlanCombinationTimePeriod.setTimePeriod(this._plans[index].timePeriod);
+        let tableData = [];
+        if (this._plans[index].tableData === undefined) {
+            tableData.push(this._plans[index].reAndco.slice());
+            tableData.push(this._plans[index].reAndco.slice());
+            tableData[1].push(1);
+        }
+        else
+            tableData = this._plans[index].tableData;
+        for (let i = 1; i < tableData.length; ++i) {
+            let table = tableData[i];
+            let html = this._table_getHTML([table[0], table[1], table[2], table[3], table[4], table[5], table[6], table[7]], table[8]);
+            $("#Consumption_tbody").append(html);
+        }
+        this._table_printTotal(this._plans[index].reAndco);
+        this._tableData = [];
+        for (let i = 0; i < tableData.length; ++i) {
+            this._tableData.push(tableData[i].slice());
+        }
     }
 
     static deleteAll() {
