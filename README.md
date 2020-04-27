@@ -19,12 +19,6 @@ Picture archive https://imgur.com/XY6kEqh
 感谢 [命运の乐章](https://github.com/hycdes/GFTool)<br>
 Thanks [FatalChapter](https://github.com/hycdes/GFTool)
 
-**该如何维护更新后勤战役?**<br>
-只需要修改js/data.js, 修改Q数组即可.<br>
-
-**如何发布新版本?**<br>
-1.运行release.py + version (如./release.py 2.0.0)<br>
-
 测试代码格式: //test[\w|\W]+?//End test
 
 注释中有"!python"表示该注释用于python脚本来进行压缩, 不要更改
