@@ -68,8 +68,8 @@ class PC_ConsumptionPlan {
         $("#Consumption_tbody").append(html);
         let tableData = this._tableData;
         for (let i = 0; i < 8; ++i) {
-            consumption[i] *= times;
-            tableData[0][i] += consumption[i];
+            // consumption[i] *= times;
+            tableData[0][i] += consumption[i] * times;
         }
         consumption.push(times);
         tableData.push(consumption);
@@ -103,7 +103,8 @@ class PC_ConsumptionPlan {
         }
         let consumption = this._tableData[row + 1];
         for (let i = 0; i < 8; ++i) {
-            this._tableData[0][i] -= consumption[i];
+            let times = consumption[8];
+            this._tableData[0][i] -= consumption[i] * times;
         }
         this._table_printTotal(this._tableData[0]);
         this._tableData.splice(row + 1, 1);
@@ -170,7 +171,11 @@ class PC_ConsumptionPlan {
         newPlan.number = this._plansNumber++;
         newPlan.reAndco = this._tableData[0].slice();
         newPlan.TimetableData = TimetableData;
-        newPlan.tableData = this._tableData.slice();
+        let tableData = [];
+        for (let i = 0; i < this._tableData.length; ++i) {
+            tableData.push(this._tableData[i].slice());
+        }
+        newPlan.tableData = tableData.slice();
         this._plans.push(newPlan);
 
         PlanCombinationTimePeriod.clear();
