@@ -60,6 +60,11 @@ class PC_ranking {
         }
         this.sortPlanByPlanValue();
 
+        if (planValue_total === 0) {
+            Modal.alert(language.JS.PC_ranking_alert2);
+            return ;
+        }
+
         //第二次
         let demandValue = this.original_demandValue.slice();
         let reAndcoValue_Norm_sum = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -70,6 +75,8 @@ class PC_ranking {
             planValue_sum += thisPlan.planValue;
             thisPlan.ranking(demandValue);
             //为下个plan ranking的demandvalue准备
+            if (thisPlan.planValue === 0)
+                continue;
             for (let ii = 0; ii < 8; ++ii) {
                 reAndcoValue_Norm_sum[ii] += thisPlan.reAndcoValue_Norm[ii];
                 reAndcoValue_sum[ii] += thisPlan.reAndcoValue[ii] * thisPlan.days;
@@ -90,7 +97,7 @@ class PC_ranking {
         let maxIndex = ArrayMaxIndex(reAndcoValue_Norm_sum);
         let a = reAndcoValue_sum[maxIndex] / demandValue_0[maxIndex];
         for (let i = 0; i < 8; ++i) {
-            if (demandValue_0[i] !== 0)
+            if (demandValue_0[i] !== 0 && reAndcoValue_sum[i] !== 0)
                 demandValue_0[i] = ((demandValue_0[i] * a - reAndcoValue_sum[i]) / reAndcoValue_sum[i] * 0.9 + 1) * demandValue_0[i];
         }
         demandValue = this.original_demandValue.slice();
@@ -106,6 +113,8 @@ class PC_ranking {
             else
                 thisPlan.ranking(demandValue);
             //为下个plan ranking的demandvalue准备
+            if (thisPlan.planValue === 0)
+                continue;
             for (let ii = 0; ii < 8; ++ii) {
                 reAndcoValue_Norm_sum[ii] += thisPlan.reAndcoValue_Norm[ii];
                 reAndcoValue_sum[ii] += thisPlan.reAndcoValue[ii] * thisPlan.days;
