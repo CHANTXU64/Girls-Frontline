@@ -83,8 +83,20 @@ class PC_ranking {
         if (RankIndex === this.allPlan.length * 2) {
             this._demandValue_0 = this.original_demandValue.slice();
             let demandValue_0 = this._demandValue_0;
-            let maxIndex = ArrayMaxIndex(this._reAndcoValue_Norm_sum);
-            let a = this._reAndcoValue_sum[maxIndex] / demandValue_0[maxIndex];
+            let a = 0;
+            for (let i = 0; i < 8; ++i) {
+                let maxIndex = ArrayMaxIndex(this._reAndcoValue_Norm_sum);
+                if (demandValue_0[maxIndex] === 0) {
+                    this._reAndcoValue_Norm_sum[maxIndex] = 0;
+                    continue;
+                }
+                else {
+                    a = this._reAndcoValue_sum[maxIndex] / demandValue_0[maxIndex];
+                    break;
+                }
+            }
+            if (a === 0)
+                this._demandValue_0 = this.original_demandValue.slice();
             for (let i = 0; i < 8; ++i) {
                 if (demandValue_0[i] !== 0 && this._reAndcoValue_sum[i] !== 0)
                     demandValue_0[i] = ((demandValue_0[i] * a - this._reAndcoValue_sum[i]) / this._reAndcoValue_sum[i] * 0.9 + 1) * demandValue_0[i];
