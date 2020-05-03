@@ -1,8 +1,3 @@
-// Input_setPC_startDate_MAXMIN();
-// Input_setPC_endDate_MAXMIN();
-// Input_getPC_startDate(true);
-// Input_getPC_endDate(true);
-
 $("#PlanCombinationSwitch").on("click", function () {
     switchPlanCombination();
 });
@@ -97,7 +92,6 @@ $("#Consumption_reset").on("click", function () {
     $("#Consumption_select").val(0);
     Input_setPC_Consumption_reAndco();
     Input_setPC_Consumption_times();
-    // PC_ConsumptionPlan.
 });
 
 $("#Consumption_tbody").on("click", "button[id^=Consumption_table_close_row_]", function () {
@@ -107,18 +101,8 @@ $("#Consumption_tbody").on("click", "button[id^=Consumption_table_close_row_]", 
 });
 
 $("#PC_startRanking").on("click", function () {
-    PC_ranking_start();
-    setTimeout(PC_start_ranking, 1);
-    setTimeout(PC_ranking_end, 1);
+    PC_start_ranking();
 })
-function PC_ranking_start() {
-    html_waiting();
-    $("#PC_ranking_loading").removeClass("d-none");
-}
-function PC_ranking_end() {
-    html_waiting_cancel();
-    $("#PC_ranking_loading").addClass("d-none");
-}
 
 $("#PlanCombination_current_box").on("blur", "input[id^=PC_current_]", function () {
     PlanCombinationChart.print(PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans());

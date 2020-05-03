@@ -294,12 +294,10 @@ $("#clear_ranking").on("click", function () {
 function ranking_loading_start() {
     $("#start_ranking").attr("disabled", "true");
     document.getElementById("ranking_loading").style.display = "";
-    html_waiting();
 }
 function ranking_loading_end() {
     document.getElementById("ranking_loading").style.display = "none";
     $("#start_ranking").removeAttr("disabled");
-    html_waiting_cancel();
 }
 
 //Result Plan

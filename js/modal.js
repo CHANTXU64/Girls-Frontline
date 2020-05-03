@@ -10,6 +10,23 @@ class Modal {
         this._insertModalQueue("alert", [message, title]);
     }
 
+    static progress(title = "Loading...") {
+        this._insertModalQueue("progress", [title]);
+    }
+
+    static progress_setWidth(width) {
+        if (!this._html_modal.hasClass("show"))
+            return ;
+        if (this._lastModal !== "progress")
+            return ;
+        document.getElementById("modal_progress").style.width = width;
+    }
+
+    static progress_close() {
+        this._needClose = true;
+        this._html_modal.modal("hide");
+    }
+
     /**
      * @param {string=} message - 内容, 默认为空
      * @param {Function=} func_ok - 点击ok触发的函数, 默认为空
@@ -76,6 +93,9 @@ class Modal {
                 break;
             case "prompt":
                 this._prompt_main(param[0], param[1], param[2], param[3], param[4], param[5], param[6], param[7], param[8]);
+                break;
+            case "progress":
+                this._progress_main(param[0]);
                 break;
         }
     }
@@ -156,6 +176,17 @@ class Modal {
         this._show();
     }
 
+    static _progress_main(title) {
+        let progress = '<div class="progress"><div id="modal_progress" class="progress-bar" role="progressbar" style="transition: none;"></div></div>';
+        this._setBody(progress);
+        this._setTitle(title);
+        this._html_close.addClass("d-none");
+        this._html_okButton.addClass("d-none");
+        this._html_cancelButton.addClass("d-none");
+        this._lastModal = "progress";
+        this._show();
+    }
+
     /**
      * 设置标题
      * @param {string} title - 标题
@@ -197,6 +228,8 @@ Modal._lastModal = "";
  */
 Modal._queque = [];
 
+Modal._needClose = false;
+
 Modal._html_modal = $("#Modal");
 Modal._html_title = $("#Modal_title");
 Modal._html_close = $("#Modal_closeButton");
@@ -212,6 +245,9 @@ Modal._html_modal.on("show.bs.modal", function () {
 });
 
 Modal._html_modal.on("shown.bs.modal", function () {
+    if (Modal._needClose === true) {
+        Modal._html_modal.modal("hide");
+    }
     switch (Modal._lastModal) {
         case "alert":
             Modal._html_okButton.focus();
@@ -226,6 +262,7 @@ Modal._html_modal.on("shown.bs.modal", function () {
 });
 
 Modal._html_modal.on("hide.bs.modal", function () {
+    Modal._needClose = false;
     switch (Modal._lastModal) {
         case "confirm":
             Modal._html_close.off();
@@ -249,6 +286,11 @@ Modal._html_modal.on("hidden.bs.modal", function () {
             break;
         case "prompt":
             Modal._html_okButton.removeAttr("disabled");
+            break;
+        case "progress":
+            Modal._html_close.removeClass("d-none");
+            Modal._html_okButton.removeClass("d-none");
+            Modal._html_cancelButton.removeClass("d-none");
             break;
     }
     Modal._runFirstModal();

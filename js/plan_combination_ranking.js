@@ -13,19 +13,20 @@ const PC_QValidMaxLength_firstCalc = 48;
  */
 const PC_QValidMaxLength_secondCalc = 38;
 
+let PC_ranking_object;
+
 function PC_start_ranking() {
     let demandValue = Input_getPC_demand(true);
     if ("" + demandValue === "0,0,0,0,0,0,0,0") {
         Modal.alert(language.JS.TargetValue0_alert);
         return ;
     }
-    let a = new PC_ranking(PC_LogisticsPlan.rankingGetPlans(), demandValue);
-    if (a.allPlan.length === 0) {
+    PC_ranking_object = new PC_ranking(PC_LogisticsPlan.rankingGetPlans(), demandValue);
+    if (PC_ranking_object.allPlan.length === 0) {
         Modal.alert(language.JS.PC_ranking_add_alert);
         return ;
     }
-    a.ranking();
-    Modal.alert(language.JS.PC_ranking_done);
+    PC_ranking_object.ranking();
 }
 
 class PC_ranking {
@@ -49,91 +50,91 @@ class PC_ranking {
         }
     }
 
-    ranking() {
+    //由于要刷新progress, 需要使用setTimeout, 代码结构有调整 -- v1.2.0-rc2
+    ranking(RankIndex = 0) {
         //第一次
-        let planValue_total = 0;
-        for (let i = 0; i < this.plans_number; ++i) {
+        if (RankIndex === 0) {
+            this._planValue_total = 0;
+            Modal.progress();
+        }
+        if (RankIndex < this.allPlan.length) {
+            let i = RankIndex;
             let thisPlan = this.allPlan[i];
             let demandValue = this.original_demandValue;
             thisPlan.ranking(demandValue);
-            planValue_total += thisPlan.planValue;
+            this._planValue_total += thisPlan.planValue;
         }
-        this.sortPlanByPlanValue();
-
-        if (planValue_total === 0) {
-            Modal.alert(language.JS.PC_ranking_alert2);
-            return ;
+        if (RankIndex === this.allPlan.length - 1) {
+            this.sortPlanByPlanValue();
+            if (this._planValue_total === 0) {
+                Modal.alert(language.JS.PC_ranking_alert2);
+                return ;
+            }
         }
 
         //第二次
-        let demandValue = this.original_demandValue.slice();
-        let reAndcoValue_Norm_sum = [0, 0, 0, 0, 0, 0, 0, 0];
-        let reAndcoValue_sum = [0, 0, 0, 0, 0, 0, 0, 0];
-        let planValue_sum = 0;
-        for (let i = 0; i < this.plans_number; ++i) {
-            let thisPlan = this.allPlan[i];
-            planValue_sum += thisPlan.planValue;
-            thisPlan.ranking(demandValue);
-            //为下个plan ranking的demandvalue准备
-            if (thisPlan.planValue === 0)
-                continue;
-            for (let ii = 0; ii < 8; ++ii) {
-                reAndcoValue_Norm_sum[ii] += thisPlan.reAndcoValue_Norm[ii];
-                reAndcoValue_sum[ii] += thisPlan.reAndcoValue[ii] * thisPlan.days;
-            }
-            let proportion = planValue_sum / planValue_total;
-            let maxIndex = ArrayMaxIndex(reAndcoValue_Norm_sum);
-            let a = reAndcoValue_sum[maxIndex] / proportion;
-            for (let ii = 0; ii < 8; ++ii) {
-                demandValue[ii] = this.original_demandValue[ii] * a;
-                demandValue[ii] -= reAndcoValue_sum[ii];
-                if (demandValue[ii] < 0)
-                    demandValue[ii] = 0;
-            }
+        if (RankIndex === this.allPlan.length) {
+            this._demandValue = this.original_demandValue.slice();
+            this._reAndcoValue_Norm_sum = [0, 0, 0, 0, 0, 0, 0, 0];
+            this._reAndcoValue_sum = [0, 0, 0, 0, 0, 0, 0, 0];
+            this._planValue_sum = 0;
         }
-
         //第三次
-        let demandValue_0 = this.original_demandValue.slice();
-        let maxIndex = ArrayMaxIndex(reAndcoValue_Norm_sum);
-        let a = reAndcoValue_sum[maxIndex] / demandValue_0[maxIndex];
-        for (let i = 0; i < 8; ++i) {
-            if (demandValue_0[i] !== 0 && reAndcoValue_sum[i] !== 0)
-                demandValue_0[i] = ((demandValue_0[i] * a - reAndcoValue_sum[i]) / reAndcoValue_sum[i] * 0.9 + 1) * demandValue_0[i];
-        }
-        demandValue = this.original_demandValue.slice();
-        reAndcoValue_Norm_sum = [0, 0, 0, 0, 0, 0, 0, 0];
-        reAndcoValue_sum = [0, 0, 0, 0, 0, 0, 0, 0];
-        planValue_total = planValue_sum;//??????
-        planValue_sum = 0;
-        for (let i = 0; i < this.plans_number; ++i) {
-            let thisPlan = this.allPlan[i];
-            planValue_sum += thisPlan.planValue;
-            if (i === 0)
-                thisPlan.ranking(demandValue_0);
-            else
-                thisPlan.ranking(demandValue);
-            //为下个plan ranking的demandvalue准备
-            if (thisPlan.planValue === 0)
-                continue;
-            for (let ii = 0; ii < 8; ++ii) {
-                reAndcoValue_Norm_sum[ii] += thisPlan.reAndcoValue_Norm[ii];
-                reAndcoValue_sum[ii] += thisPlan.reAndcoValue[ii] * thisPlan.days;
+        if (RankIndex === this.allPlan.length * 2) {
+            this._demandValue_0 = this.original_demandValue.slice();
+            let demandValue_0 = this._demandValue_0;
+            let maxIndex = ArrayMaxIndex(this._reAndcoValue_Norm_sum);
+            let a = this._reAndcoValue_sum[maxIndex] / demandValue_0[maxIndex];
+            for (let i = 0; i < 8; ++i) {
+                if (demandValue_0[i] !== 0 && this._reAndcoValue_sum[i] !== 0)
+                    demandValue_0[i] = ((demandValue_0[i] * a - this._reAndcoValue_sum[i]) / this._reAndcoValue_sum[i] * 0.9 + 1) * demandValue_0[i];
             }
-            let proportion = planValue_sum / planValue_total;
-            let maxIndex = ArrayMaxIndex(reAndcoValue_Norm_sum);
-            let a = reAndcoValue_sum[maxIndex] / proportion;
-            for (let ii = 0; ii < 8; ++ii) {
-                demandValue[ii] = this.original_demandValue[ii] * a;
-                demandValue[ii] -= reAndcoValue_sum[ii];
-                if (demandValue[ii] < 0)
-                    demandValue[ii] = 0;
+            this._demandValue = this.original_demandValue.slice();
+            this._reAndcoValue_Norm_sum = [0, 0, 0, 0, 0, 0, 0, 0];
+            this._reAndcoValue_sum = [0, 0, 0, 0, 0, 0, 0, 0];
+            this._planValue_total = this._planValue_sum;
+            this._planValue_sum = 0;
+        }
+        if (RankIndex >= this.allPlan.length && RankIndex < this.allPlan.length * 3) {
+            let i = RankIndex % this.allPlan.length;
+            let thisPlan = this.allPlan[i];
+            this._planValue_sum += thisPlan.planValue;
+            if (RankIndex === this.allPlan.length * 2)
+                thisPlan.ranking(this._demandValue_0);
+            else
+                thisPlan.ranking(this._demandValue);
+            //为下个plan ranking的demandvalue准备
+            if (thisPlan.planValue !== 0) {
+                for (let ii = 0; ii < 8; ++ii) {
+                    this._reAndcoValue_Norm_sum[ii] += thisPlan.reAndcoValue_Norm[ii];
+                    this._reAndcoValue_sum[ii] += thisPlan.reAndcoValue[ii] * thisPlan.days;
+                }
+                let proportion = this._planValue_sum / this._planValue_total;
+                let maxIndex = ArrayMaxIndex(this._reAndcoValue_Norm_sum);
+                let a = this._reAndcoValue_sum[maxIndex] / proportion;
+                for (let ii = 0; ii < 8; ++ii) {
+                    this._demandValue[ii] = this.original_demandValue[ii] * a;
+                    this._demandValue[ii] -= this._reAndcoValue_sum[ii];
+                    if (this._demandValue[ii] < 0)
+                        this._demandValue[ii] = 0;
+                }
             }
         }
 
-        for (let i = 0; i < this.plans_number; ++i) {
-            this.allPlan[i].applyToLogisticsPlanData();
+        let width = 100 * (RankIndex + 1) / this.allPlan.length / 3 + '%';
+        Modal.progress_setWidth(width);
+        // document.getElementById("ranking_progress").style.width = width;
+        if (RankIndex === this.allPlan.length * 3 - 1) {
+            for (let i = 0; i < this.plans_number; ++i) {
+                this.allPlan[i].applyToLogisticsPlanData();
+            }
+            PC_LogisticsPlan._plansHasChanged();
+            Modal.alert(language.JS.PC_ranking_done);
+            Modal.progress_close();
         }
-        PC_LogisticsPlan._plansHasChanged();
+        else {
+            setTimeout(function () {PC_ranking_object.ranking(++RankIndex)}, 1);
+        }
     }
 
     sortPlanByPlanValue() {
