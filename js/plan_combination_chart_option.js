@@ -60,7 +60,8 @@ function plan_combination_getChartOption(startDate, endDate) {
             },
             formatter: function (params) {
                 let text = "";
-                for (let i = 0; i < 8; ++i) {
+                text += xAxisData[params[0].axisValue] + '<br>';
+                for (let i = 0; i < params.length; ++i) {
                     text += params[i].marker + params[i].seriesName + ': ';
                     text += params[i].data[1] + '<br>';
                 }
