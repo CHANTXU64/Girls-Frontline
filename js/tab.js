@@ -204,7 +204,10 @@ class Tab {
                 CurrentValueMax_0[ii] = this._QValid[ii][i + 1];
             }
             quick_sort_descending(CurrentValueMax_0);
-            currentValueMax[i] = CurrentValueMax_0[0] + CurrentValueMax_0[1] + CurrentValueMax_0[2] + CurrentValueMax_0[3];
+            let ii_max = CurrentValueMax_0.length < 4 ? CurrentValueMax_0.length : 4;
+            for (let ii = 0; ii < ii_max; ++ii) {
+                currentValueMax[i] += CurrentValueMax_0[ii];
+            }
         }
         this._currentValueMax = currentValueMax;
         this._setCurrentMaxFlag = true;

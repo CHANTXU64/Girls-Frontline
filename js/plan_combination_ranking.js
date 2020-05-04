@@ -56,6 +56,7 @@ class PC_ranking {
         if (RankIndex === 0) {
             this._planValue_total = 0;
             Modal.progress();
+            this._noPlan = 0;
         }
         if (RankIndex < this.allPlan.length) {
             let i = RankIndex;
@@ -131,6 +132,12 @@ class PC_ranking {
                         this._demandValue[ii] = 0;
                 }
             }
+            else {
+                //计数 - 没有结果
+                if (RankIndex >= this.allPlan.length * 2 && RankIndex < this.allPlan.length * 3) {
+                    this._noPlan++;
+                }
+            }
         }
 
         let width = 100 * (RankIndex + 1) / this.allPlan.length / 3 + '%';
@@ -141,7 +148,11 @@ class PC_ranking {
                 this.allPlan[i].applyToLogisticsPlanData();
             }
             PC_LogisticsPlan._plansHasChanged();
-            Modal.alert(language.JS.PC_ranking_done);
+            let done = language.JS.PC_ranking_done;
+            if (this._noPlan !== 0) {
+                done += language.JS.PC_ranking_alert3_1 + this._noPlan + language.JS.PC_ranking_alert3_2;
+            }
+            Modal.alert(done);
             Modal.progress_close();
         }
         else {
