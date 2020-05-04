@@ -4,15 +4,26 @@
 #需要使用babel-cli, babel-preset-es2015, UglifyJS 3, closure-stylesheets.jar
 #该脚本适用于Linux系统
 
+#具体使用方法见wiki
+#使用方法./release.py 2.0.0 or ./release.py 2.0.0 offline
+
 import re
 import sys
 from io import StringIO
 import os
 
 version = sys.argv[1]
+if (len(sys.argv) > 2 and sys.argv[2] == "offline"):
+    is_offline = True
+else:
+    is_offline = False
+if (is_offline):
+    version += '-offline'
 version_word = re.sub('\.', '_', version)
 version_word = re.sub('\-', '_', version_word)
 copyrightInfo = '/** copyright info\n * [GF_logistics]{@link https://github.com/CHANTXU64/Girls-Frontline}\n *\n * @namespace GF_logistics\n * @version ' + version + '\n * @author ChantXu64 [chantxu@outlook.com]\n * @copyright ChantXu64\n * @license MIT\n */\n\n'
+
+VENDORJS = '';
 
 def main():
     os.mkdir('./js', 0o755)
@@ -22,7 +33,6 @@ def main():
     os.mkdir('./dependent/css', 0o755)
     MergeCSS()
     MergeJS()
-    compressHTML()
     os.system('java -jar closure-stylesheets.jar ./css.css > ./css/GFLGSTS_v'+version_word+'.css --allowed-unrecognized-property user-select')
     f = open('./css/GFLGSTS_v'+version_word+'.css', 'r+' , encoding='UTF-8')
     content = f.read()
@@ -36,11 +46,15 @@ def main():
     os.system('babel ./GF_logistics.js -o ./js/GF_logistics.js')
     os.remove('./GF_logistics.js')
     os.remove('.babelrc')
-    os.system('uglifyjs ./js/GF_logistics.js -c -m -o ./js/GF_logistics.min.js --toplevel --comments /@license/')
+    os.system('uglifyjs ./js/GF_logistics.js -c -m reserved=[loadBackupJS] -o ./js/GF_logistics.min.js --toplevel --comments /@license/')
     splitJS()
+    compressHTML()
     os.remove('./js/GF_logistics.js')
     os.remove('./js/GF_logistics.min.js')
-    os.system('zip -q -r GF_logistics_v'+version_word+'.zip ./css ./dependent ./js *.html')
+    if (is_offline == False):
+        os.system('zip -q -r GF_logistics_v'+version_word+'.zip ./css ./dependent ./js *.html')
+    else:
+        os.system('zip -q -r GF_logistics_v'+version_word+'.zip *.html')
     os.system('rm -rf ./dependent')
     os.system('rm -rf ./js')
     os.system('rm -rf ./css')
@@ -64,6 +78,10 @@ def splitJS():
     f2.close()
     f1.close()
     f.close()
+    if (is_offline == True):
+        f2 = open('./js/GFLGSTS_js2_v' + version_word + '.js', 'a', encoding='UTF-8')
+        f2.write(VENDORJS)
+        f2.close()
 
 
 def getFilesPathName(file, start_comments, end_comments, search_str):
@@ -119,6 +137,15 @@ def backupVendorJS():
         f.write(text)
         f.close()
 
+def getVendorJS():
+    js_files = getFilesPathName('./js.js', '//Backup vendor js !python', '//End Backup vendor js !python', 'src[\s|=]{1,3}"\.\./vendor/.+?"')
+    vendorJS = ""
+    for file in js_files:
+        f = open(file, 'r', encoding='UTF-8')
+        vendorJS += f.read()
+        f.close()
+    return vendorJS
+
 def MergeFiles(Files):
     data = StringIO()
     for file in Files:
@@ -144,8 +171,16 @@ def MergeJS():
     f.write(MergeFiles(js2_files))
     f.close()
 
-    backupVendorJS()
-    js_str = changeTextFilePath('./js.js', '//Backup vendor js !python', '//End Backup vendor js !python', '(?<=src = ")\.\./vendor/.+?(?=")', './dependent/js/')
+    if (is_offline == False):
+        backupVendorJS()
+        js_str = changeTextFilePath('./js.js', '//Backup vendor js !python', '//End Backup vendor js !python', '(?<=src = ")\.\./vendor/.+?(?=")', './dependent/js/')
+    else:
+        global VENDORJS
+        VENDORJS = getVendorJS()
+        f = open('./js.js', 'r+', encoding='UTF-8')
+        js_str = f.read()
+        f.close()
+        js_str = re.sub('//Backup vendor js !python[\w|\W]+?//End Backup vendor js !python', 'function loadBackupJS() {}', js_str)
     os.remove('./js.js')
 
     js_str = re.sub('//test[\w|\W]+?//End test', '', js_str)
@@ -161,59 +196,92 @@ def compressHTML():
     html = file.read()
     file.close()
 
+    if (is_offline == True):
+        html = re.sub('<!-- GF_OFFLINE_VERSION !python -->', '<script>window.GF_OFFLINE_VERSION=true;</script>', html)
+
     # JQ
     JQpath = getFilesPathName(htmlPath, '//backup vendor_js JQ !python', '//end backup vendor_js JQ !python', 'src=".+?"')
     JQfile = open(JQpath[0], 'r', encoding='UTF-8')
-    f = open('./dependent/js/jQuery.slim.min.js', 'w+', encoding='UTF-8')
-    f.write(JQfile.read())
-    f.close()
+    if (is_offline == False):
+        f = open('./dependent/js/jQuery.slim.min.js', 'w+', encoding='UTF-8')
+        f.write(JQfile.read())
+        f.close()
+        html = re.sub('//backup vendor_js JQ !python[\w|\W]*//end backup vendor_js JQ !python', 'window.jQuery || document.write(\'<script src="./dependent/js/jQuery.slim.min.js"><\/script>\');', html)
+    else:
+        html = re.sub('<!-- vendor_js JQ !python -->[\w|\W]*<!-- end vendor_js JQ !python -->', '<!-- vendor_js JQ !python -->', html)
+        html = html.replace('<!-- vendor_js JQ !python -->', '<script>' + JQfile.read() + '</script>', 1)
     JQfile.close()
-    html = re.sub('//backup vendor_js JQ !python[\w|\W]*//end backup vendor_js JQ !python', 'window.jQuery || document.write(\'<script src="./dependent/js/jQuery.slim.min.js"><\/script>\');', html)
 
     # bootstrap
     BootstrapJS = open('../vendor/bootstrap/js/bootstrap.bundle.min.js', 'r', encoding='UTF-8')
-    f = open('./dependent/js/bootstrap.bundle.min.js', 'w+', encoding='UTF-8')
-    f.write(BootstrapJS.read())
-    f.close()
+    if (is_offline == False):
+        f = open('./dependent/js/bootstrap.bundle.min.js', 'w+', encoding='UTF-8')
+        f.write(BootstrapJS.read())
+        f.close()
+    else:
+        html = re.sub('<!-- vendor_js bootstrap !python -->[\w|\W]*<!-- end vendor_js bootstrap !python -->', '<!-- vendor_js bootstrap !python -->', html)
+        html = html.replace('<!-- vendor_js bootstrap !python -->', '<script>' + BootstrapJS.read() + '</script>', 1)
     BootstrapJS.close()
     BootstrapCSS = open('../vendor/bootstrap/css/bootstrap.min.css', 'r', encoding='UTF-8')
-    f = open('./dependent/css/bootstrap.min.css', 'w+', encoding='UTF-8')
-    f.write(BootstrapCSS.read())
-    f.close()
+    if (is_offline == False):
+        f = open('./dependent/css/bootstrap.min.css', 'w+', encoding='UTF-8')
+        f.write(BootstrapCSS.read())
+        f.close()
+    else:
+        html = re.sub('<!-- vendor css bootstrap !python-->[\w|\W]*<!-- end vendor css bootstrap !python -->', '<!-- vendor css bootstrap !python-->', html)
+        html = html.replace('<!-- vendor css bootstrap !python-->', '<style>' + BootstrapCSS.read() + '</style>', 1)
     BootstrapCSS.close()
-    html = re.sub('//backup vendor bootstrap !python[\w|\W]*//end backup vendor bootstrap !python', 'window.bootstrap || document.write(\'<link href="./dependent/css/bootstrap.min.css" rel="stylesheet"><link href="./css/GFLGSTS_v' + version_word + '.css" rel="stylesheet"><script src="./dependent/js/bootstrap.bundle.min.js"><\/script>\');', html)
+    if (is_offline == False):
+        html = re.sub('//backup vendor bootstrap !python[\w|\W]*//end backup vendor bootstrap !python', 'window.bootstrap || document.write(\'<link href="./dependent/css/bootstrap.min.css" rel="stylesheet"><link href="./css/GFLGSTS_v' + version_word + '.css" rel="stylesheet"><script src="./dependent/js/bootstrap.bundle.min.js"><\/script>\');', html)
 
-    html = re.sub('<!-- GF css[\w|\W]*<!-- end GF css !python -->', '<link href="./css/GFLGSTS_v' + version_word + '.css"rel="stylesheet">', html)
-    html = re.sub('<!-- GF js_1[\w|\W]*<!-- end GF js_1 !python -->', '<script src="./js/GFLGSTS_js1_v' + version_word + '.js"></script>', html) # crossorigin="anonymous"
-    html = re.sub('<!-- GF js_2[\w|\W]*<!-- end GF js_2 !python -->', '<script src="./js/GFLGSTS_js2_v' + version_word + '.js"></script>', html)
+    if (is_offline == False):
+        html = re.sub('<!-- GF css[\w|\W]*<!-- end GF css !python -->', '<link href="./css/GFLGSTS_v' + version_word + '.css"rel="stylesheet">', html)
+        html = re.sub('<!-- GF js_1[\w|\W]*<!-- end GF js_1 !python -->', '<script src="./js/GFLGSTS_js1_v' + version_word + '.js"></script>', html) # crossorigin="anonymous"
+        html = re.sub('<!-- GF js_2[\w|\W]*<!-- end GF js_2 !python -->', '<script src="./js/GFLGSTS_js2_v' + version_word + '.js"></script>', html)
+    else:
+        f = open('./css/GFLGSTS_v' + version_word + '.css', 'r', encoding='UTF-8')
+        html = re.sub('<!-- GF css[\w|\W]*<!-- end GF css !python -->', '<!-- GF css -->', html)
+        html = html.replace('<!-- GF css -->', '<style>' + f.read() + '</style>', 1)
+        f.close()
+        f = open('./js/GFLGSTS_js1_v' + version_word + '.js', 'r', encoding='UTF-8')
+        html = re.sub('<!-- GF js_1[\w|\W]*<!-- end GF js_1 !python -->', '<!-- GF js_1 -->', html)
+        html = html.replace('<!-- GF js_1 -->', '<script>' + f.read() + '</script>', 1)
+        f.close()
+        f = open('./js/GFLGSTS_js2_v' + version_word + '.js', 'r', encoding='UTF-8')
+        html = re.sub('<!-- GF js_2[\w|\W]*<!-- end GF js_2 !python -->', '<!-- GF js_2 -->', html)
+        html = html.replace('<!-- GF js_2 -->', '<script>' + f.read() + '</script>', 1)
+        f.close()
+
     file2 = open("./GF_logistics.html", "w+", encoding="UTF-8")
     file2.write(html)
     file2.close()
-    file2 = open("./GF_logistics.html", "r", encoding="UTF-8")
-    html = file2.readlines()
-    file2.close()
-    new_html = []
-    for line in html:
-        line = re.sub('^\s*//.*', '', line) # 不安全地删除js注释
-        line = re.sub('^\s+', '', line) # 删除每行前面的空
-        line = CompressHTML_style(line) # 删除'style=""'中的最后一个';'
-        # line = re.sub('(?<=[:|;"=\(\)\{\}])\s', '', line) # 删除一些符号后面的空
-        # line = re.sub('\s(?=[:|;"=\{\}\(\)])', '', line) # 删除一些符号前面的空
-        line = re.sub('(?<!\w)\n', '', line) # 删除不是字母后的换行符
-        line = re.sub('space-->', '--> ', line) # 在'space-->'后加上空格
-        line = re.sub('<!--[\w|\W]*?-->', '', line) # 删除html注释
-        line = re.sub('</td>', '', line) # 删除</td>
-        line = re.sub('</tr>', '', line) # 删除</tr>
-        line = re.sub('</th>', '', line) # 删除</th>
-        line = re.sub('</thead>', '', line) # 删除</thead>
-        line = re.sub('</tbody>', '', line) # 删除</tbody>
-        line = re.sub('\n', ' ', line)
-        if (line != '' and line != '\n'):
-            new_html.append(line)
-    new_file = open("GF_logistics.html", "w+", encoding="UTF-8")
-    for line in new_html:
-        new_file.write(line)
-    new_file.close()
+    if (is_offline == False):
+        file2 = open("./GF_logistics.html", "r", encoding="UTF-8")
+        html = file2.readlines()
+        file2.close()
+        new_html = []
+        for line in html:
+            line = re.sub('^\s*//.*', '', line) # 不安全地删除js注释
+            line = re.sub('^\s+', '', line) # 删除每行前面的空
+            line = CompressHTML_style(line) # 删除'style=""'中的最后一个';'
+            # line = re.sub('(?<=[:|;"=\(\)\{\}])\s', '', line) # 删除一些符号后面的空
+            # line = re.sub('\s(?=[:|;"=\{\}\(\)])', '', line) # 删除一些符号前面的空
+            line = re.sub('(?<=")\s', '', line) # 删除"后面的空
+            line = re.sub('(?<!\w)\n', '', line) # 删除不是字母后的换行符
+            line = re.sub('space-->', '--> ', line) # 在'space-->'后加上空格
+            line = re.sub('<!--[\w|\W]*?-->', '', line) # 删除html注释
+            line = re.sub('</td>', '', line) # 删除</td>
+            line = re.sub('</tr>', '', line) # 删除</tr>
+            line = re.sub('</th>', '', line) # 删除</th>
+            line = re.sub('</thead>', '', line) # 删除</thead>
+            line = re.sub('</tbody>', '', line) # 删除</tbody>
+            line = re.sub('\n', ' ', line)
+            if (line != '' and line != '\n'):
+                new_html.append(line)
+        new_file = open("GF_logistics.html", "w+", encoding="UTF-8")
+        for line in new_html:
+            new_file.write(line)
+        new_file.close()
 
 # 辣鸡python, 还报错look-behind requires fixed-width pattern
 def CompressHTML_style(line):
