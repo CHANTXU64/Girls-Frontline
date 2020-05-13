@@ -235,27 +235,11 @@ class PlanDetails {
                     value: [
                         index,
                         baseTime = missions_CollectTimetable[category][i] - duration,
-                        baseTime += duration - 1,
-                        duration - 1
+                        baseTime += duration,
                     ],
                     itemStyle: {
-                        normal: {
-                            color: typeItem.color
-                        }
-                    }
-                });
-                data.push({
-                    name: 'none',
-                    value: [
-                        index,
-                        baseTime = missions_CollectTimetable[category][i] - 1,
-                        baseTime += 1,
-                        1
-                    ],
-                    itemStyle: {
-                        normal: {
-                            color: '#000000'
-                        }
+                        color: typeItem.color,
+                        borderColor: '#000'
                     }
                 });
             }
@@ -289,15 +273,6 @@ class PlanDetails {
             series: [{
                 type: 'custom',
                 renderItem: plan_details_renderItem,
-                itemStyle: {
-                    normal: {
-                        opacity: 0.8
-                    }
-                },
-                encode: {
-                    x: [1, 2],
-                    y: 0
-                },
                 data: data,
                 silent: true
             }],
@@ -367,18 +342,17 @@ function plan_details_renderItem(params, api) {
     let start = api.coord([api.value(1), categoryIndex]);
     let end = api.coord([api.value(2), categoryIndex]);
     let height = api.size([0, 1])[1] * 0.5;
-    let rectShape = echarts.graphic.clipRectByRect({
-        x: start[0],
+    let x = Math.round(start[0] * 2) / 2;
+    if (x === 35)
+        x = 35.5;
+    x = Math.round(x - 35.5) + 35.5;
+    let rectShape = {
+        x: x,
         y: start[1] - height / 2,
-        width: end[0] - start[0],
+        width: Math.round(Math.round(end[0] * 2) / 2 - 35.5) + 35.5 - x,
         height: height
-    }, {
-        x: params.coordSys.x,
-        y: params.coordSys.y,
-        width: params.coordSys.width,
-        height: params.coordSys.height
-    });
-    return rectShape && {
+    }
+    return {
         type: 'rect',
         shape: rectShape,
         style: api.style()
