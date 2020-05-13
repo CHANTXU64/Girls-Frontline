@@ -524,3 +524,7 @@ $(".autoEnter").on("keyup", function (e) {
         autoEnterArray[index + 1].focus();
     }
 });
+
+$("#version").on("click", function () {
+    showAllReleaseNotes();
+})

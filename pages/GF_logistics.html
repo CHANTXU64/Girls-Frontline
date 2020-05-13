@@ -56,8 +56,8 @@
     }
   </style>
   <!-- Modal -->
-  <div class="modal fade" id="Modal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="transition-duration: 0.3s">
+  <div class="modal fade" style="overflow-y: hidden;" id="Modal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document" style="transition-duration: 0.3s">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title disable-selected-text" id="Modal_title"></h5>
@@ -584,7 +584,9 @@
       <a id="OfflineVersion" href="https://chantxu64.github.io/GF_logistics_offline.zip"
         download="GF_logistics_offline.zip" target="_blank;"></a>
     </footer>
-    <footer class="col p-0" id="version"></footer>
+    <footer class="col p-0">
+      <a id="version" href="##"></a>
+    </footer>
   </div>
 
   <script>
@@ -613,11 +615,13 @@
   <!-- GF js_1 !python -->
   <script src="../js/debug.js" crossorigin></script>
   <script src="../lang/languages.js"></script>
+  <script src="../js/version.js"></script>
   <script src="../js/quick_sort.js"></script>
   <script src="../js/function.js"></script>
   <script src="../js/data.js"></script>
   <script src="../js/modal.js"></script>
   <script src="../js/local_storage.js"></script>
+  <script src="../js/release_notes.js"></script>
   <script src="../js/timetable_slider.js"></script>
   <script src="../js/input.js"></script>
   <script src="../js/tab.js"></script>

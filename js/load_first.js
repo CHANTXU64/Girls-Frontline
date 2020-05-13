@@ -1,5 +1,6 @@
 checkLocalStorageWork();
 updateLocalStorage();
+setPreviousVersion();
 
 setLanguage();
 
@@ -48,3 +49,5 @@ $("#ContractWeight").removeAttr("disabled");
 $("#PlanDetails_InputStartTime").removeAttr("disabled");
 $("#PlanDetails_InputExecutionTimes").removeAttr("disabled");
 $("#version").html("version: " + VERSION);
+
+showReleaseNotes();

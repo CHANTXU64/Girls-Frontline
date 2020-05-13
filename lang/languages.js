@@ -5,6 +5,7 @@ let language;
 const language_zh_CN = {
     name: "简体中文",
     lang: "zh-Hans",
+    version_note_lang: "zh_CN",
     title: "少女前线-后勤组合排序器",
     cssClass: "zh-Hans",
     otherLangCssClass: ["zh-Hant", "en"],
@@ -171,6 +172,7 @@ const language_zh_CN = {
         FineTuning_plus: "增大需求量",
     },
     JS: {
+        release_notes_title: "发布版本",
         alertTitle_warning: "警告",
         chapter_start: "第",
         chapter_end: "战役",
@@ -314,6 +316,7 @@ const language_zh_CN = {
 const language_zh_TW = {
     name: "繁體中文",
     lang: "zh-Hant",
+    version_note_lang: "zh_TW",
     title: "少女前線-後勤組合排序器",
     cssClass: "zh-Hant",
     otherLangCssClass: ["zh-Hans", "en"],
@@ -480,6 +483,7 @@ const language_zh_TW = {
         FineTuning_plus: "增大需求量",
     },
     JS: {
+        release_notes_title: "發布版本",
         alertTitle_warning: "警告",
         chapter_start: "第",
         chapter_end: "戰役",
@@ -623,6 +627,7 @@ const language_zh_TW = {
 const language_en = {
     name: "English",
     lang: "en",
+    version_note_lang: "en",
     title: "Girls' Frontline Logistics Combination Calculator",
     cssClass: "en",
     otherLangCssClass: ["zh-Hans", "zh-Hant"],
@@ -789,6 +794,7 @@ const language_en = {
         FineTuning_plus: "Increase demand",
     },
     JS: {
+        release_notes_title: "Release Notes",
         alertTitle_warning: "Warning",
         chapter_start: "Chapter ",
         chapter_end: "",
