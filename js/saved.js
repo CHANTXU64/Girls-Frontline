@@ -282,6 +282,9 @@ class Saved {
         if (this._selectRow === 0)
             $("#moveSaved_up").attr("disabled", "true");
         storageSetItem("Saved", this._saved);
+        try {
+            document.getElementById("SavedTable_row_" + (row - 1)).scrollIntoViewIfNeeded(false);
+        } catch (ex) {}
     }
 
     /**
@@ -300,6 +303,9 @@ class Saved {
         if (this._selectRow === this._saved.length - 1)
             $("#moveSaved_down").attr("disabled", "true");
         storageSetItem("Saved", this._saved);
+        try {
+            document.getElementById("SavedTable_row_" + (row + 1)).scrollIntoViewIfNeeded(false);
+        } catch (ex) {}
     }
 
     /**
