@@ -200,6 +200,7 @@ function setPageByImport(input) {
     if ((input === "clearSTORAGE" || input === "clear") && CAN_STORAGE_WORK) {
         sessionStorage.removeItem("GF_Logistics_console");
         sessionStorage.removeItem("GF_Logistics_windowOnload");
+        sessionStorage.removeItem("GF_Logistics_windowOnloadFailed");
         localStorage.removeItem("GF_Logistics");
         localStorage.removeItem("GF_Logistics_v1.x.x");
         localStorage.removeItem("GF_Logistics_PC_v1.x.x");

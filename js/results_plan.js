@@ -8,9 +8,6 @@ class ResultsPlan {
     static clear() {
         this._lastResultsPlan = [];
         this._lastSortBy = "Ranking";
-        //test
-        console.log("Results Plan Clear");
-        //End test
     }
 
     /**
