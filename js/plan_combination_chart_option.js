@@ -46,7 +46,7 @@ function plan_combination_getChartOption(startDate, endDate) {
         ],
         tooltip: {
             trigger: 'item',
-            backgroundColor: 'rgba(245, 245, 245, 0.8)',
+            backgroundColor: 'rgba(245, 245, 245, 0.9)',
             borderWidth: 1,
             borderColor: '#ccc',
             padding: 10,
@@ -63,7 +63,18 @@ function plan_combination_getChartOption(startDate, endDate) {
                 text += xAxisData[params[0].axisValue] + '<br>';
                 for (let i = 0; i < params.length; ++i) {
                     text += params[i].marker + params[i].seriesName + ': ';
-                    text += params[i].data[1] + '<br>';
+                    let val = params[i].data[1];
+                    if (val < 0)
+                        text += '<span style="color: red;">';
+                    else if (val === 0)
+                        text += '<span>';
+                    else if (val < softcap && params[i].componentIndex < 4)
+                        text += '<span style="color: blue;">';
+                    else if (val === 300000 && params[i].componentIndex < 4)
+                        text += '<span style="color: green;">';
+                    else
+                        text += '<span>';
+                    text += val.toLocaleString() + '</span><br>';
                 }
                 return text;
             },
@@ -343,13 +354,6 @@ function plan_combination_getChartOption(startDate, endDate) {
                         return text;
                     }
                 },
-                emphasis: {
-                    itemStyle: {
-                        borderColor: '#000',
-                        borderWidth: 1,
-                        borderType: 'solid'
-                    }
-                }
             },
             {
                 type: 'custom',
@@ -374,19 +378,16 @@ function plan_combination_getChartOption(startDate, endDate) {
                             text += language.JS[class_name[i]];
                             text += ': ';
                             if (reAndco[i] > 0)
-                                text += '+';
-                            text += NumberAutoExact(reAndco[i]) + '<br>';
+                                text += '<span style="color: green;">+';
+                            else if (reAndco[i] < 0)
+                                text += '<span style="color: red;">';
+                            else
+                                text += '<span>';
+                            text += NumberAutoExact(reAndco[i]).toLocaleString() + '</span><br>';
                         }
                         return text;
                     }
                 },
-                emphasis: {
-                    itemStyle: {
-                        borderColor: '#000',
-                        borderWidth: 1,
-                        borderType: 'solid'
-                    }
-                }
             }
         ],
         animation: animation,

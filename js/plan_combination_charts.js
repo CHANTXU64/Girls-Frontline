@@ -112,6 +112,7 @@ class PlanCombinationChart {
             }
             newData.itemStyle = {};
             newData.itemStyle.color = this.colorList[i];
+            newData.emphasis = {itemStyle: {borderColor: '#000', borderWidth: 2}};
             data.push(newData);
         }
         return data;
@@ -126,6 +127,7 @@ class PlanCombinationChart {
             newData.value = ConsumptionPlanData[i].TimetableData;
             newData.itemStyle = {};
             newData.itemStyle.color = this.colorList[32 + i];
+            newData.emphasis = {itemStyle: {borderColor: '#000', borderWidth: 2}};
             data.push(newData);
         }
         return data;
@@ -239,6 +241,7 @@ function PC_renderItem_Logistics(params, api) {
         child.shape.width = size[0];
         child.shape.height = size[1];
         child.style = style;
+        child.styleEmphasis = api.styleEmphasis();
         groupChildren.push(child);
         ++i;
     }
@@ -267,6 +270,7 @@ function PC_renderItem_Consumption(params, api) {
         child.shape.width = size[0];
         child.shape.height = size[1];
         child.style = style;
+        child.styleEmphasis = api.styleEmphasis();
         groupChildren.push(child);
         ++i;
     }

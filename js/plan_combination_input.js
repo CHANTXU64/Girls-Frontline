@@ -225,4 +225,5 @@ function Input_setPC_CommanderLevel(level) {
         $("#CommanderLevel").val("");
     else
         $("#CommanderLevel").val(level);
+    PC_storageSetItem("level", level);
 }
