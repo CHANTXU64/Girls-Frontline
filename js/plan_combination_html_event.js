@@ -100,6 +100,12 @@ $("#Consumption_tbody").on("click", "button[id^=Consumption_table_close_row_]", 
     PC_ConsumptionPlan._table_deleteThisRow(tr_id);
 });
 
+$("#Consumption_tbody").on("click", "button[id^=Consumption_table_apply_row_]", function () {
+    let row = stringSliceFromLast_(this.id);
+    let tr_id = "Consumption_table_row_" + row;
+    PC_ConsumptionPlan.table_applyThisRow(tr_id);
+});
+
 $("#PC_startRanking").on("click", function () {
     PC_start_ranking();
 })

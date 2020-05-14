@@ -85,7 +85,8 @@ class PC_ConsumptionPlan {
                 html += '+'
             html += NumberAutoExact(consumption[i]) + '</td>';
         }
-        html += '<td>' + times;
+        html += '<td>' + times + '</td>';
+        html += '<td><button id="Consumption_table_apply_row_' + row + '" style="float: left;" class="close" title="' + language.JS.apply + '">✓</button>';
         html += '<button id="Consumption_table_close_row_' + row + '" class="close" title="' + language.JS.delete_ + '">×</button></td>';
         return html;
     }
@@ -108,6 +109,19 @@ class PC_ConsumptionPlan {
         }
         this._table_printTotal(this._tableData[0]);
         this._tableData.splice(row + 1, 1);
+    }
+
+    static table_applyThisRow(id) {
+        let tr_elem = document.getElementById(id);
+        let row = 0;
+        while(1) {
+            if ($("#Consumption_tbody").children()[row].id === id)
+                break;
+            else
+                ++row;
+        }
+        Input_setPC_Consumption_reAndco(this._tableData[row + 1]);
+        Input_setPC_Consumption_times(this._tableData[row + 1][8]);
     }
 
     static _table_clear() {
