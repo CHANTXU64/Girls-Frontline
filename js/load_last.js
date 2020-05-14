@@ -14,8 +14,8 @@ window.onload = function () {
         script3.crossOrigin = "anonymous";
         document.body.appendChild(script3);
         let script4 = document.createElement("script");
-        script4.src = "https://cdn.jsdelivr.net/npm/echarts@4.6.0/dist/echarts.min.js";
-        script4.integrity = "sha256-9TvhGliyfFW2O8SvloAhdFQbfjluHQ+vQ7WWWX5Z7oM=";
+        script4.src = "https://cdn.jsdelivr.net/npm/echarts@4.7.0/dist/echarts.min.js";
+        script4.integrity = "sha256-eKrx6Ly6b0Rscx/PSm52rJsvK76RJyv18Toswq+OLSs=";
         script4.crossOrigin = "anonymous";
         document.body.appendChild(script4);
         let script5 = document.createElement("script");
