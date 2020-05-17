@@ -147,7 +147,7 @@ function loadHTML_language() {
     }
 
     //plan combination chart
-    if (PLAN_COMBINATION_READY)
+    if (window.PLAN_COMBINATION)
         PlanCombinationChart.print(PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans());
 
     //comsumption preset

@@ -28,6 +28,94 @@ class PC_ConsumptionPlan {
         this.setStorage();
     }
 
+    static changeDate(newStartDate, newEndDate) {
+        let data = {};
+        data.startDate = newStartDate;
+        data.endDate = newEndDate;
+        data.totalDays = calcDaysBetween2Dates(newStartDate, newEndDate);
+        data.plansNumber = this._plansNumber;
+        let startDate = this._startDate;
+        let endDate = this._endDate;
+        let interval_startDate = calcDaysBetween2Dates(startDate, newStartDate);
+        let interval_endDate = calcDaysBetween2Dates(endDate, newEndDate);
+        if (interval_startDate > 0) {
+            this._changeDate_PostponeStartDate(interval_startDate);
+        }
+        else if (interval_startDate < 0) {
+            this._changeDate_AdvanceStartDate(-interval_startDate);
+        }
+        if (interval_endDate > 0) {
+            this._changeDate_PostponeEndDate(interval_endDate);
+        }
+        else if (interval_endDate < 0) {
+            this._changeDate_AdvanceEndDate(-interval_endDate, data.totalDays);
+        }
+        data.planFlag = this._planFlag;
+        data.plans = this._plans;
+        this.init(data);
+    }
+    static _changeDate_PostponeStartDate(interval_startDate) {
+        this._planFlag.splice(0, interval_startDate);
+        for (let i = 0; i < this._plans.length; ++i) {
+            let plan = this._plans[i];
+            for (let ii = 0; ii < plan.timePeriod.length; ++ii) {
+                if (plan.timePeriod[ii][1] <= interval_startDate) {
+                    plan.timePeriod.splice(ii, 1);
+                    --ii;
+                }
+                else {
+                    plan.timePeriod[ii][0] = Math.max(plan.timePeriod[ii][0] - interval_startDate, 0);
+                    plan.timePeriod[ii][1] -= interval_startDate;
+                }
+            }
+            if (plan.timePeriod.length === 0) {
+                this._plans.splice(i, 1);
+                --i;
+                continue;
+            }
+            plan.TimetableData = this._calcTimetableData(plan.timePeriod);
+        }
+    }
+    static _changeDate_AdvanceStartDate(interval_startDate) {
+        for (let i = 0; i < interval_startDate; ++i) {
+            this._planFlag.unshift(0);
+        }
+        for (let i = 0; i < this._plans.length; ++i) {
+            let plan = this._plans[i];
+            for (let ii = 0; ii < plan.timePeriod.length; ++ii) {
+                plan.timePeriod[ii][0] += interval_startDate;
+                plan.timePeriod[ii][1] += interval_startDate;
+            }
+            plan.TimetableData = this._calcTimetableData(plan.timePeriod);
+        }
+    }
+    static _changeDate_PostponeEndDate(interval_endDate) {
+        for (let i = 0; i < interval_endDate; ++i) {
+            this._planFlag.push(0);
+        }
+    }
+    static _changeDate_AdvanceEndDate(interval_endDate, totalDays) {
+        this._planFlag.splice(-interval_endDate, interval_endDate);
+        for (let i = 0; i < this._plans.length; ++i) {
+            let plan = this._plans[i];
+            for (let ii = 0; ii < plan.timePeriod.length; ++ii) {
+                if (plan.timePeriod[ii][0] >= totalDays) {
+                    plan.timePeriod.splice(ii, 1);
+                    --ii;
+                }
+                else {
+                    plan.timePeriod[ii][1] = Math.min(plan.timePeriod[ii][1], totalDays);
+                }
+            }
+            if (plan.timePeriod.length === 0) {
+                this._plans.splice(i, 1);
+                --i;
+                continue;
+            }
+            plan.TimetableData = this._calcTimetableData(plan.timePeriod);
+        }
+    }
+
     static reset() {
         let startDate = Input_getPC_startDate();
         let endDate = Input_getPC_endDate();
@@ -173,12 +261,7 @@ class PC_ConsumptionPlan {
         }
 
         //格式[height, (xindex, yindex, width,) (xindex......]
-        let TimetableData = [240];
-        for (let i = 0; i < timePeriod_length; ++i) {
-            TimetableData.push(timePeriod[i][0]);
-            TimetableData.push(1680);
-            TimetableData.push(timePeriod[i][1] - timePeriod[i][0]);
-        }
+        let TimetableData = this._calcTimetableData(timePeriod);
 
         let newPlan = {};
         newPlan.timePeriod = timePeriod;
@@ -195,6 +278,17 @@ class PC_ConsumptionPlan {
         PlanCombinationTimePeriod.clear();
         PlanCombination_disabledDate();
         this._plansHasChanged();
+    }
+
+    static _calcTimetableData(timePeriod) {
+        let timePeriod_length = timePeriod.length;
+        let TimetableData = [240];
+        for (let i = 0; i < timePeriod_length; ++i) {
+            TimetableData.push(timePeriod[i][0]);
+            TimetableData.push(1680);
+            TimetableData.push(timePeriod[i][1] - timePeriod[i][0]);
+        }
+        return TimetableData;
     }
 
     static apply(plan_number) {

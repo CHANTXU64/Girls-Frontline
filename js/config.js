@@ -171,7 +171,9 @@ function config_export() {
     data.ContractWeight = Input_getContractWeight();
     data.TargetValue = Input_getTarget_Correct();
     data.Saved = Saved.getSaved();
-    data.PlanCombination = plan_combination_getConfigData();
+    if (window.PLAN_COMBINATION) {
+        data.PlanCombination = plan_combination_getConfigData();
+    }
 
     let SHA1 = sha1(JSON.stringify(data));
     let config = {
@@ -278,7 +280,9 @@ function setPageByImport_main(data) {
     MissionsDetails.print();
     printPlanDetails();
 
-    plan_combination_init(data.PlanCombination);
+    if (window.PLAN_COMBINATION) {
+        plan_combination_init(data.PlanCombination);
+    }
 }
 
 /**

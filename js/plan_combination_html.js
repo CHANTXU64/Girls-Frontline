@@ -114,7 +114,7 @@ function PC_calcDemand() {
 function PC_saveAll() {
     let plans_length = PC_LogisticsPlan._plans.length;
     for (let i = 0; i < plans_length; ++i) {
-        Saved._saved.push(PC_LogisticsPlan._plans[i].saved);
+        Saved._saved.push(JSON.parse(JSON.stringify(PC_LogisticsPlan._plans[i].saved)));
         Saved._printLastSaved();
     }
 }
@@ -179,4 +179,80 @@ function plan_combination_getConfigData() {
     data.ConsumptionData = PC_ConsumptionPlan.exportData();
     data.level = Input_getPC_CommanderLevel();
     return data;
+}
+
+function PC_changeStartDate() {
+    Modal.prompt(language.JS.PC_changeStart_prompt_1, language.JS.PC_changeStart_prompt_2, PC_changeStartDate_ok, function () {},
+                    "date", Input_getPC_startDate(), PC_changeStartDate_check,
+                    function (i) {return "";}, PC_changeStartDate_invalid);
+}
+
+function PC_changeStartDate_ok(newStartDate) {
+    Input_setPC_startDate(newStartDate);
+    Input_setPC_startDate_MAXMIN();
+    Input_setPC_planStartDate_MAXMIN();
+    Input_setPC_planEndDate_MAXMIN();
+    PC_ConsumptionPlan.changeDate(Input_getPC_startDate(), Input_getPC_endDate());
+    PC_LogisticsPlan.changeDate(Input_getPC_startDate(), Input_getPC_endDate());
+    if (PC_LogisticsPlan.chartGetPlans().length === 0 && PC_ConsumptionPlan.chartGetPlans().length === 0)
+        PlanCombination_enabledDate();
+    PlanCombinationChart.print(PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans());
+}
+
+function PC_changeStartDate_check(input) {
+    let endDate = Input_getPC_endDate();
+    if (input !== "" && input < endDate)
+        return true;
+    else
+        return false;
+}
+
+function PC_changeStartDate_invalid(input) {
+    if (input === "")
+        return language.JS.PC_changeStart_prompt_3;
+    else {
+        let endDate = Input_getPC_endDate();
+        if (input >= endDate)
+            return language.JS.PC_changeStart_prompt_4;
+        else
+            return "";
+    }
+}
+
+function PC_changeEndDate() {
+    Modal.prompt(language.JS.PC_changeEnd_prompt_1, language.JS.PC_changeEnd_prompt_2, PC_changeEndDate_ok, function () {},
+                    "date", Input_getPC_endDate(), PC_changeEndDate_check,
+                    function (i) {return "";}, PC_changeEndDate_invalid);
+}
+
+function PC_changeEndDate_ok(newEndDate) {
+    Input_setPC_endDate(newEndDate);
+    Input_setPC_startDate_MAXMIN();
+    Input_setPC_planStartDate_MAXMIN();
+    Input_setPC_planEndDate_MAXMIN();
+    PC_ConsumptionPlan.changeDate(Input_getPC_startDate(), Input_getPC_endDate());
+    PC_LogisticsPlan.changeDate(Input_getPC_startDate(), Input_getPC_endDate());
+    if (PC_LogisticsPlan.chartGetPlans().length === 0 && PC_ConsumptionPlan.chartGetPlans().length === 0)
+        PlanCombination_enabledDate();
+    PlanCombinationChart.print(PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans());
+}
+
+function PC_changeEndDate_check(input) {
+    let startDate = Input_getPC_startDate();
+    if (input !== "" && input > startDate)
+        return true;
+    else
+        return false;
+}
+
+function PC_changeEndDate_invalid(input) {
+    if (input === "")
+        return language.JS.PC_changeEnd_prompt_3;
+    else {
+        let startDate = Input_getPC_startDate();
+        if (input <= startDate)
+            return language.JS.PC_changeEnd_prompt_4;
+        else
+            return "";
+    }
 }

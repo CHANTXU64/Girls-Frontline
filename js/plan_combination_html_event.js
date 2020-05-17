@@ -153,3 +153,11 @@ $("#Consumption_select").on("change", function () {
 $("input[id^=Consumption_]").on("focus", function () {
     this.select();
 })
+
+$("#PC_changeStartDate").on("click", function () {
+    PC_changeStartDate();
+});
+
+$("#PC_changeEndDate").on("click", function () {
+    PC_changeEndDate();
+});

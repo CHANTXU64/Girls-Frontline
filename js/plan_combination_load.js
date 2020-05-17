@@ -1,5 +1,3 @@
-let PLAN_COMBINATION_READY = false;
-
 function plan_combination_load() {
     const class_name = ['Manp', 'Ammu', 'Rati', 'Part', 'TPro', 'Equi', 'QPro', 'QRes'];
     const name = ['current_', 'demand_', 'target_'];
