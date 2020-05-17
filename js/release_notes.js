@@ -48,11 +48,12 @@ function getReleaseNotesHTML(previous_version_index, current_version_index) {
             html += ' / ' + release_note.version[1];
         }
         html += '</h5>';
+        html += '<ul style="padding-left: 25px; margin-bottom: 1.5rem;">';
         let notes = release_note.notes[language.version_note_lang];
         for (let ii = 0; ii < notes.length; ++ii) {
-            html += ' - ' + notes[ii] + '<br>';
+            html += '<li>' + notes[ii] + '</li>';
         }
-        html += '<br>';
+        html += '</ul>';
     }
     return html;
 }
