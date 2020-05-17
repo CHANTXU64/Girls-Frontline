@@ -69,6 +69,7 @@ class PC_ranking {
             this.sortPlanByPlanValue();
             if (this._planValue_total === 0) {
                 Modal.alert(language.JS.PC_ranking_alert2);
+                Modal.progress_close();
                 return ;
             }
         }
