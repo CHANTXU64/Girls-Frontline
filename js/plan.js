@@ -458,12 +458,6 @@ class Plan extends Plan_Original {
     constructor(ShownTab, list_length, targetValue_StandardizationAndNormalization) {
         super(ShownTab, list_length);
         this.targetValue = targetValue_StandardizationAndNormalization;
-
-        //由于已标准化归一化, 当方案的现值小于目标值一半可以直接跳过
-        this.targetValue_half = this.targetValue.slice();
-        for (let i = 0; i < 8; i++) {
-            this.targetValue_half[i] = this.targetValue_half[i] * 0.5;
-        }
     }
 
     /**
@@ -480,11 +474,6 @@ class Plan extends Plan_Original {
         //ShownTab的计算现值函数返回全为-1的数组, 说明由于某些原因该组合不可用
         if (currentValue[0] === -1)
             return ;
-
-        for (let i = 0; i < 8; i++) {
-            if (currentValue[i] < this.targetValue_half[i])
-                return ;
-        }
 
         let planValue = this._calculateValue(currentValue);
         this._pushIntoList(Mission_1, Mission_2, Mission_3, Mission_4, planValue, currentValue);
