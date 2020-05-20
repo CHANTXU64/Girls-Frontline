@@ -4,7 +4,8 @@
 ### WIKI  https://github.com/CHANTXU64/Girls-Frontline/wiki
 
 参考 [星光下的彩虹](https://pan.baidu.com/s/1c3iS9Ks#list/path=/Girls%20Frontline)<br>
-Reference from [星光下的彩虹](https://pan.baidu.com/s/1c3iS9Ks#list/path=/Girls%20Frontline)
+Reference from [星光下的彩虹](https://pan.baidu.com/s/1c3iS9Ks#list/path=/Girls%20Frontline)<br>
+[Contract](https://bbs.nga.cn/read.php?tid=21401760&_fp=4)
 
 感谢MCorMC在开发1.2.0版本时提出的建议。
 
