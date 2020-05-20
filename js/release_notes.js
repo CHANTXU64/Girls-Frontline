@@ -40,7 +40,7 @@ function showAllReleaseNotes() {
 
 function getReleaseNotesHTML(previous_version_index, current_version_index) {
     let html = "";
-    for (let i = previous_version_index; i <= current_version_index; ++i) {
+    for (let i = previous_version_index + 1; i <= current_version_index; ++i) {
         let release_note = release_notes[i];
         html += '<h5>';
         html += release_note.version[0];
@@ -233,5 +233,33 @@ const release_notes = [
                 "Update Chapter 13"
             ]
         }
-    }
+    },
+    {
+        version: [
+            "1.3.0-rc",
+        ],
+        notes: {
+            zh_CN: [
+                "后勤组合排序模式 - 更方便地修改开始结束日期",
+                "更新契约数据",
+                "增加版本更新通知",
+                "各种优化",
+                "修复错误"
+            ],
+            zh_TW: [
+                "後勤組合排序模式 - 更方便地修改開始結束日期",
+                "更新契約數據",
+                "增加版本更新通知",
+                "各種優化",
+                "修復錯誤"
+            ],
+            en: [
+                "Plan combination mode - easy to change date",
+                "Update contract data",
+                "Add release notes",
+                "Various optimizations",
+                "Fix bug"
+            ]
+        }
+    },
 ]
