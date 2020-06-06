@@ -60,7 +60,7 @@ function plan_combination_getChartOption(startDate, endDate) {
             },
             formatter: function (params) {
                 let text = "";
-                text += xAxisData[params[0].axisValue] + '<br>';
+                text += xAxisData[params[0].axisValue] + '&nbsp;&nbsp;0:00<br>';
                 for (let i = 0; i < params.length; ++i) {
                     text += params[i].marker + params[i].seriesName + ': ';
                     let val = params[i].data[1];
@@ -123,11 +123,9 @@ function plan_combination_getChartOption(startDate, endDate) {
         },
         xAxis: [
             {
-                // type: 'category',
                 type: 'value',
                 min: 0,
                 max: totalDays,
-                // data: xAxisData,
                 axisTick: {show: false},
                 scale: true,
                 axisLabel: {
@@ -138,14 +136,10 @@ function plan_combination_getChartOption(startDate, endDate) {
                 axisLine: {onZero: false},
             },
             {
-                // type: 'category',
                 type: 'value',
                 min: 0,
                 scale: true,
-                // boundaryGap: false,
-                // data: xAxisData,
                 minInterval: 1,
-                // interval: 1,
                 axisLabel: {
                     formatter: function (val) {
                         let date = addDate(startDate, val);
@@ -159,7 +153,6 @@ function plan_combination_getChartOption(startDate, endDate) {
                     },
                 },
                 max: totalDays,
-                // axisLine: {onZero: false},
                 gridIndex: 1
             }
         ],

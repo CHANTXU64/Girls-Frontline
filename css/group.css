@@ -73,6 +73,10 @@
     border-bottom-left-radius: 0;
 }
 
+.Saved-List>.list-group-item:first-child {
+    border-top-width: 0;
+}
+
 .Saved-List>.list-group-item:last-child {
     border-bottom-width: 0;
 }

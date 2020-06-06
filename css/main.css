@@ -213,6 +213,10 @@ input[type="number"] {
     padding-top: 0.5rem;
 }
 
+.result-table th {
+    border-top-width: 0;
+}
+
 .container-fluid {
     min-width: 300px;
     background-color: #FFFFFF;
