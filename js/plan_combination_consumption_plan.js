@@ -174,7 +174,7 @@ class PC_ConsumptionPlan {
             html += NumberAutoExact(consumption[i]) + '</td>';
         }
         html += '<td>' + times + '</td>';
-        html += '<td><button id="Consumption_table_apply_row_' + row + '" style="float: left;" class="close" title="' + language.JS.apply + '">✓</button>';
+        html += '<td style="min-width: 3.2rem;"><button id="Consumption_table_apply_row_' + row + '" style="float: left;" class="close" title="' + language.JS.apply + '">✓</button>';
         html += '<button id="Consumption_table_close_row_' + row + '" class="close" title="' + language.JS.delete_ + '">×</button></td>';
         return html;
     }
