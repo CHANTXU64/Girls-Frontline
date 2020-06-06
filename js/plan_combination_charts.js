@@ -196,11 +196,11 @@ class PlanCombinationChart {
                     if (resource[ii] + regen > softcap) {
                         regen = softcap - resource[ii];
                     }
-                    resource[ii] += regen;
+                    resource[ii] = Math.min(regen + resource[ii], 300000);
                     lastRegen = regen;
                 }
                 else
-                    resource[ii] += lastRegen;
+                    resource[ii] = Math.min(lastRegen + resource[ii], 300000);
             }
         }
         return this._reAndcoData;

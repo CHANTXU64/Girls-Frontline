@@ -70,7 +70,7 @@ function plan_combination_getChartOption(startDate, endDate) {
                         text += '<span>';
                     else if (val < softcap && params[i].componentIndex < 4)
                         text += '<span style="color: blue;">';
-                    else if (val === 300000 && params[i].componentIndex < 4)
+                    else if (val >= 300000 && params[i].componentIndex < 4)
                         text += '<span style="color: green;">';
                     else
                         text += '<span>';
