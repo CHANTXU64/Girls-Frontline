@@ -152,4 +152,7 @@ function loadHTML_language() {
 
     //comsumption preset
     Consumption_load_preset_select_lang();
+
+    //Saved
+    Saved.setSaved(Saved._saved);
 } //End loadHTML_language()
