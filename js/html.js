@@ -271,3 +271,9 @@ function delete_rankingResults() {
     if (!!window.ResultsPlan_JS)
         ResultsPlan.clear();
 }
+
+function warning_ancient_browser() {
+    if (!Array.prototype.fill) {
+        $("#warn_ancient_browser").removeClass("d-none");
+    }
+}

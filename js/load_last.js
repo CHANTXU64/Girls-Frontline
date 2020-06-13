@@ -19,15 +19,10 @@ window.onload = function () {
         script4.crossOrigin = "anonymous";
         document.body.appendChild(script4);
         let script5 = document.createElement("script");
-        script5.src = "https://cdn.jsdelivr.net/npm/es6-promise@4.2.8/dist/es6-promise.auto.min.js";
-        script5.integrity = "sha256-Xxrdry6fWSKu1j2ALyuK/gHFQ+2Bp76ZrR6f3QXI47Y=";
+        script5.src = "https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.1/dist/html2canvas.min.js";
+        script5.integrity = "sha256-uacRffSSMP9qpvNWhVmYLykBv9YKMA1d/VSIN1AmfyQ=";
         script5.crossOrigin = "anonymous";
         document.body.appendChild(script5);
-        let script6 = document.createElement("script");
-        script6.src = "https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.1/dist/html2canvas.min.js";
-        script6.integrity = "sha256-uacRffSSMP9qpvNWhVmYLykBv9YKMA1d/VSIN1AmfyQ=";
-        script6.crossOrigin = "anonymous";
-        document.body.appendChild(script6);
     }
 
     cheackLoadedAndLoadLast();
@@ -42,7 +37,7 @@ window.onload = function () {
  * @returns {boolean}
  */
 function cheackScriptLoad() {
-    if (!!window.sha1 && !!window.md5 && !!window.LZString && !!window.echarts && !!window.ES6Promise && !!window.html2canvas)
+    if (!!window.sha1 && !!window.md5 && !!window.LZString && !!window.echarts && !!window.html2canvas)
         return true;
     else
         return false;
@@ -67,7 +62,9 @@ function loadLast() {
     $("#Config_export").removeAttr("disabled");
     $("#importSaved_input").removeAttr("disabled");
     $("#importSaved_importButton").removeAttr("disabled");
-    $("#Capture").removeAttr("disabled");
+    let a = document.createElement("a");
+    if (a.download === "" && !!Promise)
+        $("#Capture").removeAttr("disabled");
     $("#page_loading").remove();
     $("#PlanCombinationSwitch").removeAttr("disabled");
     plan_combination_init("LocalStorage");
@@ -97,11 +94,6 @@ function loadBackupJS() {
     if (!window.echarts) {
         let script = document.createElement("script");
         script.src = "../vendor/echarts/echarts.min.js";
-        document.body.appendChild(script);
-    }
-    if (!window.ES6Promise) {
-        let script = document.createElement("script");
-        script.src = "../vendor/es6-promise/es6_promise.auto.min.js";
         document.body.appendChild(script);
     }
     if (!window.html2canvas) {

@@ -470,22 +470,10 @@ $("#savePlan").on("click", function () {
 });
 $("#Capture").on("click", function () {
     html2canvas(document.getElementById("PlanDetails"), {logging: false}).then(function (canvas) {
-        if (window.navigator.msSaveBlob) { // IE
-            var bstr = atob(canvas.toDataURL().split(',')[1]);
-            var n = bstr.length;
-            var u8arr = new Uint8Array(n);
-            while (n--) {
-                u8arr[n] = bstr.charCodeAt(n);
-            }
-            var blob = new Blob([u8arr]);
-            navigator.msSaveBlob(blob, "Capture.png");
-        }
-        else {
-            let link = document.createElement("a");
-            link.download = "Capture.png";
-            link.href = canvas.toDataURL();
-            link.click();
-        }
+        let link = document.createElement("a");
+        link.download = "Capture.png";
+        link.href = canvas.toDataURL();
+        link.click();
     });
 });
 $("#PlanDetails_InputStartTime").on("input propertychange", function () {

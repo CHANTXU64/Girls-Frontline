@@ -54,3 +54,5 @@ $("#PlanDetails_InputExecutionTimes").removeAttr("disabled");
 $("#version").html("version: " + VERSION);
 
 showReleaseNotes();
+
+warning_ancient_browser();
