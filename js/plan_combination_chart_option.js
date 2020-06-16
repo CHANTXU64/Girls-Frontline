@@ -25,7 +25,7 @@ function plan_combination_getChartOption(startDate, endDate) {
             {
                 left: 60,
                 right: 45,
-                top: 50,
+                bottom: 125,
                 height: 125,
                 tooltip: {
                     trigger: 'axis',
@@ -81,11 +81,12 @@ function plan_combination_getChartOption(startDate, endDate) {
             extraCssText: 'width: 170px'
         },
         toolbox: {
-            right: 30,
+            left: 16,
+			bottom: 60,
             feature: {
                 saveAsImage: {
                     name: 'GF',
-                    title: ' ',
+                    title: 'Save',
                 }
             }
         },
