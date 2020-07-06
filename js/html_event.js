@@ -73,11 +73,19 @@ $("#Tab_Timetable_name").on("click", function () {
 });
 
 //Hourly Total
-$("input[id^=Display_]").on("change", function () {
-    if (is_CalculateByHour())
-        changeCalculateOutput_Hourly();
-    else
-        changeCalculateOutput_Total();
+$("input[id^=Display_]").on("click", function () {
+    if (is_CalculateByHour()) {
+        if (DISPLAY_BY_TOTAL === true) {
+            changeCalculateOutput_Hourly();
+            DISPLAY_BY_TOTAL = false;
+        }
+    }
+    else {
+        if (DISPLAY_BY_TOTAL === false) {
+            changeCalculateOutput_Total();
+            DISPLAY_BY_TOTAL = true;
+        }
+    }
 });
 
 //GreatSuccess

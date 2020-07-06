@@ -43,6 +43,7 @@ function LS_setHTMLtab(htmlTab = storageGetItem("TabName")) {
         ChangeTab("Anytime");
 }
 
+let DISPLAY_BY_TOTAL = true;
 /**
  * @param {string} PerHourOrTotal
  */
@@ -52,12 +53,14 @@ function LS_setPerHourOrTotal(PerHourOrTotal = storageGetItem("HourlyOrTotal")) 
         document.getElementById("Display_PerHour").checked = true;
         $("#Display_Total_label").removeClass("active");
         $("#Display_PerHour_label").addClass("active");
+        DISPLAY_BY_TOTAL = false;
     }
     else {
         storageSetItem("HourlyOrTotal", "Total");
         document.getElementById("Display_Total").checked = true;
         $("#Display_Total_label").addClass("active");
         $("#Display_PerHour_label").removeClass("active");
+        DISPLAY_BY_TOTAL = true;
     }
 }
 
