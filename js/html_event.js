@@ -73,23 +73,11 @@ $("#Tab_Timetable_name").on("click", function () {
 });
 
 //Hourly Total
-$("input[id^=Display_]").on("click", function () {
+$("input[id^=Display_]").on("change", function () {
     if (is_CalculateByHour())
         changeCalculateOutput_Hourly();
     else
         changeCalculateOutput_Total();
-});
-$("#Display_PerHour_text").on("keyup", function (e) {
-    if (is_KeyIsEnter(e)) {
-        document.getElementById("Display_PerHour").checked = true;
-        changeCalculateOutput_Hourly();
-    }
-});
-$("#Display_Total_text").on("keyup", function (e) {
-    if (is_KeyIsEnter(e)) {
-        document.getElementById("Display_Total").checked = true;
-        changeCalculateOutput_Total();
-    }
 });
 
 //GreatSuccess

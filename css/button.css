@@ -40,7 +40,7 @@ button:disabled:hover {
     background-color: #e9ecef;
 }
 
-/* .btn-switch {
+.btn-switch {
     color: #fff;
     background-color: rgba(0, 0, 0, 0.25);
     border-color: rgba(0, 0, 0, 0.25);
@@ -58,7 +58,7 @@ button:disabled:hover {
     background-color: rgba(0, 0, 0, 0.25);
     border-color: rgba(0, 0, 0, 0.25);
     box-shadow: 0 0 0 0.1rem rgba(38, 143, 255, 0.5);
-} */
+}
 
 .btn-outline-dark:hover {
     color: #fff;
@@ -66,7 +66,7 @@ button:disabled:hover {
     border-color: #343a40;
 }
 
-/* .btn-switch.disabled,
+.btn-switch.disabled,
 .btn-switch:disabled {
     color: #fff;
     background-color: #007bff;
@@ -85,7 +85,7 @@ button:disabled:hover {
 .btn-switch:not(:disabled):not(.disabled).active:focus,
 .show>.btn-switch.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
-} */
+}
 
 .btn-regular {
     padding: 0.3rem 0.65rem;

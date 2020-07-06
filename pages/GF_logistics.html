@@ -206,14 +206,15 @@
     <div class="card border-dark mb-3">
       <div class="card-header pt-2 pb-2">
         <span id="setting" class="disable-selected-text" style="padding-top: 2px; padding-bottom: 2px;"></span>
-        <div class="switch float-right">
-          <input type="radio" class="switch-input" name="Display_PerHourOrTotal" id="Display_PerHour">
-          <label tabindex="0" for="Display_PerHour" class="disable-selected-text switch-label switch-label-off"
-            id="Display_PerHour_text" style="cursor: pointer;"></label>
-          <input type="radio" class="switch-input" name="Display_PerHourOrTotal" id="Display_Total" checked>
-          <label tabindex="0" for="Display_Total" class="disable-selected-text switch-label switch-label-on"
-            id="Display_Total_text" style="cursor: pointer;"></label>
-          <span class="switch-selection"></span>
+        <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+          <label class="btn btn-switch p-0" id="Display_PerHour_label">
+            <input type="radio" name="Display_PerHourOrTotal" autocomplete="off" id="Display_PerHour">
+            <span id="Display_PerHour_text" style="font-size: .85rem; padding-left: 6px; padding-right: 6px;">
+          </label>
+          <label class="btn btn-switch p-0" id="Display_Total_label">
+            <input type="radio" name="Display_PerHourOrTotal" autocomplete="off" id="Display_Total">
+            <span id="Display_Total_text" style="font-size: .85rem; padding-left: 6px; padding-right: 6px;">
+          </label>
         </div>
       </div>
       <div class="card-body row" style="margin: 0;">
