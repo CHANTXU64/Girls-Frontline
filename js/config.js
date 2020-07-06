@@ -50,10 +50,14 @@ function LS_setPerHourOrTotal(PerHourOrTotal = storageGetItem("HourlyOrTotal")) 
     if (PerHourOrTotal === "PerHour") {
         storageSetItem("HourlyOrTotal", "PerHour");
         document.getElementById("Display_PerHour").checked = true;
+        $("#Display_Total_label").removeClass("active");
+        $("#Display_PerHour_label").addClass("active");
     }
     else {
         storageSetItem("HourlyOrTotal", "Total");
         document.getElementById("Display_Total").checked = true;
+        $("#Display_Total_label").addClass("active");
+        $("#Display_PerHour_label").removeClass("active");
     }
 }
 
