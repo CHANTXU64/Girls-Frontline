@@ -149,33 +149,6 @@ function changeCalculateOutput_Total() {
 }
 
 /**
- * 根据需求量的设定的按钮来设置需求量
- * @param {string} TargetInfo
- */
-function setTarget(TargetInfo) {
-    switch (TargetInfo) {
-        case "HG":
-            Input_setTarget([130, 130, 130, 130, 0, 0, 0, 0]); break;
-        case "SMG":
-            Input_setTarget([430, 430, 130, 230, 0, 0, 0, 0]); break;
-        case "RF":
-            Input_setTarget([430, 130, 430, 230, 0, 0, 0, 0]); break;
-        case "AR":
-            Input_setTarget([130, 430, 430, 130, 0, 0, 0, 0]); break;
-        case "MG":
-            Input_setTarget([730, 630, 130, 430, 0, 0, 0, 0]); break;
-        case "SG":
-            Input_setTarget([800, 200, 800, 400, 0, 0, 0, 0]); break;
-        case "2221":
-            Input_setTarget([400, 400, 400, 200, 0, 0, 0, 0]); break;
-        case "Clear":
-            Input_setTarget();
-            Input_setContractWeight();
-            break;
-    }
-}
-
-/**
  * 按下某一需求量增减按钮来更改需求量
  * @param {string} FullID - 某一需求量增减按钮ID
  */

@@ -163,6 +163,37 @@ input[type="number"] {
     padding: 0.2rem 0.5rem;
 }
 
+.dropdown-item-regular {
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+    padding-bottom: 0;
+    font-size: 0.875rem;
+}
+
+.dropdown-item-regular>.close {
+    line-height: 0.75;
+}
+
+.dropdown-item-regular>.dropdown-item-span {
+    font-size: 0.875rem;
+}
+
+.setTarget-saved {
+    margin-bottom: 5px;
+    display: inline-flex;
+    width: calc(100% - 65px);
+    max-width: 400px;
+}
+
+.dropdown-item-span {
+    display: inline-block;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 40px);
+    white-space: nowrap;
+    overflow: hidden;
+    word-break: keep-all;
+}
+
 /*分辨率样式*/
 @media (min-width: 1400px) {
     .container-fluid {
@@ -193,6 +224,16 @@ input[type="number"] {
 @media screen and (max-width: 1560px) and (min-width: 992px) {
     .target-btn-hidden {
         display: none;
+    }
+
+    .setTarget-saved {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .setTarget-saved {
+        width: 100%;
     }
 }
 

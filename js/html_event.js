@@ -237,10 +237,20 @@ function Tab_Timetable_AddNew() {
 //End Tab_Timetable
 
 //Target
-let JQ_selector_target = $("#target");
-JQ_selector_target.on("click", "button[id^=setTarget_]", function () {
-    setTarget(stringSliceFromLast_(this.id));
+$("#setTarget_saved").on("click", "a[id^=setTarget_row_]", function () {
+    SetTargetSaved.click(parseInt(stringSliceFromLast_(this.id)));
 });
+$("#setTarget_saved").on("click", "button[id^=setTarget_close_row_]", function () {
+    SetTargetSaved.delete(parseInt(stringSliceFromLast_(this.id)));
+});
+$("#setTarget_saved_button").on("click", function () {
+    SetTargetSaved.save();
+});
+$("#setTarget_Clear").on("click", function () {
+    Input_setTarget();
+    Input_setContractWeight();
+});
+let JQ_selector_target = $("#target");
 $("#ContractWeight").change(function () {
     storageSetItem("ContractWeight", Input_getContractWeight());
 });

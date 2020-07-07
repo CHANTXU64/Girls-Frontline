@@ -362,6 +362,18 @@
         <!-- setting demand -->
         <div class="col-lg-5 disable-selected-text Demand p-0" id="target">
           <h5 id="Demand"></h5>
+          <div class="input-group input-group-regular setTarget-saved">
+            <div class="btn-group" style="width: calc(100% - 60px);">
+              <button type="button" id="setTarget_saved_dropdown" class="btn btn-outline-dark dropdown-toggle btn-regular"
+                data-boundary="window" data-toggle="dropdown" style="border-bottom-right-radius: 0; border-top-right-radius: 0;"></button>
+              <ul class="dropdown-menu" style="width: 100%;" >
+                <h6 class="dropdown-header" id="setTarget_noSaved"></h6>
+                <div id="setTarget_saved"></div>
+              </ul>
+            </div>
+            <button class="btn btn-outline-dark input-group-btn" id="setTarget_saved_button" style="width: 60px;"></button>
+          </div>
+          <button type="button" class="btn btn-danger btn-regular"id="setTarget_Clear" style="margin-bottom: 5px; width: 60px;"></button>
           <div id="setTargetButton"></div>
           <label id="ContractWeight_label" class="btn-toolbar justify-content-between mb-0" for="customRange1">
             <span id="ContractWeight_notImportant"></span>
@@ -633,6 +645,7 @@
   <script src="../js/plan_details.js"></script>
   <script src="../js/mission_table.js"></script>
   <script src="../js/result_and_details_event.js"></script>
+  <script src="../js/set_target_saved.js"></script>
   <script src="../js/html.js"></script>
   <script src="../js/saved.js"></script>
   <script src="../js/config.js"></script>

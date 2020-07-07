@@ -116,6 +116,7 @@ function updateLocalStorage() {
 //ContractWeight - 契约权重
 //TargetValue - 需求值
 //Saved - 已保存的方案
+//TargetSaved - 保存的需求量
 //IsSavedPanelShow - "已保存"是否展开
 
 /**
