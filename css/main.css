@@ -201,6 +201,11 @@ input[type="number"] {
     word-break: keep-all;
 }
 
+.config_card {
+    margin-top: 2rem;
+    max-width: 440px;
+}
+
 /*分辨率样式*/
 @media (min-width: 1400px) {
     .container-fluid {
@@ -222,9 +227,21 @@ input[type="number"] {
     }
 }
 
+@media (max-width: 991px) {
+    .config_card {
+        margin-top: 0;
+    }
+}
+
 @media (max-width: 1400px) {
     .container-fluid {
         padding: 0;
+    }
+}
+
+@media screen and (max-width: 1055px) and (min-width: 992px) {
+    .config_card {
+        max-width: 400px;
     }
 }
 
@@ -266,16 +283,6 @@ input[type="number"] {
 .footer_card {
     padding: 5px 15px;
     font-size: 0.815rem;
-}
-
-.config_card {
-    margin-top: 2rem;
-}
-
-@media (max-width: 1055px) {
-    .config_card {
-        margin-top: 0;
-    }
 }
 
 @media (max-width: 576px) {
