@@ -142,6 +142,9 @@ function plan_combination_init(data) {
         let level = PC_storageGetItem("level");
         if (level !== "noStorage")
             Input_setPC_CommanderLevel(level);
+        let consumption_saved = PC_storageGetItem("ConsumptionSaved");
+        if (consumption_saved !== "noStorage")
+            ConsumptionSaved.setSaved(consumption_saved);
         PC_LogisticsPlan.init(PC_storageGetItem("LogisticsPlan"));
         PC_ConsumptionPlan.init(PC_storageGetItem("ConsumptionPlan"));
     }
@@ -157,6 +160,8 @@ function plan_combination_init(data) {
         Input_setPC_demand(demand);
         let level = data.level;
         Input_setPC_CommanderLevel(level);
+        let consumption_saved = data.ConsumptionSaved;
+            ConsumptionSaved.setSaved(consumption_saved);
         PC_LogisticsPlan.init(data.LogisticsData);
         PC_ConsumptionPlan.init(data.ConsumptionData);
     }
@@ -178,6 +183,7 @@ function plan_combination_getConfigData() {
     data.LogisticsData = PC_LogisticsPlan.exportData();
     data.ConsumptionData = PC_ConsumptionPlan.exportData();
     data.level = Input_getPC_CommanderLevel();
+    data.ConsumptionSaved = ConsumptionSaved._saved.slice();
     return data;
 }
 

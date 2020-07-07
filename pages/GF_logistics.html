@@ -140,13 +140,13 @@
       <div class="card-body">
         <div class="form-row" style="max-width: 800px;">
           <div class="col-md-5 mb-2 input-group input-group-regular">
-            <label for="PlanCombination_startDate" class="input-group-label input-group-text"
+            <label for="PlanCombination_startDate" class="input-group-label input-group-text date-label-width"
               id="PlanCombination_startDate_label"></label>
             <input id="PlanCombination_startDate" type="date" class="form-control input-group" style="width: auto; max-width: 180px;">
             <button id="PC_changeStartDate" type="button" class="btn btn-outline-dark input-group-btn"><span class="glyphicon glyphicon-pencil"></span></button>
           </div>
           <div class="col-md-5 mb-2 input-group input-group-regular">
-            <label for="PlanCombination_endDate" class="input-group-label input-group-text"
+            <label for="PlanCombination_endDate" class="input-group-label input-group-text date-label-width"
               id="PlanCombination_endDate_label"></label>
             <input id="PlanCombination_endDate" type="date" class="form-control" style="width: auto; max-width: 180px;">
             <button id="PC_changeEndDate" type="button" class="btn btn-outline-dark input-group-btn"><span class="glyphicon glyphicon-pencil"></span></button>
@@ -317,12 +317,23 @@
         <!-- setting consumption -->
         <div class="col-lg-7 p-0 d-none disable-selected-text" id="ConsumptionPlan_setting">
           <h5 id="Consumption_setting_title"></h5>
+          <div class="input-group input-group-regular consumption-saved">
+            <div class="btn-group" style="width: calc(100% - 60px);">
+              <button type="button" id="consumption_saved_dropdown" class="btn btn-outline-dark dropdown-toggle btn-regular"
+                data-boundary="window" data-toggle="dropdown" style="border-bottom-right-radius: 0; border-top-right-radius: 0;"></button>
+              <ul class="dropdown-menu" style="width: 100%;" >
+                <h6 class="dropdown-header" id="consumption_noSaved"></h6>
+                <div id="consumption_saved"></div>
+              </ul>
+            </div>
+            <button class="btn btn-outline-dark input-group-btn" id="consumption_saved_button" style="width: 60px;"></button>
+          </div>
           <div class="form-row">
             <div class="col-sm-8 input-group-regular mb-2">
               <select class="custom-select" id="Consumption_select" autocomplete="off"></select>
             </div>
             <div class="col-sm-4 mb-2">
-              <button type="button" class="btn btn-outline-dark btn-regular" id="Consumption_reset"></button>
+              <button type="button" class="btn btn-danger btn-regular" id="Consumption_reset"></button>
             </div>
           </div>
           <div class="form-row" id="Consumption_re"></div>
@@ -393,12 +404,12 @@
           <ul id="PC_DateTimePeriod_body" class="list-group list-group-regular mb-2" style="max-height: 300px;
             overflow-y: auto;"></ul>
           <div class="mb-2 input-group input-group-regular">
-            <label for="PlanCombination_planStartDate" class="input-group-label input-group-text"
+            <label for="PlanCombination_planStartDate" class="input-group-label input-group-text date-label-width"
                                                    id="PlanCombination_planStartDate_label"></label>
             <input id="PlanCombination_planStartDate" type="date" class="form-control input-group" style="width: auto; max-width: 200px;">
           </div>
           <div class="mb-2 input-group input-group-regular">
-            <label for="PlanCombination_planEndDate" class="input-group-label input-group-text"
+            <label for="PlanCombination_planEndDate" class="input-group-label input-group-text date-label-width"
                                                  id="PlanCombination_planEndDate_label"></label>
             <input id="PlanCombination_planEndDate" type="date" class="form-control" style="width: auto; max-width: 200px;">
           </div>
@@ -665,6 +676,7 @@
   <script src="../js/plan_combination_input.js"></script>
   <script src="../js/plan_combination_time_period.js"></script>
   <script src="../js/plan_combination_consumption_plan.js"></script>
+  <script src="../js/plan_combination_consumption_saved.js"></script>
   <script src="../js/plan_combination_logistics_plan.js"></script>
   <script src="../js/plan_combination_chart_option.js"></script>
   <script src="../js/plan_combination_charts.js"></script>

@@ -140,8 +140,11 @@ function loadHTML_language() {
     if (window.PLAN_COMBINATION)
         PlanCombinationChart.print(PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans());
 
-    //comsumption preset
+    //consumption preset
     Consumption_load_preset_select_lang();
+
+    //consumption total td
+    $("#consumption_total_td").html(language_JS.consumption_total_td);
 
     //Saved
     Saved.setSaved(Saved._saved);

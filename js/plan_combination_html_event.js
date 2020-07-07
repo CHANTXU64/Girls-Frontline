@@ -88,9 +88,19 @@ $("#Consumption_add").on("click", function () {
     PC_ConsumptionPlan.table_add();
 });
 
+$("#consumption_saved").on("click", "a[id^=consumption_saved_row_]", function () {
+    ConsumptionSaved.click(parseInt(stringSliceFromLast_(this.id)));
+});
+$("#consumption_saved").on("click", "button[id^=consumption_close_row_]", function () {
+    ConsumptionSaved.delete(parseInt(stringSliceFromLast_(this.id)));
+});
+$("#consumption_saved_button").on("click", function () {
+    ConsumptionSaved.save();
+});
+
 $("#Consumption_reset").on("click", function () {
     $("#Consumption_select").val(0);
-    Input_setPC_Consumption_reAndco();
+    Input_setPC_Consumption_reAndco([0, 0, 0, 0, 0, 0, 0, 0]);
     Input_setPC_Consumption_times();
 });
 
@@ -148,6 +158,7 @@ $("#PC_saveAll").on("click", function () {
 $("#Consumption_select").on("change", function () {
     let value = consumption_preset[this.selectedIndex - 1];
     Input_setPC_Consumption_reAndco(value);
+    $("#Consumption_select").val(0);
 });
 
 $("input[id^=Consumption_]").on("focus", function () {

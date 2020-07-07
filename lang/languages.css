@@ -11,6 +11,10 @@ body.zh-Hans .FineTuning-button {
     width: 30%;
 }
 
+body.zh-Hans .date-label-width {
+    width: 90px;
+}
+
 /*zh-Hant ************************/
 body.zh-Hant .reAndco-label {
     width: 60px;
@@ -24,6 +28,10 @@ body.zh-Hant .FineTuning-button {
     width: 30%;
 }
 
+body.zh-Hant .date-label-width {
+    width: 90px;
+}
+
 /*en ************************/
 body.en .reAndco-label {
     width: 70px;
@@ -35,4 +43,8 @@ body.en .FineTuning-span {
 
 body.en .FineTuning-button {
     width: 20%;
+}
+
+body.en .date-label-width {
+    width: 95px;
 }

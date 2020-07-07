@@ -227,6 +227,7 @@ class PC_ConsumptionPlan {
                 html += '+';
             html += NumberAutoExact(totalData[i]) + '</td>';
         }
+        html += '<td colspan="2" id="consumption_total_td">' + language.JS.consumption_total_td + '</td>';
         html += '</tr>';
         document.getElementById("Consumption_total").innerHTML = html;
     }

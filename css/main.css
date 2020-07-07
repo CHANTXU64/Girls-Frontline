@@ -185,6 +185,13 @@ input[type="number"] {
     max-width: 400px;
 }
 
+.consumption-saved {
+    margin-bottom: 0.5rem;
+    display: inline-flex;
+    width: calc(100% - 65px);
+    max-width: 440px;
+}
+
 .dropdown-item-span {
     display: inline-block;
     text-overflow: ellipsis;
@@ -229,10 +236,18 @@ input[type="number"] {
     .setTarget-saved {
         width: 100%;
     }
+
+    .consumption-saved {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 400px) {
     .setTarget-saved {
+        width: 100%;
+    }
+
+    .consumption-saved {
         width: 100%;
     }
 }

@@ -236,7 +236,7 @@ function setPageByImport(input) {
     }
 
     //当有saved, 询问是否要覆盖当前config, 否则退出
-    if (Saved.getSaved().length !== 0 || SetTargetSaved._saved.length !== 0)
+    if (Saved.getSaved().length !== 0 || SetTargetSaved._saved.length !== 0 || ConsumptionSaved._saved.length !== 0)
         Modal.confirm(language.JS.config_alert, function () {setPageByImport_ok(input);});
     else
         setPageByImport_ok(input);
