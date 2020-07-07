@@ -71,7 +71,6 @@ function removeStorageAndWarnDueToFailedWindowLoad() {
     data.cookieEnabled = navigator.cookieEnabled;
     data.onLine = navigator.onLine;
     data.language = navigator.language;
-    data.localStorage_v0 = storage_v0;
     data.localStorage_v1 = storage_v1;
     data.console = sessionStorage.getItem("GF_Logistics_console");
 
