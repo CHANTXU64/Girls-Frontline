@@ -79,7 +79,7 @@ class ConsumptionSaved {
         PC_storageSetItem("ConsumptionSaved", this._saved);
 
         this._deleteFlag = true;
-        setTimeout(function () {$("#setTarget_saved_dropdown").dropdown('show')}, 0);
+        setTimeout(function () {$("#consumption_saved_dropdown").dropdown('show')}, 0);
     }
 
     static setSaved(newSaved) {
