@@ -15,6 +15,7 @@ function setPageByLocalStorage() {
     LS_setTarget();
     LS_setSaved();
     LS_setSavedOrMissionsShow();
+    uhaentohuatnhusnahoen();
 }
 
 /**
@@ -207,6 +208,7 @@ function setPageByImport(input) {
         sessionStorage.removeItem("GF_Logistics_console");
         sessionStorage.removeItem("GF_Logistics_windowOnload");
         sessionStorage.removeItem("GF_Logistics_windowOnloadFailed");
+        localStorage.removeItem("GF_Logistics");
         localStorage.removeItem("GF_Logistics_v1.x.x");
         localStorage.removeItem("GF_Logistics_PC_v1.x.x");
         localStorage.removeItem("GF_Logistics_vDevelop.x.x");
@@ -235,19 +237,32 @@ function setPageByImport(input) {
  */
 function setPageByImport_ok(input) {
     try {
-        //尝试导入v1版本
-        input = LZString.decompressFromBase64(input);
+        //尝试导入v0版本
         var config = JSON.parse(input);
         let SHA1 = sha1(JSON.stringify(config.data));
         var result = SHA1 === config.SHA1;
     } catch (ex) {}
     if (result) {
-        setPageByImport_main(config.data);
+        setPageByImport_main_v_0_x_x(config.data);
         delete_rankingResults();
         HTML_AllowRankingInput();
     }
-    else
-        Modal.alert(language.JS.Saved_alert);
+    else {
+        try {
+            //尝试导入v1版本
+            input = LZString.decompressFromBase64(input);
+            var config = JSON.parse(input);
+            let SHA1 = sha1(JSON.stringify(config.data));
+            var result = SHA1 === config.SHA1;
+        } catch (ex) {}
+        if (result) {
+            setPageByImport_main(config.data);
+            delete_rankingResults();
+            HTML_AllowRankingInput();
+        }
+        else
+            Modal.alert(language.JS.Saved_alert);
+    }
 }
 
 /**
@@ -273,4 +288,26 @@ function setPageByImport_main(data) {
     if (window.PLAN_COMBINATION) {
         plan_combination_init(data.PlanCombination);
     }
+}
+
+/**
+ * 从v0.x.x版本的config导入到page
+ * @param {Array} data - v0.x.x版本的config.data
+ */
+function setPageByImport_main_v_0_x_x(data) {
+    /**@type {config_data_type_v_1_x_x} */
+    let data_v_1_x_x = {};
+    data_v_1_x_x.version = "0.x.x";
+    data_v_1_x_x.TabName = data[0];
+    data_v_1_x_x.HourlyOrTotal = data[1];
+    data_v_1_x_x.TabAnytimeCustom = data[2];
+    data_v_1_x_x.TabTimetableCustom = data[3];
+    data_v_1_x_x.GreatSuccessRate = data[4];
+    data_v_1_x_x.Is_GreatSuccessRateUp = data[5];
+    data_v_1_x_x.ChapterLimit = data[6];
+    data_v_1_x_x.ContractWeight = data[7];
+    data_v_1_x_x.TargetValue = data[8];
+    data_v_1_x_x.Saved = _savedData_v_0_x_x_To_v_1_x_x(data[9]);
+
+    setPageByImport_main(data_v_1_x_x);
 }

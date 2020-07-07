@@ -61,6 +61,7 @@ function _sessionStorageWorks() {
 
 function removeStorageAndWarnDueToFailedWindowLoad() {
     let storage_v1 = localStorage.getItem(LOCAL_STORAGE_KEY);
+    let storage_v0 = localStorage.getItem("GF_Logistics");
     let data = {};
     data.userAgent = navigator.userAgent;
     data.appName = navigator.appName;
@@ -71,6 +72,7 @@ function removeStorageAndWarnDueToFailedWindowLoad() {
     data.cookieEnabled = navigator.cookieEnabled;
     data.onLine = navigator.onLine;
     data.language = navigator.language;
+    data.localStorage_v0 = storage_v0;
     data.localStorage_v1 = storage_v1;
     data.console = sessionStorage.getItem("GF_Logistics_console");
 
@@ -87,6 +89,7 @@ function removeStorageAndWarnDueToFailedWindowLoad() {
     sessionStorage.removeItem("GF_Logistics_windowOnloadFailed");
     localStorage.removeItem(LOCAL_STORAGE_KEY);
     localStorage.removeItem("GF_Logistics_PC_v" + VERSION.slice(0, VERSION.indexOf(".")) + ".x.x");
+    localStorage.removeItem("GF_Logistics");
 }
 
 /**
@@ -98,6 +101,7 @@ function updateLocalStorage() {
         return ;
     let LS_data = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (LS_data === null) {
+        _updateLSFrom_v_0_x_x_To_v_1_x_x();
     }
 }
 
@@ -116,6 +120,65 @@ function updateLocalStorage() {
 //TargetValue - 需求值
 //Saved - 已保存的方案
 //IsSavedPanelShow - "已保存"是否展开
+/**
+ * 从v0.x.x版本localstorage转换为v1.x.x版本, 并删除原来的存储数据
+ */
+function _updateLSFrom_v_0_x_x_To_v_1_x_x() {
+    let LS_Key = "GF_Logistics";
+    let LS_data = localStorage.getItem(LS_Key);
+    if (LS_data === null)
+        return ;
+    try {
+        let data = JSON.parse(LS_data);
+        LS_data = data;
+    } catch (ex) {
+        console.error("v0storage, storage: " + LS_data);
+        LS_data = {};
+    }
+
+    let newData = {};
+    newData.Lang = LS_data.lang;
+    newData.Description_Display = LS_data.Description_Display;
+    newData.LocalstorageWarning_Display = LS_data.LocalstorageWarning_Display;
+    newData.TabName = LS_data.HTML_TAB;
+    newData.HourlyOrTotal = LS_data.PerHourOrTotal;
+    newData.TabAnytimeCustom = LS_data.TabAnytimeCustom;
+    newData.TabTimetableCustom = LS_data.TabTimetableCustom;
+    newData.GreatSuccessRate = LS_data.GreatSuccessRate;
+    newData.Is_GreatSuccessRateUP = LS_data.is_GreatSuccessRateUP;
+    newData.ChapterLimit = LS_data.SelectChapter;
+    newData.ContractWeight = LS_data.ContractWeight;
+    newData.TargetValue = LS_data.TargetValue;
+    newData.Saved = _savedData_v_0_x_x_To_v_1_x_x(LS_data.SAVED);
+    newData.IsSavedPanelShow = LS_data.IsSavedShow;
+    let storageValue = JSON.stringify(newData)
+
+    localStorage.setItem("GF_Logistics_v1.x.x", storageValue);
+    localStorage.removeItem(LS_Key);
+}
+/**
+ * 将v0版本saved数转换成v1版本的saved数据
+ * @param {Array} v_0_x_x_savedData - v0.x.x版本的saved数据
+ * @returns {Saved._saved} v1.x.x版本的saved数据
+ */
+function _savedData_v_0_x_x_To_v_1_x_x(v_0_x_x_savedData = []) {
+    let v_1_x_x_savedData = [];
+    for (let i = 0; i < v_0_x_x_savedData.length; i++) {
+        let data = v_0_x_x_savedData[i].data;
+        let newData = {};
+        newData.name = data[0];
+        newData.TabName = data[1];
+        newData.GSRate = data[2];
+        newData.is_UP = data[3];
+        newData.Chapter = data[4];
+        newData.TabCustom = data[5];
+        newData.Missions = data[6];
+        newData.startTime = data[7];
+
+        v_1_x_x_savedData.push(newData);
+    }
+    return v_1_x_x_savedData;
+}
 
 /**
  * 向localstorage存入数据, 不用考虑localstorage是否能工作
