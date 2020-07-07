@@ -16,7 +16,6 @@ function setPageByLocalStorage() {
     LS_setSaved();
     LS_setTargetSaved();
     LS_setSavedOrMissionsShow();
-    uhaentohuatnhusnahoen();
 }
 
 /**
