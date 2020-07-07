@@ -14,6 +14,7 @@ function setPageByLocalStorage() {
     LS_setContractWeight();
     LS_setTarget();
     LS_setSaved();
+    LS_setTargetSaved();
     LS_setSavedOrMissionsShow();
     uhaentohuatnhusnahoen();
 }
@@ -44,6 +45,7 @@ function LS_setHTMLtab(htmlTab = storageGetItem("TabName")) {
         ChangeTab("Anytime");
 }
 
+let DISPLAY_BY_TOTAL = true;
 /**
  * @param {string} PerHourOrTotal
  */
@@ -53,12 +55,14 @@ function LS_setPerHourOrTotal(PerHourOrTotal = storageGetItem("HourlyOrTotal")) 
         document.getElementById("Display_PerHour").checked = true;
         $("#Display_Total_label").removeClass("active");
         $("#Display_PerHour_label").addClass("active");
+        DISPLAY_BY_TOTAL = false;
     }
     else {
         storageSetItem("HourlyOrTotal", "Total");
         document.getElementById("Display_Total").checked = true;
         $("#Display_Total_label").addClass("active");
         $("#Display_PerHour_label").removeClass("active");
+        DISPLAY_BY_TOTAL = true;
     }
 }
 
@@ -130,6 +134,13 @@ function LS_setSaved(saved = storageGetItem("Saved")) {
         Saved.setSaved(saved);
 }
 
+function LS_setTargetSaved(saved = storageGetItem("TargetSaved")) {
+    if (saved !== "noStorage")
+        SetTargetSaved.setSaved(saved);
+    else
+        SetTargetSaved.setSaved([]);
+}
+
 /**
  * @param {boolean} IsSavedPanelShow
  */
@@ -176,6 +187,7 @@ function config_export() {
     data.ContractWeight = Input_getContractWeight();
     data.TargetValue = Input_getTarget_Correct();
     data.Saved = Saved.getSaved();
+    data.TargetSaved = SetTargetSaved._saved;
     if (window.PLAN_COMBINATION) {
         data.PlanCombination = plan_combination_getConfigData();
     }
@@ -225,7 +237,7 @@ function setPageByImport(input) {
     }
 
     //当有saved, 询问是否要覆盖当前config, 否则退出
-    if (Saved.getSaved().length !== 0)
+    if (Saved.getSaved().length !== 0 || SetTargetSaved._saved.length !== 0)
         Modal.confirm(language.JS.config_alert, function () {setPageByImport_ok(input);});
     else
         setPageByImport_ok(input);
@@ -280,6 +292,7 @@ function setPageByImport_main(data) {
     LS_setContractWeight(data.ContractWeight);
     LS_setTarget(data.TargetValue);
     LS_setSaved(data.Saved);
+    LS_setTargetSaved(data.TargetSaved);
 
     MissionsDetails.setSelectedMissions([]);
     MissionsDetails.print();

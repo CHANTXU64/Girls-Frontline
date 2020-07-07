@@ -3,14 +3,6 @@
  */
 function loadHTML_Target() {
     let HTML = '';
-    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_HG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_SMG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_RF" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_AR" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_MG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_SG" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-outline-dark btn-regular"id="setTarget_2221" style="margin-right: 5px; margin-bottom: 5px;"></button>';
-    HTML += '<button type="button" class="btn btn-danger btn-regular"id="setTarget_Clear" style="margin-right: 5px; margin-bottom: 5px;"></button>';
     document.getElementById("setTargetButton").innerHTML = HTML;
     HTML = '';
     const TargetName = ["Manp", "Ammu", "Rati", "Part", "TPro", "Equi", "QPro", "QRes"];
@@ -30,9 +22,7 @@ function loadHTML_Target() {
         else
             HTML += '01';
         HTML += '_' + Target[i] + '"style="padding-right:10px;padding-left:10px;"tabindex=-1>';
-        HTML += '&minus;</button><input type="number" min="0"';
-        if (i >= 4)
-            HTML += 'step="0.01"'
+        HTML += '&minus;</button><input type="number" min="0" step="0.01"';
         HTML += 'class="form-control autoEnter ' + TargetName[i] + '_placeholder" id="';
         HTML += Target[i];
         HTML += '"value=0 onfocus="this.select();"style="border-left-width:0"><button class="btn btn-outline-dark input-group-btn target-btn-hidden"type="button"id="Target_plus_';

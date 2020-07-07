@@ -73,11 +73,19 @@ $("#Tab_Timetable_name").on("click", function () {
 });
 
 //Hourly Total
-$("input[id^=Display_]").on("change", function () {
-    if (is_CalculateByHour())
-        changeCalculateOutput_Hourly();
-    else
-        changeCalculateOutput_Total();
+$("input[id^=Display_]").on("click", function () {
+    if (is_CalculateByHour()) {
+        if (DISPLAY_BY_TOTAL === true) {
+            changeCalculateOutput_Hourly();
+            DISPLAY_BY_TOTAL = false;
+        }
+    }
+    else {
+        if (DISPLAY_BY_TOTAL === false) {
+            changeCalculateOutput_Total();
+            DISPLAY_BY_TOTAL = true;
+        }
+    }
 });
 
 //GreatSuccess
@@ -229,10 +237,20 @@ function Tab_Timetable_AddNew() {
 //End Tab_Timetable
 
 //Target
-let JQ_selector_target = $("#target");
-JQ_selector_target.on("click", "button[id^=setTarget_]", function () {
-    setTarget(stringSliceFromLast_(this.id));
+$("#setTarget_saved").on("click", "a[id^=setTarget_row_]", function () {
+    SetTargetSaved.click(parseInt(stringSliceFromLast_(this.id)));
 });
+$("#setTarget_saved").on("click", "button[id^=setTarget_close_row_]", function () {
+    SetTargetSaved.delete(parseInt(stringSliceFromLast_(this.id)));
+});
+$("#setTarget_saved_button").on("click", function () {
+    SetTargetSaved.save();
+});
+$("#setTarget_Clear").on("click", function () {
+    Input_setTarget();
+    Input_setContractWeight();
+});
+let JQ_selector_target = $("#target");
 $("#ContractWeight").change(function () {
     storageSetItem("ContractWeight", Input_getContractWeight());
 });
