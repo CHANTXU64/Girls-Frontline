@@ -264,4 +264,33 @@ const release_notes = [
             ],
         }
     },
+    {
+        version: [
+            "1.3.0",
+            "1.3.0-offline"
+        ],
+        notes: {
+            en: [
+                "Save demand",
+                "Save revenue and expenditure value",
+                "No longer compatible with IE or other outdated browsers",
+                "Various optimizations",
+                "Fix bug"
+            ],
+            zh_CN: [
+                "保存需求量",
+                "保存其他收支值",
+                "不再兼容IE或其他过时浏览器",
+                "各种优化",
+                "修复错误"
+            ],
+            zh_TW: [
+                "保存需求量",
+                "保存其他收支值",
+                "不再兼容IE或其他過時瀏覽器",
+                "各種優化",
+                "修復錯誤"
+            ],
+        }
+    },
 ]
