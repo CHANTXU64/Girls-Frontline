@@ -622,8 +622,6 @@
     try {
       let storage = localStorage.getItem("GF_Logistics_v1.x.x");
       if (storage === null)
-        storage = localStorage.getItem("GF_Logistics");
-      if (storage === null)
         storage = localStorage.getItem("GF_Logistics_vDevelop.x.x");
       HTMLSCRIPT_ShownTab = JSON.parse(storage).TabName;
     } catch (ex) { }
