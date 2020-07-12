@@ -23,6 +23,11 @@ window.onload = function () {
         script5.integrity = "sha256-uacRffSSMP9qpvNWhVmYLykBv9YKMA1d/VSIN1AmfyQ=";
         script5.crossOrigin = "anonymous";
         document.body.appendChild(script5);
+        let script6 = document.createElement("script");
+        script6.src = "https://cdn.jsdelivr.net/npm/javascript-lp-solver@0.4.24/prod/solver.js";
+        script6.integrity = "sha256-imUMOwIXfy1QK+gn6/sXZ23ELFHqvM1e4dEtVwb3AUA=";
+        script6.crossOrigin = "anonymous";
+        document.body.appendChild(script6);
     }
 
     cheackLoadedAndLoadLast();
@@ -99,6 +104,11 @@ function loadBackupJS() {
     if (!window.html2canvas) {
         let script = document.createElement("script");
         script.src = "../vendor/html2canvas/html2canvas.min.js";
+        document.body.appendChild(script);
+    }
+    if (!window.solver) {
+        let script = document.createElement("script");
+        script.src = "../vendor/lp-solver/solver.js";
         document.body.appendChild(script);
     }
 }
