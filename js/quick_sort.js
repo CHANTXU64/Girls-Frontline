@@ -27,8 +27,8 @@ function quick_sort_descending(arr) {
         let left = range.start;
         let right = range.end - 1;
         while (left < right) {
-            while (arr[left] > mid && left < right) left++;
-            while (arr[right] <= mid && left < right) right--;
+            while ((arr[left] > mid || isNaN(arr[left]) || isNaN(mid)) && left < right) left++;
+            while ((arr[right] <= mid || isNaN(arr[right]) || isNaN(mid)) && left < right) right--;
             [arr[left], arr[right]] = [arr[right], arr[left]];
         }
         if (arr[left] <= arr[range.end])
@@ -56,8 +56,8 @@ function quick_sort_ascending(arr) {
         let left = range.start;
         let right = range.end - 1;
         while (left < right) {
-            while (arr[left] < mid && left < right) left++;
-            while (arr[right] >= mid && left < right) right--;
+            while ((arr[left] < mid || isNaN(arr[left]) || isNaN(mid)) && left < right) left++;
+            while ((arr[right] >= mid || isNaN(arr[right]) || isNaN(mid)) && left < right) right--;
             [arr[left], arr[right]] = [arr[right], arr[left]];
         }
         if (arr[left] >= arr[range.end])
@@ -86,8 +86,8 @@ function quick_sort_expand_descending(arr, compare_Column) {
         let left = range.start;
         let right = range.end - 1;
         while (left < right) {
-            while (arr[left][compare_Column] >= mid && left < right) left++;
-            while (arr[right][compare_Column] < mid && left < right) right--;
+            while ((arr[left][compare_Column] >= mid || isNaN(arr[left][compare_Column]) || isNaN(mid)) && left < right) left++;
+            while ((arr[right][compare_Column] < mid || isNaN(arr[right][compare_Column]) || isNaN(mid)) && left < right) right--;
             [arr[left], arr[right]] = [arr[right], arr[left]];
         }
         if (arr[left][compare_Column] < arr[range.end][compare_Column])
@@ -116,8 +116,8 @@ function quick_sort_expand_ascending(arr, compare_Column) {
         let left = range.start;
         let right = range.end - 1;
         while (left < right) {
-            while (arr[left][compare_Column] <= mid && left < right) left++;
-            while (arr[right][compare_Column] > mid && left < right) right--;
+            while ((arr[left][compare_Column] <= mid || isNaN(arr[left][compare_Column]) || isNaN(mid)) && left < right) left++;
+            while ((arr[right][compare_Column] > mid || isNaN(arr[right][compare_Column]) || isNaN(mid)) && left < right) right--;
             [arr[left], arr[right]] = [arr[right], arr[left]];
         }
         if (arr[left][compare_Column] > arr[range.end][compare_Column])
