@@ -82,7 +82,7 @@ function plan_combination_getChartOption(startDate, endDate) {
         },
         toolbox: {
             left: 16,
-			bottom: 60,
+            bottom: 60,
             feature: {
                 saveAsImage: {
                     name: 'GF',
