@@ -3,19 +3,19 @@
 }
 
 #PlanCombination_chart {
-	height: 300px;
-	width: auto;
-	margin: 0 -10px 1rem -10px;
+    height: 300px;
+    width: auto;
+    margin: 0 -10px 1rem -10px;
 }
 
 @media (max-width: 576px) {
     .plan_combination_card {
         padding: 0;
     }
-	
-	#PlanCombination_chart {
-		height: 320px;
-	}
+
+    #PlanCombination_chart {
+        height: 320px;
+    }
 }
 
 .consumption-table {
