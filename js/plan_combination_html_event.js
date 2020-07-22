@@ -129,11 +129,11 @@ $("#PlanCombination_current_box").on("focus", "input[id^=PC_current_]", function
     this.select();
 });
 
-$("#PlanCombination_demand_card").on("blur", "input[id^=PC_target_]", function () {
+$("#PC_Ranking_card").on("blur", "input[id^=PC_target_]", function () {
     PC_storageSetItem("target", Input_getPC_target());
 });
 
-$("#PlanCombination_demand_card").on("focus", "input[id^=PC_target_]", function () {
+$("#PC_Ranking_card").on("focus", "input[id^=PC_target_]", function () {
     this.select();
 });
 
