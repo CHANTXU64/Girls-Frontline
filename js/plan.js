@@ -102,9 +102,8 @@ class Plan_Stdzn extends Plan_Original {
      * @param {number} list_length
      * @param {number} QValidMaxLength_firstCalc - 用于这次限制QValid长度加快计算
      * @param {number} QValidMaxLength_secondCalc - 用于正式计算, 若QValid.length大于, 则还需进行更详细的关卡价值计算
-     * @param {Array.<number>=} - 用于plan combination
      */
-    constructor(ShownTab, list_length, QValidMaxLength_firstCalc, QValidMaxLength_secondCalc, targetValue) {
+    constructor(ShownTab, list_length, QValidMaxLength_firstCalc, QValidMaxLength_secondCalc) {
         super(ShownTab, list_length);
 
         let QValid_length = this.ShownTab.getQValidLength();
@@ -123,14 +122,8 @@ class Plan_Stdzn extends Plan_Original {
         else
             this._calculateAndPushIntoList = this._calculateAndPushIntoList_normal;
 
-        if (targetValue) {
-            this.targetValue_html = targetValue;
-            this.targetValue = targetValue;
-        }
-        else {
-            this.targetValue_html = this._correctTargetValueHTML();
-            this.targetValue = this._correctTargetValue();
-        }
+        this.targetValue_html = this._correctTargetValueHTML();
+        this.targetValue = this._correctTargetValue();
         this._norm_target = this._getNorm(this.targetValue);
     }
     /**
@@ -326,20 +319,14 @@ class Plan_Stdzn extends Plan_Original {
      * @returns {Array.<number>} 已标准化的targetValue
      * @public
      */
-    getStdznTargetValue(PlanCombinationString) {
+    getStdznTargetValue() {
         let targetValue = this._getAvgCurrentByList();
         let target_Resource = targetValue.slice(0, 4);
         target_Resource.class = "Resource";
         let target_Contract = targetValue.slice(4, 8);
         target_Contract.class = "Contract";
         let Resource_CalibrationValue = this._getCalibration(target_Resource);
-        let Contract_CalibrationValue;
-        if (PlanCombinationString === "PlanCombination" && Resource_CalibrationValue !== 0) {
-            Resource_CalibrationValue *= 0.8;
-            Contract_CalibrationValue = Resource_CalibrationValue;
-        }
-        else
-            Contract_CalibrationValue = this._getCalibration(target_Contract);
+        let Contract_CalibrationValue = this._getCalibration(target_Contract);
         for (let i = 0; i < 4; i++) {
             if (Resource_CalibrationValue !== 0)
                 targetValue[i] = this.targetValue_html[i] / Resource_CalibrationValue;
