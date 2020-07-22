@@ -1,6 +1,6 @@
 function plan_combination_load() {
     const class_name = ['Manp', 'Ammu', 'Rati', 'Part', 'TPro', 'Equi', 'QPro', 'QRes'];
-    const name = ['current_', 'demand_', 'target_'];
+    const name = ['current_', 'target_'];
     for (let i = 0; i < name.length; ++i) {
         document.getElementById("PlanCombination_" + name[i] + "re").innerHTML = plan_combination_load_main(name[i], class_name.slice(0, 4));
         document.getElementById("PlanCombination_" + name[i] + "co").innerHTML = plan_combination_load_main(name[i], class_name.slice(4, 8));

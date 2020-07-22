@@ -93,24 +93,6 @@ function getResourceSoftcap(CommanderLevel) {
         return ResourceSoftcap_List[index];
 }
 
-function PC_calcDemand() {
-    let currentValue = Input_getPC_current(true);
-    let startDate = Input_getPC_startDate();
-    let endDate = Input_getPC_endDate();
-    let totalDays = calcDaysBetween2Dates(startDate, endDate);
-    // let data = PlanCombinationChart._calcReAndCoData(currentValue, PC_LogisticsPlan.chartGetPlans(), PC_ConsumptionPlan.chartGetPlans(), totalDays);
-    let data = PlanCombinationChart._calcReAndCoData(currentValue, [], PC_ConsumptionPlan.chartGetPlans(), totalDays);
-    let demandValue = [];
-    let data_lastIndex = data[0].length - 1;
-    let targetValue = Input_getPC_target(true);
-    for (let i = 0; i < 8; ++i) {
-        let a = data[i][data_lastIndex];
-        a = Math.max(0, targetValue[i] - a);
-        demandValue.push(a);
-    }
-    Input_setPC_demand(demandValue);
-}
-
 function PC_saveAll() {
     let plans_length = PC_LogisticsPlan._plans.length;
     for (let i = 0; i < plans_length; ++i) {
@@ -136,9 +118,6 @@ function plan_combination_init(data) {
         let target = PC_storageGetItem("target");
         if (target !== "noStorage")
             Input_setPC_target(target);
-        let demand = PC_storageGetItem("demand");
-        if (demand !== "noStorage")
-            Input_setPC_demand(demand);
         let level = PC_storageGetItem("level");
         if (level !== "noStorage")
             Input_setPC_CommanderLevel(level);
@@ -156,8 +135,6 @@ function plan_combination_init(data) {
         Input_setPC_current(current);
         let target = data.target;
         Input_setPC_target(target);
-        let demand = data.demand;
-        Input_setPC_demand(demand);
         let level = data.level;
         Input_setPC_CommanderLevel(level);
         let consumption_saved = data.ConsumptionSaved;
@@ -179,7 +156,6 @@ function plan_combination_getConfigData() {
     data.date.end = Input_getPC_endDate();
     data.current = Input_getPC_current();
     data.target = Input_getPC_target();
-    data.demand = Input_getPC_demand();
     data.LogisticsData = PC_LogisticsPlan.exportData();
     data.ConsumptionData = PC_ConsumptionPlan.exportData();
     data.level = Input_getPC_CommanderLevel();

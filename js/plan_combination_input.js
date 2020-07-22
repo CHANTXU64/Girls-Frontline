@@ -142,23 +142,6 @@ function Input_setPC_Consumption_times(times = "1") {
     $("#Consumption_times").val(times);
 }
 
-function Input_getPC_demand(NeedCorrection = false) {
-    const class_name = ['Manp', 'Ammu', 'Rati', 'Part', 'TPro', 'Equi', 'QPro', 'QRes'];
-    let demand = [];
-    for (let i = 0; i < 8; ++i) {
-        demand.push(getPositiveValueFromHTML($("#PC_demand_" + class_name[i]), NeedCorrection));
-    }
-    return demand;
-}
-
-function Input_setPC_demand(demandValue) {
-    const class_name = ['Manp', 'Ammu', 'Rati', 'Part', 'TPro', 'Equi', 'QPro', 'QRes'];
-    for (let i = 0; i < 8; ++i) {
-        $("#PC_demand_" + class_name[i]).val(demandValue[i]);
-    }
-    PC_storageSetItem("demand", demandValue);
-}
-
 function Input_getPC_current(NeedCorrection = false) {
     const class_name = ['Manp', 'Ammu', 'Rati', 'Part', 'TPro', 'Equi', 'QPro', 'QRes'];
     let current = [];

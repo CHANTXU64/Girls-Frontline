@@ -137,18 +137,6 @@ $("#PlanCombination_demand_card").on("focus", "input[id^=PC_target_]", function 
     this.select();
 });
 
-$("#PlanCombination_demand_card").on("blur", "input[id^=PC_demand_]", function () {
-    PC_storageSetItem("demand", Input_getPC_demand());
-});
-
-$("#PlanCombination_demand_card").on("focus", "input[id^=PC_demand_]", function () {
-    this.select();
-});
-
-$("#PC_calcDemand").on("click", function () {
-    PC_calcDemand();
-});
-
 $("#PC_saveAll").on("click", function () {
     Modal.confirm(language.JS.PC_saveAll_confirm, function () {
         PC_saveAll();
