@@ -91,7 +91,6 @@ $("input[id^=Display_]").on("click", function () {
 //GreatSuccess
 let JQ_selector_GreatSuccessRate = $("#GreatSuccessRate");
 JQ_selector_GreatSuccessRate.on("input propertychange", function () {
-    const Rate = Input_getGreatSuccessRate();
     const is_RateUP = IsGreatSuccessRateUp();
     Input_setGreatSuccessUpRate(is_RateUP, false);
     MissionsDetails.print();
@@ -164,12 +163,14 @@ let JQ_selector_Time_Timetable_hours = $("#Time_Timetable_hours");
 let JQ_selector_Time_Timetable_minutes = $("#Time_Timetable_minutes");
 JQ_selector_Time_Timetable_hours.on("input propertychange", function () {
     Tab_Timetable_changeSliderTotalTime();
+    Saved.cancelSelected();
 });
 JQ_selector_Time_Timetable_hours.blur(function () {
     Tab_Timetable_changeStorageCustom();
 });
 JQ_selector_Time_Timetable_minutes.on("input propertychange", function () {
     Tab_Timetable_changeSliderTotalTime();
+    Saved.cancelSelected();
 });
 JQ_selector_Time_Timetable_minutes.blur(function () {
     Tab_Timetable_changeStorageCustom();
