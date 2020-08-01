@@ -186,31 +186,38 @@ class Tab {
 
     /**
      * 设置各个资源契约的最大值CurrentValue_MAX,
-     * 在此之前需要先设置QValid
-     * @private
+     * 如果不提供current_max则在此之前需要先设置QValid
+     * @param {Array.<number>} current_max - 使用这个值直接设置
+     * @public
      */
-    _setCurrentMax() {
+    setCurrentMax(current_max) {
         //test
         if (this._setQValidFlag === false)
             throw "error";
         //End test
-        if (this._setCurrentMaxFlag === true)
-            return ;
-        let currentValueMax = [0, 0, 0, 0, 0, 0, 0, 0];
-        const Qvalid_length = this._QValid.length;
-        for (let i = 0; i < 8; i++) {
-            let CurrentValueMax_0 = new Array(Qvalid_length);
-            for (let ii = 0; ii < Qvalid_length; ii++) {
-                CurrentValueMax_0[ii] = this._QValid[ii][i + 1];
-            }
-            quick_sort_descending(CurrentValueMax_0);
-            let ii_max = CurrentValueMax_0.length < 4 ? CurrentValueMax_0.length : 4;
-            for (let ii = 0; ii < ii_max; ++ii) {
-                currentValueMax[i] += CurrentValueMax_0[ii];
-            }
+        if (current_max) {
+            this._currentValueMax = current_max.slice();
+            this._setCurrentMaxFlag = true;
         }
-        this._currentValueMax = currentValueMax;
-        this._setCurrentMaxFlag = true;
+        else {
+            if (this._setCurrentMaxFlag === true)
+                return ;
+            let currentValueMax = [0, 0, 0, 0, 0, 0, 0, 0];
+            const Qvalid_length = this._QValid.length;
+            for (let i = 0; i < 8; i++) {
+                let CurrentValueMax_0 = new Array(Qvalid_length);
+                for (let ii = 0; ii < Qvalid_length; ii++) {
+                    CurrentValueMax_0[ii] = this._QValid[ii][i + 1];
+                }
+                quick_sort_descending(CurrentValueMax_0);
+                let ii_max = CurrentValueMax_0.length < 4 ? CurrentValueMax_0.length : 4;
+                for (let ii = 0; ii < ii_max; ++ii) {
+                    currentValueMax[i] += CurrentValueMax_0[ii];
+                }
+            }
+            this._currentValueMax = currentValueMax;
+            this._setCurrentMaxFlag = true;
+        }
     }
 
     /**
@@ -223,7 +230,7 @@ class Tab {
             throw "error";
         //End test
         if (!this._setCurrentMaxFlag === true)
-            this._setCurrentMax();
+            this.setCurrentMax();
         return this._currentValueMax;
     }
 
