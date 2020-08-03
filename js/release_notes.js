@@ -293,4 +293,24 @@ const release_notes = [
             ],
         }
     },
+    {
+        version: [
+            "1.3.1",
+            "1.3.1-offline"
+        ],
+        notes: {
+            en: [
+                "Change URL: chantx.net, the original URL will automatically jump to the new URL",
+                "Fix bug"
+            ],
+            zh_CN: [
+                "更改网址: chantx.net, 原有网址由于某些原因可能很难访问",
+                "修复错误"
+            ],
+            zh_TW: [
+                "更改網址: chantx.net, 原網址將會自動跳轉到新網址",
+                "修復錯誤"
+            ],
+        }
+    },
 ]
