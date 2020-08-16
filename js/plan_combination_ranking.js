@@ -7,6 +7,9 @@ const PC_QValidMaxLength = 48;
 let PC_ranking_object;
 
 function PC_start_ranking() {
+    //test
+    console.time("PC_ranking");
+    //End test
     let demandValue = pc_get_demand();
     PC_ranking_object = new PC_ranking(PC_LogisticsPlan.rankingGetPlans(), demandValue);
     if (PC_ranking_object.allPlan.length === 0) {
@@ -15,6 +18,23 @@ function PC_start_ranking() {
     }
     PC_ranking_object.ranking();
 }
+
+//test
+function PC_start_ranking_debug_1() {
+    console.time("PC_ranking");
+    let demandValue = pc_get_demand();
+    PC_ranking_object = new PC_ranking;
+    PC_ranking_object._constructor1(PC_LogisticsPlan.rankingGetPlans(), demandValue);
+    PC_ranking_object.ranking();
+}
+function PC_start_ranking_debug_2() {
+    console.time("PC_ranking");
+    let demandValue = pc_get_demand();
+    PC_ranking_object = new PC_ranking;
+    PC_ranking_object._constructor2(PC_LogisticsPlan.rankingGetPlans(), demandValue);
+    PC_ranking_object.ranking();
+}
+//End test
 
 function pc_get_demand() {
     let demand = Array(8);
@@ -27,7 +47,8 @@ function pc_get_demand() {
 }
 
 class PC_ranking {
-    constructor(LogisticsPlanData, demandValue) {
+    //test
+    _constructor1(LogisticsPlanData, demandValue) {
         this.original_demandValue = demandValue;
         /**@type Array.<_PC_ranking_planData> */
         this.allPlan = [];
@@ -43,6 +64,7 @@ class PC_ranking {
             }
         }
         this.reAndcoValue_MaxMax = reAndcoValue_MaxMax;
+        print_array("original_reAndcoMax:", reAndcoValue_MaxMax);
         for (let i = 0; i < 8; ++i) {
             this.original_demandValue[i] /= reAndcoValue_MaxMax[i];
         }
@@ -52,7 +74,40 @@ class PC_ranking {
         }
     }
 
-    //由于要刷新progress, 需要使用setTimeout, 代码结构有调整 -- v1.2.0-rc2
+    _constructor2(LogisticsPlanData, demandValue) {
+        this.original_demandValue = demandValue.slice();
+        /**@type Array.<_PC_ranking_planData> */
+        this.allPlan = [];
+        let plans_number = LogisticsPlanData.length;
+        this.plans_number = plans_number;
+        //计算所有方案的资源契约最大值, 用于归一化计算方案贡献占比
+        let reAndcoValue_MaxMax = [0, 0, 0, 0, 0, 0, 0, 0];
+        let totalTime = 0;
+        for (let i = 0; i < plans_number; ++i) {
+            this.allPlan.push(new _PC_ranking_planData(LogisticsPlanData[i]));
+            let thisPlan = this.allPlan[i];
+            let time = thisPlan.totalTime * thisPlan.days;
+            totalTime += time;
+            let reAndcoValue_Max = thisPlan.reAndcoValue_Max;
+            for (let ii = 0; ii < 8; ++ii) {
+                reAndcoValue_MaxMax[ii] += reAndcoValue_Max[ii] * time;
+            }
+        }
+        for (let i = 0; i < 8; ++i) {
+            reAndcoValue_MaxMax[i] = reAndcoValue_MaxMax[i] / totalTime;
+        }
+        this.reAndcoValue_MaxMax = reAndcoValue_MaxMax;
+        print_array("original_reAndcoMax:", reAndcoValue_MaxMax);
+        for (let i = 0; i < 8; ++i) {
+            this.original_demandValue[i] /= reAndcoValue_MaxMax[i];
+        }
+        for (let i = 0; i < plans_number; ++i) {
+            this.allPlan[i].setOriginalDemandValue(this.original_demandValue.slice());
+            this.allPlan[i].resetReAndCoValueMax(this.reAndcoValue_MaxMax.slice());
+        }
+    }
+    //End test
+
     ranking(RankIndex = 0) {
         //第一次
         if (RankIndex === 0) {
@@ -155,8 +210,19 @@ class PC_ranking {
             if (this._noPlan !== 0) {
                 done += language.JS.PC_ranking_alert3_1 + this._noPlan + language.JS.PC_ranking_alert3_2;
             }
+            //test
+            /*
+            //End test
             Modal.alert(done);
+            //test
+            */
+            //End test
             Modal.progress_close();
+            //test
+            print_a_element_of_a_multidimensional_array("reAndco:", PlanCombinationChart._reAndcoData, 16, 1);
+            print_a_element_of_a_multidimensional_array("missions:", PC_ranking_object.allPlan, "missions");
+            console.timeEnd("PC_ranking");
+            //End test
         }
         else {
             setTimeout(function () {PC_ranking_object.ranking(++RankIndex)}, 1);
@@ -203,7 +269,8 @@ class _PC_ranking_planData {
         let tab = Saved.creatTabBySaved(this.LogisticsPlanData.saved);
         //plan计算需要已经设置好的Qvalid的ShownTab
         tab.setQValid();
-        tab.deleteUselessMissions(PC_QValidMaxLength, demandValue);
+        // 好像会归一化，有点问题，等会再看看
+        // tab.deleteUselessMissions(PC_QValidMaxLength, demandValue);
         tab.setCurrentMax(this.reAndcoValue_Max);
         tab.normalizedQValid();
 
