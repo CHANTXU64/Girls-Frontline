@@ -161,6 +161,13 @@ function Tab_Anytime_changeStorageCustom() {
     let tab = new Tab_Anytime;
     storageSetItem("TabAnytimeCustom", tab.getSavedCustom());
 }
+let JQ_selector_DelayTime = $("#tab_Anytime_delayTime");
+JQ_selector_DelayTime.on("click", function () {
+    MissionsDetails.print();
+    printPlanDetails();
+    Saved.cancelSelected();
+    // storageSetItem("Is_GreatSuccessRateUP", is_RateUP);
+});
 //End Tab_Anytime
 
 //Tab_Timetable

@@ -180,6 +180,10 @@ function Input_getAnytimeMinimumIntervalTime(NeedCorrection = false) {
 function Input_setAnytimeMinimumIntervalTime(MinimumIntervalTime = 0) {
     $("#Tab_Anytime_MinimumIntervalTime_minutes").val(MinimumIntervalTime);
 }
+
+function is_delayTime() {
+    return !!document.getElementById('tab_Anytime_delayTime').checked;
+}
 //----------------
 
 //Timetable-------

@@ -506,6 +506,10 @@ class Tab_Anytime extends Tab {
         let totalGreatSuccessRate = this._calcTotalGSRate(NeedCorrection);
         let resourceIncreasingRate = 1 + totalGreatSuccessRate / 200;
 
+        let mission_time_delay = 0;
+        if (is_delayTime())
+            mission_time_delay = 1
+
         const UnableLogistic = this._getUnableLogistic();
         for (let i = 0; i < Q.length; i++) {
             if (UnableLogistic.indexOf(i) === -1) {
@@ -515,7 +519,8 @@ class Tab_Anytime extends Tab {
 
                 //该关卡在后勤总时间内可执行次数
                 let times = 0;
-                while ((++times + 1) * Q[i][9] <= this._totalTime);
+                let mission_time = Q[i][9] + mission_time_delay;
+                while ((++times + 1) * mission_time <= this._totalTime);
 
                 for (let ii = 1; ii < 5; ii++) {
                     newrow.push(Q[i][ii] * times * resourceIncreasingRate / this._totalTime);
@@ -524,14 +529,14 @@ class Tab_Anytime extends Tab {
                 for (let ii = 5; ii < 9; ii++) {
                     newrow.push(calcContractValue(Q[i][ii], contractSumValue, totalGreatSuccessRate) * times / this._totalTime);
                 }
-                newrow.push(Q[i][9]);
+                newrow.push(mission_time);
                 let CollectTimetable = [];
                 for (let ii = 1; ii <= times; ii++) {
-                    CollectTimetable.push(Q[i][9] * ii);
+                    CollectTimetable.push(mission_time * ii);
                 }
                 newrow.push(CollectTimetable);
                 this._QValid.push(newrow);
-                this.Qvalid_Time.push(Q[i][9]);
+                this.Qvalid_Time.push(mission_time);
             }
         }
         //为优化后面计算最小间隔时间做准备, 计算最小间隔时间的函数的传入时间Time_Arr必须从小到大
